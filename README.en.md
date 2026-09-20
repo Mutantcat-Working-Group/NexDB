@@ -3,7 +3,7 @@
 <h2>NexDB</h2>
 </div>
 
-[简体中文](README.zh-CN.md) | English
+[简体中文](README.md) | English
 
 ### 1. Overview
 - Lightweight open-source database manager: one ~25 MB package, no Java or Python runtime, no bundled Chromium, native on macOS, Windows, and Linux.

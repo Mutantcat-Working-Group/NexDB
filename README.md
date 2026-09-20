@@ -3,7 +3,7 @@
 <h2>NexDB</h2>
 </div>
 
-[English](README.md) | 简体中文
+[English](README.en.md) | 简体中文
 
 ### 一、功能简述
 - 轻量级开源数据库管理工具：约 25 MB 单包，无需 Java、Python 运行时，不内嵌 Chromium，支持 macOS、Windows、Linux。
