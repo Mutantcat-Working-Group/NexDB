@@ -363,9 +363,10 @@ function validateRollbackRelease(rollbackRelease, latestRelease) {
 
   const version = formatVersion(rollbackVersion);
   // Rollback targets may predate the aarch64 -> arm64 dmg rename, so either
-  // asset name satisfies the Apple Silicon requirement.
+  // asset name satisfies the Apple Silicon requirement. New installer-only
+  // releases intentionally ship without the updater latest.json, so it is not
+  // part of the required rollback asset set.
   const requiredAssets = [
-    ["latest.json"],
     [`DBX_${version}_arm64.dmg`, `DBX_${version}_aarch64.dmg`],
     [`DBX_${version}_x64.dmg`],
     [`DBX_${version}_x64-setup.exe`],

@@ -137,17 +137,13 @@ describe("Windows 7 fixed WebView2 runtime bundle", () => {
     expect(win7LoaderAuditScript).toContain('"WebView2: Failed to find an installed WebView2 runtime or non-stable Microsoft Edge installation."');
     expect(win7LoaderAuditScript).toContain("GetEncoding(28591)");
     expect(ciWorkflow).toContain("./.github/scripts/assert-webview2-win7-loader.ps1");
-    expect(releaseWorkflow).toContain("./.github/scripts/assert-webview2-win7-loader.ps1");
   });
 
   it("keeps the existing Win7 compile-cache policy unchanged", () => {
-    const releaseWin7Job = releaseWorkflow.slice(releaseWorkflow.indexOf("  build-windows-7-offline:"), releaseWorkflow.indexOf("  static-browser:"));
     const ciWin7Job = ciWorkflow.slice(ciWorkflow.indexOf("  windows-win7-bundle:"), ciWorkflow.indexOf("  duckdb-windows-driver:"));
 
     // The vendored loader makes compile caching safe. This change does not alter
     // cache policy. A separate CI change can enable caching for these jobs.
-    expect(releaseWin7Job).not.toContain("RUSTC_WRAPPER");
-    expect(releaseWin7Job).not.toContain("sccache-action");
     expect(ciWin7Job).not.toContain("RUSTC_WRAPPER");
     expect(ciWin7Job).not.toContain("sccache-action");
   });
@@ -157,7 +153,6 @@ describe("Windows 7 fixed WebView2 runtime bundle", () => {
     expect(win7RuntimeProbeScript).toContain('$ExpectedVersion = "109.0.1518.78"');
     expect(win7RuntimeProbeScript).toContain("msedgewebview2.exe");
     expect(ciWorkflow).toContain("./.github/scripts/assert-webview2-win7-runtime.ps1");
-    expect(releaseWorkflow).toContain("./.github/scripts/assert-webview2-win7-runtime.ps1");
   });
 
   it("passes the configured fixed-runtime folder to WebView2 discovery and creation", () => {
@@ -174,7 +169,6 @@ describe("Windows 7 fixed WebView2 runtime bundle", () => {
     expect(win7InstallerAuditScript).toContain('"webview2-fixed-runtime\\msedgewebview2.exe"');
     expect(win7InstallerAuditScript).toContain('"dbx.exe"');
     expect(ciWorkflow).toContain("./.github/scripts/assert-win7-installer-content.ps1");
-    expect(releaseWorkflow).toContain("./.github/scripts/assert-win7-installer-content.ps1");
   });
 
   it("builds the Windows 7 executable with the production custom protocol", () => {
@@ -182,10 +176,16 @@ describe("Windows 7 fixed WebView2 runtime bundle", () => {
     expect(appBuildScript).toContain("CARGO_FEATURE_CUSTOM_PROTOCOL");
     expect(appBuildScript).toContain("CARGO_CFG_TARGET_VENDOR");
     expect(ciWorkflow).toContain("--release --features custom-protocol --target x86_64-win7-windows-msvc");
-    expect(releaseWorkflow).toContain("--release --features custom-protocol --target x86_64-win7-windows-msvc");
     expect(ciWorkflow).toContain("TAURI_CONFIG = Get-Content src-tauri/tauri.webview2-win7-fixed.conf.json -Raw");
-    expect(releaseWorkflow).toContain("TAURI_CONFIG = Get-Content src-tauri/tauri.webview2-win7-fixed.conf.json -Raw");
     expect(ciWorkflow).toContain("target-feature=+crt-static");
-    expect(releaseWorkflow).toContain("target-feature=+crt-static");
+  });
+});
+
+describe("Simplified release workflow", () => {
+  it("builds NSIS installers for both Windows architectures", () => {
+    expect(releaseWorkflow).toContain("bundles: nsis");
+    expect(releaseWorkflow).toContain('--bundles "${{ matrix.bundles }}"');
+    expect(releaseWorkflow).toContain("x86_64-pc-windows-msvc");
+    expect(releaseWorkflow).toContain("aarch64-pc-windows-msvc");
   });
 });

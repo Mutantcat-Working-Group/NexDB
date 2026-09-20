@@ -239,11 +239,13 @@ jobs:
           ls -lh assets/
 
       - name: Validate latest.json completeness
+        id: manifest
         run: |
           LATEST_JSON="assets/latest.json"
           if [ ! -f "$LATEST_JSON" ]; then
-            echo "::error::latest.json not found in release assets; refusing to sync an incomplete manifest to R2"
-            exit 1
+            echo "::warning::latest.json not found in release assets; installer artifacts will still be published."
+            echo "has_latest=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
           MISSING=""
           for p in darwin-aarch64 darwin-x86_64 windows-x86_64 windows-aarch64 linux-x86_64 linux-aarch64; do
@@ -257,6 +259,7 @@ jobs:
           fi
           echo "Platform manifest complete:"
           jq -r '.platforms | keys[]' "$LATEST_JSON"
+          echo "has_latest=true" >> "$GITHUB_OUTPUT"
 
       - name: Rewrite latest.json download URLs to R2 CDN
         run: |
@@ -287,6 +290,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
 
       - name: Upload to R2 (latest)
+        if: steps.manifest.outputs.has_latest == 'true'
         run: |
           aws s3 sync ./assets "s3://${{ secrets.R2_BUCKET_NAME }}/releases/latest/" \
             --endpoint-url "https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com" \

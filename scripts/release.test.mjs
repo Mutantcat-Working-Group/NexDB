@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
-import { chmodSync, existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
 import { isDesktopVersionOnlyCargoLockChange } from "./release-lock.mjs";
@@ -10,7 +10,7 @@ const repoRoot = new URL("..", import.meta.url).pathname;
 const releaseScript = join(repoRoot, "scripts/release.mjs");
 const releaseWorkflow = join(repoRoot, ".github/workflows/release.yml");
 const packagesWorkflow = join(repoRoot, ".github/workflows/mcp-release.yml");
-const vsignConfigPath = join(repoRoot, "src-tauri/tauri.vsign.conf.json");
+const releaseCiConfigPath = join(repoRoot, "src-tauri/tauri.release-ci.conf.json");
 
 function runRelease(args, env = {}) {
   return spawnSync(process.execPath, [releaseScript, ...args], {
@@ -40,7 +40,7 @@ function createMockGh() {
       "  const tagName = explicitTag ?? process.env.MOCK_LATEST_TAG;",
       "  const version = tagName.slice(1);",
       "  const assets = [",
-      '    "latest.json",',
+      '  ...(process.env.MOCK_NO_LATEST === "1" ? [] : ["latest.json"]),',
       '    "DBX_" + version + "_" + (process.env.MOCK_ARM64_DMG_ARCH || "arm64") + ".dmg",',
       '    "DBX_" + version + "_x64.dmg",',
       '    "DBX_" + version + "_x64-setup.exe",',
@@ -127,6 +127,20 @@ test("rollback rejects a release missing both arm64 dmg asset names", () => {
   assert.match(result.stderr, /missing required distribution assets: DBX_0\.5\.63_arm64\.dmg or DBX_0\.5\.63_aarch64\.dmg/);
 });
 
+test("rollback accepts installer-only releases without latest.json", () => {
+  const mockBin = createMockGh();
+  const logPath = join(mockBin, "gh.log");
+  const result = runRelease(["rollback", "v0.5.63", "--yes", "--skip-fetch"], {
+    PATH: `${mockBin}:${process.env.PATH}`,
+    GH_LOG: logPath,
+    MOCK_LATEST_TAG: "v0.5.64",
+    MOCK_NO_LATEST: "1",
+  });
+
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(readFileSync(logPath, "utf8").trim().split("\n").length, 3);
+});
+
 test("rollback rejects prerelease tag syntax", () => {
   const result = runRelease(["rollback", "v0.5.63-rc.1", "--dry-run", "--skip-fetch"]);
 
@@ -142,31 +156,18 @@ test("launcher packages bypass filtered publishing for provenance", () => {
   assert.doesNotMatch(workflow, /pnpm --filter "@dbx-app\/(?:cli|mcp-server)" publish/);
 });
 
-test("Tauri VSign script resolves from the src-tauri working directory", () => {
-  const config = JSON.parse(readFileSync(vsignConfigPath, "utf8"));
-  const args = config.bundle.windows.signCommand.args;
-  const fileArgumentIndex = args.indexOf("-File");
-
-  assert.notEqual(fileArgumentIndex, -1);
-  const scriptPath = args[fileArgumentIndex + 1];
-  assert.equal(typeof scriptPath, "string");
-  assert.equal(existsSync(resolve(repoRoot, "src-tauri", scriptPath)), true);
+test("release CI config does not require updater signing keys", () => {
+  const config = JSON.parse(readFileSync(releaseCiConfigPath, "utf8"));
+  assert.equal(config.bundle.createUpdaterArtifacts, false);
 });
 
-test("Windows 7 release build does not use sccache", () => {
+test("release workflow builds NSIS installers without external signing secrets", () => {
   const workflow = readFileSync(releaseWorkflow, "utf8");
-  const start = workflow.indexOf("  build-windows-7-offline:");
-  const end = workflow.indexOf("\n  static-browser:", start);
-
-  assert.notEqual(start, -1);
-  assert.notEqual(end, -1);
-  const win7Job = workflow
-    .slice(start, end)
-    // Ignore comments; the job itself documents why sccache is absent.
-    .split("\n")
-    .filter((line) => !line.trim().startsWith("#"))
-    .join("\n");
-  assert.doesNotMatch(win7Job, /RUSTC_WRAPPER|SCCACHE_|sccache/i);
+  assert.match(workflow, /target: x86_64-pc-windows-msvc/);
+  assert.match(workflow, /target: aarch64-pc-windows-msvc/);
+  assert.match(workflow, /bundles: nsis/);
+  assert.match(workflow, /--bundles "\${{ matrix.bundles }}"/);
+  assert.doesNotMatch(workflow, /VSIGN_|APPLE_CERTIFICATE|TAURI_SIGNING_PRIVATE_KEY/i);
 });
 
 test("desktop-only Cargo.lock version refresh does not count as a Node package change", () => {

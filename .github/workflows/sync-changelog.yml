@@ -81,7 +81,10 @@ jobs:
           set -euo pipefail
           TAG="$(jq -r '.version' latest-notes.json)"
           mkdir -p updater-assets
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern latest.json --dir updater-assets --clobber
+          if ! gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern latest.json --dir updater-assets --clobber; then
+            echo "::warning::No latest.json in release assets; skipping updater notes and CDN manifest sync."
+            exit 0
+          fi
           NOTES="$(jq -r '.notes' latest-notes.json)"
           jq --arg notes "$NOTES" '.notes = $notes' updater-assets/latest.json > updater-assets/latest.json.tmp
           mv updater-assets/latest.json.tmp updater-assets/latest.json
