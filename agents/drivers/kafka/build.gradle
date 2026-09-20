@@ -16,6 +16,6 @@ dependencies {
 tasks.named('shadowJar') {
     mergeServiceFiles()
     manifest {
-        attributes('Agent-Label': 'Apache Kafka', 'Main-Class': 'com.dbx.agent.kafka.KafkaAgent')
+        attributes('Agent-Label': 'Apache Kafka', 'Main-Class': 'org.mutantcat.agent.kafka.KafkaAgent')
     }
 }

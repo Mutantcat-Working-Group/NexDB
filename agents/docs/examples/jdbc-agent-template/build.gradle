@@ -56,7 +56,7 @@ tasks.named('shadowJar') {
             'Agent-Label': 'Template DB',
             // Add this only when users must provide the JDBC driver jar:
             // 'Agent-External-Driver': 'true',
-            'Main-Class': 'com.dbx.agent.template.TemplateAgent'
+            'Main-Class': 'org.mutantcat.agent.template.TemplateAgent'
         )
     }
 }

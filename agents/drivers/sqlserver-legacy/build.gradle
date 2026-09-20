@@ -7,7 +7,7 @@ tasks.named('shadowJar') {
     manifest {
         attributes(
             'Agent-Label': 'SQL Server legacy compatibility component',
-            'Main-Class': 'com.dbx.agent.sqlserverlegacy.SqlServerLegacyAgent'
+            'Main-Class': 'org.mutantcat.agent.sqlserverlegacy.SqlServerLegacyAgent'
         )
     }
 }

@@ -24,7 +24,7 @@ async fn ssh_sftp_package_installs_and_serves_mcp_tools() {
     let installer = PluginPackageInstaller::new(plugins_root.clone(), "0.6.0").expect("installer");
     let result = installer.install_file(&package, PluginInstallPolicy::LocalDevelopment).expect("install .dbxp");
     let response = result.response();
-    assert_eq!(response.plugin.manifest.id, "io.dbx.ssh-sftp");
+    assert_eq!(response.plugin.manifest.id, "org.mutantcat.ssh-sftp");
     assert!(!response.plugin.manifest.version.is_empty());
     assert_eq!(response.signature, PluginSignatureStatus::Unsigned);
 
@@ -35,14 +35,14 @@ async fn ssh_sftp_package_installs_and_serves_mcp_tools() {
     let backend = LocalBackend::open_with_app_version(&database_path, "0.6.0").await.unwrap();
     let installed = backend.state().plugins.list_installed().unwrap();
     let plugin =
-        installed.iter().find(|plugin| plugin.manifest.id == "io.dbx.ssh-sftp").expect("installed plugin listed");
+        installed.iter().find(|plugin| plugin.manifest.id == "org.mutantcat.ssh-sftp").expect("installed plugin listed");
     assert!(plugin.compatibility.compatible, "plugin incompatible: {:?}", plugin.compatibility.errors);
 
     // 3. MCP bridge: tool discovery over the real sidecar process.
     let providers = backend.list_plugin_tools().await.expect("list plugin tools");
     let ssh = providers
         .iter()
-        .find(|provider| provider["pluginId"] == "io.dbx.ssh-sftp")
+        .find(|provider| provider["pluginId"] == "org.mutantcat.ssh-sftp")
         .expect("plugin contributes MCP tools");
     let names = ssh["tools"]
         .as_array()
@@ -56,7 +56,7 @@ async fn ssh_sftp_package_installs_and_serves_mcp_tools() {
 
     // 4. MCP bridge: a real tool call through the installed sidecar.
     let listed = backend
-        .call_plugin_tool("io.dbx.ssh-sftp", "ssh_list_known_hosts", None, &serde_json::json!({}))
+        .call_plugin_tool("org.mutantcat.ssh-sftp", "ssh_list_known_hosts", None, &serde_json::json!({}))
         .await
         .expect("call plugin tool");
     assert!(!listed["isError"].as_bool().unwrap_or(true), "tool failed: {listed}");

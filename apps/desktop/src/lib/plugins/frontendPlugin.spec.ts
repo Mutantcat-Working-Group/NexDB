@@ -438,7 +438,7 @@ describe("FrontendPluginRegistry", () => {
 
     expect(initialPluginFormValues(provider)).toEqual({ read_only: false });
 
-    const config = buildPluginConnectionConfig("io.dbx.ssh", provider, {
+    const config = buildPluginConnectionConfig("org.mutantcat.ssh", provider, {
       sudo_password: null,
       mode: null,
       read_only: false,
@@ -456,7 +456,7 @@ describe("FrontendPluginRegistry", () => {
         { key: "sudo_source", label: "Sudo source", type: "text", binding: "config" },
       ],
     });
-    const existing = buildPluginConnectionConfig("io.dbx.ssh", provider, {});
+    const existing = buildPluginConnectionConfig("org.mutantcat.ssh", provider, {});
     existing.connection_secrets = { sudo_password: "null", totp_secret: "JBSWY3DPEHPK3PXP" };
     existing.external_config = { sudo_source: "custom", stale: null };
 
@@ -467,7 +467,7 @@ describe("FrontendPluginRegistry", () => {
     expect(values.stale).toBeUndefined();
     expect(values.sudo_source).toBe("custom");
 
-    const saved = buildPluginConnectionConfig("io.dbx.ssh", provider, values, existing);
+    const saved = buildPluginConnectionConfig("org.mutantcat.ssh", provider, values, existing);
     expect(saved.connection_secrets?.sudo_password).toBe("null");
     expect(saved.connection_secrets?.totp_secret).toBe("JBSWY3DPEHPK3PXP");
   });

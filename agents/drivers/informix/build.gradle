@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'IBM Informix', 'Main-Class': 'com.dbx.agent.informix.InformixAgent')
+        attributes('Agent-Label': 'IBM Informix', 'Main-Class': 'org.mutantcat.agent.informix.InformixAgent')
     }
 }

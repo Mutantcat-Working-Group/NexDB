@@ -69,7 +69,7 @@ class ValidateAgentsTest(unittest.TestCase):
     def test_source_scan_rejects_old_execute_query_patterns(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            source = root / "h2/src/main/java/com/dbx/agent/h2/H2Agent.java"
+            source = root / "h2/src/main/java/org/mutantcat/agent/h2/H2Agent.java"
             source.parent.mkdir(parents=True)
             source.write_text(
                 textwrap.dedent(
@@ -88,8 +88,8 @@ class ValidateAgentsTest(unittest.TestCase):
 
             self.assertEqual(
                 [
-                    "h2/src/main/java/com/dbx/agent/h2/H2Agent.java:2: forbidden local SQL prefix classifier",
-                    "h2/src/main/java/com/dbx/agent/h2/H2Agent.java:5: forbidden executeUpdate(trimmedSql) in query execution",
+                    "h2/src/main/java/org/mutantcat/agent/h2/H2Agent.java:2: forbidden local SQL prefix classifier",
+                    "h2/src/main/java/org/mutantcat/agent/h2/H2Agent.java:5: forbidden executeUpdate(trimmedSql) in query execution",
                 ],
                 problems,
             )
@@ -98,7 +98,7 @@ class ValidateAgentsTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             module = root / "example"
-            source = module / "src/main/java/com/dbx/agent/example/ExampleAgent.java"
+            source = module / "src/main/java/org/mutantcat/agent/example/ExampleAgent.java"
             source.parent.mkdir(parents=True)
             (module / "build.gradle").write_text(
                 textwrap.dedent(
@@ -107,7 +107,7 @@ class ValidateAgentsTest(unittest.TestCase):
                         manifest {
                             attributes(
                                 'Agent-Label': 'Example',
-                                'Main-Class': 'com.dbx.agent.example.ExampleAgent'
+                                'Main-Class': 'org.mutantcat.agent.example.ExampleAgent'
                             )
                         }
                     }
@@ -118,9 +118,9 @@ class ValidateAgentsTest(unittest.TestCase):
             source.write_text(
                 textwrap.dedent(
                     """
-                    package com.dbx.agent.example;
+                    package org.mutantcat.agent.example;
 
-                    import com.dbx.agent.BaseDatabaseAgent;
+                    import org.mutantcat.agent.BaseDatabaseAgent;
                     import java.sql.DriverManager;
 
                     public final class ExampleAgent extends BaseDatabaseAgent {
@@ -138,9 +138,9 @@ class ValidateAgentsTest(unittest.TestCase):
 
             self.assertEqual(
                 [
-                    "example/src/main/java/com/dbx/agent/example/ExampleAgent.java: JDBC agents must extend AbstractJdbcAgent, ConfiguredJdbcAgent, or PostgresLikeAgent",
-                    "example/src/main/java/com/dbx/agent/example/ExampleAgent.java:9: copied driver loading; use shared JDBC foundation",
-                    "example/src/main/java/com/dbx/agent/example/ExampleAgent.java:10: copied JDBC connection creation; use shared JDBC foundation",
+                    "example/src/main/java/org/mutantcat/agent/example/ExampleAgent.java: JDBC agents must extend AbstractJdbcAgent, ConfiguredJdbcAgent, or PostgresLikeAgent",
+                    "example/src/main/java/org/mutantcat/agent/example/ExampleAgent.java:9: copied driver loading; use shared JDBC foundation",
+                    "example/src/main/java/org/mutantcat/agent/example/ExampleAgent.java:10: copied JDBC connection creation; use shared JDBC foundation",
                 ],
                 problems,
             )
@@ -180,13 +180,13 @@ class ValidateAgentsTest(unittest.TestCase):
     def test_authoring_template_must_use_shared_foundation(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            template = root / "docs/examples/jdbc-agent-template/src/main/java/com/dbx/agent/template/TemplateAgent.java"
+            template = root / "docs/examples/jdbc-agent-template/src/main/java/org/mutantcat/agent/template/TemplateAgent.java"
             template.parent.mkdir(parents=True)
             template.write_text(
                 textwrap.dedent(
                     """
-                    package com.dbx.agent.template;
-                    import com.dbx.agent.BaseDatabaseAgent;
+                    package org.mutantcat.agent.template;
+                    import org.mutantcat.agent.BaseDatabaseAgent;
                     import java.sql.DriverManager;
                     public final class TemplateAgent extends BaseDatabaseAgent {
                         void connect() throws Exception {
@@ -200,8 +200,8 @@ class ValidateAgentsTest(unittest.TestCase):
 
             self.assertEqual(
                 [
-                    "docs/examples/jdbc-agent-template/src/main/java/com/dbx/agent/template/TemplateAgent.java: template must use shared JDBC foundation",
-                    "docs/examples/jdbc-agent-template/src/main/java/com/dbx/agent/template/TemplateAgent.java: template contains copied JDBC connection creation",
+                    "docs/examples/jdbc-agent-template/src/main/java/org/mutantcat/agent/template/TemplateAgent.java: template must use shared JDBC foundation",
+                    "docs/examples/jdbc-agent-template/src/main/java/org/mutantcat/agent/template/TemplateAgent.java: template contains copied JDBC connection creation",
                 ],
                 validate_agents.validate_authoring_template(root),
             )
@@ -287,7 +287,7 @@ class ValidateAgentsTest(unittest.TestCase):
                         manifest {
                             attributes(
                                 'Agent-Label': 'H2',
-                                'Main-Class': 'com.dbx.agent.h2.H2Agent'
+                                'Main-Class': 'org.mutantcat.agent.h2.H2Agent'
                             )
                         }
                     }
@@ -299,13 +299,13 @@ class ValidateAgentsTest(unittest.TestCase):
             problems = validate_agents.validate_manifest_fields(root, {"h2"})
 
             self.assertEqual(
-                ["h2/build.gradle: Main-Class source not found: h2/src/main/java/com/dbx/agent/h2/H2Agent.java"],
+                ["h2/build.gradle: Main-Class source not found: h2/src/main/java/org/mutantcat/agent/h2/H2Agent.java"],
                 problems,
             )
 
-            source = module / "src/main/java/com/dbx/agent/h2/H2Agent.java"
+            source = module / "src/main/java/org/mutantcat/agent/h2/H2Agent.java"
             source.parent.mkdir(parents=True)
-            source.write_text("package com.dbx.agent.h2; public final class H2Agent {}", encoding="utf-8")
+            source.write_text("package org.mutantcat.agent.h2; public final class H2Agent {}", encoding="utf-8")
 
             self.assertEqual([], validate_agents.validate_manifest_fields(root, {"h2"}))
 
@@ -313,9 +313,9 @@ class ValidateAgentsTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             module = root / "drivers/h2"
-            source = module / "src/main/java/com/dbx/agent/h2/H2Agent.java"
+            source = module / "src/main/java/org/mutantcat/agent/h2/H2Agent.java"
             source.parent.mkdir(parents=True)
-            source.write_text("package com.dbx.agent.h2; public final class H2Agent {}", encoding="utf-8")
+            source.write_text("package org.mutantcat.agent.h2; public final class H2Agent {}", encoding="utf-8")
             (root / "build.gradle").write_text(
                 'archiveBaseName = "dbx-agent-${project.name}"\n',
                 encoding="utf-8",
@@ -327,7 +327,7 @@ class ValidateAgentsTest(unittest.TestCase):
                         manifest {
                             attributes(
                                 'Agent-Label': 'H2',
-                                'Main-Class': 'com.dbx.agent.h2.H2Agent'
+                                'Main-Class': 'org.mutantcat.agent.h2.H2Agent'
                             )
                         }
                     }
@@ -341,7 +341,7 @@ class ValidateAgentsTest(unittest.TestCase):
     def test_kotlin_residue_scan_rejects_kt_and_kts_files_outside_build_dirs(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            forbidden_source = root / "h2/src/main/kotlin/com/dbx/agent/h2/H2Agent.kt"
+            forbidden_source = root / "h2/src/main/kotlin/org/mutantcat/agent/h2/H2Agent.kt"
             forbidden_build = root / "settings.gradle.kts"
             ignored_build_output = root / "h2/build/tmp/Generated.kt"
             ignored_gradle_cache = root / ".gradle/caches/init.gradle.kts"
@@ -358,7 +358,7 @@ class ValidateAgentsTest(unittest.TestCase):
 
             self.assertEqual(
                 [
-                    "h2/src/main/kotlin/com/dbx/agent/h2/H2Agent.kt: forbidden Kotlin file",
+                    "h2/src/main/kotlin/org/mutantcat/agent/h2/H2Agent.kt: forbidden Kotlin file",
                     "settings.gradle.kts: forbidden Kotlin file",
                 ],
                 problems,
@@ -457,16 +457,16 @@ class ValidateAgentsTest(unittest.TestCase):
                     "META-INF/MANIFEST.MF",
                     "Manifest-Version: 1.0\n"
                     "Agent-Label: H2\n"
-                    "Main-Class: com.dbx.agent.h2.H2Agent\n\n",
+                    "Main-Class: org.mutantcat.agent.h2.H2Agent\n\n",
                 )
 
             self.assertEqual(
-                ["h2/build/libs/dbx-agent-h2.jar: Main-Class class not found: com/dbx/agent/h2/H2Agent.class"],
+                ["h2/build/libs/dbx-agent-h2.jar: Main-Class class not found: org/mutantcat/agent/h2/H2Agent.class"],
                 validate_agent_jars.validate_agent_jars(root),
             )
 
             with zipfile.ZipFile(jar, "a") as archive:
-                archive.writestr("com/dbx/agent/h2/H2Agent.class", b"class-bytes")
+                archive.writestr("org/mutantcat/agent/h2/H2Agent.class", b"class-bytes")
 
             self.assertEqual([], validate_agent_jars.validate_agent_jars(root))
 
@@ -480,9 +480,9 @@ class ValidateAgentsTest(unittest.TestCase):
                     "META-INF/MANIFEST.MF",
                     "Manifest-Version: 1.0\n"
                     "Agent-Label: H2\n"
-                    "Main-Class: com.dbx.agent.h2.H2Agent\n\n",
+                    "Main-Class: org.mutantcat.agent.h2.H2Agent\n\n",
                 )
-                archive.writestr("com/dbx/agent/h2/H2Agent.class", b"class-bytes")
+                archive.writestr("org/mutantcat/agent/h2/H2Agent.class", b"class-bytes")
 
             self.assertEqual([], validate_agent_jars.validate_agent_jars(root))
 

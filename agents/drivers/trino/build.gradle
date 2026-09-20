@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Trino (Presto)', 'Main-Class': 'com.dbx.agent.trino.TrinoAgent')
+        attributes('Agent-Label': 'Trino (Presto)', 'Main-Class': 'org.mutantcat.agent.trino.TrinoAgent')
     }
 }

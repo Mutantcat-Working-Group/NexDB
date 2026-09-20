@@ -6,9 +6,9 @@ This guide defines the expected shape of a DBX agent. Treat it as the checklist 
 
 Every agent is a standalone JVM process that:
 
-- Implements `com.dbx.agent.DatabaseAgent`.
-- Prefer extending `com.dbx.agent.ConfiguredJdbcAgent` for standard JDBC agents.
-- Extend `com.dbx.agent.AbstractJdbcAgent` when the database needs custom metadata SQL but can still share lifecycle and execution behavior.
+- Implements `org.mutantcat.agent.DatabaseAgent`.
+- Prefer extending `org.mutantcat.agent.ConfiguredJdbcAgent` for standard JDBC agents.
+- Extend `org.mutantcat.agent.AbstractJdbcAgent` when the database needs custom metadata SQL but can still share lifecycle and execution behavior.
 - Starts with `new JsonRpcServer(new <Agent>()).run()` in its `main` method.
 - Talks to DBX over stdin/stdout JSON-RPC 2.0.
 - Uses JDBC for database access unless the module is explicitly designed around a non-JDBC protocol.
@@ -154,7 +154,7 @@ tasks.named('shadowJar') {
         attributes(
             'Agent-Label': 'Example DB',
             'Agent-External-Driver': 'true',
-            'Main-Class': 'com.dbx.agent.example.ExampleAgent'
+            'Main-Class': 'org.mutantcat.agent.example.ExampleAgent'
         )
     }
 }
@@ -170,7 +170,7 @@ When adding an agent named `exampledb`:
 - Add `exampledb` to `driverModules` in `settings.gradle`.
 - Add `"exampledb": "0.1.0"` to `versions.json`.
 - Set `Agent-Label` to the user-facing database name.
-- Set `Main-Class` to the Java agent class, usually `com.dbx.agent.exampledb.ExampledbAgent`.
+- Set `Main-Class` to the Java agent class, usually `org.mutantcat.agent.exampledb.ExampledbAgent`.
 - Add the database to the README support table.
 
 The root `build.gradle` convention derives the archive name from the module name, so `exampledb` builds `dbx-agent-exampledb.jar` without per-module archive configuration.

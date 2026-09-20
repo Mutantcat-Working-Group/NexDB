@@ -31,11 +31,11 @@ describe("queryStore reconnectRestoredPluginTabs", () => {
 
   it("replays ensureConnected once per distinct plugin connection, active tab first", async () => {
     const queryStore = useQueryStore();
-    queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", { connectionId: "conn-1", context: { connectionId: "conn-1" } });
-    queryStore.openPluginFilesystem("io.dbx.files", "files", { connectionId: "conn-1" });
+    queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", { connectionId: "conn-1", context: { connectionId: "conn-1" } });
+    queryStore.openPluginFilesystem("org.mutantcat.files", "files", { connectionId: "conn-1" });
     // A non-plugin tab must not participate in the replay.
-    queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", { connectionId: "conn-sql", context: { connectionId: "conn-sql" } });
-    const activeTabId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", { connectionId: "conn-2", context: { connectionId: "conn-2" } });
+    queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", { connectionId: "conn-sql", context: { connectionId: "conn-sql" } });
+    const activeTabId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", { connectionId: "conn-2", context: { connectionId: "conn-2" } });
     queryStore.activeTabId = activeTabId;
 
     await queryStore.reconnectRestoredPluginTabs();
@@ -48,8 +48,8 @@ describe("queryStore reconnectRestoredPluginTabs", () => {
 
   it("a per-connection failure does not abort the remaining replays", async () => {
     const queryStore = useQueryStore();
-    queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", { connectionId: "conn-1", context: { connectionId: "conn-1" } });
-    queryStore.openPluginWorkbench("io.dbx.ldap", "workbench", { connectionId: "conn-2", context: { connectionId: "conn-2" } });
+    queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", { connectionId: "conn-1", context: { connectionId: "conn-1" } });
+    queryStore.openPluginWorkbench("org.mutantcat.ldap", "workbench", { connectionId: "conn-2", context: { connectionId: "conn-2" } });
     ensureConnected.mockImplementation(async (id: string) => {
       if (id === "conn-1") throw new Error("password prompt cancelled");
     });

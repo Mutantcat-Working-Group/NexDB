@@ -4,6 +4,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'InterSystems Cach\u00e9', 'Main-Class': 'com.dbx.agent.cache.CacheAgent')
+        attributes('Agent-Label': 'InterSystems Cach\u00e9', 'Main-Class': 'org.mutantcat.agent.cache.CacheAgent')
     }
 }

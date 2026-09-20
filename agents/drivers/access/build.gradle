@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Microsoft Access', 'Main-Class': 'com.dbx.agent.access.AccessAgent')
+        attributes('Agent-Label': 'Microsoft Access', 'Main-Class': 'org.mutantcat.agent.access.AccessAgent')
     }
 }

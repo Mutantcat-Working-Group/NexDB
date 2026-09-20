@@ -28,7 +28,7 @@ trap cleanup EXIT
 cat >"$work_dir/pom.xml" <<EOF
 <project xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.dbx.test</groupId>
+  <groupId>org.mutantcat.test</groupId>
   <artifactId>rocketmq-integration</artifactId>
   <version>1.0.0</version>
   <dependencies>

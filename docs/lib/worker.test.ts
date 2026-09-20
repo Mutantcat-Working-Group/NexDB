@@ -29,8 +29,8 @@ test("static assets receive browser cache headers without caching HTML", () => {
 });
 
 test("plugin detail fallback maps unknown ids onto the shell route", () => {
-  const shell = pluginDetailShellRequest(new URL("https://dbxio.com/cn/plugins/io.github.t8y2.s3"), new Request("https://dbxio.com/cn/plugins/io.github.t8y2.s3"));
-  assert.equal(shell?.url, "https://dbxio.com/cn/plugins/detail?id=io.github.t8y2.s3");
+  const shell = pluginDetailShellRequest(new URL("https://dbxio.com/cn/plugins/org.mutantcat.s3"), new Request("https://dbxio.com/cn/plugins/org.mutantcat.s3"));
+  assert.equal(shell?.url, "https://dbxio.com/cn/plugins/detail?id=org.mutantcat.s3");
 
   const encoded = pluginDetailShellRequest(new URL("https://dbxio.com/en/plugins/a%20b"), new Request("https://dbxio.com/en/plugins/a%20b"));
   assert.equal(encoded?.url, "https://dbxio.com/en/plugins/detail?id=a%2520b");
@@ -38,7 +38,7 @@ test("plugin detail fallback maps unknown ids onto the shell route", () => {
   // The shell route itself and non-GET requests must pass through untouched.
   assert.equal(pluginDetailShellRequest(new URL("https://dbxio.com/en/plugins/detail"), new Request("https://dbxio.com/en/plugins/detail")), null);
   assert.equal(
-    pluginDetailShellRequest(new URL("https://dbxio.com/en/plugins/io.dbx.ssh"), new Request("https://dbxio.com/en/plugins/io.dbx.ssh", { method: "POST" })),
+    pluginDetailShellRequest(new URL("https://dbxio.com/en/plugins/org.mutantcat.ssh"), new Request("https://dbxio.com/en/plugins/org.mutantcat.ssh", { method: "POST" })),
     null,
   );
   assert.equal(pluginDetailShellRequest(new URL("https://dbxio.com/en/plugins"), new Request("https://dbxio.com/en/plugins")), null);

@@ -1379,7 +1379,7 @@ fn test_agent_jar_bytes() -> Vec<u8> {
     let options = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Stored);
     // The production validator rejects corrupt driver artifacts by requiring a real JAR manifest.
     zip.start_file("META-INF/MANIFEST.MF", options).unwrap();
-    std::io::Write::write_all(&mut zip, b"Manifest-Version: 1.0\nMain-Class: com.dbx.agent.TestAgent\n\n").unwrap();
+    std::io::Write::write_all(&mut zip, b"Manifest-Version: 1.0\nMain-Class: org.mutantcat.agent.TestAgent\n\n").unwrap();
     zip.finish().unwrap().into_inner()
 }
 

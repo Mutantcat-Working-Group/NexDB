@@ -11,10 +11,10 @@ description: Frequently asked questions about DBX, including where connection da
   <Accordion title="Where is my connection configuration stored?">
     DBX Desktop stores connections, saved credentials, SSH tunnel profiles, query history, and app settings in a single SQLite database file `dbx.db` inside the DBX data directory:
 
-    - **Windows (installer):** `C:\Users\<user>\AppData\Roaming\com.dbx.app\dbx.db`
+    - **Windows (installer):** `C:\Users\<user>\AppData\Roaming\org.mutantcat.app\dbx.db`
     - **Windows (portable ZIP):** `<DBX.exe folder>\data\dbx.db`
-    - **macOS:** `~/Library/Application Support/com.dbx.app/dbx.db`
-    - **Linux:** `~/.local/share/com.dbx.app/dbx.db`
+    - **macOS:** `~/Library/Application Support/org.mutantcat.app/dbx.db`
+    - **Linux:** `~/.local/share/org.mutantcat.app/dbx.db`
 
     SSH host keys are kept in `known_hosts` in the same directory, so DBX never touches `~/.ssh`. Depending on write activity, `dbx.db-wal` and `dbx.db-shm` checkpoint files may sit next to the database.
 

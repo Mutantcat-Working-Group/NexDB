@@ -6,9 +6,9 @@
 
 每个 Agent 都是独立的 JVM 进程，需要满足：
 
-- 实现 `com.dbx.agent.DatabaseAgent`。
-- 标准 JDBC Agent 优先继承 `com.dbx.agent.ConfiguredJdbcAgent`。
-- 当数据库需要自定义元数据 SQL 但仍可复用生命周期与执行行为时，继承 `com.dbx.agent.AbstractJdbcAgent`。
+- 实现 `org.mutantcat.agent.DatabaseAgent`。
+- 标准 JDBC Agent 优先继承 `org.mutantcat.agent.ConfiguredJdbcAgent`。
+- 当数据库需要自定义元数据 SQL 但仍可复用生命周期与执行行为时，继承 `org.mutantcat.agent.AbstractJdbcAgent`。
 - 在 `main` 方法中以 `new JsonRpcServer(new <Agent>()).run()` 启动。
 - 通过 stdin/stdout 与 DBX 通信，遵循 JSON-RPC 2.0 协议。
 - 除非模块明确设计为非 JDBC 协议，否则使用 JDBC 访问数据库。
@@ -154,7 +154,7 @@ tasks.named('shadowJar') {
         attributes(
             'Agent-Label': 'Example DB',
             'Agent-External-Driver': 'true',
-            'Main-Class': 'com.dbx.agent.example.ExampleAgent'
+            'Main-Class': 'org.mutantcat.agent.example.ExampleAgent'
         )
     }
 }
@@ -170,7 +170,7 @@ tasks.named('shadowJar') {
 - 将 `exampledb` 加入 `settings.gradle` 的 `driverModules`。
 - 在 `versions.json` 中添加 `"exampledb": "0.1.0"`。
 - 将 `Agent-Label` 设置为面向用户的数据库名称。
-- 将 `Main-Class` 设置为 Java Agent 类，通常是 `com.dbx.agent.exampledb.ExampledbAgent`。
+- 将 `Main-Class` 设置为 Java Agent 类，通常是 `org.mutantcat.agent.exampledb.ExampledbAgent`。
 - 将该数据库加入 README 的支持列表。
 
 根 `build.gradle` 约定会根据模块名派生归档名，因此 `exampledb` 会自动构建出 `dbx-agent-exampledb.jar`，无需在每个模块单独配置归档名。

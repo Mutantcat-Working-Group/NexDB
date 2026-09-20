@@ -6,7 +6,7 @@ tasks.named('shadowJar') {
     manifest {
         attributes(
             'Agent-Label': '\u795e\u901a OSCAR',
-            'Main-Class': 'com.dbx.agent.oscar.OscarAgent'
+            'Main-Class': 'org.mutantcat.agent.oscar.OscarAgent'
         )
     }
 }

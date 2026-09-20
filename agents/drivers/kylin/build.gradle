@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Apache Kylin', 'Main-Class': 'com.dbx.agent.kylin.KylinAgent')
+        attributes('Agent-Label': 'Apache Kylin', 'Main-Class': 'org.mutantcat.agent.kylin.KylinAgent')
     }
 }

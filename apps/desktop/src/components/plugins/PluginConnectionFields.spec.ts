@@ -315,7 +315,7 @@ describe("PluginConnectionFields", () => {
         { key: "msk_region", label: "MSK AWS region", type: "text", visible_when: { field: "oauth_token_source", one_of: ["msk_iam"] }, required_when: { field: "oauth_token_source", one_of: ["msk_iam"] } },
       ],
     };
-    const state = await mountContribution(kafka, {}, "io.dbx.kafka");
+    const state = await mountContribution(kafka, {}, "org.mutantcat.kafka");
 
     expect(document.querySelector("#kafka-connection-msk_region")).toBeNull();
 
@@ -435,10 +435,10 @@ describe("PluginConnectionFields", () => {
       ],
     });
     // "ghost" is stored but no longer offered: the dropdown must keep it visible.
-    await mountContribution(dynamic, { sudo_profile: "ghost" }, "io.dbx.ssh");
+    await mountContribution(dynamic, { sudo_profile: "ghost" }, "org.mutantcat.ssh");
     await flushAsync();
 
-    expect(invokePluginMock).toHaveBeenCalledWith("io.dbx.ssh", "sudo/profiles/options");
+    expect(invokePluginMock).toHaveBeenCalledWith("org.mutantcat.ssh", "sudo/profiles/options");
     expect(document.querySelector("input#dyn-connection-sudo_profile")).toBeNull();
     const trigger = document.querySelector<HTMLButtonElement>('#dyn-connection-sudo_profile, button[role="combobox"]');
     expect(trigger).not.toBeNull();
@@ -454,7 +454,7 @@ describe("PluginConnectionFields", () => {
       fields: [{ key: "sudo_profile", label: "Profile", type: "text", options_action: "sudo/profiles/options" }],
     };
     invokePluginMock.mockRejectedValueOnce(new Error("method not registered"));
-    await mountContribution(dynamic, {}, "io.dbx.ssh");
+    await mountContribution(dynamic, {}, "org.mutantcat.ssh");
     await flushAsync();
 
     const input = document.querySelector<HTMLInputElement>("input#degrade-connection-sudo_profile");
@@ -464,7 +464,7 @@ describe("PluginConnectionFields", () => {
     // An empty option list degrades the same way.
     invokePluginMock.mockResolvedValueOnce({ options: [] });
     const empty = { ...dynamic, id: "empty.connection", label: "Empty" };
-    await mountContribution(empty, {}, "io.dbx.ssh");
+    await mountContribution(empty, {}, "org.mutantcat.ssh");
     await flushAsync();
     expect(document.querySelector("input#empty-connection-sudo_profile")).not.toBeNull();
   });

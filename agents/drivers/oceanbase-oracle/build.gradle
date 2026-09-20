@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'OceanBase Oracle Mode', 'Main-Class': 'com.dbx.agent.oceanbaseoracle.OceanBaseOracleAgent')
+        attributes('Agent-Label': 'OceanBase Oracle Mode', 'Main-Class': 'org.mutantcat.agent.oceanbaseoracle.OceanBaseOracleAgent')
     }
 }

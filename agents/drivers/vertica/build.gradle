@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Vertica', 'Main-Class': 'com.dbx.agent.vertica.VerticaAgent')
+        attributes('Agent-Label': 'Vertica', 'Main-Class': 'org.mutantcat.agent.vertica.VerticaAgent')
     }
 }

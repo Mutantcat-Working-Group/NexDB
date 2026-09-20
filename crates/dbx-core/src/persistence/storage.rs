@@ -6870,8 +6870,8 @@ mod tests {
         config.name = "SSH plugin".to_string();
         config.db_type = DatabaseType::Plugin;
         config.driver_profile = Some("plugin".to_string());
-        config.plugin_id = Some("io.dbx.ssh".to_string());
-        config.plugin_connection_provider = Some("io.dbx.ssh.connection".to_string());
+        config.plugin_id = Some("org.mutantcat.ssh".to_string());
+        config.plugin_connection_provider = Some("org.mutantcat.ssh.connection".to_string());
         config.plugin_connection_type = Some("ssh".to_string());
         config.connection_secrets.insert("sudo_password".to_string(), "null".to_string());
         config.connection_secrets.insert("totp_secret".to_string(), "".to_string());

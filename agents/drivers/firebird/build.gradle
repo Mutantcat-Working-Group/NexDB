@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Firebird', 'Main-Class': 'com.dbx.agent.firebird.FirebirdAgent')
+        attributes('Agent-Label': 'Firebird', 'Main-Class': 'org.mutantcat.agent.firebird.FirebirdAgent')
     }
 }

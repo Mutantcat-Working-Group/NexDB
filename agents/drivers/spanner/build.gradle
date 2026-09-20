@@ -25,7 +25,7 @@ tasks.named('shadowJar') {
     manifest {
         attributes(
             'Agent-Label': 'Google Cloud Spanner',
-            'Main-Class': 'com.dbx.agent.spanner.SpannerAgent'
+            'Main-Class': 'org.mutantcat.agent.spanner.SpannerAgent'
         )
     }
 }

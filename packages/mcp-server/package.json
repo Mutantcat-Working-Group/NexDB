@@ -48,5 +48,5 @@
   "engines": {
     "node": ">=18.18.0"
   },
-  "mcpName": "io.github.t8y2/dbx"
+  "mcpName": "org.mutantcat.nexdb"
 }

@@ -4157,7 +4157,7 @@ mod tests {
     fn formats_agent_process_error_with_exit_status_and_stderr_tail() {
         let mut stderr_tail = StderrTail::default();
         stderr_tail.push_line("java.lang.NoClassDefFoundError: org/apache/hive/jdbc/HiveDriver".to_string());
-        stderr_tail.push_line("\tat com.dbx.agent.hive.HiveAgent.connect(HiveAgent.kt:21)".to_string());
+        stderr_tail.push_line("\tat org.mutantcat.agent.hive.HiveAgent.connect(HiveAgent.kt:21)".to_string());
 
         let message = format_agent_process_error(
             "Failed to read response from agent: end of stream",

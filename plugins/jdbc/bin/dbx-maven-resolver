@@ -22,4 +22,4 @@ exec "$JAVA_BIN" \
   -Dsun.stdout.encoding=UTF-8 \
   -Dsun.stderr.encoding=UTF-8 \
   -cp "$DIR/../lib/dbx-jdbc-plugin.jar" \
-  app.dbx.jdbc.maven.DbxMavenResolver "$@"
+  org.mutantcat.jdbc.maven.DbxMavenResolver "$@"

@@ -335,10 +335,10 @@ winget install t8y2.dbx
 
 ```bash
 flatpak remote-add --if-not-exists flatpark https://dl.flatpark.org/flatpark.flatpakrepo
-flatpak install flatpark com.dbxio.dbx
+flatpak install flatpark org.mutantcat.nexdb
 ```
 
-Updates then arrive through the regular `flatpak update`. See the [DBX page on FlatPark](https://flatpark.org/apps/com.dbxio.dbx/) for details.
+Updates then arrive through the regular `flatpak update`. See the [DBX page on FlatPark](https://flatpark.org/apps/org.mutantcat.nexdb/) for details.
 
 ## Self-Hosted (Docker)
 

@@ -18,7 +18,7 @@ describe("queryStore openPluginWorkbench reuse", () => {
   it("reopening an open workbench surfaces the tab as-is without replacing its context", async () => {
     const queryStore = useQueryStore();
 
-    const firstId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const firstId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       title: "hktkosl1103",
       connectionId: "conn-1",
       context: { connectionId: "conn-1", workbenchId: "wb-original" },
@@ -28,7 +28,7 @@ describe("queryStore openPluginWorkbench reuse", () => {
     // context; the tab must keep the original one — a replacement would
     // deep-reload the plugin webview (full flash) and orphan the sidecar
     // session bound to the original workbench id.
-    const secondId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const secondId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       title: "hktkosl1103",
       connectionId: "conn-1",
       context: { connectionId: "conn-1", workbenchId: "wb-fresh" },
@@ -43,11 +43,11 @@ describe("queryStore openPluginWorkbench reuse", () => {
   it("a different connection still opens its own workbench tab", () => {
     const queryStore = useQueryStore();
 
-    const firstId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const firstId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       connectionId: "conn-1",
       context: { connectionId: "conn-1", workbenchId: "wb-1" },
     });
-    const secondId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const secondId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       connectionId: "conn-2",
       context: { connectionId: "conn-2", workbenchId: "wb-2" },
     });
@@ -59,7 +59,7 @@ describe("queryStore openPluginWorkbench reuse", () => {
   it("registers the workbench tab into the focused group so the group tab strip can render it", () => {
     const queryStore = useQueryStore();
 
-    const id = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const id = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       connectionId: "conn-1",
       context: { connectionId: "conn-1" },
     });
@@ -76,7 +76,7 @@ describe("queryStore openPluginWorkbench reuse", () => {
   it("adopts a legacy ownerless workbench tab back into the workspace when reopened", () => {
     const queryStore = useQueryStore();
 
-    const id = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const id = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       connectionId: "conn-1",
       context: { connectionId: "conn-1" },
     });
@@ -84,7 +84,7 @@ describe("queryStore openPluginWorkbench reuse", () => {
     // edge: strip it from its group, then reopen from the sidebar.
     queryStore.groups = [{ id: "main", tabIds: [], activeTabId: null }];
 
-    const reopenedId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const reopenedId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       connectionId: "conn-1",
       context: { connectionId: "conn-1", workbenchId: "wb-fresh" },
     });
@@ -99,8 +99,8 @@ describe("queryStore openPluginWorkbench reuse", () => {
   it("keeps a result-view tab distinct from the plugin's workbench tab", () => {
     const queryStore = useQueryStore();
 
-    const workbenchId = queryStore.openPluginWorkbench("io.dbx.ssh", "ssh.main", { title: "SSH server", connectionId: "conn-1", context: { connectionId: "conn-1" } });
-    const resultViewId = queryStore.openPluginWorkbench("io.dbx.ssh", "ssh.erd", {
+    const workbenchId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "ssh.main", { title: "SSH server", connectionId: "conn-1", context: { connectionId: "conn-1" } });
+    const resultViewId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "ssh.erd", {
       title: "Graph",
       connectionId: "conn-1",
       context: { connectionId: "conn-1", sql: "SELECT 1", result: { columns: ["id"], rows: [[1]], truncated: false } },
@@ -118,19 +118,19 @@ describe("queryStore openPluginWorkbench reuse", () => {
 
     // First tab keeps the bare connection name; numbering starts at (1) from
     // the second tab on.
-    const firstId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const firstId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       title: "SSH server222",
       connectionId: "conn-1",
       context: { connectionId: "conn-1" },
     });
     // forceNew is orthogonal to numbering: it skips dedup, the count still grows.
-    const secondId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const secondId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       title: "SSH server222",
       connectionId: "conn-1",
       context: { connectionId: "conn-1", workbenchId: "wb-2" },
       forceNew: true,
     });
-    const thirdId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const thirdId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       title: "SSH server222",
       connectionId: "conn-1",
       context: { connectionId: "conn-1", workbenchId: "wb-3" },
@@ -145,7 +145,7 @@ describe("queryStore openPluginWorkbench reuse", () => {
     // so two open sessions never share a title. (Removed directly: the stubbed
     // window in this harness lacks the timers closeTab's cleanup needs.)
     queryStore.tabs = queryStore.tabs.filter((tab) => tab.id !== secondId);
-    const fourthId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const fourthId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       title: "SSH server222",
       connectionId: "conn-1",
       context: { connectionId: "conn-1", workbenchId: "wb-4" },
@@ -157,7 +157,7 @@ describe("queryStore openPluginWorkbench reuse", () => {
     // Closing the highest suffix may reuse that now-free number, but must not
     // collide with any session that remains open.
     queryStore.tabs = queryStore.tabs.filter((tab) => tab.id !== fourthId);
-    const fifthId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", {
+    const fifthId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", {
       title: "SSH server222",
       connectionId: "conn-1",
       context: { connectionId: "conn-1", workbenchId: "wb-5" },
@@ -169,15 +169,15 @@ describe("queryStore openPluginWorkbench reuse", () => {
   it("numbers sessions independently per connection and reads bridge-style context-only connection ids", async () => {
     const queryStore = useQueryStore();
 
-    queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", { title: "A", connectionId: "conn-1", context: { connectionId: "conn-1" }, forceNew: true });
-    const otherConnectionId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", { title: "B", connectionId: "conn-2", context: { connectionId: "conn-2" }, forceNew: true });
+    queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", { title: "A", connectionId: "conn-1", context: { connectionId: "conn-1" }, forceNew: true });
+    const otherConnectionId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", { title: "B", connectionId: "conn-2", context: { connectionId: "conn-2" }, forceNew: true });
     // A different connection keeps its own bare title, unaffected by conn-1's count.
     expect(queryStore.tabs.find((tab) => tab.id === otherConnectionId)?.title).toBe("B");
 
     // Bridge-path legacy tab: connection only inside context (tab-level "").
     // It must join conn-1's numbering (second conn-1 tab → (1)) and its own
     // tab-level connectionId gets normalized for reconnect/restore logic.
-    const bridgedId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", { title: "A", context: { connectionId: "conn-1" }, forceNew: true });
+    const bridgedId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", { title: "A", context: { connectionId: "conn-1" }, forceNew: true });
     const bridged = queryStore.tabs.find((tab) => tab.id === bridgedId);
     expect(bridged?.title).toBe("A (1)");
     expect(bridged?.connectionId).toBe("conn-1");

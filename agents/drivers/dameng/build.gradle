@@ -8,6 +8,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': '达梦 DM8', 'Main-Class': 'com.dbx.agent.dameng.DamengAgent')
+        attributes('Agent-Label': '达梦 DM8', 'Main-Class': 'org.mutantcat.agent.dameng.DamengAgent')
     }
 }

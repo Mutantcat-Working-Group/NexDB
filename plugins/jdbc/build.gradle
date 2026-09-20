@@ -3,7 +3,7 @@ plugins {
     id 'com.gradleup.shadow' version '9.0.0-beta12'
 }
 
-group = 'app.dbx'
+group = 'org.mutantcat.jdbc'
 version = '0.1.39'
 
 java {
@@ -56,7 +56,7 @@ tasks.named('shadowJar') {
     archiveClassifier = 'all'
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'app.dbx.jdbc.DbxJdbcPlugin'
+        attributes 'Main-Class': 'org.mutantcat.jdbc.DbxJdbcPlugin'
     }
 }
 

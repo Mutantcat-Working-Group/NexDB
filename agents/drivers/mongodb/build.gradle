@@ -6,6 +6,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'MongoDB (Legacy)', 'Main-Class': 'com.dbx.agent.mongodb.MongoAgent')
+        attributes('Agent-Label': 'MongoDB (Legacy)', 'Main-Class': 'org.mutantcat.agent.mongodb.MongoAgent')
     }
 }

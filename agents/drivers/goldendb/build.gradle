@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'GoldenDB', 'Main-Class': 'com.dbx.agent.goldendb.GoldendbAgent')
+        attributes('Agent-Label': 'GoldenDB', 'Main-Class': 'org.mutantcat.agent.goldendb.GoldendbAgent')
     }
 }

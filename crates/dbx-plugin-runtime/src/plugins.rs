@@ -429,19 +429,19 @@ mod tests {
     #[test]
     fn plugin_data_dir_lives_beside_the_plugin_registry() {
         let registry = PluginRegistry::new(PathBuf::from("/data/plugins"));
-        assert_eq!(registry.plugin_data_dir("io.dbx.ssh"), PathBuf::from("/data/plugin-data/io.dbx.ssh"));
+        assert_eq!(registry.plugin_data_dir("org.mutantcat.ssh"), PathBuf::from("/data/plugin-data/org.mutantcat.ssh"));
     }
 
     #[test]
     fn plugin_data_dir_falls_back_to_registry_root_without_a_parent() {
         let registry = PluginRegistry::new(PathBuf::from("/"));
-        assert_eq!(registry.plugin_data_dir("io.dbx.ssh"), PathBuf::from("/plugin-data/io.dbx.ssh"));
+        assert_eq!(registry.plugin_data_dir("org.mutantcat.ssh"), PathBuf::from("/plugin-data/org.mutantcat.ssh"));
     }
 
     #[test]
     fn with_plugin_data_dir_sets_the_env_var_once() {
-        let env = PluginRuntimeEnv::default().with_plugin_data_dir(Path::new("/data/plugin-data/io.dbx.ssh"));
-        assert_eq!(env.get("DBX_PLUGIN_DATA_DIR"), Some("/data/plugin-data/io.dbx.ssh"));
+        let env = PluginRuntimeEnv::default().with_plugin_data_dir(Path::new("/data/plugin-data/org.mutantcat.ssh"));
+        assert_eq!(env.get("DBX_PLUGIN_DATA_DIR"), Some("/data/plugin-data/org.mutantcat.ssh"));
 
         // An explicit caller-provided value wins over the registry default.
         let explicit = PluginRuntimeEnv::default()

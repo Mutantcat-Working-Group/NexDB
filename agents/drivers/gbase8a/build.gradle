@@ -6,7 +6,7 @@ tasks.named('shadowJar') {
     manifest {
         attributes(
             'Agent-Label': 'GBase 8a',
-            'Main-Class': 'com.dbx.agent.gbase8a.Gbase8aAgent'
+            'Main-Class': 'org.mutantcat.agent.gbase8a.Gbase8aAgent'
         )
     }
 }

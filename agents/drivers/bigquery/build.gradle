@@ -7,7 +7,7 @@ tasks.named('shadowJar') {
         attributes(
             'Agent-Label': 'Google BigQuery',
             'Agent-External-Driver': 'true',
-            'Main-Class': 'com.dbx.agent.bigquery.BigQueryAgent'
+            'Main-Class': 'org.mutantcat.agent.bigquery.BigQueryAgent'
         )
     }
 }

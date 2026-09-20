@@ -4209,7 +4209,7 @@ mod agent_registry_install_tests {
         let file = std::fs::File::create(path).unwrap();
         let mut archive = zip::ZipWriter::new(file);
         archive.start_file("META-INF/MANIFEST.MF", zip::write::SimpleFileOptions::default()).unwrap();
-        archive.write_all(b"Manifest-Version: 1.0\nMain-Class: com.dbx.Agent\n").unwrap();
+        archive.write_all(b"Manifest-Version: 1.0\nMain-Class: org.mutantcat.Agent\n").unwrap();
         archive.finish().unwrap();
     }
 
@@ -4327,7 +4327,7 @@ mod agent_registry_install_tests {
             use std::io::Write;
             let mut archive = zip::ZipWriter::new(&mut bytes);
             archive.start_file("META-INF/MANIFEST.MF", zip::write::SimpleFileOptions::default()).unwrap();
-            archive.write_all(b"Manifest-Version: 1.0\nMain-Class: com.dbx.Agent\n").unwrap();
+            archive.write_all(b"Manifest-Version: 1.0\nMain-Class: org.mutantcat.Agent\n").unwrap();
             archive.finish().unwrap();
         }
         bytes.into_inner()

@@ -1529,7 +1529,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.example",
+            "id": "org.mutantcat.example",
             "name": "Example",
             "version": "1.0.0",
             "publisher": "example",
@@ -1552,7 +1552,7 @@ mod tests {
         std::fs::write(&executable, b"example").unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.example",
+            "id": "org.mutantcat.example",
             "name": "Example",
             "version": "1.0.0",
             "publisher": "example",
@@ -1562,7 +1562,7 @@ mod tests {
             },
             "contributions": [{
                 "type": "connection-provider",
-                "id": "io.dbx.example.connection",
+                "id": "org.mutantcat.example.connection",
                 "database_type": "example",
                 "fields": [{
                     "key": "protocol",
@@ -1590,7 +1590,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.localized",
+            "id": "org.mutantcat.localized",
             "name": "Localized",
             "version": "1.0.0",
             "publisher": "example",
@@ -1622,7 +1622,7 @@ mod tests {
         std::fs::write(dir.path().join("ui").join("index.html"), "<!doctype html>").unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.example",
+            "id": "org.mutantcat.example",
             "name": "Example",
             "version": "1.0.0",
             "publisher": "example",
@@ -1648,7 +1648,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.localized",
+            "id": "org.mutantcat.localized",
             "name": "Localized",
             "version": "1.0.0",
             "publisher": "example",
@@ -1677,7 +1677,7 @@ mod tests {
         std::fs::write(dir.path().join("assets/provider.png"), b"png").unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.icons",
+            "id": "org.mutantcat.icons",
             "name": "Icons",
             "icon": "assets/plugin.svg",
             "version": "1.0.0",
@@ -1706,7 +1706,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.icons",
+            "id": "org.mutantcat.icons",
             "name": "Icons",
             "icon": "../outside.svg",
             "version": "1.0.0",
@@ -1735,7 +1735,7 @@ mod tests {
     fn rejects_obsolete_ui_kind_declaration() {
         let ui_error = serde_json::from_value::<PluginManifest>(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.host-ui",
+            "id": "org.mutantcat.host-ui",
             "name": "Host UI",
             "version": "1.0.0",
             "publisher": "example",
@@ -1745,7 +1745,7 @@ mod tests {
         .unwrap_err();
         let backend_error = serde_json::from_value::<PluginManifest>(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.backend-protocol",
+            "id": "org.mutantcat.backend-protocol",
             "name": "Backend protocol",
             "version": "1.0.0",
             "publisher": "example",
@@ -1763,7 +1763,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.unknown-field",
+            "id": "org.mutantcat.unknown-field",
             "name": "Unknown field",
             "version": "1.0.0",
             "publisher": "example",
@@ -1793,7 +1793,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.mixed-contract",
+            "id": "org.mutantcat.mixed-contract",
             "name": "Mixed contract",
             "version": "1.0.0",
             "publisher": "example",
@@ -1835,7 +1835,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.connection-bindings",
+            "id": "org.mutantcat.connection-bindings",
             "name": "Connection bindings",
             "version": "1.0.0",
             "publisher": "example",
@@ -1870,7 +1870,7 @@ mod tests {
     fn rejects_unknown_connection_field_binding() {
         let error = serde_json::from_value::<PluginManifest>(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.invalid-binding",
+            "id": "org.mutantcat.invalid-binding",
             "name": "Invalid binding",
             "version": "1.0.0",
             "publisher": "example",
@@ -1893,7 +1893,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.invalid-contract",
+            "id": "org.mutantcat.invalid-contract",
             "name": "Invalid contract",
             "version": "1.0.0",
             "publisher": "example",
@@ -1927,7 +1927,7 @@ mod tests {
         std::fs::write(dir.path().join("icon.svg"), "<svg />").unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.files",
+            "id": "org.mutantcat.files",
             "name": "Files",
             "version": "1.0.0",
             "publisher": "example",
@@ -1976,7 +1976,7 @@ mod tests {
         std::fs::write(&executable, "binary").unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.invalid-files",
+            "id": "org.mutantcat.invalid-files",
             "name": "Invalid files",
             "version": "1.0.0",
             "publisher": "example",
@@ -2087,7 +2087,7 @@ mod tests {
     fn serialized_form_fields_omit_absent_optionals() {
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.nulls",
+            "id": "org.mutantcat.nulls",
             "name": "Nulls",
             "version": "1.0.0",
             "publisher": "example",
@@ -2132,7 +2132,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.conditions",
+            "id": "org.mutantcat.conditions",
             "name": "Conditions",
             "version": "1.0.0",
             "publisher": "example",
@@ -2190,7 +2190,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let malformed = serde_json::from_value::<PluginManifest>(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.conditions",
+            "id": "org.mutantcat.conditions",
             "name": "Conditions",
             "version": "1.0.0",
             "publisher": "example",
@@ -2216,7 +2216,7 @@ mod tests {
 
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.conditions",
+            "id": "org.mutantcat.conditions",
             "name": "Conditions",
             "version": "1.0.0",
             "publisher": "example",
@@ -2256,7 +2256,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.conditions",
+            "id": "org.mutantcat.conditions",
             "name": "Conditions",
             "version": "1.0.0",
             "publisher": "example",
@@ -2306,7 +2306,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.conditions",
+            "id": "org.mutantcat.conditions",
             "name": "Conditions",
             "version": "1.0.0",
             "publisher": "example",
@@ -2350,7 +2350,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.ssh",
+            "id": "org.mutantcat.ssh",
             "name": "SSH",
             "version": "1.0.0",
             "publisher": "example",
@@ -2395,7 +2395,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let manifest: PluginManifest = serde_json::from_value(serde_json::json!({
             "manifest_version": 1,
-            "id": "io.dbx.ssh",
+            "id": "org.mutantcat.ssh",
             "name": "SSH",
             "version": "1.0.0",
             "publisher": "example",

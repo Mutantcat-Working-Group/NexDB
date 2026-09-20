@@ -29,7 +29,7 @@ test("checks Gradle and manifest versions together", () => {
 
 test("bumps Gradle and manifest versions for JDBC source changes", () => {
   const result = evaluateJdbcPluginReleaseBump({
-    changedFiles: ["plugins/jdbc/build.gradle", "plugins/jdbc/src/main/java/app/dbx/jdbc/DbxJdbcPlugin.java"],
+    changedFiles: ["plugins/jdbc/build.gradle", "plugins/jdbc/src/main/java/org/mutantcat/jdbc/DbxJdbcPlugin.java"],
     buildGradle,
     manifestJson,
   });

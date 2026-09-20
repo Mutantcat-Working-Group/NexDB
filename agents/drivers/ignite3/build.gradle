@@ -4,6 +4,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Apache Ignite 3', 'Main-Class': 'com.dbx.agent.ignite3.Ignite3Agent')
+        attributes('Agent-Label': 'Apache Ignite 3', 'Main-Class': 'org.mutantcat.agent.ignite3.Ignite3Agent')
     }
 }

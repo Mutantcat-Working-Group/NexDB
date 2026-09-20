@@ -228,7 +228,7 @@ def validate_jdbc_pool_coverage(root: Path, modules: set[str]) -> list[str]:
 
 
 def validate_authoring_template(root: Path) -> list[str]:
-    template = root / "docs/examples/jdbc-agent-template/src/main/java/com/dbx/agent/template/TemplateAgent.java"
+    template = root / "docs/examples/jdbc-agent-template/src/main/java/org/mutantcat/agent/template/TemplateAgent.java"
     if not template.exists():
         return []
     text = template.read_text(encoding="utf-8")

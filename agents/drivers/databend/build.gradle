@@ -4,6 +4,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Databend', 'Main-Class': 'com.dbx.agent.databend.DatabendAgent')
+        attributes('Agent-Label': 'Databend', 'Main-Class': 'org.mutantcat.agent.databend.DatabendAgent')
     }
 }

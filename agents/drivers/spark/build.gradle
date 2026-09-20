@@ -6,6 +6,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Apache Spark', 'Main-Class': 'com.dbx.agent.spark.SparkAgent')
+        attributes('Agent-Label': 'Apache Spark', 'Main-Class': 'org.mutantcat.agent.spark.SparkAgent')
     }
 }

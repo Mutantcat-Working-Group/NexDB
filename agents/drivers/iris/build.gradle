@@ -4,6 +4,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'IRIS', 'Main-Class': 'com.dbx.agent.iris.IrisAgent')
+        attributes('Agent-Label': 'IRIS', 'Main-Class': 'org.mutantcat.agent.iris.IrisAgent')
     }
 }

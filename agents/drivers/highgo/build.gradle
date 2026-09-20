@@ -11,6 +11,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': '瀚高 HighGo', 'Main-Class': 'com.dbx.agent.highgo.HighgoAgent')
+        attributes('Agent-Label': '瀚高 HighGo', 'Main-Class': 'org.mutantcat.agent.highgo.HighgoAgent')
     }
 }

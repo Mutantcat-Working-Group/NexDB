@@ -487,13 +487,13 @@ describe("connectionStore plugin password prompt", () => {
   function sshInstalledPlugin(): unknown {
     return {
       manifest: {
-        id: "io.dbx.ssh",
+        id: "org.mutantcat.ssh",
         name: "SSH",
         drivers: [],
         contributions: [
           {
             type: "connection-provider",
-            id: "io.dbx.ssh.connection",
+            id: "org.mutantcat.ssh.connection",
             label: "SSH server",
             database_type: "ssh",
             fields: [
@@ -524,8 +524,8 @@ describe("connectionStore plugin password prompt", () => {
       username: "jinpy.he",
       password: "",
       save_password: false,
-      plugin_id: "io.dbx.ssh",
-      plugin_connection_provider: "io.dbx.ssh.connection",
+      plugin_id: "org.mutantcat.ssh",
+      plugin_connection_provider: "org.mutantcat.ssh.connection",
       plugin_connection_type: "ssh",
       external_config: { authentication: "private-key", private_key_path: "/Users/dev/.ssh/id_rsa" },
       read_only: false,
@@ -557,7 +557,7 @@ describe("connectionStore plugin password prompt", () => {
     const store = useConnectionStore();
     store.connections = [pluginConnection({ external_config: { authentication: "password" } })];
 
-    await expect(store.reopenPluginConnection("ssh-1", "io.dbx.other")).rejects.toThrow("Connection is owned by another plugin");
+    await expect(store.reopenPluginConnection("ssh-1", "org.mutantcat.other")).rejects.toThrow("Connection is owned by another plugin");
 
     expect(requestPassword).not.toHaveBeenCalled();
     expect(connectDb).not.toHaveBeenCalled();
@@ -571,7 +571,7 @@ describe("connectionStore plugin password prompt", () => {
     const store = useConnectionStore();
     store.connections = [pluginConnection()];
 
-    await expect(store.reopenPluginConnection("ssh-1", "io.dbx.ssh")).resolves.toBeUndefined();
+    await expect(store.reopenPluginConnection("ssh-1", "org.mutantcat.ssh")).resolves.toBeUndefined();
 
     expect(requestPassword).not.toHaveBeenCalled();
     expect(connectDb).toHaveBeenCalledWith(expect.objectContaining({ id: "ssh-1" }), expect.any(Number));

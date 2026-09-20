@@ -169,7 +169,7 @@ mod tests {
     #[test]
     fn filters_plugin_install_deep_links() {
         let links = plugin_install_deep_links_from_args([
-            "dbx://plugins/install?url=https%3A%2F%2Fdl.dbxio.com%2Fplugins%2Fio.dbx.ssh%2F0.4.73%2Fio.dbx.ssh-0.4.73-darwin-arm64.dbxp",
+            "dbx://plugins/install?url=https%3A%2F%2Fdl.dbxio.com%2Fplugins%2Forg.mutantcat.ssh%2F0.4.73%2Forg.mutantcat.ssh-0.4.73-darwin-arm64.dbxp",
             "--flag",
             "dbx://plugins/installed?url=https://example.com/plugin.dbxp",
             "dbx://plugins/installation?url=https://example.com/plugin.dbxp",
@@ -178,7 +178,7 @@ mod tests {
 
         assert_eq!(
             links,
-            vec!["dbx://plugins/install?url=https%3A%2F%2Fdl.dbxio.com%2Fplugins%2Fio.dbx.ssh%2F0.4.73%2Fio.dbx.ssh-0.4.73-darwin-arm64.dbxp".to_string()]
+            vec!["dbx://plugins/install?url=https%3A%2F%2Fdl.dbxio.com%2Fplugins%2Forg.mutantcat.ssh%2F0.4.73%2Forg.mutantcat.ssh-0.4.73-darwin-arm64.dbxp".to_string()]
         );
     }
 

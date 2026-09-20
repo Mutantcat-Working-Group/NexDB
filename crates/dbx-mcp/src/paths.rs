@@ -11,7 +11,7 @@ pub fn app_data_dir() -> Result<PathBuf, String> {
 
     let base = dirs::data_dir()
         .ok_or_else(|| "Unable to resolve the user data directory. Set DBX_DATA_DIR explicitly.".to_string())?;
-    Ok(base.join("com.dbx.app"))
+    Ok(base.join("org.mutantcat.app"))
 }
 
 pub fn storage_db_path() -> Result<PathBuf, String> {

@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'SAP HANA', 'Main-Class': 'com.dbx.agent.saphana.SapHanaAgent')
+        attributes('Agent-Label': 'SAP HANA', 'Main-Class': 'org.mutantcat.agent.saphana.SapHanaAgent')
     }
 }

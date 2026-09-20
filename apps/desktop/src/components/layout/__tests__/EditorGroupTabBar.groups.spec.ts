@@ -727,7 +727,7 @@ describe("EditorGroupTabBar group behavior", () => {
 
   it("renders plugin workbench tabs with the plugin icon instead of the code fallback", async () => {
     const store = useQueryStore();
-    const pluginTabId = store.openPluginWorkbench("io.dbx.ssh", "io.dbx.ssh.workbench", { title: "SSH server", connectionId: "ssh-1", forceNew: true });
+    const pluginTabId = store.openPluginWorkbench("org.mutantcat.ssh", "org.mutantcat.ssh.workbench", { title: "SSH server", connectionId: "ssh-1", forceNew: true });
     const { app, host } = mountBar(store.groups[0].id, store.tabs.slice(), pluginTabId, pinia);
     await settle();
     // PluginIcon loads the asset asynchronously; wait for the blob <img> to appear.

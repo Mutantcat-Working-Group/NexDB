@@ -7,7 +7,7 @@ tasks.named('shadowJar') {
         attributes(
             'Agent-Label': 'SunDB',
             'Agent-External-Driver': 'true',
-            'Main-Class': 'com.dbx.agent.sundb.SundbAgent'
+            'Main-Class': 'org.mutantcat.agent.sundb.SundbAgent'
         )
     }
 }

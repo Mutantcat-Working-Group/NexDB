@@ -22,7 +22,7 @@ tasks.named('shadowJar') {
     archiveBaseName = 'dbx-iotdb-jdbc-benchmark'
     archiveClassifier = ''
     manifest {
-        attributes('Main-Class': 'com.dbx.agent.iotdb.bench.JdbcDriverBenchmark')
+        attributes('Main-Class': 'org.mutantcat.agent.iotdb.bench.JdbcDriverBenchmark')
     }
 }
 

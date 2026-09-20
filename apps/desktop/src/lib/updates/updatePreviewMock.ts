@@ -101,10 +101,10 @@ export function previewMcpUpdate(): McpServerStatus {
 export function previewPluginUpdates(): MarketplacePluginListing[] {
   return [
     {
-      key: "official:io.dbx.ssh",
+      key: "official:org.mutantcat.ssh",
       repository: { id: "official", name: "DBX Official", kind: "official", enabled: true, managed: true },
       plugin: {
-        id: "io.dbx.ssh",
+        id: "org.mutantcat.ssh",
         name: "SSH Tunnel",
         description: "通过 SSH 隧道安全访问数据库。",
         publisher: "DBX",
@@ -118,15 +118,15 @@ export function previewPluginUpdates(): MarketplacePluginListing[] {
       description: "通过 SSH 隧道安全访问数据库。",
       target: "universal",
       artifact: { target: "universal", url: "https://example.invalid/ssh.dbxp", sha256: "preview", signingKeyId: "preview" },
-      installed: { manifest: { id: "io.dbx.ssh", name: "SSH Tunnel", version: "0.4.77", drivers: [] }, compatibility: { compatible: true } },
+      installed: { manifest: { id: "org.mutantcat.ssh", name: "SSH Tunnel", version: "0.4.77", drivers: [] }, compatibility: { compatible: true } },
       verified: true,
       status: "update",
     },
     {
-      key: "official:io.dbx.data-tools",
+      key: "official:org.mutantcat.data-tools",
       repository: { id: "official", name: "DBX Official", kind: "official", enabled: true, managed: true },
       plugin: {
-        id: "io.dbx.data-tools",
+        id: "org.mutantcat.data-tools",
         name: "Data Tools",
         description: "数据生成、转换和校验工具集。",
         publisher: "DBX",
@@ -140,7 +140,7 @@ export function previewPluginUpdates(): MarketplacePluginListing[] {
       description: "数据生成、转换和校验工具集。",
       target: "universal",
       artifact: { target: "universal", url: "https://example.invalid/data-tools.dbxp", sha256: "preview", signingKeyId: "preview" },
-      installed: { manifest: { id: "io.dbx.data-tools", name: "Data Tools", version: "3.2.0", drivers: [] }, compatibility: { compatible: true } },
+      installed: { manifest: { id: "org.mutantcat.data-tools", name: "Data Tools", version: "3.2.0", drivers: [] }, compatibility: { compatible: true } },
       verified: true,
       status: "update",
     },

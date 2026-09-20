@@ -65,7 +65,7 @@ test("common agent test changes do not bump driver versions", () => {
     versions: {
       access: "0.1.0",
     },
-    changedFiles: ["agents/common/src/test/java/com/dbx/agent/AbstractJdbcAgentTest.java"],
+    changedFiles: ["agents/common/src/test/java/org/mutantcat/agent/AbstractJdbcAgentTest.java"],
     ...fixture,
   });
 
@@ -184,7 +184,7 @@ test("manual agent versions are preserved while other changed modules auto bump"
       access: "0.1.1",
       dameng: "0.1.0",
     },
-    changedFiles: ["agents/common/src/main/java/com/dbx/agent/JdbcExecutor.java", "agents/versions.json"],
+    changedFiles: ["agents/common/src/main/java/org/mutantcat/agent/JdbcExecutor.java", "agents/versions.json"],
     ...fixture,
   });
 

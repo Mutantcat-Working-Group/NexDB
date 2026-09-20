@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Snowflake', 'Main-Class': 'com.dbx.agent.snowflake.SnowflakeAgent')
+        attributes('Agent-Label': 'Snowflake', 'Main-Class': 'org.mutantcat.agent.snowflake.SnowflakeAgent')
     }
 }

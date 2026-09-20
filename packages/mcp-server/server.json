@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.t8y2/dbx",
+  "name": "org.mutantcat.nexdb",
   "description": "Query and manage databases from AI agents using connections configured in DBX.",
   "repository": {
     "url": "https://github.com/t8y2/dbx",

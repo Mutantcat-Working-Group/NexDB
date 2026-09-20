@@ -136,7 +136,7 @@ mod tests {
 
     #[test]
     fn uses_portable_data_dir_when_marker_exists_without_installer_marker() {
-        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\com.dbx.app");
+        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\org.mutantcat.app");
         let exe_dir = PathBuf::from(r"D:\Apps\DBX");
 
         let resolution = resolve_data_dir_from_inputs(default_dir, Some(exe_dir.clone()), true, false, None);
@@ -150,7 +150,7 @@ mod tests {
 
     #[test]
     fn installer_marker_keeps_installed_mode_even_when_portable_marker_exists() {
-        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\com.dbx.app");
+        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\org.mutantcat.app");
         let exe_dir = PathBuf::from(r"C:\Program Files\DBX");
 
         let resolution = resolve_data_dir_from_inputs(default_dir.clone(), Some(exe_dir), true, true, None);
@@ -164,7 +164,7 @@ mod tests {
 
     #[test]
     fn env_override_wins_over_installer_and_portable_markers() {
-        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\com.dbx.app");
+        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\org.mutantcat.app");
         let exe_dir = PathBuf::from(r"C:\Program Files\DBX");
         let env_dir = PathBuf::from(r"E:\DBXData");
 
@@ -179,7 +179,7 @@ mod tests {
 
     #[test]
     fn portable_mode_can_import_from_default_data_dir() {
-        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\com.dbx.app");
+        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\org.mutantcat.app");
         let exe_dir = PathBuf::from(r"D:\Apps\DBX");
 
         let resolution = resolve_data_dir_from_inputs(default_dir.clone(), Some(exe_dir), true, false, None);
@@ -189,7 +189,7 @@ mod tests {
 
     #[test]
     fn installed_mode_can_import_from_leftover_portable_data_dir() {
-        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\com.dbx.app");
+        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\org.mutantcat.app");
         let exe_dir = PathBuf::from(r"C:\Program Files\DBX");
 
         let resolution = resolve_data_dir_from_inputs(default_dir, Some(exe_dir.clone()), true, true, None);
@@ -199,7 +199,7 @@ mod tests {
 
     #[test]
     fn env_override_does_not_import_from_implicit_alternative_dir() {
-        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\com.dbx.app");
+        let default_dir = PathBuf::from(r"C:\Users\Administrator\AppData\Roaming\org.mutantcat.app");
         let exe_dir = PathBuf::from(r"D:\Apps\DBX");
 
         let resolution =

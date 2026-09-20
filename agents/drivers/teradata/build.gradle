@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Teradata', 'Main-Class': 'com.dbx.agent.teradata.TeradataAgent')
+        attributes('Agent-Label': 'Teradata', 'Main-Class': 'org.mutantcat.agent.teradata.TeradataAgent')
     }
 }

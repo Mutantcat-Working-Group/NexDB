@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'Exasol', 'Main-Class': 'com.dbx.agent.exasol.ExasolAgent')
+        attributes('Agent-Label': 'Exasol', 'Main-Class': 'org.mutantcat.agent.exasol.ExasolAgent')
     }
 }

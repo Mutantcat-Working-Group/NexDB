@@ -1613,7 +1613,7 @@ mod tests {
         let store = MemorySecretStore::default();
         let mut config = connection("plugin-connection", "", "");
         config.db_type = DatabaseType::Plugin;
-        config.plugin_id = Some("io.dbx.ssh".to_string());
+        config.plugin_id = Some("org.mutantcat.ssh".to_string());
         config.plugin_connection_provider = Some("ssh.connection".to_string());
         config.plugin_connection_type = Some("ssh".to_string());
         config.external_config = Some(serde_json::json!({ "sudo_source": "custom" }));

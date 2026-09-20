@@ -120,10 +120,10 @@ jobs:
             app "DBX.app"
 
             zap trash: [
-              "~/Library/Application Support/com.dbx.app",
-              "~/Library/Caches/com.dbx.app",
-              "~/Library/Logs/com.dbx.app",
-              "~/Library/Preferences/com.dbx.app.plist",
+              "~/Library/Application Support/org.mutantcat.app",
+              "~/Library/Caches/org.mutantcat.app",
+              "~/Library/Logs/org.mutantcat.app",
+              "~/Library/Preferences/org.mutantcat.app.plist",
             ]
           end
           RUBY_EOF

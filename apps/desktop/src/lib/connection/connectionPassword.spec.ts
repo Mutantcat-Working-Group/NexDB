@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { PluginFormField } from "@/types/database";
 import { connectionNeedsPasswordPrompt, pluginConnectionNeedsPasswordPrompt } from "@/lib/connection/connectionPassword";
 
-/** Mirrors the io.dbx.ssh connection-provider password/authentication fields. */
+/** Mirrors the org.mutantcat.ssh connection-provider password/authentication fields. */
 const sshAuthFields: PluginFormField[] = [
   { key: "authentication", label: "Authentication", type: "select", binding: "config", default: "password", options: [] },
   {

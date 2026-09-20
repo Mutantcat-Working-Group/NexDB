@@ -25,7 +25,7 @@ describe("queryStore plugin tab close disconnects the plugin connection", () => 
     const connectionStore = useConnectionStore();
     const disconnectSpy = vi.spyOn(connectionStore, "disconnect").mockResolvedValue();
 
-    const id = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", { connectionId: "conn-1", context: { connectionId: "conn-1" } });
+    const id = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", { connectionId: "conn-1", context: { connectionId: "conn-1" } });
     queryStore.closeTab(id);
 
     await vi.waitFor(() => expect(disconnectSpy).toHaveBeenCalledTimes(1));
@@ -38,8 +38,8 @@ describe("queryStore plugin tab close disconnects the plugin connection", () => 
     const disconnectSpy = vi.spyOn(connectionStore, "disconnect").mockResolvedValue();
 
     // Workbench + filesystem tab riding the same connection (e.g. SSH terminal + SFTP).
-    const workbenchId = queryStore.openPluginWorkbench("io.dbx.ssh", "workbench", { connectionId: "conn-1", context: { connectionId: "conn-1" } });
-    queryStore.openPluginFilesystem("io.dbx.ssh", "fs", { connectionId: "conn-1", rootUri: "sftp:/" });
+    const workbenchId = queryStore.openPluginWorkbench("org.mutantcat.ssh", "workbench", { connectionId: "conn-1", context: { connectionId: "conn-1" } });
+    queryStore.openPluginFilesystem("org.mutantcat.ssh", "fs", { connectionId: "conn-1", rootUri: "sftp:/" });
 
     queryStore.closeTab(workbenchId);
     await new Promise((resolve) => setTimeout(resolve, 20));

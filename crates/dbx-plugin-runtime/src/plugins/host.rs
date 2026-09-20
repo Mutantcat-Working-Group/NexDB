@@ -1345,7 +1345,7 @@ mod tests {
                 "username": "",
                 "password": "",
                 "database": null,
-                "plugin_id": "io.dbx.ldap",
+                "plugin_id": "org.mutantcat.ldap",
                 "plugin_connection_provider": "ldap.connection",
                 "plugin_connection_type": "ldap",
                 "external_config": external
@@ -1532,7 +1532,7 @@ mod tests {
                 "username": "root",
                 "password": "",
                 "database": null,
-                "plugin_id": "io.dbx.ssh",
+                "plugin_id": "org.mutantcat.ssh",
                 "plugin_connection_provider": "ssh.connection",
                 "plugin_connection_type": "ssh",
                 "external_config": external

@@ -3837,14 +3837,14 @@ mod tests {
     async fn local_backend_standalone_open_skips_plugin_dbx_engine_gate() {
         let data_dir = tempfile::tempdir().unwrap();
         let database_path = data_dir.path().join("dbx.db");
-        let plugin_dir = data_dir.path().join("plugins").join("io.dbx.gated");
+        let plugin_dir = data_dir.path().join("plugins").join("org.mutantcat.gated");
         std::fs::create_dir_all(plugin_dir.join("ui")).unwrap();
         std::fs::write(plugin_dir.join("ui").join("index.html"), "<!doctype html>").unwrap();
         std::fs::write(
             plugin_dir.join("manifest.json"),
             r#"{
                 "manifest_version": 1,
-                "id": "io.dbx.gated",
+                "id": "org.mutantcat.gated",
                 "name": "Gated",
                 "version": "1.0.0",
                 "publisher": "example",
@@ -3860,19 +3860,19 @@ mod tests {
         // The standalone host has no app version to compare against (#9595).
         let backend = LocalBackend::open(&database_path).await.unwrap();
         let installed = backend.state().plugins.list_installed().unwrap();
-        let plugin = installed.iter().find(|plugin| plugin.manifest.id == "io.dbx.gated").unwrap();
+        let plugin = installed.iter().find(|plugin| plugin.manifest.id == "org.mutantcat.gated").unwrap();
         assert!(plugin.compatibility.compatible, "{:?}", plugin.compatibility.errors);
 
         // A host that knows the app version keeps enforcing the requirement.
         let backend = LocalBackend::open_with_app_version(&database_path, "0.6.16").await.unwrap();
         let installed = backend.state().plugins.list_installed().unwrap();
-        let plugin = installed.iter().find(|plugin| plugin.manifest.id == "io.dbx.gated").unwrap();
+        let plugin = installed.iter().find(|plugin| plugin.manifest.id == "org.mutantcat.gated").unwrap();
         assert!(!plugin.compatibility.compatible, "{:?}", plugin.compatibility.errors);
     }
 
     #[test]
     fn local_plugin_directory_honors_desktop_storage_settings() {
-        let data_dir = Path::new("C:/Users/user/AppData/Roaming/com.dbx.app");
+        let data_dir = Path::new("C:/Users/user/AppData/Roaming/org.mutantcat.app");
         let explicit = DesktopSettings {
             plugin_store_dir: Some("D:/DBX/plugins-custom".to_string()),
             ..DesktopSettings::default()
@@ -3886,7 +3886,7 @@ mod tests {
 
     #[test]
     fn local_agent_directory_honors_desktop_storage_settings() {
-        let data_dir = Path::new("C:/Users/user/AppData/Roaming/com.dbx.app");
+        let data_dir = Path::new("C:/Users/user/AppData/Roaming/org.mutantcat.app");
         let explicit =
             DesktopSettings { agent_store_dir: Some("D:/DBX/agents-custom".to_string()), ..DesktopSettings::default() };
         let legacy = DesktopSettings { driver_store_dir: Some("D:/DBX/drivers".to_string()), ..Default::default() };

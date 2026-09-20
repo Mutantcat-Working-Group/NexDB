@@ -333,10 +333,10 @@ winget install t8y2.dbx
 
 ```bash
 flatpak remote-add --if-not-exists flatpark https://dl.flatpark.org/flatpark.flatpakrepo
-flatpak install flatpark com.dbxio.dbx
+flatpak install flatpark org.mutantcat.nexdb
 ```
 
-之后通过常规的 `flatpak update` 即可获取更新。详见 [FlatPark 上的 DBX 页面](https://flatpark.org/apps/com.dbxio.dbx/)。
+之后通过常规的 `flatpak update` 即可获取更新。详见 [FlatPark 上的 DBX 页面](https://flatpark.org/apps/org.mutantcat.nexdb/)。
 
 **Spark Store 星火应用商店(Linux)：**
 

@@ -11,10 +11,10 @@ description: DBX 常见问题：连接数据保存在哪里、如何备份、如
   <Accordion title="连接配置保存在哪里？">
     DBX 桌面端把连接、已保存的凭据、SSH 隧道配置、查询历史和应用设置保存在数据目录下的单个 SQLite 数据库文件 `dbx.db` 中：
 
-    - **Windows（安装版）：** `C:\Users\<用户名>\AppData\Roaming\com.dbx.app\dbx.db`
+    - **Windows（安装版）：** `C:\Users\<用户名>\AppData\Roaming\org.mutantcat.app\dbx.db`
     - **Windows（便携版压缩包）：** `<DBX.exe 所在目录>\data\dbx.db`
-    - **macOS：** `~/Library/Application Support/com.dbx.app/dbx.db`
-    - **Linux：** `~/.local/share/com.dbx.app/dbx.db`
+    - **macOS：** `~/Library/Application Support/org.mutantcat.app/dbx.db`
+    - **Linux：** `~/.local/share/org.mutantcat.app/dbx.db`
 
     SSH 主机指纹保存在同目录的 `known_hosts` 中，DBX 不会读写 `~/.ssh`。数据目录下还可能出现 `dbx.db-wal`、`dbx.db-shm` 检查点文件。
 

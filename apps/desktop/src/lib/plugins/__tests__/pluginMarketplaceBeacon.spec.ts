@@ -28,28 +28,28 @@ describe("beaconPluginInstall", () => {
   });
 
   it("sends id, version and install kind by default", () => {
-    beaconPluginInstall("io.dbx.ssh", "1.2.3");
-    expect(lastBeaconBody()).toMatchObject({ id: "io.dbx.ssh", version: "1.2.3", kind: "install" });
+    beaconPluginInstall("org.mutantcat.ssh", "1.2.3");
+    expect(lastBeaconBody()).toMatchObject({ id: "org.mutantcat.ssh", version: "1.2.3", kind: "install" });
   });
 
   it("forwards the update kind so updates cannot inflate install counts", () => {
-    beaconPluginInstall("io.dbx.ssh", "1.2.4", "update");
+    beaconPluginInstall("org.mutantcat.ssh", "1.2.4", "update");
     expect(lastBeaconBody()).toMatchObject({ kind: "update" });
   });
 
   it("generates a uuid installation id once and reuses it across beacons", () => {
-    beaconPluginInstall("io.dbx.ssh", "1.2.3");
+    beaconPluginInstall("org.mutantcat.ssh", "1.2.3");
     const first = lastBeaconBody().clientId;
     expect(first).toBe(storedInstallationId());
     expect(String(first)).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
 
-    beaconPluginInstall("io.dbx.ldap", "2.0.0");
+    beaconPluginInstall("org.mutantcat.ldap", "2.0.0");
     expect(lastBeaconBody().clientId).toBe(first);
   });
 
   it("regenerates a malformed stored installation id instead of sending it", () => {
     backing.set("dbx-installation-id", "not-a-uuid");
-    beaconPluginInstall("io.dbx.ssh", "1.2.3");
+    beaconPluginInstall("org.mutantcat.ssh", "1.2.3");
     const clientId = String(lastBeaconBody().clientId);
     expect(clientId).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
     expect(clientId).toBe(storedInstallationId());
@@ -65,7 +65,7 @@ describe("beaconPluginInstall", () => {
       },
       removeItem: () => undefined,
     });
-    beaconPluginInstall("io.dbx.ssh", "1.2.3");
+    beaconPluginInstall("org.mutantcat.ssh", "1.2.3");
     expect(lastBeaconBody().clientId).toBe("");
   });
 });

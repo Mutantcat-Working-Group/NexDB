@@ -231,7 +231,7 @@ test("builds only common-dependent Java modules for a shared runtime change", ()
   ]);
   const result = evaluateAgentVersionBump({
     versions: { access: "0.1.0", mongodb: "0.1.0" },
-    changedFiles: ["agents/common/src/main/java/com/dbx/Agent.java"],
+    changedFiles: ["agents/common/src/main/java/org/mutantcat/Agent.java"],
     legacyStandaloneModules: new Set(["mongodb"]),
     moduleExists: (path) => existing.has(path),
     readModuleFile: () => "",

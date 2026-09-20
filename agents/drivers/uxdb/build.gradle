@@ -4,6 +4,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'UXDB', 'Main-Class': 'com.dbx.agent.uxdb.UxdbAgent')
+        attributes('Agent-Label': 'UXDB', 'Main-Class': 'org.mutantcat.agent.uxdb.UxdbAgent')
     }
 }

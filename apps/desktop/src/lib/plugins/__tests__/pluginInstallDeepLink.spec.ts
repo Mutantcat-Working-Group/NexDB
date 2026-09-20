@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { parsePluginInstallDeepLink } from "../pluginInstallDeepLink";
 
-const PACKAGE_URL = "https://dl.dbxio.com/plugins/io.dbx.ssh/0.4.73/io.dbx.ssh-0.4.73-darwin-arm64.dbxp";
+const PACKAGE_URL = "https://dl.dbxio.com/plugins/org.mutantcat.ssh/0.4.73/org.mutantcat.ssh-0.4.73-darwin-arm64.dbxp";
 
 describe("parsePluginInstallDeepLink", () => {
   it("extracts the encoded package url", () => {

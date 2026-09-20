@@ -4,6 +4,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': '崖山 YashanDB', 'Main-Class': 'com.dbx.agent.yashandb.YashandbAgent')
+        attributes('Agent-Label': '崖山 YashanDB', 'Main-Class': 'org.mutantcat.agent.yashandb.YashandbAgent')
     }
 }

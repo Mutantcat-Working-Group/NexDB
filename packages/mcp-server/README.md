@@ -182,9 +182,9 @@ DuckDB runs through the standalone DBX DuckDB driver. Install it from DBX Driver
 
 DBX connection storage defaults to:
 
-- macOS: `~/Library/Application Support/com.dbx.app/dbx.db`
-- Linux: `~/.local/share/com.dbx.app/dbx.db`
-- Windows: `%APPDATA%\com.dbx.app\dbx.db`
+- macOS: `~/Library/Application Support/org.mutantcat.app/dbx.db`
+- Linux: `~/.local/share/org.mutantcat.app/dbx.db`
+- Windows: `%APPDATA%\org.mutantcat.app\dbx.db`
 
 Override the directory with `DBX_DATA_DIR`.
 
@@ -549,9 +549,9 @@ MCP 配置：
 
 ### 本地数据目录
 
-- macOS：`~/Library/Application Support/com.dbx.app/dbx.db`
-- Linux：`~/.local/share/com.dbx.app/dbx.db`
-- Windows：`%APPDATA%\com.dbx.app\dbx.db`
+- macOS：`~/Library/Application Support/org.mutantcat.app/dbx.db`
+- Linux：`~/.local/share/org.mutantcat.app/dbx.db`
+- Windows：`%APPDATA%\org.mutantcat.app\dbx.db`
 
 通过 `DBX_DATA_DIR` 覆盖默认目录。Windows 便携版应指向 `DBX.exe` 同级、包含 `dbx.db` 的 `data` 文件夹。
 

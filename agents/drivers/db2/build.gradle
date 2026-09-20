@@ -5,6 +5,6 @@ dependencies {
 
 tasks.named('shadowJar') {
     manifest {
-        attributes('Agent-Label': 'IBM DB2', 'Main-Class': 'com.dbx.agent.db2.Db2Agent')
+        attributes('Agent-Label': 'IBM DB2', 'Main-Class': 'org.mutantcat.agent.db2.Db2Agent')
     }
 }
