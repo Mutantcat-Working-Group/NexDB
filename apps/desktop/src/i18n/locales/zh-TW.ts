@@ -962,6 +962,7 @@ export default withEnglishFallback({
     databaseCategoryTimeseries: "時序資料庫",
     databaseCategoryMq: "訊息佇列",
     databaseCategoryRegistryConfig: "註冊與設定",
+    databaseCategoryObjectStorage: "物件儲存",
     databaseCategoryPlugins: "外掛",
     pluginProviderUnavailable: "此外掛連線提供者不可用，請重新安裝或啟用外掛後再試。",
     pluginRequiredField: "請填寫{field}",

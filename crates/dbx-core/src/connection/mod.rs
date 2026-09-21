@@ -127,6 +127,9 @@ pub enum PoolKind {
     MessageQueue,
     /// Nacos admin connection marker.
     Nacos,
+    /// Object storage (S3-compatible) connection marker. Endpoint reachability
+    /// is verified by the shared probe; no data query pool is held yet.
+    ObjectStorage,
     Consul(crate::consul::ConsulClient),
     /// MQTT broker connection with an active client.
     #[cfg(feature = "mq-admin")]
@@ -2701,6 +2704,12 @@ impl AppState {
                 adapter.test_connection().await?;
                 PoolKind::Nacos
             }
+            DatabaseType::ObjectStorage => {
+                // S3-compatible object storage (MinIO / RustFS) has no data query
+                // pool yet; the shared endpoint probe above already validated
+                // reachability, so register a marker for this connection_id.
+                PoolKind::ObjectStorage
+            }
             DatabaseType::Consul => {
                 let mut consul_config = crate::consul::ConsulConfig::from_connection(&db_config)?;
                 let original_host = consul_config.base_url.host_str().unwrap_or_default();
@@ -4115,6 +4124,7 @@ impl AppState {
                 | PoolKind::ExternalDriver { .. }
                 | PoolKind::MessageQueue
                 | PoolKind::Nacos
+                | PoolKind::ObjectStorage
                 | PoolKind::Consul(_) => false,
                 #[cfg(feature = "mq-admin")]
                 PoolKind::Mqtt(_) => false,
@@ -5189,6 +5199,7 @@ impl AppState {
                 | PoolKind::ExternalDriver { .. }
                 | PoolKind::MessageQueue
                 | PoolKind::Nacos
+                | PoolKind::ObjectStorage
                 | PoolKind::Consul(_) => true,
                 PoolKind::PluginConnection(handle) => handle.is_running(),
                 #[cfg(feature = "mq-admin")]
@@ -6054,6 +6065,7 @@ fn clone_pool_kind(pool: &PoolKind) -> PoolKind {
         PoolKind::PluginConnection(handle) => PoolKind::PluginConnection(handle.clone()),
         PoolKind::MessageQueue => PoolKind::MessageQueue,
         PoolKind::Nacos => PoolKind::Nacos,
+        PoolKind::ObjectStorage => PoolKind::ObjectStorage,
         PoolKind::Consul(client) => PoolKind::Consul(client.clone()),
         #[cfg(feature = "mq-admin")]
         PoolKind::Mqtt(client) => PoolKind::Mqtt(Arc::clone(client)),
@@ -6137,6 +6149,7 @@ async fn close_pool_kind(pool: PoolKind) -> Result<(), String> {
         }
         PoolKind::MessageQueue => {}
         PoolKind::Nacos => {}
+        PoolKind::ObjectStorage => {}
         PoolKind::Consul(_) => {}
         #[cfg(feature = "mq-admin")]
         PoolKind::Mqtt(client) => {

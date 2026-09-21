@@ -8,6 +8,7 @@ export const DRIVER_CATEGORIES = [
   { key: "timeseries", order: 7, titleKey: "connection.databaseCategoryTimeseries" },
   { key: "mq", order: 8, titleKey: "connection.databaseCategoryMq" },
   { key: "registry_config", order: 9, titleKey: "connection.databaseCategoryRegistryConfig" },
+  { key: "object_storage", order: 10, titleKey: "connection.databaseCategoryObjectStorage" },
 ] as const;
 
 export type DriverCategoryKey = (typeof DRIVER_CATEGORIES)[number]["key"];

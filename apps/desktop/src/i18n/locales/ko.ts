@@ -1056,6 +1056,7 @@ export default withEnglishFallback({
     databaseCategoryTimeseries: "시계열",
     databaseCategoryMq: "메시지 큐",
     databaseCategoryRegistryConfig: "레지스트리/구성",
+    databaseCategoryObjectStorage: "객체 스토리지",
     jdbcConnection: "JDBC 연결",
     iconView: "아이콘 보기",
     listView: "목록 보기",

@@ -960,6 +960,7 @@ export default withEnglishFallback({
     databaseCategoryTimeseries: "Temporali",
     databaseCategoryMq: "Code messaggi",
     databaseCategoryRegistryConfig: "Registro/config.",
+    databaseCategoryObjectStorage: "Storage a oggetti",
     databaseCategoryPlugins: "Plugin",
     pluginProviderUnavailable: "Questo provider di connessione del plugin non è disponibile. Reinstalla o abilita il plugin e riprova.",
     pluginRequiredField: "{field} è obbligatorio",

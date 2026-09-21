@@ -66,6 +66,28 @@ describe("DatabaseIcon", () => {
     app.unmount();
   });
 
+  it("uses the MinIO asset for the object storage profile", async () => {
+    const container = document.createElement("div");
+    document.body.appendChild(container);
+    const app = createApp(DatabaseIcon, { dbType: "minio" });
+    app.mount(container);
+    await nextTick();
+
+    expect(container.querySelector("img")?.getAttribute("src")).toBe("/icons/database/minio.svg");
+    app.unmount();
+  });
+
+  it("uses the RustFS asset for the object storage profile", async () => {
+    const container = document.createElement("div");
+    document.body.appendChild(container);
+    const app = createApp(DatabaseIcon, { dbType: "rustfs" });
+    app.mount(container);
+    await nextTick();
+
+    expect(container.querySelector("img")?.getAttribute("src")).toBe("/icons/database/rustfs.png");
+    app.unmount();
+  });
+
   it("falls back to the generic icon when the database type is missing", async () => {
     const container = document.createElement("div");
     document.body.appendChild(container);

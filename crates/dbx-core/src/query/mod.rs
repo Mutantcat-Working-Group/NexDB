@@ -1997,6 +1997,7 @@ async fn do_execute_typed(
         #[cfg(feature = "mq-admin")]
         PoolKind::Mqtt(_) => Err("Use MQTT-specific commands".to_string()),
         PoolKind::Nacos => Err("Use Nacos-specific commands".to_string()),
+        PoolKind::ObjectStorage => Err("Object storage connections do not support SQL commands".to_string()),
         PoolKind::InfluxDb(client) => {
             let client = client.clone();
             let database = pool_key.split(':').nth(1).unwrap_or("default").to_string();
@@ -4201,6 +4202,7 @@ fn pool_kind_has_transactional_path(pool: &PoolKind) -> bool {
         | PoolKind::Agent(_) => true,
         PoolKind::MessageQueue
         | PoolKind::Nacos
+        | PoolKind::ObjectStorage
         | PoolKind::Consul(_)
         | PoolKind::PluginConnection(_)
         | PoolKind::HBase(_)
@@ -4598,6 +4600,7 @@ fn batch_transaction_path(pool: &PoolKind) -> BatchTransactionPath {
         PoolKind::Agent(client) => BatchTransactionPath::Agent(client.clone()),
         PoolKind::MessageQueue
         | PoolKind::Nacos
+        | PoolKind::ObjectStorage
         | PoolKind::PluginConnection(_)
         | PoolKind::Consul(_)
         | PoolKind::HBase(_) => BatchTransactionPath::Unsupported,

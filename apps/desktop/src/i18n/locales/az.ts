@@ -1019,6 +1019,7 @@ export default withEnglishFallback({
     databaseCategoryTimeseries: "Zaman sıraları",
     databaseCategoryMq: "Mesaj növbələri",
     databaseCategoryRegistryConfig: "Reyestr/konfiqurasiya",
+    databaseCategoryObjectStorage: "Obyekt yaddaşı",
     jdbcConnection: "JDBC əlaqəsi",
     iconView: "İkon görünüşü",
     listView: "Siyahı görünüşü",

@@ -126,9 +126,13 @@ export function supportsClearableQuerySchema(dbType?: DatabaseType): boolean {
  * Meilisearch exposes its own index search and management workspaces rather
  * than a general-purpose SQL query surface, so the generic sidebar action is
  * hidden there as well (issue #9609).
+ *
+ * Object storage (MinIO, RustFS) is bucket-based and has no SQL engine at all:
+ * its connection workbench is the bucket browser, so the generic sidebar
+ * action is hidden there too.
  */
 export function supportsConnectionQueryActions(dbType?: DatabaseType): boolean {
-  return dbType !== "nacos" && dbType !== "consul" && dbType !== "hbase" && dbType !== "zookeeper" && dbType !== "plugin" && dbType !== "mq" && dbType !== "mqtt" && dbType !== "meilisearch";
+  return dbType !== "nacos" && dbType !== "consul" && dbType !== "hbase" && dbType !== "zookeeper" && dbType !== "plugin" && dbType !== "mq" && dbType !== "mqtt" && dbType !== "meilisearch" && dbType !== "object-storage";
 }
 
 /**

@@ -3052,6 +3052,7 @@ const dbCategoryMetadata: Array<{ key: DbCategoryKey; titleKey: string }> = [
   { key: "timeseries", titleKey: "connection.databaseCategoryTimeseries" },
   { key: "mq", titleKey: "connection.databaseCategoryMq" },
   { key: "registry_config", titleKey: "connection.databaseCategoryRegistryConfig" },
+  { key: "object_storage", titleKey: "connection.databaseCategoryObjectStorage" },
 ];
 
 function jdbcProductCategory(profileId: string): ConnectionProfileCategory {

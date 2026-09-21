@@ -112,6 +112,8 @@ const assetIcons: Record<string, string> = {
   rabbitmq: "rabbitmq",
   nacos: "nacos.png",
   consul: "consul",
+  minio: "minio",
+  rustfs: "rustfs.png",
   iris: "iris",
   cache: "iris",
   influxdb: "influxdb",

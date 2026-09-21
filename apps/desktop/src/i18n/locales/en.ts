@@ -1163,6 +1163,7 @@ export default {
     databaseCategoryTimeseries: "Time series",
     databaseCategoryMq: "Message queues",
     databaseCategoryRegistryConfig: "Registry/Config",
+    databaseCategoryObjectStorage: "Object Storage",
     databaseCategoryPlugins: "Plugins",
     pluginProviderUnavailable: "This plugin connection provider is unavailable. Reinstall or enable the plugin, then try again.",
     pluginRequiredField: "{field} is required",

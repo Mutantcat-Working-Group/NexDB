@@ -926,6 +926,7 @@ export default withEnglishFallback({
     databaseCategoryTimeseries: "時系列DB",
     databaseCategoryMq: "メッセージキュー",
     databaseCategoryRegistryConfig: "登録/設定",
+    databaseCategoryObjectStorage: "オブジェクトストレージ",
     databaseCategoryPlugins: "プラグイン",
     pluginProviderUnavailable: "このプラグイン接続プロバイダーは利用できません。プラグインを再インストールまたは有効化してください。",
     pluginRequiredField: "{field} は必須です",

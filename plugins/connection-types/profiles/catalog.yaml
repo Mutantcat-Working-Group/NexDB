@@ -102,6 +102,20 @@ profiles:
     user: ""
     host: dynamodb.us-east-1.amazonaws.com
     category: document
+  - id: minio
+    dbType: object-storage
+    label: MinIO
+    icon: minio
+    port: 9000
+    user: ""
+    category: object_storage
+  - id: rustfs
+    dbType: object-storage
+    label: RustFS
+    icon: rustfs
+    port: 8000
+    user: ""
+    category: object_storage
   - id: clickhouse
     dbType: clickhouse
     label: ClickHouse

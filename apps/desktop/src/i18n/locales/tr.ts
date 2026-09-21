@@ -1021,6 +1021,7 @@ export default withEnglishFallback({
     databaseCategoryTimeseries: "Zaman serisi",
     databaseCategoryMq: "Mesaj kuyrukları",
     databaseCategoryRegistryConfig: "Kayıt/Yapılandırma",
+    databaseCategoryObjectStorage: "Nesne depolama",
     jdbcConnection: "JDBC bağlantısı",
     iconView: "Simge görünümü",
     listView: "Liste görünümü",

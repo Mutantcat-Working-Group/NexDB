@@ -961,6 +961,7 @@ export default withEnglishFallback({
     databaseCategoryTimeseries: "Temporal",
     databaseCategoryMq: "Colas",
     databaseCategoryRegistryConfig: "Registro/config.",
+    databaseCategoryObjectStorage: "Almacenamiento de objetos",
     databaseCategoryPlugins: "Plugins",
     pluginProviderUnavailable: "Este proveedor de conexión del plugin no está disponible. Reinstala o habilita el plugin e inténtalo de nuevo.",
     pluginRequiredField: "{field} es obligatorio",

@@ -1077,6 +1077,7 @@ export default withEnglishFallback({
     databaseCategoryTimeseries: "时序数据库",
     databaseCategoryMq: "消息队列",
     databaseCategoryRegistryConfig: "注册与配置",
+    databaseCategoryObjectStorage: "对象存储",
     databaseCategoryPlugins: "插件",
     pluginProviderUnavailable: "此插件连接提供者不可用，请重新安装或启用插件后再试。",
     pluginRequiredField: "请填写{field}",

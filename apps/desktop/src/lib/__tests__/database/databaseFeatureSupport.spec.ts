@@ -123,6 +123,12 @@ describe("connection query actions", () => {
   it("hides the sidebar new-query entry for Meilisearch", () => {
     expect(supportsConnectionQueryActions("meilisearch")).toBe(false);
   });
+
+  it("hides the sidebar new-query entry for object storage", () => {
+    // MinIO and RustFS share db_type "object-storage" and expose buckets
+    // rather than a SQL engine.
+    expect(supportsConnectionQueryActions("object-storage")).toBe(false);
+  });
 });
 
 describe("message queue query capabilities", () => {

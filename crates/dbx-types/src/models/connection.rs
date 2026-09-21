@@ -1207,6 +1207,7 @@ impl ConnectionConfig {
             DatabaseType::Mqtt => self.mqtt_broker_url(),
             DatabaseType::Nacos => self.nacos_admin_url(),
             DatabaseType::Consul => self.consul_api_url(),
+            DatabaseType::ObjectStorage => self.object_storage_endpoint_url(),
         }
     }
 
@@ -1490,6 +1491,13 @@ impl ConnectionConfig {
             DatabaseType::Mqtt => self.mqtt_broker_url(),
             DatabaseType::Nacos => self.nacos_admin_url(),
             DatabaseType::Consul => self.consul_api_url(),
+            DatabaseType::ObjectStorage => {
+                if self.username.is_empty() {
+                    self.object_storage_endpoint_url()
+                } else {
+                    format!("s3://{}:{}@{host}:{port}", username, password)
+                }
+            }
         }
     }
 
@@ -1569,6 +1577,10 @@ impl ConnectionConfig {
         }
         let scheme = if self.ssl { "mqtts" } else { "mqtt" };
         format!("{}://{}:{}", scheme, self.host, self.port)
+    }
+
+    fn object_storage_endpoint_url(&self) -> String {
+        format!("s3://{}:{}", bracket_ipv6(&self.host), self.port)
     }
 
     fn normalized_url_params(&self) -> String {
