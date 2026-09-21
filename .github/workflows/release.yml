@@ -125,19 +125,23 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          APP_PATH="$(find "target/${{ matrix.target }}/release/bundle/macos" -maxdepth 1 -name '*.app' | head -n 1)"
-          if [ -z "${APP_PATH}" ]; then
-            echo "::error::No macOS app bundle was produced for ${{ matrix.target }}"
-            exit 1
-          fi
-          codesign --verify --deep --strict "${APP_PATH}"
-          codesign -dv --verbose=2 "${APP_PATH}" 2>&1 | tee "${RUNNER_TEMP}/codesign.txt"
-          grep -qi 'adhoc' "${RUNNER_TEMP}/codesign.txt"
           DMG_PATH="$(find "target/${{ matrix.target }}/release/bundle/dmg" -maxdepth 1 -name '*.dmg' | head -n 1)"
           if [ -z "${DMG_PATH}" ]; then
             echo "::error::No DMG was produced for ${{ matrix.target }}"
             exit 1
           fi
+          MOUNT_POINT="${RUNNER_TEMP}/dmg-verify"
+          mkdir -p "${MOUNT_POINT}"
+          hdiutil attach -nobrowse -readonly "${DMG_PATH}" -mountpoint "${MOUNT_POINT}"
+          trap 'hdiutil detach "${MOUNT_POINT}" >/dev/null 2>&1 || true' EXIT
+          APP_PATH="$(find "${MOUNT_POINT}" -maxdepth 3 -name '*.app' | head -n 1)"
+          if [ -z "${APP_PATH}" ]; then
+            echo "::error::No .app bundle found inside ${DMG_PATH}"
+            exit 1
+          fi
+          codesign --verify --deep --strict "${APP_PATH}"
+          codesign -dv --verbose=2 "${APP_PATH}" 2>&1 | tee "${RUNNER_TEMP}/codesign.txt"
+          grep -qi 'adhoc' "${RUNNER_TEMP}/codesign.txt"
           hdiutil verify "${DMG_PATH}"
 
       - name: Verify NSIS installer
@@ -156,7 +160,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          VERSION="${GITHUB_REF_NAME#v}"
           BUNDLE_ROOT="target/${{ matrix.target }}/release/bundle"
           case "${{ matrix.bundles }}" in
             appimage)
@@ -173,15 +176,19 @@ jobs:
             echo "::error::Built asset was not found for ${{ matrix.target }}"
             exit 1
           fi
+          UPLOAD_PATH="${ASSET}"
           UPLOAD_NAME="$(basename "${ASSET}")"
           if [ "${{ matrix.asset_arch }}" = "arm64" ]; then
             UPLOAD_NAME="${UPLOAD_NAME/aarch64/arm64}"
           fi
           if [ "${UPLOAD_NAME}" != "$(basename "${ASSET}")" ]; then
-            cp "${ASSET}" "${UPLOAD_NAME}"
+            UPLOAD_DIR="${RUNNER_TEMP}/assets"
+            mkdir -p "${UPLOAD_DIR}"
+            cp "${ASSET}" "${UPLOAD_DIR}/${UPLOAD_NAME}"
+            UPLOAD_PATH="${UPLOAD_DIR}/${UPLOAD_NAME}"
           fi
-          echo "Uploading ${UPLOAD_NAME}"
-          gh release upload "${GITHUB_REF_NAME}" "${UPLOAD_NAME}" --repo "${GITHUB_REPOSITORY}" --clobber
+          echo "Uploading ${UPLOAD_NAME} (${UPLOAD_PATH})"
+          gh release upload "${GITHUB_REF_NAME}" "${UPLOAD_PATH}" --repo "${GITHUB_REPOSITORY}" --clobber
 
   publish:
     name: Publish release
