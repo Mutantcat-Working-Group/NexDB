@@ -111,6 +111,18 @@ test("local Rust entrypoints and live TDengine tests use nextest", () => {
   assert.doesNotMatch(integration, /cargo test/);
 });
 
+test("the packages job installs cargo-nextest before running the CLI suite", () => {
+  // `pnpm test:packages` shells out to cargo-nextest through the published CLI
+  // package, so the runner needs the binary even though this job compiles no
+  // workspace crates itself. The install step was dropped when the Rust test
+  // runners migrated to nextest, which failed the job with
+  // "no such command: `nextest`".
+  const packages = job("packages");
+  assert.ok(packages.includes("pnpm test:packages"));
+  assert.match(packages, /name: Install nextest\s+uses: taiki-e\/install-action@\w+\s+with:\s+tool: cargo-nextest@[\d.]+/);
+  assert.ok(packages.indexOf("Install nextest") < packages.indexOf("Node package tests"));
+});
+
 test("DuckDB Windows builds persist Rust and C++ compiler results", () => {
   const content = job("duckdb-windows-driver");
   assert.ok(content.includes('SCCACHE_GHA_ENABLED: "true"'));

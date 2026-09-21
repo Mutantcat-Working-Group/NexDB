@@ -255,6 +255,13 @@ jobs:
           # PR caches are large and branch-scoped; restore them from main without saving per-PR copies.
           save-if: ${{ github.ref == 'refs/heads/main' }}
 
+      # pnpm test:packages runs the CLI suite through cargo-nextest, so the
+      # runner needs the binary even though this job builds no workspace crates.
+      - name: Install nextest
+        uses: taiki-e/install-action@9114bf4d891761788c546334fd37538eae1bf8b3
+        with:
+          tool: cargo-nextest@0.9.137
+
       # mold -run injects itself as `ld` through PATH for the whole process
       # tree. It must stay a wrapper: putting the linker into RUSTFLAGS or
       # .cargo config would change every sccache key and orphan the shared cache.
