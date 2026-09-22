@@ -93,3 +93,9 @@
 - [X] 插件与 JDBC 驱动商店
 
 [Apache-2.0](LICENSE)
+
+---
+
+## 致谢
+
+本项目是 [tyza66/Nexdb](https://github.com/tyza66/Nexdb) 的 Fork，感谢原仓库及其作者的优秀开源工作，本仓库在其基础上继续维护与改进。
