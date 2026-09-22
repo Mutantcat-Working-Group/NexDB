@@ -102,6 +102,7 @@ export const databaseSupport: DatabaseSupportItem[] = [
   { id: "consul", name: "Consul", icon: "/icons/database/consul.svg", tone: "#e03875" },
   { id: "minio", name: "MinIO", icon: "/icons/database/minio.svg", tone: "#c72c48" },
   { id: "rustfs", name: "RustFS", icon: "/icons/database/rustfs.png", tone: "#f97316" },
+  { id: "s3", name: "S3 Compatible", icon: "/icons/database/s3.svg", tone: "#2563eb" },
   { id: "iris", name: "IRIS", icon: "/icons/database/iris.svg", tone: "#0085ca" },
   { id: "cache", name: "Caché", icon: "/icons/database/iris.svg", tone: "#358a4e" },
   { id: "jdbcx", name: "JDBC", icon: "/icons/database/jdbcx.svg", tone: "#6ea8ff" },

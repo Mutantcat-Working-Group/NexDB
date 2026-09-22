@@ -88,6 +88,17 @@ describe("DatabaseIcon", () => {
     app.unmount();
   });
 
+  it("uses the S3 compatible asset for the generic object storage profile", async () => {
+    const container = document.createElement("div");
+    document.body.appendChild(container);
+    const app = createApp(DatabaseIcon, { dbType: "s3" });
+    app.mount(container);
+    await nextTick();
+
+    expect(container.querySelector("img")?.getAttribute("src")).toBe("/icons/database/s3.svg");
+    app.unmount();
+  });
+
   it("falls back to the generic icon when the database type is missing", async () => {
     const container = document.createElement("div");
     document.body.appendChild(container);

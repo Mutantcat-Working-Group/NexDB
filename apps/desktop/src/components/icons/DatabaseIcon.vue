@@ -114,6 +114,7 @@ const assetIcons: Record<string, string> = {
   consul: "consul",
   minio: "minio",
   rustfs: "rustfs.png",
+  s3: "s3",
   iris: "iris",
   cache: "iris",
   influxdb: "influxdb",

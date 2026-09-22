@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none" role="img" aria-label="S3 Compatible">
+  <title>S3 Compatible</title>
+  <rect x="2" y="3" width="28" height="5" rx="2.5" fill="#1d4ed8"/>
+  <path d="M4.5 8.5H27.5L24.9 26.8A2.2 2.2 0 0 1 22.7 28.8H9.3A2.2 2.2 0 0 1 7.1 26.8L4.5 8.5Z" fill="#2563eb"/>
+  <circle cx="12.2" cy="21.4" r="2.6" fill="#ffffff"/>
+  <circle cx="19.8" cy="21.4" r="2.6" fill="#ffffff"/>
+  <circle cx="16" cy="15.6" r="2.6" fill="#ffffff"/>
+</svg>

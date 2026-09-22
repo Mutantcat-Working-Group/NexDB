@@ -244,7 +244,10 @@ const IGNITE_CONNECTION_PROFILES: ReadonlyArray<{ value: IgniteConnectionProfile
 // The picker merges the Ignite 2.x/3.x cards into a single "Apache Ignite"
 // entry; the version is picked inside the connection form instead.
 const MERGED_PICKER_OPTION_FOR_TYPE: Record<string, string> = { ignite3: "ignite" };
-const PICKER_SEARCH_ALIASES: Record<string, string[]> = { ignite: ["ignite3", "ignite 3"] };
+const PICKER_SEARCH_ALIASES: Record<string, string[]> = {
+  ignite: ["ignite3", "ignite 3"],
+  s3: ["aws s3", "amazon s3", "object storage", "对象存储"],
+};
 
 type LegacyTransportFields = {
   ssh_enabled?: boolean;

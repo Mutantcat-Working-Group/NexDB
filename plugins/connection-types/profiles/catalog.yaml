@@ -116,6 +116,13 @@ profiles:
     port: 8000
     user: ""
     category: object_storage
+  - id: s3
+    dbType: object-storage
+    label: S3 兼容
+    icon: s3
+    port: 9000
+    user: ""
+    category: object_storage
   - id: clickhouse
     dbType: clickhouse
     label: ClickHouse

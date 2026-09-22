@@ -2705,9 +2705,10 @@ impl AppState {
                 PoolKind::Nacos
             }
             DatabaseType::ObjectStorage => {
-                // S3-compatible object storage (MinIO / RustFS) has no data query
-                // pool yet; the shared endpoint probe above already validated
-                // reachability, so register a marker for this connection_id.
+                // S3-compatible object storage (MinIO / RustFS / any S3 endpoint)
+                // has no data query pool yet; the shared endpoint probe above
+                // already validated reachability, so register a marker for this
+                // connection_id.
                 PoolKind::ObjectStorage
             }
             DatabaseType::Consul => {
