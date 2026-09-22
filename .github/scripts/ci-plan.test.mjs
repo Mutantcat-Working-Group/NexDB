@@ -31,7 +31,8 @@ const groups = (result) => result.rust_matrix.include.map((entry) => entry.group
 // share the windows_win7_bundle routing output.
 const routedJobs = { frontend: "frontend", packages: "packages", "github-scripts": "github_scripts",
   "windows-standard-check": "windows_win7_bundle", "windows-win7-bundle": "windows_win7_bundle",
-  "duckdb-windows-driver": "duckdb_windows", jdbc: "jdbc", "offline-jdbc-release": "offline_jdbc", "nix-packaging": "nix" };
+  "duckdb-windows-driver": "duckdb_windows", jdbc: "jdbc", "offline-jdbc-release": "offline_jdbc",
+  "nix-packaging": "nix", "version-checks": "version" };
 
 test("foundation changes select transitive consumers and standalone DuckDB", () => {
   const result = plan(["crates/dbx-types/src/lib.rs"]);

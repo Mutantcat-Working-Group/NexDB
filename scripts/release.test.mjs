@@ -145,7 +145,15 @@ test("rollback rejects prerelease tag syntax", () => {
   const result = runRelease(["rollback", "v0.5.63-rc.1", "--dry-run", "--skip-fetch"]);
 
   assert.equal(result.status, 1);
-  assert.match(result.stderr, /only supports stable vX\.Y\.Z app releases/);
+  assert.match(result.stderr, /must not use a prerelease suffix/);
+});
+
+test("app publish rejects prerelease tags", () => {
+  const result = runRelease(["app", "v1.0.20260922-1", "--dry-run", "--skip-fetch"]);
+
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /must not use a prerelease suffix/);
+  assert.match(result.stderr, /use the next date version/i);
 });
 
 test("launcher packages bypass filtered publishing for provenance", () => {

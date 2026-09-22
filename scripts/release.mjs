@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { isDesktopVersionOnlyCargoLockChange } from "./release-lock.mjs";
+import { resolveNextAppVersion } from "./bump-app-version.mjs";
 import {
   evaluateAgentVersionBump,
   getAgentVersionChanges,
@@ -602,6 +603,18 @@ function resolveAppTag(value) {
   const explicitVersion = normalizeExplicitVersion(value, APP_TAG_PREFIX);
   if (!explicitVersion) {
     fail(`Invalid app release tag '${value}'. Use vX.Y.Z or X.Y.Z.`);
+  }
+  if (explicitVersion.includes("-")) {
+    let suggestion = "for example 1.0.YYYYMMDD";
+    try {
+      suggestion = resolveNextAppVersion(explicitVersion.split("-")[0]);
+    } catch {
+      // Legacy tags may not be date-based; keep the generic rule message.
+    }
+    fail(
+      `App release tag '${explicitVersion}' must not use a prerelease suffix like '-1' or '-2'. ` +
+        `Use the next date version instead (${suggestion}).`,
+    );
   }
 
   return `${APP_TAG_PREFIX}${explicitVersion}`;

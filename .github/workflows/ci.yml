@@ -160,6 +160,24 @@ jobs:
       - name: GitHub script tests
         run: node --test .github/scripts/*.test.mjs
 
+  version-checks:
+    needs: changes
+    if: needs.changes.outputs.version == 'true'
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.13.0
+
+      - name: App version rule tests
+        run: node --test scripts/bump-app-version.test.mjs
+
+      - name: Check app version consistency
+        run: node scripts/bump-app-version.mjs --check
+
   packages:
     needs: changes
     if: needs.changes.outputs.packages == 'true'
@@ -738,6 +756,7 @@ jobs:
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
       packages: ${{ steps.filter.outputs.packages }}
+      version: ${{ steps.filter.outputs.version }}
       rust: ${{ steps.plan.outputs.rust }}
       rust_full: ${{ steps.plan.outputs.rust_full }}
       jdbc: ${{ steps.filter.outputs.jdbc }}
@@ -878,6 +897,17 @@ jobs:
               - '.github/workflows/ci.yml'
               - 'apps/desktop/src/types/database.ts'
               - 'crates/dbx-core/assets/database-drivers.manifest.json'
+            version:
+              - 'package.json'
+              - 'flake.nix'
+              - 'src-tauri/**'
+              - 'crates/dbx-web/**'
+              - 'Cargo.toml'
+              - 'Cargo.lock'
+              - 'scripts/bump-app-version.mjs'
+              - 'scripts/bump-app-version.test.mjs'
+              - '.github/workflows/ci.yml'
+              - '.github/workflows/release.yml'
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@1.97.1
       - name: Plan dependency-aware CI jobs
@@ -1167,6 +1197,7 @@ jobs:
       - frontend
       - github-scripts
       - packages
+      - version-checks
       - windows-standard-check
       - windows-win7-bundle
       - duckdb-windows-driver

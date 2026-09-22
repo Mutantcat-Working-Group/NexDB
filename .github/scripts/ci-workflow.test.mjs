@@ -37,7 +37,7 @@ test("stable Rust, Agent and overall gates always inspect selected upstream resu
   for (const [name, mode, dependencies] of [["rust", "rust", ["fast-checks", "rust-fmt-clippy", "rust-test"]],
     ["agents", "agents", ["fast-checks", "agent-checks", "agent-rust", "agent-go", "agent-integration", "agent-java"]],
     ["frontend", "frontend", ["frontend-checks", "frontend-typecheck", "frontend-test"]],
-    ["ci", "all", ["rust", "agents", "frontend", "packages", "windows-standard-check", "windows-win7-bundle", "duckdb-windows-driver", "nix-packaging"]]]) {
+    ["ci", "all", ["rust", "agents", "frontend", "packages", "version-checks", "windows-standard-check", "windows-win7-bundle", "duckdb-windows-driver", "nix-packaging"]]]) {
     const content = job(name);
     assert.match(content, /if: always\(\)/);
     assert.ok(content.includes(`node .github/scripts/ci-gate.mjs ${mode}`));

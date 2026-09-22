@@ -32,7 +32,26 @@ jobs:
             echo "::error::Tag ${GITHUB_REF_NAME} does not match app versions (package.json=${PACKAGE_VERSION}, dbx=${CARGO_VERSION}, dbx-web=${WEB_VERSION})"
             exit 1
           fi
+          case "${TAG_VERSION}" in
+            *-*)
+              echo "::error::App release versions must not use prerelease suffixes like -1 or -2. Bump the date forward instead, for example 1.0.YYYYMMDD."
+              exit 1
+              ;;
+          esac
+          PATCH="${TAG_VERSION##*.}"
+          if ! [[ "${PATCH}" =~ ^[0-9]{8}$ ]] || ! date -u -d "${PATCH:0:4}-${PATCH:4:2}-${PATCH:6:2}" "+%Y%m%d" >/dev/null 2>&1; then
+            echo "::error::Tag ${GITHUB_REF_NAME} must use a date-based patch in YYYYMMDD form."
+            exit 1
+          fi
           echo "version=${TAG_VERSION}" >> "${GITHUB_OUTPUT}"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Check all app version locations
+        run: node scripts/bump-app-version.mjs --check
 
       - name: Create draft release
         env:
