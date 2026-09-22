@@ -916,6 +916,43 @@ jobs:
           TAG: ${{ needs.prepare.outputs.tag }}
         run: gh release upload "${TAG}" release-assets/* --clobber
 
+      - name: Publish MD5 and SHA1 checksums
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.prepare.outputs.tag }}
+        run: |
+          set -euo pipefail
+          # Runs after both the MCP and CLI archives are on the release, so the
+          # manifests describe every asset instead of a partial upload.
+          work="$(mktemp -d)"
+          gh release download "${TAG}" --repo "${GITHUB_REPOSITORY}" --dir "$work" --clobber
+
+          shopt -s nullglob
+          names=()
+          for candidate in "$work"/*; do
+            [ -f "$candidate" ] || continue
+            case "${candidate##*/}" in
+              checksums-md5.txt|checksums-sha1.txt) continue ;;
+            esac
+            names+=("${candidate##*/}")
+          done
+          shopt -u nullglob
+          if [ "${#names[@]}" -eq 0 ]; then
+            echo "::error::No release assets found to checksum"
+            exit 1
+          fi
+          (
+            cd "$work"
+            md5sum "${names[@]}" > "$RUNNER_TEMP/checksums-md5.txt"
+            sha1sum "${names[@]}" > "$RUNNER_TEMP/checksums-sha1.txt"
+          )
+          gh release upload "${TAG}" \
+            "$RUNNER_TEMP/checksums-md5.txt" \
+            "$RUNNER_TEMP/checksums-sha1.txt" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --clobber
+
   publish-homebrew-formula:
     name: Publish Homebrew formula
     runs-on: ubuntu-latest
