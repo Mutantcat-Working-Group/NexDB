@@ -1646,11 +1646,35 @@ jobs:
           echo "=== Release Notes ==="
           cat RELEASE_NOTES.md
 
+      - name: Generate release checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          names=()
+          for candidate in release/*; do
+            [ -f "$candidate" ] || continue
+            names+=("${candidate##*/}")
+          done
+          shopt -u nullglob
+          if [ "${#names[@]}" -eq 0 ]; then
+            echo "::error::No release artifacts to checksum"
+            exit 1
+          fi
+          (
+            cd release
+            md5sum "${names[@]}" > checksums-md5.txt
+            sha1sum "${names[@]}" > checksums-sha1.txt
+          )
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ steps.release-token.outputs.token }}
-          files: release/*
+          files: |
+            release/*
+            checksums-md5.txt
+            checksums-sha1.txt
           body_path: RELEASE_NOTES.md
           make_latest: false
 
