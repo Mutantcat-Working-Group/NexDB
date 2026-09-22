@@ -214,6 +214,19 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Generate and upload checksums
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p release-assets
+          gh release download "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" --dir release-assets --clobber
+          cd release-assets
+          find . -maxdepth 1 -type f ! -name 'checksums.txt' ! -name 'checksums-md5.txt' ! -name 'checksums-sha1.txt' -print0 | sort -z | xargs -0 -r sha256sum > checksums.txt
+          find . -maxdepth 1 -type f ! -name 'checksums.txt' ! -name 'checksums-md5.txt' ! -name 'checksums-sha1.txt' -print0 | sort -z | xargs -0 -r md5sum > checksums-md5.txt
+          find . -maxdepth 1 -type f ! -name 'checksums.txt' ! -name 'checksums-md5.txt' ! -name 'checksums-sha1.txt' -print0 | sort -z | xargs -0 -r sha1sum > checksums-sha1.txt
+          gh release upload "${GITHUB_REF_NAME}" checksums.txt checksums-md5.txt checksums-sha1.txt --repo "${GITHUB_REPOSITORY}" --clobber
+
       - name: Publish draft release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
