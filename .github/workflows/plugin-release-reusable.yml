@@ -262,3 +262,30 @@ jobs:
           gh release upload "$RELEASE_TAG" "${packages[@]}" release-assets/release-candidates.json \
             --repo "$GITHUB_REPOSITORY" \
             --clobber
+
+          # Publish MD5/SHA1 manifests alongside the packages. The two checksum
+          # files stay excluded so re-publishing a tag keeps the digests stable.
+          shopt -s nullglob
+          names=()
+          for candidate in release-assets/*; do
+            [ -f "$candidate" ] || continue
+            case "${candidate##*/}" in
+              checksums-md5.txt|checksums-sha1.txt) continue ;;
+            esac
+            names+=("${candidate##*/}")
+          done
+          shopt -u nullglob
+          if [ "${#names[@]}" -eq 0 ]; then
+            echo "No release assets were downloaded" >&2
+            exit 1
+          fi
+          (
+            cd release-assets
+            md5sum "${names[@]}" > "$RUNNER_TEMP/checksums-md5.txt"
+            sha1sum "${names[@]}" > "$RUNNER_TEMP/checksums-sha1.txt"
+          )
+          gh release upload "$RELEASE_TAG" \
+            "$RUNNER_TEMP/checksums-md5.txt" \
+            "$RUNNER_TEMP/checksums-sha1.txt" \
+            --repo "$GITHUB_REPOSITORY" \
+            --clobber
