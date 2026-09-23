@@ -246,7 +246,7 @@ export function ContributorsExperience({ data, lang }: { data: ContributorActivi
               {verifiedContributor ? (
                 <button type="button" onClick={() => setCertificateOpen(true)}><Award size={17} /> {text.claim}</button>
               ) : (
-                <a href={`/${lang}/docs/contributing`}>{text.viewGuide}<ExternalLink size={14} /></a>
+                <a href="https://github.com/Mutantcat-Working-Group/NexDB">{text.viewGuide}<ExternalLink size={14} /></a>
               )}
               <button type="button" className={styles.logoutButton} onClick={signOut} aria-label={text.signOut}><LogOut size={16} /></button>
             </div>
