@@ -7868,6 +7868,8 @@ export default withEnglishFallback({
     mcpToolOpenTable: "Tabloyu DBX'te aç",
     mcpToolExecuteAndShow: "Çalıştır ve DBX'te göster",
     supportInfoTitle: "Destek bilgileri",
+    publisher: "Yayıncı",
+    publisherOrg: "异猫工作群（mutantcat.org）",
     supportInfoDescription: "Sorun bildirirken ya da yardım isterken bu ortam ayrıntılarını kopyalayın.",
     supportInfoCopy: "Destek bilgilerini kopyala",
     supportInfoCopied: "Kopyalandı",

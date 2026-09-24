@@ -1,3 +1,5 @@
+// DBX CLI — 由异猫工作群（mutantcat.org）发行
+// GitHub: https://github.com/Mutantcat-Working-Group
 use std::{env, path::PathBuf, process::ExitCode, sync::Arc};
 
 use dbx_core::{
@@ -15,6 +17,8 @@ use serde::Serialize;
 use serde_json::{json, Map, Value};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
+// Help is the only surface where the CLI states who ships it, so keep the line next to VERSION.
+const PUBLISHER_LINE: &str = "DBX CLI — 由异猫工作群（mutantcat.org）发行 · https://github.com/Mutantcat-Working-Group";
 const DIRECT_QUERY_TYPES: &[&str] =
     &["postgres", "redshift", "mysql", "doris", "starrocks", "manticoresearch", "sqlite", "rqlite", "kwdb", "questdb"];
 const BRIDGE_REQUIRED_TYPES: &[&str] = &[
@@ -188,7 +192,7 @@ async fn run(argv: Vec<String>) -> Result<String, (CliError, bool)> {
         return Ok(format!("{VERSION}\n"));
     }
     if flags.args.is_empty() || flags.help || flags.args.first().is_some_and(|arg| arg == "help") {
-        return Ok(format!("{}\n", usage()));
+        return Ok(format!("{}\n{}\n", usage(), PUBLISHER_LINE));
     }
     if flags.args[0] == "doctor" {
         ensure_arg_count(&flags.args, 1, "dbx doctor").map_err(|error| (error, json_output))?;

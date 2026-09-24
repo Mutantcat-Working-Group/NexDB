@@ -6747,6 +6747,8 @@ export default withEnglishFallback({
     jdbcDeleteSuccess: "驅動程式已刪除",
     jdbcNoDrivers: "還沒有匯入 JDBC 驅動程式。",
     supportInfoTitle: "支援資訊",
+    publisher: "發行方",
+    publisherOrg: "异猫工作群（mutantcat.org）",
     supportInfoDescription: "提交 issue 或尋求協助時，可複製這些環境資訊。",
     supportInfoCopy: "複製支援資訊",
     supportInfoCopied: "已複製",

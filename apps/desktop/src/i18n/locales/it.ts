@@ -7715,6 +7715,8 @@ export default withEnglishFallback({
     mcpToolOpenTable: "Apri tabella in DBX",
     mcpToolExecuteAndShow: "Esegui e mostra in DBX",
     supportInfoTitle: "Informazioni di supporto",
+    publisher: "Distributore",
+    publisherOrg: "异猫工作群（mutantcat.org）",
     supportInfoDescription: "Copia questi dettagli dell'ambiente quando apri issue o chiedi aiuto.",
     supportInfoCopy: "Copia informazioni",
     supportInfoCopied: "Copiato",

@@ -8197,6 +8197,8 @@ export default withEnglishFallback({
     mcpToolOpenTable: "在 DBX 中打开表",
     mcpToolExecuteAndShow: "在 DBX 中执行并展示",
     supportInfoTitle: "支持信息",
+    publisher: "发行方",
+    publisherOrg: "异猫工作群（mutantcat.org）",
     supportInfoDescription: "提交 issue 或寻求帮助时，可复制这些环境信息。",
     supportInfoCopy: "复制支持信息",
     supportInfoCopied: "已复制",

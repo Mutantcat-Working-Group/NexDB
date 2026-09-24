@@ -7741,6 +7741,8 @@ export default withEnglishFallback({
     queryExportKeysetOptimizationEnabled: "キーセット最適化を試行",
     queryExportKeysetOptimizationEnabledDescription: "安全に認識された単一テーブルクエリにのみ適用。複雑なクエリは自動的にフォールバックします。",
     supportInfoTitle: "サポート情報",
+    publisher: "発行元",
+    publisherOrg: "异猫工作群（mutantcat.org）",
     supportInfoDescription: "Issueの作成や問い合わせ時に、この環境情報をコピーできます。",
     supportInfoCopy: "サポート情報をコピー",
     supportInfoCopied: "コピーしました",

@@ -7970,6 +7970,8 @@ export default withEnglishFallback({
     mcpToolOpenTable: "Cədvəli DBX-də aç",
     mcpToolExecuteAndShow: "İcra et və DBX-də göstər",
     supportInfoTitle: "Dəstək məlumatları",
+    publisher: "Naşir",
+    publisherOrg: "异猫工作群（mutantcat.org）",
     supportInfoDescription: "Problem bildirərkən və ya kömək istəyərkən bu mühit təfərrüatlarını kopyalayın.",
     supportInfoCopy: "Dəstək məlumatlarını kopyala",
     supportInfoCopied: "Kopyalandı",

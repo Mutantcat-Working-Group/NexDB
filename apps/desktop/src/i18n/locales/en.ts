@@ -8222,6 +8222,8 @@ export default {
     mcpToolOpenTable: "Open table in DBX",
     mcpToolExecuteAndShow: "Execute and show in DBX",
     supportInfoTitle: "Support information",
+    publisher: "Publisher",
+    publisherOrg: "异猫工作群（mutantcat.org）",
     supportInfoDescription: "Copy these environment details when filing issues or asking for help.",
     supportInfoCopy: "Copy support info",
     supportInfoCopied: "Copied",

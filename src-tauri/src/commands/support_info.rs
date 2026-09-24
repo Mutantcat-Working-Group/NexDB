@@ -26,11 +26,21 @@ pub(crate) fn current_app_support_info() -> AppSupportInfo {
 }
 
 #[cfg(any(target_os = "macos", test))]
+pub(crate) const NATIVE_ABOUT_PUBLISHER: &str =
+    "发行方：异猫工作群（mutantcat.org） · https://github.com/Mutantcat-Working-Group";
+
+#[cfg(any(target_os = "macos", test))]
 pub(crate) fn format_support_info_for_native_about() -> String {
     let info = current_app_support_info();
     let operating_system = format_operating_system(&info);
 
-    ["Desktop".to_string(), unknown_if_empty(&operating_system), unknown_if_empty(&info.arch)].join(" • ")
+    [
+        "Desktop".to_string(),
+        unknown_if_empty(&operating_system),
+        unknown_if_empty(&info.arch),
+        NATIVE_ABOUT_PUBLISHER.to_string(),
+    ]
+    .join(" • ")
 }
 
 #[cfg(any(target_os = "macos", test))]
