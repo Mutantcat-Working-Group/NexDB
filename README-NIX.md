@@ -1,3 +1,5 @@
+- **发行方** 由异猫工作群（mutantcat.org）发行，GitHub: https://github.com/Mutantcat-Working-Group
+
 ##  Add to NixOS system configuration
 
 Add DBX as a flake input and include the package in `environment.systemPackages`.

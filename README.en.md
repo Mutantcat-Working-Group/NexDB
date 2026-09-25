@@ -12,6 +12,7 @@
 - Built-in AI SQL assistant: natural-language SQL generation, explanation, optimization, error fixing, and built-in safety checks. Works with Claude, OpenAI, local models via Ollama, and any OpenAI-compatible endpoint.
 - Built-in MCP server, so Claude Code, Cursor, Windsurf, and other AI coding agents can query your configured databases.
 - Query editor, virtualized data grid, schema tools, ER diagram, schema diff, explain plan, import/export/migration/compare, Redis and MongoDB browsers, SSH tunnel, and encrypted config import/export.
+- **Publisher** Mutantcat Working Group (mutantcat.org) · GitHub: https://github.com/Mutantcat-Working-Group
 
 Core value:
 

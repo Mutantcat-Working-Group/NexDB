@@ -13,6 +13,7 @@
 - 内置 AI SQL 助手：自然语言生成 SQL、解释、优化与纠错，内置安全检查；支持 Claude、OpenAI、Ollama 本地模型及 OpenAI 兼容端点。
 - 内置 MCP Server，Claude Code、Cursor、Windsurf 等 AI 编程助手可直接查询已配置的数据库。
 - 查询编辑器、虚拟滚动数据表格、Schema 工具、ER 图、Schema 对比、执行计划、数据导入导出/迁移对比、Redis/MongoDB 专项浏览器、SSH 隧道、加密配置导入导出。
+- **发行方** 由异猫工作群（mutantcat.org）发行，GitHub: https://github.com/Mutantcat-Working-Group
 
 核心价值：
 
