@@ -133,6 +133,46 @@ jobs:
           shared-key: release-${{ matrix.target }}
           cache-on-failure: true
 
+      - name: Create Windows code-signing certificate
+        if: startsWith(matrix.os, 'windows')
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $pfx = Join-Path $env:RUNNER_TEMP 'mutantcat-code-signing.pfx'
+          $password = 'mutantcat'
+          $cert = New-SelfSignedCertificate `
+            -Subject 'CN=Mutantcat Working Group, O=Mutantcat Working Group, C=CN' `
+            -CertStoreLocation 'Cert:\CurrentUser\My' `
+            -KeyUsage DigitalSignature `
+            -Type CodeSigningCert `
+            -KeyExportPolicy Exportable `
+            -KeyLength 2048 `
+            -HashAlgorithm SHA256 `
+            -NotAfter (Get-Date).AddYears(10)
+          Export-PfxCertificate -Cert $cert -FilePath $pfx -Password (ConvertTo-SecureString -String $password -Force -AsPlainText) | Out-Null
+          "PFX_PATH=$pfx" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "SIGN_PASSWORD=$password" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          $signtool = $null
+          foreach ($kit in (Get-ChildItem -Path 'C:\Program Files (x86)\Windows Kits\10\bin' -Directory | Sort-Object Name -Descending)) {
+            $candidate = Join-Path $kit.FullName 'x64\signtool.exe'
+            if (Test-Path $candidate) { $signtool = $candidate; break }
+          }
+          if (-not $signtool) { throw 'signtool.exe not found in the Windows SDK' }
+          "SIGNTOOL_PATH=$signtool" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      # Tauri embeds the binary into NSIS as-is, so sign the application before bundling.
+      - name: Build and sign Windows application
+        if: startsWith(matrix.os, 'windows')
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if (-not $env:PFX_PATH -or -not $env:SIGNTOOL_PATH) { throw 'code-signing setup did not run' }
+          cargo build --release --locked --target ${{ matrix.target }} --manifest-path src-tauri/Cargo.toml
+          $app = "target/${{ matrix.target }}/release/dbx.exe"
+          if (-not (Test-Path $app)) { throw "missing $app" }
+          & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'DBX' "$app"
+          echo "signed $app"
+
       - name: Build Tauri bundle
         env:
           APPLE_SIGNING_IDENTITY: ${{ startsWith(matrix.os, 'macos') && '-' || '' }}
@@ -149,10 +189,16 @@ jobs:
             echo "::error::No DMG was produced for ${{ matrix.target }}"
             exit 1
           fi
+          codesign --force --sign - --timestamp=none "${DMG_PATH}"
+          codesign --verify --strict --verbose=2 "${DMG_PATH}"
+          codesign -dv --verbose=2 "${DMG_PATH}" 2>&1 | tee "${RUNNER_TEMP}/dmg-codesign.txt"
+          grep -qi 'adhoc' "${RUNNER_TEMP}/dmg-codesign.txt"
+          hdiutil verify "${DMG_PATH}"
           MOUNT_POINT="${RUNNER_TEMP}/dmg-verify"
           mkdir -p "${MOUNT_POINT}"
           hdiutil attach -nobrowse -readonly "${DMG_PATH}" -mountpoint "${MOUNT_POINT}"
           trap 'hdiutil detach "${MOUNT_POINT}" >/dev/null 2>&1 || true' EXIT
+          test -L "${MOUNT_POINT}/Applications"
           APP_PATH="$(find "${MOUNT_POINT}" -maxdepth 3 -name '*.app' | head -n 1)"
           if [ -z "${APP_PATH}" ]; then
             echo "::error::No .app bundle found inside ${DMG_PATH}"
@@ -161,17 +207,30 @@ jobs:
           codesign --verify --deep --strict "${APP_PATH}"
           codesign -dv --verbose=2 "${APP_PATH}" 2>&1 | tee "${RUNNER_TEMP}/codesign.txt"
           grep -qi 'adhoc' "${RUNNER_TEMP}/codesign.txt"
-          hdiutil verify "${DMG_PATH}"
 
       - name: Verify NSIS installer
         if: startsWith(matrix.os, 'windows')
         shell: pwsh
         run: |
-          $installer = Get-ChildItem "target/${{ matrix.target }}/release/bundle/nsis" -Filter "*.exe" -File | Select-Object -First 1
-          if ($null -eq $installer) {
+          $ErrorActionPreference = 'Stop'
+          if (-not $env:PFX_PATH -or -not $env:SIGNTOOL_PATH) { throw 'code-signing setup did not run' }
+          $app = "target/${{ matrix.target }}/release/dbx.exe"
+          $signature = Get-AuthenticodeSignature $app
+          if (-not $signature.SignerCertificate -or $signature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
+            throw "$app lost its signature during bundling ($($signature.Status))"
+          }
+          $installers = @(Get-ChildItem "target/${{ matrix.target }}/release/bundle/nsis" -Filter "*.exe" -File)
+          if ($installers.Count -eq 0) {
             throw "No NSIS installer was produced for ${{ matrix.target }}"
           }
-          Write-Host "Built $($installer.FullName)"
+          foreach ($installer in $installers) {
+            & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'DBX Installer' "$($installer.FullName)"
+            $installerSignature = Get-AuthenticodeSignature $installer.FullName
+            if (-not $installerSignature.SignerCertificate -or $installerSignature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
+              throw "Failed to sign $($installer.FullName) ($($installerSignature.Status))"
+            }
+            Write-Host "Built and signed $($installer.FullName)"
+          }
 
       - name: Upload release asset
         env:

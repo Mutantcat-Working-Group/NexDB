@@ -66,8 +66,8 @@
     },
     "windows": {
       "nsis": {
-        "installMode": "currentUser",
-        "languages": ["English", "SimpChinese", "TradChinese"],
+        "installMode": "perMachine",
+        "languages": ["SimpChinese"],
         "template": "windows/nsis/installer.nsi"
       }
     },
