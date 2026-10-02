@@ -10,7 +10,7 @@ Use GitHub's private vulnerability reporting for this repository when available.
 
 Helpful reports include:
 
-- Affected DBX version or commit.
+- Affected NexDB version or commit.
 - Operating system and installation method.
 - The impacted component, such as desktop app, Docker service, CLI, MCP server, or JDBC plugin.
 - Steps to reproduce in a safe test environment.
@@ -24,7 +24,7 @@ Security-sensitive areas include:
 - Database credential handling.
 - SSH tunnel and proxy handling.
 - AI provider keys and OpenAI-compatible endpoint configuration.
-- MCP and CLI access to local DBX connections.
+- MCP and CLI access to local NexDB connections.
 - Docker web service authentication and data directory handling.
 - Plugin package verification, native sidecar execution, sandboxed plugin UI, host bridge permissions, and plugin connection secrets.
 

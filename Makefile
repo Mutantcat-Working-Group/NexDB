@@ -20,7 +20,7 @@ docs/node_modules/.modules.yaml: docs/package.json docs/pnpm-lock.yaml docs/pnpm
 	cd docs && $(PNPM) install --frozen-lockfile
 
 help:
-	@printf '%s\n' 'DBX development targets:'
+	@printf '%s\n' 'NexDB development targets:'
 	@printf '%s\n' ''
 	@printf '%s\n' 'App:'
 	@printf '  %-23s %s\n' 'make' 'Start the local desktop development environment'
@@ -45,7 +45,7 @@ help:
 	@printf '%s\n' ''
 	@printf '%s\n' 'Database test environments:'
 	@printf '  %-23s %s\n' 'make db-list' 'List available database versions'
-	@printf '  %-23s %s\n' 'make db DB=mysql@8.4' 'Start and print DBX connection fields'
+	@printf '  %-23s %s\n' 'make db DB=mysql@8.4' 'Start and print NexDB connection fields'
 	@printf '  %-23s %s\n' 'make db-verify DB=mysql@8.4' 'Start and run smoke checks'
 	@printf '  %-23s %s\n' 'make db-down DB=mysql@8.4' 'Stop an environment'
 	@printf '  %-23s %s\n' 'make db-reset DB=mysql@8.4 CONFIRM=1' 'Delete containers and data'
@@ -63,11 +63,11 @@ docs-install:
 
 ifeq ($(OS),Windows_NT)
 check-tauri-dev-port:
-	@powershell -NoProfile -Command "if (Get-NetTCPConnection -LocalPort $(TAURI_DEV_PORT) -State Listen -ErrorAction SilentlyContinue) { Write-Host 'Port $(TAURI_DEV_PORT) is already in use. DBX Tauri dev requires http://localhost:$(TAURI_DEV_PORT).'; Write-Host ''; Get-NetTCPConnection -LocalPort $(TAURI_DEV_PORT) -State Listen -ErrorAction SilentlyContinue | Format-Table LocalAddress,LocalPort,OwningProcess -AutoSize; Write-Host 'Stop the process above, then run make dev again.'; exit 1 }"
+	@powershell -NoProfile -Command "if (Get-NetTCPConnection -LocalPort $(TAURI_DEV_PORT) -State Listen -ErrorAction SilentlyContinue) { Write-Host 'Port $(TAURI_DEV_PORT) is already in use. NexDB Tauri dev requires http://localhost:$(TAURI_DEV_PORT).'; Write-Host ''; Get-NetTCPConnection -LocalPort $(TAURI_DEV_PORT) -State Listen -ErrorAction SilentlyContinue | Format-Table LocalAddress,LocalPort,OwningProcess -AutoSize; Write-Host 'Stop the process above, then run make dev again.'; exit 1 }"
 else
 check-tauri-dev-port:
 	@if lsof -nP -iTCP:$(TAURI_DEV_PORT) -sTCP:LISTEN >/dev/null 2>&1; then \
-		echo "Port $(TAURI_DEV_PORT) is already in use. DBX Tauri dev requires http://localhost:$(TAURI_DEV_PORT)."; \
+		echo "Port $(TAURI_DEV_PORT) is already in use. NexDB Tauri dev requires http://localhost:$(TAURI_DEV_PORT)."; \
 		echo ""; \
 		lsof -nP -iTCP:$(TAURI_DEV_PORT) -sTCP:LISTEN; \
 		echo ""; \

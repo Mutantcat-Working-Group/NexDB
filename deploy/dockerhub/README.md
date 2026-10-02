@@ -1,6 +1,6 @@
-# DBX
+# NexDB
 
-DBX is a lightweight, self-hosted database client for the browser. It supports 90+ databases, including MySQL, PostgreSQL, SQLite, Redis, MongoDB, DuckDB, ClickHouse, SQL Server, Oracle, and Elasticsearch.
+NexDB is a lightweight, self-hosted database client for the browser. It supports 90+ databases, including MySQL, PostgreSQL, SQLite, Redis, MongoDB, DuckDB, ClickHouse, SQL Server, Oracle, and Elasticsearch.
 
 - Official website: https://dbxio.com
 - Documentation: https://dbxio.com/en/docs/getting-started
@@ -9,7 +9,7 @@ DBX is a lightweight, self-hosted database client for the browser. It supports 9
 
 ## Quick Start
 
-Set a strong access password and start DBX:
+Set a strong access password and start NexDB:
 
 ```bash
 docker run -d \
@@ -65,11 +65,11 @@ docker compose up -d --pull always
 | `DBX_WEB_MCP_ALLOWED_HOSTS` | Not set | Required when native MCP is enabled. Comma-separated public Host authorities, including ports when present. |
 | `DBX_WEB_MCP_ALLOWED_ORIGINS` | Not set | Comma-separated browser Origins allowed to call native MCP. Optional for non-browser MCP clients. |
 
-Persist `/app/data` with a named volume or bind mount. Removing this data removes saved connections and other DBX application data.
+Persist `/app/data` with a named volume or bind mount. Removing this data removes saved connections and other NexDB application data.
 
 ## Native HTTP MCP
 
-Native MCP is disabled by default. When enabled, it is served by the existing DBX Web listener at `/mcp`; no second container port is required. With a host mapping of `4225:4224`, configure the public authority clients use:
+Native MCP is disabled by default. When enabled, it is served by the existing NexDB Web listener at `/mcp`; no second container port is required. With a host mapping of `4225:4224`, configure the public authority clients use:
 
 ```yaml
 environment:
@@ -81,13 +81,13 @@ ports:
 
 The MCP endpoint is `http://localhost:4225/mcp` and requires `Authorization: Bearer <DBX_WEB_MCP_TOKEN>`. For a reverse proxy, set `DBX_WEB_MCP_ALLOWED_HOSTS` to the public hostname (and port if non-default); with `DBX_PUBLIC_BASE_PATH: /dbx`, the endpoint becomes `/dbx/mcp`. Browser-based clients must also set `DBX_WEB_MCP_ALLOWED_ORIGINS` to their exact `https://host[:port]` origin.
 
-The token is a deployment credential: rotate it through your secret manager and restart the container. DBX Desktop offers a local **Rotate Token** action for its separately managed loopback HTTP MCP service.
+The token is a deployment credential: rotate it through your secret manager and restart the container. NexDB Desktop offers a local **Rotate Token** action for its separately managed loopback HTTP MCP service.
 
 DuckDB is delivered as a standalone native driver instead of being embedded in `dbx-web`. Install the DuckDB driver from Driver Manager after the first launch. It is stored under `/app/data/agents` and remains available across container upgrades when `/app/data` is persisted.
 
 ## Reverse Proxy
 
-To publish DBX under a path such as `https://example.com/dbx`, set:
+To publish NexDB under a path such as `https://example.com/dbx`, set:
 
 ```yaml
 environment:
@@ -106,15 +106,15 @@ docker.cnb.cool/dbxio.com/dbx:latest
 
 ## 1Panel
 
-DBX is available from the 1Panel app store. See the official installation guide for port, password, persistence, and access instructions:
+NexDB is available from the 1Panel app store. See the official installation guide for port, password, persistence, and access instructions:
 
 - 中文教程: https://dbxio.com/cn/docs/1panel
 - English guide: https://dbxio.com/en/docs/1panel
 
 ## Tags
 
-- `latest`: latest stable DBX release
-- `<version>`: a specific DBX release
+- `latest`: latest stable NexDB release
+- `<version>`: a specific NexDB release
 - `dev`: current development image
 
 For production deployments, pin a version tag when you need controlled upgrades.

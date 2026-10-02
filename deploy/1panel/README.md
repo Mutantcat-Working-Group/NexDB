@@ -1,4 +1,4 @@
-# DBX
+# NexDB
 
 25+ databases in 15 MB. Desktop & Docker self-hosting, with built-in AI assistant.
 

@@ -8,7 +8,7 @@ body:
       value: |
         用于收集数据库兼容性细节，例如连接失败、schema 读取不完整、字段类型显示错误等。请脱敏。
         This form collects database compatibility details such as connection failures, incomplete schema reads, and incorrect field types. Redact sensitive information.
-        DBX 版本、运行环境、操作系统和系统架构可在应用内通过“设置 → 关于我们 → 复制支持信息 / Support information”一键复制。
+        NexDB 版本、运行环境、操作系统和系统架构可在应用内通过“设置 → 关于我们 → 复制支持信息 / Support information”一键复制。
 
   - type: input
     id: database
@@ -41,9 +41,9 @@ body:
     id: support-info
     attributes:
       label: 支持信息 / Support information
-      description: 打开 DBX 的“设置 → 关于我们”，点击“复制支持信息”，然后粘贴到这里。如无法打开应用，请说明原因。 / Open DBX Settings → About, copy Support Information, and paste it here. Explain if the app cannot open.
+      description: 打开 NexDB 的“设置 → 关于我们”，点击“复制支持信息”，然后粘贴到这里。如无法打开应用，请说明原因。 / Open NexDB Settings → About, copy Support Information, and paste it here. Explain if the app cannot open.
       placeholder: |
-        DBX 版本：v0.5.52
+        NexDB 版本：v0.5.52
         运行环境：桌面端
         操作系统：macOS 26.4
         系统架构：aarch64

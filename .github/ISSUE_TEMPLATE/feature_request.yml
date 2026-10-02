@@ -8,8 +8,8 @@ body:
       value: |
         好的建议最好说明使用场景、数据库类型和期望效果。请避免只写“支持 X”。
         Describe the use case, database type, and desired outcome; avoid requests that only say “support X”.
-        DBX 版本、运行环境、操作系统和系统架构可在应用内通过“设置 → 关于我们 → 复制支持信息”一键复制。
-        You can copy the DBX version, runtime, operating system, and architecture in the app via “Settings → About → Copy support information”.
+        NexDB 版本、运行环境、操作系统和系统架构可在应用内通过“设置 → 关于我们 → 复制支持信息”一键复制。
+        You can copy the NexDB version, runtime, operating system, and architecture in the app via “Settings → About → Copy support information”.
   - type: input
     id: database
     attributes:
@@ -23,7 +23,7 @@ body:
       label: 支持信息 / Support information
       description: 粘贴应用中的支持信息。 / Paste the support information copied from the app.
       placeholder: |
-        DBX 版本 / Version: v0.5.52
+        NexDB 版本 / Version: v0.5.52
         运行环境 / Runtime: Desktop
         操作系统 / OS: macOS 26.4
         系统架构 / Architecture: aarch64
