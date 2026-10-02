@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
   <key>NSLocalNetworkUsageDescription</key>
-  <string>DBX needs local network access to connect to database servers on your LAN.</string>
+  <string>NexDB needs local network access to connect to database servers on your LAN.</string>
   <key>ApplePressAndHoldEnabled</key>
   <false/>
 </dict>

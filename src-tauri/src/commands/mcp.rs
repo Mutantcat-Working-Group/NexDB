@@ -410,7 +410,7 @@ async fn fetch_latest_mcp_version() -> Result<String, String> {
 pub(crate) async fn resolve_mcp_server_command() -> Result<(String, Vec<String>), String> {
     let command = tauri::async_runtime::spawn_blocking(resolve_mcp_server_command_sync)
         .await
-        .map_err(|err| format!("Failed to resolve DBX MCP Server runtime: {err}"))?;
+        .map_err(|err| format!("Failed to resolve NexDB MCP Server runtime: {err}"))?;
     require_managed_mcp_command(command)
 }
 

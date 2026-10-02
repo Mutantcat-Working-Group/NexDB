@@ -758,7 +758,7 @@ fn ensure_connection_in_mcp_scope_with_groups(
 ) -> Result<(), String> {
     if !dbx_core::mcp_policy::policy_allows_connection(policy, group_path, connection_id) {
         return Err(format!(
-            "CONNECTION_OUT_OF_SCOPE: connection '{connection_id}' is not allowed by DBX MCP settings"
+            "CONNECTION_OUT_OF_SCOPE: connection '{connection_id}' is not allowed by NexDB MCP settings"
         ));
     }
     Ok(())
@@ -777,7 +777,7 @@ fn ensure_database_in_mcp_scope(policy: &McpGlobalPolicy, connection_id: &str, d
         Ok(())
     } else {
         Err(format!(
-            "DATABASE_OUT_OF_SCOPE: database '{database}' is not allowed by DBX MCP settings for connection '{connection_id}'"
+            "DATABASE_OUT_OF_SCOPE: database '{database}' is not allowed by NexDB MCP settings for connection '{connection_id}'"
         ))
     }
 }
@@ -825,7 +825,7 @@ async fn ensure_mcp_write_allowed_with_risk(
         ));
     }
     if dangerous && !allow_dangerous_sql {
-        return Err(format!("SQL_BLOCKED: High-risk operation '{action}' is disabled in DBX MCP settings."));
+        return Err(format!("SQL_BLOCKED: High-risk operation '{action}' is disabled in NexDB MCP settings."));
     }
     if config.read_only {
         return Err(format!(
@@ -1197,7 +1197,7 @@ async fn ensure_mcp_sql_allowed(
             )
         {
             return Err(
-                "DATABASE_OUT_OF_SCOPE: SQL references a database that is not allowed by DBX MCP settings for this connection."
+                "DATABASE_OUT_OF_SCOPE: SQL references a database that is not allowed by NexDB MCP settings for this connection."
                     .to_string(),
             );
         }
@@ -1214,7 +1214,7 @@ async fn ensure_mcp_sql_allowed(
         ));
     }
     if !allow_dangerous_sql && dbx_core::sql_risk::is_dangerous_sql_for_database(sql, config.db_type) {
-        return Err("SQL_BLOCKED: High-risk SQL is disabled in DBX MCP settings.".to_string());
+        return Err("SQL_BLOCKED: High-risk SQL is disabled in NexDB MCP settings.".to_string());
     }
     ensure_mcp_connection_sql_write_allowed(config, is_write)?;
     if is_write && dbx_core::production_safety::targets_production_database(config, database, sql) {

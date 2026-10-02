@@ -540,14 +540,14 @@ fn confirm_keep_compatibility_mode() -> bool {
     let locale = sys_locale::get_locale().unwrap_or_default().to_ascii_lowercase();
     let body = if locale.starts_with("zh") {
         format!(
-            "DBX 已通过企业环境兼容模式恢复主界面。\n\n该模式会为 WebView2 使用独立数据目录，并关闭沙箱和 GPU 加速，仅建议在标准模式无法显示窗口时保留。\n\n是否让当前 DBX 版本后续启动直接使用兼容模式？\n选择“否”后，下次启动会重新尝试标准模式。\n\n本次恢复日志：{log_path}"
+            "NexDB 已通过企业环境兼容模式恢复主界面。\n\n该模式会为 WebView2 使用独立数据目录，并关闭沙箱和 GPU 加速，仅建议在标准模式无法显示窗口时保留。\n\n是否让当前 NexDB 版本后续启动直接使用兼容模式？\n选择“否”后，下次启动会重新尝试标准模式。\n\n本次恢复日志：{log_path}"
         )
     } else {
         format!(
-            "DBX restored the main window using enterprise environment compatibility mode.\n\nThis mode uses an isolated WebView2 data directory and disables the sandbox and GPU acceleration. Keep it only when the standard mode cannot display the window.\n\nUse compatibility mode directly for future launches of this DBX version?\nChoose No to retry standard mode on the next launch.\n\nRecovery log: {log_path}"
+            "NexDB restored the main window using enterprise environment compatibility mode.\n\nThis mode uses an isolated WebView2 data directory and disables the sandbox and GPU acceleration. Keep it only when the standard mode cannot display the window.\n\nUse compatibility mode directly for future launches of this NexDB version?\nChoose No to retry standard mode on the next launch.\n\nRecovery log: {log_path}"
         )
     };
-    let title = "DBX".encode_utf16().chain(std::iter::once(0)).collect::<Vec<_>>();
+    let title = "NexDB".encode_utf16().chain(std::iter::once(0)).collect::<Vec<_>>();
     let body = body.encode_utf16().chain(std::iter::once(0)).collect::<Vec<_>>();
     unsafe {
         MessageBoxW(
@@ -570,13 +570,13 @@ fn show_recovery_failure_message() {
         startup_log_path().map(|path| path.display().to_string()).unwrap_or_else(|| "startup.log".to_string());
     let locale = sys_locale::get_locale().unwrap_or_default().to_ascii_lowercase();
     let body = if locale.starts_with("zh") {
-        format!("DBX 已尝试企业环境兼容模式，但主窗口仍未显示。\n\n请将此日志发给维护者：{log_path}")
+        format!("NexDB 已尝试企业环境兼容模式，但主窗口仍未显示。\n\n请将此日志发给维护者：{log_path}")
     } else {
         format!(
-            "DBX tried enterprise environment compatibility mode, but the main window was still not visible.\n\nPlease send this log to the maintainer: {log_path}"
+            "NexDB tried enterprise environment compatibility mode, but the main window was still not visible.\n\nPlease send this log to the maintainer: {log_path}"
         )
     };
-    windows_ok_message("DBX", &body);
+    windows_ok_message("NexDB", &body);
 }
 
 #[cfg(not(target_os = "windows"))]

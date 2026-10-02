@@ -170,7 +170,7 @@ jobs:
           cargo build --release --locked --target ${{ matrix.target }} --manifest-path src-tauri/Cargo.toml
           $app = "target/${{ matrix.target }}/release/dbx.exe"
           if (-not (Test-Path $app)) { throw "missing $app" }
-          & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'DBX' "$app"
+          & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'NexDB' "$app"
           echo "signed $app"
 
       - name: Build Tauri bundle
@@ -224,7 +224,7 @@ jobs:
             throw "No NSIS installer was produced for ${{ matrix.target }}"
           }
           foreach ($installer in $installers) {
-            & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'DBX Installer' "$($installer.FullName)"
+            & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'NexDB Installer' "$($installer.FullName)"
             $installerSignature = Get-AuthenticodeSignature $installer.FullName
             if (-not $installerSignature.SignerCertificate -or $installerSignature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
               throw "Failed to sign $($installer.FullName) ($($installerSignature.Status))"
