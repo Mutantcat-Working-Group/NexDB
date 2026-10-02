@@ -160,19 +160,6 @@ jobs:
           if (-not $signtool) { throw 'signtool.exe not found in the Windows SDK' }
           "SIGNTOOL_PATH=$signtool" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
 
-      # Tauri embeds the binary into NSIS as-is, so sign the application before bundling.
-      - name: Build and sign Windows application
-        if: startsWith(matrix.os, 'windows')
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = 'Stop'
-          if (-not $env:PFX_PATH -or -not $env:SIGNTOOL_PATH) { throw 'code-signing setup did not run' }
-          cargo build --release --locked --target ${{ matrix.target }} --manifest-path src-tauri/Cargo.toml
-          $app = "target/${{ matrix.target }}/release/dbx.exe"
-          if (-not (Test-Path $app)) { throw "missing $app" }
-          & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'NexDB' "$app"
-          echo "signed $app"
-
       - name: Build Tauri bundle
         env:
           APPLE_SIGNING_IDENTITY: ${{ startsWith(matrix.os, 'macos') && '-' || '' }}
@@ -208,28 +195,30 @@ jobs:
           codesign -dv --verbose=2 "${APP_PATH}" 2>&1 | tee "${RUNNER_TEMP}/codesign.txt"
           grep -qi 'adhoc' "${RUNNER_TEMP}/codesign.txt"
 
-      - name: Verify NSIS installer
+      # Tauri rebuilds the application with the custom-protocol feature and patches
+      # the executable while compiling the NSIS package, so anything signed before
+      # bundling ends up unsigned. Sign the finished artifacts instead.
+      - name: Sign and verify Windows bundles
         if: startsWith(matrix.os, 'windows')
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
           if (-not $env:PFX_PATH -or -not $env:SIGNTOOL_PATH) { throw 'code-signing setup did not run' }
-          $app = "target/${{ matrix.target }}/release/nexdb.exe"
-          $signature = Get-AuthenticodeSignature $app
-          if (-not $signature.SignerCertificate -or $signature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
-            throw "$app lost its signature during bundling ($($signature.Status))"
-          }
           $installers = @(Get-ChildItem "target/${{ matrix.target }}/release/bundle/nsis" -Filter "*.exe" -File)
           if ($installers.Count -eq 0) {
             throw "No NSIS installer was produced for ${{ matrix.target }}"
           }
-          foreach ($installer in $installers) {
-            & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'NexDB Installer' "$($installer.FullName)"
-            $installerSignature = Get-AuthenticodeSignature $installer.FullName
-            if (-not $installerSignature.SignerCertificate -or $installerSignature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
-              throw "Failed to sign $($installer.FullName) ($($installerSignature.Status))"
+          $artifacts = @("target/${{ matrix.target }}/release/nexdb.exe")
+          $artifacts += $installers | ForEach-Object { $_.FullName }
+          foreach ($artifact in $artifacts) {
+            if (-not (Test-Path -LiteralPath $artifact -PathType Leaf)) { throw "Missing Windows artifact: $artifact" }
+            & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'NexDB' "$artifact"
+            if ($LASTEXITCODE -ne 0) { throw "signtool failed for $artifact ($LASTEXITCODE)" }
+            $signature = Get-AuthenticodeSignature -LiteralPath $artifact
+            if (-not $signature.SignerCertificate -or $signature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
+              throw "$artifact is missing the expected signature ($($signature.Status))"
             }
-            Write-Host "Built and signed $($installer.FullName)"
+            Write-Host "Signed and verified $artifact"
           }
 
       - name: Upload release asset
