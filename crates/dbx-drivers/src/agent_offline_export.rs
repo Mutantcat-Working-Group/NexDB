@@ -1012,7 +1012,9 @@ fn sha256_file(path: &Path) -> Result<String, String> {
 
 fn unavailable_reason_label(reason: AgentOfflineExportUnavailableReason) -> &'static str {
     match reason {
-        AgentOfflineExportUnavailableReason::UnmanagedInstall => "the artifact is not tracked as a NexDB-managed install",
+        AgentOfflineExportUnavailableReason::UnmanagedInstall => {
+            "the artifact is not tracked as a NexDB-managed install"
+        }
         AgentOfflineExportUnavailableReason::LocalInstall => "locally imported Agent builds are not redistributable",
         AgentOfflineExportUnavailableReason::LaunchConfig => "custom launch configurations are machine-local",
         AgentOfflineExportUnavailableReason::MissingArtifact => "the installed Agent artifact is missing",

@@ -106,7 +106,8 @@ mod tests {
 
     #[test]
     fn mirror_download_candidates_prefer_selected_source() {
-        let github_url = "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-latest/agent-registry.json";
+        let github_url =
+            "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-latest/agent-registry.json";
         assert_eq!(
             DownloadSource::Cnb.download_candidate_urls(github_url, "agents/agent-registry.json").unwrap(),
             vec![

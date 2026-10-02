@@ -19,6 +19,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Update Docker Hub overview
+        if: ${{ secrets.DOCKERHUB_USERNAME != '' && secrets.DOCKERHUB_TOKEN != '' }}
         uses: peter-evans/dockerhub-description@v5
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}

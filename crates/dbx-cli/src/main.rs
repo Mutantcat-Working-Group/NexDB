@@ -18,7 +18,8 @@ use serde_json::{json, Map, Value};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 // Help is the only surface where the CLI states who ships it, so keep the line next to VERSION.
-const PUBLISHER_LINE: &str = "NexDB CLI — 由异猫工作群（mutantcat.org）发行 · https://github.com/Mutantcat-Working-Group";
+const PUBLISHER_LINE: &str =
+    "NexDB CLI — 由异猫工作群（mutantcat.org）发行 · https://github.com/Mutantcat-Working-Group";
 const DIRECT_QUERY_TYPES: &[&str] =
     &["postgres", "redshift", "mysql", "doris", "starrocks", "manticoresearch", "sqlite", "rqlite", "kwdb", "questdb"];
 const BRIDGE_REQUIRED_TYPES: &[&str] = &[

@@ -16,7 +16,7 @@ const baseIssue = {
   state: "open",
   title: "[Bug] Grid column alignment is inconsistent",
   body: "### Description\n\nOnly the column header is misaligned; queries and editing work.\n\n"
-    + "### Priority (urgency)\n\nP0 Must fix next release\n\n### Additional information\n\nDBX on Linux.",
+    + "### Priority (urgency)\n\nP0 Must fix next release\n\n### Additional information\n\nNexDB on Linux.",
   labels: [{ name: "bug" }, { name: "db/mysql" }, { name: "user-priority/P0" }],
 };
 

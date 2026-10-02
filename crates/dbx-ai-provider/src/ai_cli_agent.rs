@@ -181,7 +181,8 @@ pub fn build_cli_agent_prompt(
     let mut sections = vec![
         format!("You are running inside NexDB Desktop as the {provider_label} CLI provider."),
         database_access.to_string(),
-        "Do not modify files or run shell commands. The NexDB MCP server is the only intended tool surface.".to_string(),
+        "Do not modify files or run shell commands. The NexDB MCP server is the only intended tool surface."
+            .to_string(),
         String::new(),
         "## System instructions".to_string(),
         system_prompt.to_string(),

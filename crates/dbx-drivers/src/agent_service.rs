@@ -189,7 +189,8 @@ fn replace_old_jre_dir(path: &Path) -> Result<Option<PathBuf>, String> {
     }
 }
 
-const REGISTRY_PATH: &str = "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-latest/agent-registry.json";
+const REGISTRY_PATH: &str =
+    "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-latest/agent-registry.json";
 const REGISTRY_R2_PATH: &str = "agents/agent-registry.json";
 
 static REGISTRY_CACHE: std::sync::LazyLock<
