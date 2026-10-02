@@ -1,8 +1,8 @@
 {
   "sources": {
     "apps/desktop/public/fonts/geist-latin-wght-normal.woff2": "19f9c92546aa300c312235e3125af1b81394d8db9a4bc4a425cd5b641d2d54e1",
-    "apps/desktop/src/docs-export/ExportApp.vue": "499ba5beb89cc411ef32f92d9aaff356a43663f5f455a0a168bb3ade86dd143c",
-    "apps/desktop/src/docs-export/export.css": "c96e413fb305e7b06932248d6f03e68ad05928954dc89bac075a79a6d4cf4a9d",
+    "apps/desktop/src/docs-export/ExportApp.vue": "1edcafa0424cc95778a9a959ed15cd484a3dfad6313e61432e8a2bb4793580b0",
+    "apps/desktop/src/docs-export/export.css": "721f2864125ce7231209b7647e9a69bca44e7d1306a5bcaa3a487a8f35c08d32",
     "apps/desktop/src/docs-export/exportPayload.ts": "d2355903843aa8a2e37b83827de9c4df2187d6df92fd514e3ab2fd89390e4b6c",
     "apps/desktop/src/docs-export/exportTranslate.ts": "2e01bf9ad20fb38f3dfab96769ed87c44a24e5eb8d0aa352f4b398606fb77e3b",
     "apps/desktop/src/docs-export/main.ts": "08c541f19fa6e368ea42fd096320da4312624f1961cd2b59387aa618288fc397",
@@ -20,10 +20,10 @@
     "apps/desktop/src/docs/components/WarningBanner.vue": "5b9ea68de1c7221cee9c5a5af6488316902fcc5c3a2bbce5d69e0ab767c1b059",
     "apps/desktop/src/docs/components/WikiIndex.vue": "eea6724bc705b98969eceb56852928cede06ca8b32c0b125f425eec2c57bd7e6",
     "apps/desktop/src/docs/diagramGeometry.ts": "839ba0fb02560bfcd4cb686568ec664de1c041a6c364b8c7b27438ce884f9dbf",
-    "apps/desktop/src/docs/docs.css": "7a2b1f5344b453c7d3673eff7027f7226d0011eb714561e33d1a3e19bc3431c9",
+    "apps/desktop/src/docs/docs.css": "314c463d555b96790dfecbfde1bb4d2ae89d02291749ec5c7bc84aab2226279b",
     "apps/desktop/src/docs/docsIndex.ts": "7e993b2039761c69dca2a1eb440eae1d24ac0e8d67802091221f52aaf73a5d72",
     "apps/desktop/src/docs/docsKeys.ts": "f98396155fd83b595080a9311092b86cd50d637f01b0986abe17d56568bdbb24",
-    "apps/desktop/src/docs/docsRoute.ts": "bd7a97b31bef4825e518596937c302a8792ea45e2e31c5b7a1066390aa4de5d2",
+    "apps/desktop/src/docs/docsRoute.ts": "9539d81bbfc1f352e092791dd25ae8895091e1fd6732d5c9a4139f5088427225",
     "apps/desktop/src/docs/docsSearch.ts": "2ca70bb8c31510823058b62402999d158592844a6f57205b5a73019d320ef84f",
     "apps/desktop/src/docs/docsWarnings.ts": "0378b27c0c7c841fc9703f4522e13944ee1116db2fbda823f9cd7a8e8fdd3134",
     "apps/desktop/src/docs/groupColor.ts": "a6cee9c5af8e531eaf15486678307b8cad41e75b9ec688ebae6f33c8a0da6a73",
@@ -39,7 +39,7 @@
     "apps/desktop/src/lib/app/localeOptions.ts": "2c19ecb7c91050d5f1c84c381606087ada11870d3ee95029362f84f34de23239",
     "apps/desktop/src/lib/common/utils.ts": "76c4b2af1e03edeb8db389d9b2c1b56b72a57a1b5198d4e224671c1445c527da",
     "apps/desktop/src/lib/diagram/erDiagram.ts": "e28aa2b5fbba001ae78bc0c4218b11f93b0e14ab9f54562f14254386b98bad11",
-    "apps/desktop/src/styles/tokens.css": "5d0dd04cb28e5354a57ca7365418923aa912ee0cf28e1d0665734de04493c533",
+    "apps/desktop/src/styles/tokens.css": "1671a4344ecb7d952466ae99bc9a488e8a6a9c5448c1c05a0b0cf3dbc7f30bae",
     "apps/desktop/tsconfig.json": "ee02ba8f2f257b86235cd3053e8d6fbfefd7c39e0807b4ea5e36e133a78e836c",
     "apps/desktop/vite.docs-export.config.ts": "833bc2cbd99f9c0740cbc1584640458492bad75c9518db4d1ce0edd6958881ec"
   },

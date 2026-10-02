@@ -56,7 +56,8 @@ pub fn is_manual_transaction_session_expired_error(error: &str) -> bool {
 /// shared-pool reconnect.
 pub fn is_pool_saturation_error(err: &str) -> bool {
     let lower = err.to_lowercase();
-    lower.contains("connection pool checkout timed out [stage=wait") || lower.contains("dbx metadata pool is busy")
+    lower.contains("connection pool checkout timed out [stage=wait")
+        || lower.contains(&METADATA_POOL_BUSY_ERROR.to_lowercase())
 }
 /// Fallback when a Mongo connection hits the generic SQL executor instead of the shell path.
 /// Wording must match packages/mongo-shell `MONGO_SHELL_COMMAND_HINT`
