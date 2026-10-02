@@ -21,6 +21,8 @@ jobs:
   sync-cnb:
     name: Sync to CNB
     runs-on: ubuntu-latest
+    env:
+      CNB_TOKEN: ${{ secrets.CNB_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -28,8 +30,7 @@ jobs:
           fetch-depth: 0
 
       - name: Push to CNB
-        env:
-          CNB_TOKEN: ${{ secrets.CNB_TOKEN }}
+        if: env.CNB_TOKEN != ''
         run: |
           set -euo pipefail
           git remote add cnb "https://cnb:${CNB_TOKEN}@cnb.cool/dbxio.com/dbx.git"
@@ -42,6 +43,8 @@ jobs:
   sync-atomgit:
     name: Sync to AtomGit
     runs-on: ubuntu-latest
+    env:
+      ATOMGIT_TOKEN: ${{ secrets.ATOMGIT_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -49,8 +52,7 @@ jobs:
           fetch-depth: 0
 
       - name: Push to AtomGit
-        env:
-          ATOMGIT_TOKEN: ${{ secrets.ATOMGIT_TOKEN }}
+        if: env.ATOMGIT_TOKEN != ''
         run: |
           set -euo pipefail
           git remote add atomgit "https://t8y2:${ATOMGIT_TOKEN}@atomgit.com/t8y2/dbx.git"
@@ -63,6 +65,8 @@ jobs:
   sync-gitee:
     name: Sync to Gitee
     runs-on: ubuntu-latest
+    env:
+      GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -70,8 +74,7 @@ jobs:
           fetch-depth: 0
 
       - name: Push to Gitee
-        env:
-          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+        if: env.GITEE_TOKEN != ''
         run: |
           set -euo pipefail
           git remote add gitee "https://codetty:${GITEE_TOKEN}@gitee.com/codetty/dbx.git"
