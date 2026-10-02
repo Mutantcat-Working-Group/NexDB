@@ -96,7 +96,7 @@ latest-en.json
 
 test.pdb
 portable/
-DBX_*_x64-portable.zip
+NexDB_*_x64-portable.zip
 .agents/skills
 .pnpm-store/*
 .dbx-web

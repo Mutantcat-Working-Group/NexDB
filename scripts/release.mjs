@@ -368,10 +368,10 @@ function validateRollbackRelease(rollbackRelease, latestRelease) {
   // releases intentionally ship without the updater latest.json, so it is not
   // part of the required rollback asset set.
   const requiredAssets = [
-    [`DBX_${version}_arm64.dmg`, `DBX_${version}_aarch64.dmg`],
-    [`DBX_${version}_x64.dmg`],
-    [`DBX_${version}_x64-setup.exe`],
-    [`DBX_${version}_arm64-setup.exe`],
+    [`NexDB_${version}_arm64.dmg`, `NexDB_${version}_aarch64.dmg`],
+    [`NexDB_${version}_x64.dmg`],
+    [`NexDB_${version}_x64-setup.exe`],
+    [`NexDB_${version}_arm64-setup.exe`],
   ];
   const assetNames = new Set(rollbackRelease.assets.map((asset) => asset.name));
   const missingAssets = requiredAssets
@@ -733,7 +733,7 @@ function fail(message) {
 function printHelp() {
   console.log(`Usage: node scripts/release.mjs [packages|agents|app|rollback] [patch|minor|major|version] [options]
 
-Unified release and emergency rollback trigger for DBX packages, agents, and app distribution.
+Unified release and emergency rollback trigger for NexDB packages, agents, and app distribution.
 
 Targets:
   packages              Trigger Node Packages Release via gh workflow run

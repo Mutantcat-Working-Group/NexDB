@@ -41,10 +41,10 @@ function createMockGh() {
       "  const version = tagName.slice(1);",
       "  const assets = [",
       '  ...(process.env.MOCK_NO_LATEST === "1" ? [] : ["latest.json"]),',
-      '    "DBX_" + version + "_" + (process.env.MOCK_ARM64_DMG_ARCH || "arm64") + ".dmg",',
-      '    "DBX_" + version + "_x64.dmg",',
-      '    "DBX_" + version + "_x64-setup.exe",',
-      '    "DBX_" + version + "_arm64-setup.exe",',
+      '    "NexDB_" + version + "_" + (process.env.MOCK_ARM64_DMG_ARCH || "arm64") + ".dmg",',
+      '    "NexDB_" + version + "_x64.dmg",',
+      '    "NexDB_" + version + "_x64-setup.exe",',
+      '    "NexDB_" + version + "_arm64-setup.exe",',
       "  ].map((name) => ({ name }));",
       '  process.stdout.write(JSON.stringify({ tagName, isDraft: false, isPrerelease: false, publishedAt: "2026-07-21T00:00:00Z", assets }));',
       "  process.exit(0);",
@@ -124,7 +124,7 @@ test("rollback rejects a release missing both arm64 dmg asset names", () => {
   });
 
   assert.equal(result.status, 1);
-  assert.match(result.stderr, /missing required distribution assets: DBX_0\.5\.63_arm64\.dmg or DBX_0\.5\.63_aarch64\.dmg/);
+  assert.match(result.stderr, /missing required distribution assets: NexDB_0\.5\.63_arm64\.dmg or NexDB_0\.5\.63_aarch64\.dmg/);
 });
 
 test("rollback accepts installer-only releases without latest.json", () => {

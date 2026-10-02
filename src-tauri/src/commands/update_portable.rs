@@ -60,7 +60,7 @@ fn portable_arch_label(arch: &str) -> Result<&'static str, String> {
 pub(super) fn portable_asset_name(version: &str, arch: &str) -> Result<String, String> {
     let version = parse_portable_version(version, "requested")?;
     let arch = portable_arch_label(arch)?;
-    Ok(format!("DBX_{version}_{arch}-portable.zip"))
+    Ok(format!("NexDB_{version}_{arch}-portable.zip"))
 }
 
 pub(super) fn verify_portable_archive(
@@ -365,8 +365,8 @@ mod tests {
 
     #[test]
     fn builds_portable_asset_names_for_windows_architectures() {
-        assert_eq!(portable_asset_name("0.5.64", "x86_64").unwrap(), "DBX_0.5.64_x64-portable.zip");
-        assert_eq!(portable_asset_name("v0.5.64-beta.1", "aarch64").unwrap(), "DBX_0.5.64-beta.1_arm64-portable.zip");
+        assert_eq!(portable_asset_name("0.5.64", "x86_64").unwrap(), "NexDB_0.5.64_x64-portable.zip");
+        assert_eq!(portable_asset_name("v0.5.64-beta.1", "aarch64").unwrap(), "NexDB_0.5.64-beta.1_arm64-portable.zip");
         assert!(portable_asset_name("0.5.64", "x86").is_err());
         assert!(portable_asset_name("../../0.5.64", "x86_64").is_err());
     }

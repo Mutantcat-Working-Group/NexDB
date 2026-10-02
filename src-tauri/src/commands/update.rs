@@ -1069,11 +1069,11 @@ mod tests {
         assert_eq!(candidates.len(), 2);
         assert_eq!(
             candidates[0].archive_url,
-            format!("{R2_LATEST_RELEASE_DOWNLOAD_PREFIX}DBX_0.5.64_x64-portable.zip")
+            format!("{R2_LATEST_RELEASE_DOWNLOAD_PREFIX}NexDB_0.5.64_x64-portable.zip")
         );
         assert_eq!(
             candidates[1].archive_url,
-            format!("{GITHUB_RELEASE_DOWNLOAD_PREFIX}v0.5.64/DBX_0.5.64_x64-portable.zip")
+            format!("{GITHUB_RELEASE_DOWNLOAD_PREFIX}v0.5.64/NexDB_0.5.64_x64-portable.zip")
         );
         assert!(candidates.iter().all(|candidate| candidate.signature_url == format!("{}.sig", candidate.archive_url)));
     }
@@ -1083,11 +1083,11 @@ mod tests {
         let candidates = UpdateDownloadSource::Cnb.portable_asset_candidates("v0.5.64", "aarch64").unwrap();
         assert_eq!(
             candidates[0].archive_url,
-            format!("{CNB_RELEASE_DOWNLOAD_PREFIX}v0.5.64/DBX_0.5.64_arm64-portable.zip")
+            format!("{CNB_RELEASE_DOWNLOAD_PREFIX}v0.5.64/NexDB_0.5.64_arm64-portable.zip")
         );
         assert_eq!(
             candidates[1].archive_url,
-            format!("{R2_LATEST_RELEASE_DOWNLOAD_PREFIX}DBX_0.5.64_arm64-portable.zip")
+            format!("{R2_LATEST_RELEASE_DOWNLOAD_PREFIX}NexDB_0.5.64_arm64-portable.zip")
         );
     }
 

@@ -17,7 +17,7 @@ permissions:
 
 env:
   APP_NAME: dbx
-  PRODUCT_NAME: DBX
+  PRODUCT_NAME: NexDB
   REPO_OWNER: t8y2
 
 jobs:
@@ -111,13 +111,13 @@ jobs:
                    intel: "__SHA_X64__"
 
             url "https://github.com/__OWNER__/__APP__/releases/download/v#{version}/__PRODUCT___#{version}_#{arch}.dmg"
-            name "DBX"
+            name "NexDB"
             desc "Database management tool"
             homepage "https://dbxio.com/"
 
             depends_on macos: :big_sur
 
-            app "DBX.app"
+            app "NexDB.app"
 
             zap trash: [
               "~/Library/Application Support/org.mutantcat.app",

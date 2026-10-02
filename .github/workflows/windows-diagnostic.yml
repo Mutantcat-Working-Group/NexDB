@@ -43,16 +43,16 @@ jobs:
       - name: Package diagnostic portable ZIP
         shell: pwsh
         run: |
-          $portableDir = "diagnostic-portable\DBX-diagnostic-x64"
+          $portableDir = "diagnostic-portable\NexDB-diagnostic-x64"
           New-Item -ItemType Directory -Force -Path $portableDir | Out-Null
           Copy-Item "target\x86_64-pc-windows-msvc\release\dbx.exe" (Join-Path $portableDir "DBX.exe") -Force
           Copy-Item "LICENSE" (Join-Path $portableDir "LICENSE") -Force
           Copy-Item "README.md" (Join-Path $portableDir "README.md") -Force
           Set-Content -Path (Join-Path $portableDir "portable.dbx") -Value "" -NoNewline
-          Compress-Archive -Path (Join-Path $portableDir "*") -DestinationPath "DBX-diagnostic-x64-portable.zip" -Force
+          Compress-Archive -Path (Join-Path $portableDir "*") -DestinationPath "NexDB-diagnostic-x64-portable.zip" -Force
 
       - name: Upload diagnostic artifact
         uses: actions/upload-artifact@v4
         with:
-          name: DBX-diagnostic-x64-portable
-          path: DBX-diagnostic-x64-portable.zip
+          name: NexDB-diagnostic-x64-portable
+          path: NexDB-diagnostic-x64-portable.zip
