@@ -1,4 +1,4 @@
-//! Helpers for interpreting the arguments DBX is launched with.
+//! Helpers for interpreting the arguments NexDB is launched with.
 //!
 //! The Linux desktop entry uses the `%U` field code so one `Exec=` line can serve
 //! both the `dbx://` scheme and the file associations. With `%U` a file manager may

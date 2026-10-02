@@ -1697,7 +1697,7 @@ describe("useDataGridExport prepared row statements", () => {
 });
 
 // issue #7471：文本型 MySQL VARBINARY 复制单元格/多选/整行时，外部剪贴板应呈现原始字符串；
-// SQL 路径与 DBX 内部网格回粘仍保留 hex 以保证 byte-for-byte round-trip，非文本二进制也始终保持 hex。
+// SQL 路径与 NexDB 内部网格回粘仍保留 hex 以保证 byte-for-byte round-trip，非文本二进制也始终保持 hex。
 describe("useDataGridExport VARBINARY 文本复制 (#7471)", () => {
   const varbinTable: DataGridTableMeta = {
     tableName: "test_varbin",
@@ -1722,7 +1722,7 @@ describe("useDataGridExport VARBINARY 文本复制 (#7471)", () => {
 
     expect(extractDataGridSelection).toHaveBeenCalledWith(expect.objectContaining({ extractor: "raw", rows: [["abc"]] }));
     expect(copyToClipboard).toHaveBeenCalledWith("abc");
-    // OS 剪贴板是文本，DBX 内部剪贴板仍保留原 hex，粘回 VARBINARY 时不会重编码或丢字节。
+    // OS 剪贴板是文本，NexDB 内部剪贴板仍保留原 hex，粘回 VARBINARY 时不会重编码或丢字节。
     expect(parseDataGridClipboard("abc")).toEqual([["0x616263"]]);
   });
 

@@ -1,5 +1,5 @@
 #[tokio::test]
-#[ignore = "requires the remote DBX mTLS smoke-test containers and local client certificates"]
+#[ignore = "requires the remote NexDB mTLS smoke-test containers and local client certificates"]
 async fn live_mysql_mtls_connection_succeeds() {
     let url = std::env::var("DBX_LIVE_MYSQL_MTLS_URL").expect("DBX_LIVE_MYSQL_MTLS_URL");
     let ca = std::env::var("DBX_LIVE_MYSQL_MTLS_CA").ok();
@@ -14,7 +14,7 @@ async fn live_mysql_mtls_connection_succeeds() {
 }
 
 #[tokio::test]
-#[ignore = "requires the remote DBX mTLS smoke-test containers and local client certificates"]
+#[ignore = "requires the remote NexDB mTLS smoke-test containers and local client certificates"]
 async fn live_postgres_mtls_connection_succeeds() {
     let url = std::env::var("DBX_LIVE_POSTGRES_MTLS_URL").expect("DBX_LIVE_POSTGRES_MTLS_URL");
 

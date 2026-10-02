@@ -12,15 +12,15 @@ test("offline download catalog includes the JDBC plugin ZIP", () => {
   const catalog = buildAgentDownloadCatalog([]);
 
   assert.deepEqual(catalog.jdbcPlugin, {
-    label: "DBX JDBC Plugin",
+    label: "NexDB JDBC Plugin",
     filename: "dbx-jdbc-plugin-latest.zip",
     url: "https://dl.dbxio.com/releases/latest/dbx-jdbc-plugin-latest.zip",
   });
 });
 
 test("versioned release assets expose GitHub and CNB download links", () => {
-  assert.deepEqual(downloadLinksFor("https://github.com/t8y2/dbx/releases/download/agents-v0.2.64/dbx-agents-offline-macos-aarch64.zip"), [
-    { source: "github", url: "https://github.com/t8y2/dbx/releases/download/agents-v0.2.64/dbx-agents-offline-macos-aarch64.zip" },
+  assert.deepEqual(downloadLinksFor("https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-v0.2.64/dbx-agents-offline-macos-aarch64.zip"), [
+    { source: "github", url: "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-v0.2.64/dbx-agents-offline-macos-aarch64.zip" },
     { source: "cnb", url: "https://cnb.cool/dbxio.com/dbx/-/releases/download/agents-v0.2.64/dbx-agents-offline-macos-aarch64.zip" },
   ]);
 });
@@ -45,7 +45,7 @@ test("catalog falls back from R2 to CNB without using GitHub API", async () => {
           access: {
             version: accessVersion,
             jar: {
-              url: `https://github.com/t8y2/dbx/releases/download/agents-v0.2.64/dbx-agent-access-${accessVersion}.tar.zst`,
+              url: `https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-v0.2.64/dbx-agent-access-${accessVersion}.tar.zst`,
               size: 1,
               format: "tar_zstd",
             },
@@ -55,7 +55,7 @@ test("catalog falls back from R2 to CNB without using GitHub API", async () => {
           "21": {
             platforms: {
               "macos-aarch64": {
-                url: "https://github.com/t8y2/dbx/releases/download/agents-v0.2.64/dbx-jre-21-macos-aarch64.tar.zst",
+                url: "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-v0.2.64/dbx-jre-21-macos-aarch64.tar.zst",
                 size: 1,
                 format: "tar_zstd",
               },
@@ -73,7 +73,7 @@ test("catalog falls back from R2 to CNB without using GitHub API", async () => {
   assert.equal(catalog?.drivers[0]?.version, accessVersion);
   assert.equal(catalog?.jres[0]?.platformKey, "macos-aarch64");
   assert.equal(catalog?.bundles[0]?.platformKey, "macos-aarch64");
-  assert.equal(catalog?.bundles[0]?.url, "https://github.com/t8y2/dbx/releases/download/agents-v0.2.64/dbx-agents-offline-macos-aarch64.zip");
+  assert.equal(catalog?.bundles[0]?.url, "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-v0.2.64/dbx-agents-offline-macos-aarch64.zip");
 });
 
 test("unknown fallback asset sizes render as unavailable", () => {

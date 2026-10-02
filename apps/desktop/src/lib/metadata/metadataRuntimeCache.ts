@@ -106,7 +106,7 @@ function cacheLogContext(key: string, fallbackConnectionId = ""): MetadataCacheL
 }
 
 function logCacheMetric(metric: string, key: string, details: Record<string, unknown> = {}, fallbackConnectionId = ""): void {
-  appendDebugLog("debug", "[DBX][metadata-cache]", {
+  appendDebugLog("debug", "[NexDB][metadata-cache]", {
     metric,
     ...cacheLogContext(key, fallbackConnectionId),
     ...details,

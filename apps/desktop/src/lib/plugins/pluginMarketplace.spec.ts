@@ -3,17 +3,17 @@ import { buildMarketplacePluginListings, filterMarketplacePluginListings, market
 import type { InstalledPlugin, PluginRepositoryCatalogResult } from "@/types/database";
 
 const result: PluginRepositoryCatalogResult = {
-  repository: { id: "dbx-official", name: "DBX Marketplace", kind: "official", enabled: true, managed: true },
+  repository: { id: "dbx-official", name: "NexDB Marketplace", kind: "official", enabled: true, managed: true },
   target: "darwin-arm64",
   catalog: {
     catalogVersion: 1,
-    repository: { id: "dbx-official", name: "DBX Marketplace" },
+    repository: { id: "dbx-official", name: "NexDB Marketplace" },
     plugins: [
       {
         id: "example.hello",
         name: "Hello",
         description: "Greets the user",
-        publisher: "DBX",
+        publisher: "NexDB",
         verified: true,
         tags: ["sample"],
         permissions: [],
@@ -37,7 +37,7 @@ function installed(version: string): InstalledPlugin {
       id: "example.hello",
       name: "Hello",
       version,
-      publisher: "DBX",
+      publisher: "NexDB",
       description: "",
       engines: { dbx: "", host_api: "" },
       permissions: [],

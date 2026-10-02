@@ -250,7 +250,7 @@ export function issueAiRequestTimeoutMs(imageCount: number): number {
 function issuePrompt(language: IssueLanguage): string {
   if (language === "en") {
     return [
-      "You turn a short DBX user report and optional screenshots into a GitHub Issue draft.",
+      "You turn a short NexDB user report and optional screenshots into a GitHub Issue draft.",
       "Return one JSON object only, without a Markdown fence.",
       'Schema: {"type":"bug|feature|question|compatibility","title":"...","summary":"...","body":"..."}.',
       "The body must be editable Markdown with useful section headings.",
@@ -260,7 +260,7 @@ function issuePrompt(language: IssueLanguage): string {
     ].join("\n");
   }
   return [
-    "你负责把 DBX 用户的简短描述和可选截图整理成 GitHub Issue 草稿。",
+    "你负责把 NexDB 用户的简短描述和可选截图整理成 GitHub Issue 草稿。",
     "只返回一个 JSON 对象，不要使用 Markdown 代码块。",
     '结构：{"type":"bug|feature|question|compatibility","title":"...","summary":"...","body":"..."}。',
     "body 使用可编辑的 Markdown 和清晰的小标题。",
@@ -400,7 +400,7 @@ async function githubJson(url: string, init: RequestInit): Promise<{ response: R
 }
 
 async function getGitHubInstallationToken(config: GitHubIssueConfig): Promise<{ token: string; repository: string }> {
-  const repository = cleanText(config.repository ?? "t8y2/dbx");
+  const repository = cleanText(config.repository ?? "Mutantcat-Working-Group/NexDB");
   if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repository)) throw new IssueSubmissionError("GITHUB_REPOSITORY_INVALID", 503);
   const appJwt = await createGitHubAppJwt(config);
   const headers = {
@@ -452,12 +452,12 @@ export function buildGitHubIssueBody(body: string, imageUrls: string[], language
   const sections = [cleanText(body)];
   if (imageUrls.length > 0) {
     const heading = language === "cn" ? "## 附件" : "## Attachments";
-    const images = imageUrls.map((url, index) => `![DBX issue image ${index + 1}](${url})`).join("\n\n");
+    const images = imageUrls.map((url, index) => `![NexDB issue image ${index + 1}](${url})`).join("\n\n");
     sections.push(`${heading}\n\n${images}`);
   }
   const source = language === "cn"
-    ? "此 Issue 通过 DBX 官网匿名反馈入口提交，发布前已由提交者确认。"
-    : "This Issue was submitted through the anonymous DBX website form and confirmed before publication.";
+    ? "此 Issue 通过 NexDB 官网匿名反馈入口提交，发布前已由提交者确认。"
+    : "This Issue was submitted through the anonymous NexDB website form and confirmed before publication.";
   sections.push(`---\n\n_${source}_`);
   return sections.join("\n\n");
 }

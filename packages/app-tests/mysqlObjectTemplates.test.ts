@@ -55,7 +55,7 @@ test("procedure and function templates are executable and database-qualified", (
   assert.equal(buildMysqlObjectTemplate("function", "app").sql, "DELIMITER $$\n\nCREATE FUNCTION `app`.`new_function`()\nRETURNS INT\nDETERMINISTIC\nBEGIN\n  RETURN 0;\nEND$$\n\nDELIMITER ;");
 });
 
-test("DBX parses every template as one executable MySQL statement", () => {
+test("NexDB parses every template as one executable MySQL statement", () => {
   for (const kind of ["procedure", "function", "trigger"] as const) {
     const ranges = executableStatementRanges(buildMysqlObjectTemplate(kind, "app", "orders").sql, "mysql");
     assert.equal(ranges.length, 1, kind);

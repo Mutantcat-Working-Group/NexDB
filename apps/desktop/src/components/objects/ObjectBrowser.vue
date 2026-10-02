@@ -1999,7 +1999,7 @@ async function refreshMutatedTableDataTabsForRows(rows: readonly ObjectBrowserRo
     try {
       await queryStore.refreshDataTabsForTable(target);
     } catch (error) {
-      console.warn("[DBX][table-data-refresh-after-mutation:error]", { target, error });
+      console.warn("[NexDB][table-data-refresh-after-mutation:error]", { target, error });
     }
   }
 }
@@ -3133,7 +3133,7 @@ watch(
     try {
       await connectionStore.ensureConnected(props.connection.id);
     } catch (e) {
-      console.warn("[DBX] ensureConnected failed for", props.connection.id, e);
+      console.warn("[NexDB] ensureConnected failed for", props.connection.id, e);
     }
     if (!objectBrowserRowsLoadGuard.isEpochCurrent(contextEpoch)) return;
     void reload({ allowCachedObjects: true, contextEpoch });

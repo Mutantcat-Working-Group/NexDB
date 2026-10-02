@@ -1,20 +1,20 @@
 ---
 name: dbx
 version: 1.0.0
-description: "DBX CLI for database schema exploration and read-only queries. When the user needs to list connections, explore tables, describe schemas, run queries, or generate AI-friendly schema context from DBX-managed databases. Do NOT use for write operations unless the user explicitly confirms with --allow-writes."
+description: "NexDB CLI for database schema exploration and read-only queries. When the user needs to list connections, explore tables, describe schemas, run queries, or generate AI-friendly schema context from NexDB-managed databases. Do NOT use for write operations unless the user explicitly confirms with --allow-writes."
 metadata:
   requires:
     bins: ["dbx"]
   cliHelp: "dbx --help"
 ---
 
-# DBX CLI
+# NexDB CLI
 
-> **Prerequisite:** DBX Desktop must be installed and configured with at least one connection. Run `dbx doctor` to verify setup. Install CLI: `npm install -g @dbx-app/cli`
+> **Prerequisite:** NexDB Desktop must be installed and configured with at least one connection. Run `dbx doctor` to verify setup. Install CLI: `npm install -g @dbx-app/cli`
 
 ## Core Concepts
 
-- **Connection**: A named database connection configured in DBX Desktop (e.g. "prod", "local"). Identified by name.
+- **Connection**: A named database connection configured in NexDB Desktop (e.g. "prod", "local"). Identified by name.
 - **Schema**: Tables and views within a connection. Listed via `dbx schema list`.
 - **Query**: Read-only SQL executed against a connection. Gated by `--allow-writes` and `--allow-dangerous-sql`.
 - **Context**: Compact schema dump optimized for AI prompts — smaller and more focused than full schema output.
@@ -22,7 +22,7 @@ metadata:
 ## Resource Relationships
 
 ```
-DBX Desktop
+NexDB Desktop
 ├── Connection (named)
 │   ├── Schema (tables, views)
 │   │   └── Table
@@ -124,13 +124,13 @@ Errors go to stderr with non-zero exit code. Run `dbx doctor` first if any comma
 |------|---------|---------------|
 | `CONNECTION_NOT_FOUND` | Connection name doesn't exist | List available connections with `dbx connections list --json` |
 | `SQL_BLOCKED` | Write operation attempted without `--allow-writes` | Ask user: "This is a write operation. Confirm?" Never add write flags automatically. |
-| `DBX_NOT_RUNNING` | Desktop bridge unavailable | Tell user to open DBX Desktop. Check which commands work without bridge via `dbx capabilities`. |
+| `DBX_NOT_RUNNING` | Desktop bridge unavailable | Tell user to open NexDB Desktop. Check which commands work without bridge via `dbx capabilities`. |
 | `INVALID_OPTION` | Wrong flag or flag value | Check `dbx --help` and retry |
 | `ERROR` | Unexpected runtime failure | Run `dbx doctor`, check logs, retry once |
 
 ## Direct vs Bridge Execution
 
-PostgreSQL, MySQL (and compatible: Doris, StarRocks), SQLite run directly without DBX Desktop. Other database types require the desktop bridge. Check with `dbx capabilities` to confirm.
+PostgreSQL, MySQL (and compatible: Doris, StarRocks), SQLite run directly without NexDB Desktop. Other database types require the desktop bridge. Check with `dbx capabilities` to confirm.
 
 ## Common Pitfalls
 
@@ -140,11 +140,11 @@ PostgreSQL, MySQL (and compatible: Doris, StarRocks), SQLite run directly withou
 
 3. **Write operations by accident** — Never add `--allow-writes` or `--allow-dangerous-sql` unless the user explicitly confirms. When in doubt, ask.
 
-4. **Missing desktop bridge** — If `dbx open` or bridge-required connections fail, run `dbx doctor` and tell the user to open DBX Desktop. Commands that don't require the bridge: `connections list`, `schema list`, `schema describe`, `query`, `context` (for PostgreSQL/MySQL/SQLite).
+4. **Missing desktop bridge** — If `dbx open` or bridge-required connections fail, run `dbx doctor` and tell the user to open NexDB Desktop. Commands that don't require the bridge: `connections list`, `schema list`, `schema describe`, `query`, `context` (for PostgreSQL/MySQL/SQLite).
 
 5. **Timeout on large queries** — Always use `--limit 50 --timeout 10s` for exploratory queries. Remove or increase limits only when the user explicitly asks for full results.
 
-6. **JSON parse errors** — Old DBX versions may not support `--json` on some commands. If JSON output looks malformed, try without `--json` and parse the human-readable output instead.
+6. **JSON parse errors** — Old NexDB versions may not support `--json` on some commands. If JSON output looks malformed, try without `--json` and parse the human-readable output instead.
 
 ## Multi-Step Workflows
 

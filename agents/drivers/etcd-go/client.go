@@ -191,7 +191,7 @@ func probeAuthEnabled(client *clientv3.Client) (bool, error) {
 }
 
 // refreshAuthEnabled keeps long-lived sessions in sync when an administrator
-// enables or disables etcd Auth after DBX connected. A failed compatibility
+// enables or disables etcd Auth after NexDB connected. A failed compatibility
 // probe retains the last known state instead of flipping privileges.
 func (s *etcdSession) refreshAuthEnabled(client *clientv3.Client) bool {
 	enabled, err := probeAuthEnabled(client)

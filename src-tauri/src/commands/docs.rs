@@ -17,9 +17,9 @@ async fn connection_of(state: &Arc<AppState>, connection_id: &str) -> Result<Con
     configs.get(connection_id).cloned().ok_or_else(|| format!("Connection {connection_id} not found."))
 }
 
-/// The notes file for a connection, resolved against DBX's data directory.
+/// The notes file for a connection, resolved against NexDB's data directory.
 ///
-/// `AppState.storage.data_dir()` is the directory DBX is actually using — it
+/// `AppState.storage.data_dir()` is the directory NexDB is actually using — it
 /// honours a custom data dir, which a fresh `app_data_dir()` lookup would not.
 /// (`dbx-mcp::paths::app_data_dir()` is NOT available here: src-tauri does not
 /// depend on dbx-mcp.)

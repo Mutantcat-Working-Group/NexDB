@@ -2,7 +2,7 @@
 
 ##  Add to NixOS system configuration
 
-Add DBX as a flake input and include the package in `environment.systemPackages`.
+Add NexDB as a flake input and include the package in `environment.systemPackages`.
 
 ### `flake.nix`
 
@@ -12,7 +12,7 @@ Add DBX as a flake input and include the package in `environment.systemPackages`
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     dbx = {
-      url = "github:t8y2/dbx";
+      url = "github:Mutantcat-Working-Group/NexDB";
       inputs.nixpkgs.follows = "nixpkgs"; # optional
     };
   };
@@ -43,12 +43,12 @@ sudo nixos-rebuild switch --flake .#my-machine
 
 ## Add via Home Manager
 
-This method installs DBX for a specific user through [Home Manager](https://github.com/nix-community/home-manager).
+This method installs NexDB for a specific user through [Home Manager](https://github.com/nix-community/home-manager).
 
 > [!NOTE]
 > The `inputs.nixpkgs.follows = "nixpkgs"` line is **optional**.
 > It prevents Nix from downloading a second copy of nixpkgs, but it also makes
-> DBX ineligible for the upstream binary cache (it will be built locally).
+> NexDB is ineligible for the upstream binary cache (it will be built locally).
 > Remove that line if you prefer to download a pre-built binary.
 
 ### `flake.nix` (standalone Home Manager)
@@ -64,7 +64,7 @@ This method installs DBX for a specific user through [Home Manager](https://gith
     };
 
     dbx = {
-      url = "github:t8y2/dbx";
+      url = "github:Mutantcat-Working-Group/NexDB";
       inputs.nixpkgs.follows = "nixpkgs"; # optional
     };
   };
@@ -98,7 +98,7 @@ This method installs DBX for a specific user through [Home Manager](https://gith
     };
 
     dbx = {
-      url = "github:t8y2/dbx";
+      url = "github:Mutantcat-Working-Group/NexDB";
       inputs.nixpkgs.follows = "nixpkgs"; # optional
     };
   };
@@ -140,10 +140,10 @@ sudo nixos-rebuild switch --flake .#my-machine
 
 ## Development Shell
 
-If you are contributing to DBX or building it from a local clone, the flake provides a fully configured development shell with Rust, Node.js, pnpm, and all GTK/WebKit system libraries:
+If you are contributing to NexDB or building it from a local clone, the flake provides a fully configured development shell with Rust, Node.js, pnpm, and all GTK/WebKit system libraries:
 
 ```bash
-git clone https://github.com/t8y2/dbx
+git clone https://github.com/Mutantcat-Working-Group/NexDB
 cd dbx
 nix develop
 ```
@@ -164,7 +164,7 @@ Inside the shell:
 Build the `dbx-desktop` package directly from the flake:
 
 ```bash
-nix build github:t8y2/dbx#dbx-desktop
+nix build github:Mutantcat-Working-Group/NexDB#dbx-desktop
 # or, from a local clone:
 nix build .#dbx-desktop
 ```

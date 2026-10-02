@@ -28,7 +28,7 @@ export interface SqlErrorOffsetOptions {
  * `localStorage.setItem("dbx:debug:sql-error-position", "1")` once (then reload)
  * to also inspect the drift/offset details.
  */
-const LOG_TAG = "[DBX][sql-error-position]";
+const LOG_TAG = "[NexDB][sql-error-position]";
 const DEBUG_FLAG_KEY = "dbx:debug:sql-error-position";
 
 export function isSqlErrorPositionDebugEnabled(): boolean {
@@ -91,7 +91,7 @@ function logDiagnostics(stage: string, options: SqlErrorOffsetOptions, extra: Re
  * current editor document.
  *
  * The backend reports the position against the statement text it actually sent.
- * DBX frequently rewrites the user's statement before execution (pagination
+ * NexDB frequently rewrites the user's statement before execution (pagination
  * wrappers, appended LIMIT/OFFSET, injected hidden key columns), so the position
  * is first resolved inside `executedStatement` and then projected back onto the
  * user's `sourceStatement` before it is placed in the editor.

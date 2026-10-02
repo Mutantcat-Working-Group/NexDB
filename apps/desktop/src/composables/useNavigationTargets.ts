@@ -195,7 +195,7 @@ async function openTableTarget(target: NavigationTarget, options: { tableInfoTab
         // Metadata is needed for optional default sorting, but it must not
         // prevent the data preview from opening. The later metadata refresh
         // keeps the tab pending for edits and can retry independently.
-        console.warn("[DBX] unable to preload table metadata for default sort", error);
+        console.warn("[NexDB] unable to preload table metadata for default sort", error);
       }
     }
     const eagerColumns = eagerMetadata?.metadata.columns ?? [];
@@ -323,7 +323,7 @@ async function openTableTarget(target: NavigationTarget, options: { tableInfoTab
         if (isCurrentTarget() && targetTab) applyTableDefaultSortResult(targetTab, defaultSort, queryStore.sortTabResultLocally);
       }
     } catch (reason) {
-      console.error("[DBX] ERROR fetching table metadata:", reason);
+      console.error("[NexDB] ERROR fetching table metadata:", reason);
     }
   } catch (e: any) {
     if (firstExecuteStarted ? !isCurrentTarget() : !isPreparationCurrent()) return;

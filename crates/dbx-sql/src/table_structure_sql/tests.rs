@@ -465,7 +465,7 @@ fn dameng_standalone_unique_index_keeps_index_level_ddl() {
     // A unique index created with CREATE UNIQUE INDEX (Dameng's "real" index — which is also
     // what this editor emits for a new unique index) has no constraint behind it: it is absent
     // from ALL_CONSTRAINTS, so DROP CONSTRAINT would fail with "constraint does not exist".
-    // Editing it must stay on the index-level path, otherwise DBX breaks the lifecycle of the
+    // Editing it must stay on the index-level path, otherwise NexDB breaks the lifecycle of the
     // unique indexes it creates itself.
     let mut changed = existing_index("IDX_USERS_EMAIL", &["EMAIL"], true);
     changed.columns = vec!["EMAIL".to_string(), "TENANT_ID".to_string()];

@@ -21,7 +21,7 @@ use crate::models::connection::DatabaseType;
 use crate::production_safety::is_production_database;
 use crate::sql_dialect::DialectCapabilityDescriptor;
 
-/// Marker that identifies a table as a DBX transfer backup.
+/// Marker that identifies a table as a NexDB transfer backup.
 pub const BACKUP_TABLE_MARKER: &str = "__dbx_bak_";
 
 /// Error prefix returned when a production target needs the destructive confirmation.

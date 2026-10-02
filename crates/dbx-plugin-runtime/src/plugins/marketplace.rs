@@ -293,7 +293,7 @@ impl PluginMarketplace {
             .redirect(Policy::limited(5))
             .connect_timeout(Duration::from_secs(10))
             .timeout(Duration::from_secs(300))
-            .user_agent(format!("DBX/{}/plugin-marketplace", env!("CARGO_PKG_VERSION")))
+            .user_agent(format!("NexDB/{}/plugin-marketplace", env!("CARGO_PKG_VERSION")))
             .build()
             .map_err(|error| format!("Failed to create plugin marketplace HTTP client: {error}"))?;
         Ok(Self {
@@ -430,7 +430,7 @@ impl PluginMarketplace {
 
     /// Downloads a .dbxp package from a direct http(s) URL and installs it with
     /// the same policy semantics as a local package install, except that
-    /// signatures may also verify against the built-in official DBX Marketplace
+    /// signatures may also verify against the built-in official NexDB Marketplace
     /// keys, so store-signed packages install from their direct artifact URLs
     /// as well. No marketplace catalog expectation is applied.
     pub async fn install_url_package<F>(
@@ -518,7 +518,7 @@ fn supported_repository_document_version() -> u32 {
 fn official_repository() -> PluginRepository {
     PluginRepository {
         id: OFFICIAL_PLUGIN_REPOSITORY_ID.to_string(),
-        name: "DBX Marketplace".to_string(),
+        name: "NexDB Marketplace".to_string(),
         kind: PluginRepositoryKind::Official,
         catalog_url: Some(OFFICIAL_CATALOG_URL.to_string()),
         enabled: true,
@@ -529,7 +529,7 @@ fn official_repository() -> PluginRepository {
 fn repository_catalog_url(repository: &PluginRepository) -> Result<Url, String> {
     let raw = repository.catalog_url.as_deref().and_then(trimmed_nonempty).ok_or_else(|| {
         if repository.kind == PluginRepositoryKind::Official {
-            "Official DBX Marketplace catalog is not configured in this build".to_string()
+            "Official NexDB Marketplace catalog is not configured in this build".to_string()
         } else {
             format!("Plugin repository '{}' has no catalog URL", repository.id)
         }
@@ -572,7 +572,7 @@ fn validate_and_resolve_catalog(
 ) -> Result<(), String> {
     if catalog.catalog_version != SUPPORTED_PLUGIN_CATALOG_VERSION {
         return Err(format!(
-            "Unsupported plugin catalog version {}; this DBX build supports version {}",
+            "Unsupported plugin catalog version {}; this NexDB build supports version {}",
             catalog.catalog_version, SUPPORTED_PLUGIN_CATALOG_VERSION
         ));
     }
@@ -718,10 +718,10 @@ fn builtin_official_trusted_keys() -> Result<BTreeMap<String, String>, String> {
         .collect::<BTreeMap<_, _>>();
     if let Some(raw) = ADDITIONAL_OFFICIAL_TRUSTED_KEYS_JSON.and_then(trimmed_nonempty) {
         let additional: BTreeMap<String, String> = serde_json::from_str(raw)
-            .map_err(|error| format!("Failed to parse additional official DBX Marketplace signing keys: {error}"))?;
+            .map_err(|error| format!("Failed to parse additional official NexDB Marketplace signing keys: {error}"))?;
         for (key_id, public_key) in additional {
             if keys.insert(key_id.clone(), public_key).is_some() {
-                return Err(format!("Duplicate official DBX Marketplace signing key '{key_id}'"));
+                return Err(format!("Duplicate official NexDB Marketplace signing key '{key_id}'"));
             }
         }
     }
@@ -734,13 +734,13 @@ fn marketplace_trust_store(root_dir: &Path, kind: PluginRepositoryKind) -> Resul
     }
     let store = PluginTrustStore::from_base64_keys(builtin_official_trusted_keys()?)?;
     if store.is_empty() {
-        return Err("Official DBX Marketplace signing keys are empty".to_string());
+        return Err("Official NexDB Marketplace signing keys are empty".to_string());
     }
     Ok(store)
 }
 
 /// Trust store for local file and direct URL installs: the user's trusted keys plus the
-/// built-in official DBX Marketplace keys. A user-saved key that collides with
+/// built-in official NexDB Marketplace keys. A user-saved key that collides with
 /// a builtin key id but carries a different public key is a rotation conflict
 /// and fails the install instead of silently overriding the builtin key.
 pub(super) fn package_install_trust_store(root_dir: &Path) -> Result<PluginTrustStore, String> {

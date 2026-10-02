@@ -58,7 +58,7 @@ describe("AI configuration deep links", () => {
     ).toMatchObject({ authMethod: "api-key", apiStyle: "anthropic-messages" });
   });
 
-  it("ignores unrelated DBX routes", () => {
+  it("ignores unrelated NexDB routes", () => {
     expect(parseAiConfigDeepLink("dbx://open")).toBeNull();
     expect(parseAiConfigDeepLink("dbx://connection/new?type=mysql")).toBeNull();
   });

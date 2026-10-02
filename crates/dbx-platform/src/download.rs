@@ -1,5 +1,5 @@
 pub const R2_CDN_BASE: &str = "https://dl.dbxio.com/";
-pub const GITHUB_RELEASE_DOWNLOAD_PREFIX: &str = "https://github.com/t8y2/dbx/releases/download/";
+pub const GITHUB_RELEASE_DOWNLOAD_PREFIX: &str = "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/";
 pub const CNB_RELEASE_DOWNLOAD_PREFIX: &str = "https://cnb.cool/dbxio.com/dbx/-/releases/download/";
 
 #[derive(Clone, Copy, Debug, Default, serde::Deserialize, PartialEq, Eq, Hash)]
@@ -33,7 +33,7 @@ fn rewrite_github_release_url(url: &str, target_prefix: &str) -> Result<String, 
     }
     url.strip_prefix(GITHUB_RELEASE_DOWNLOAD_PREFIX)
         .map(|path| format!("{target_prefix}{path}"))
-        .ok_or_else(|| format!("Unsupported DBX release download URL: {url}"))
+        .ok_or_else(|| format!("Unsupported NexDB release download URL: {url}"))
 }
 
 pub fn download_candidate_urls(github_url: &str, r2_path: &str) -> Vec<String> {
@@ -91,7 +91,7 @@ mod tests {
     #[test]
     fn download_candidates_exclude_third_party_github_proxy() {
         let urls = download_candidate_urls(
-            "https://github.com/t8y2/dbx/releases/latest/download/latest.json",
+            "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest/download/latest.json",
             "releases/latest/latest.json",
         );
 
@@ -99,14 +99,14 @@ mod tests {
             urls,
             vec![
                 "https://dl.dbxio.com/releases/latest/latest.json",
-                "https://github.com/t8y2/dbx/releases/latest/download/latest.json",
+                "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest/download/latest.json",
             ]
         );
     }
 
     #[test]
     fn mirror_download_candidates_prefer_selected_source() {
-        let github_url = "https://github.com/t8y2/dbx/releases/download/agents-latest/agent-registry.json";
+        let github_url = "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-latest/agent-registry.json";
         assert_eq!(
             DownloadSource::Cnb.download_candidate_urls(github_url, "agents/agent-registry.json").unwrap(),
             vec![

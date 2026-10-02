@@ -2671,7 +2671,7 @@ watch(
     try {
       await connectionStore.ensureConnected(props.connectionId);
     } catch (e) {
-      console.warn("[DBX] ensureConnected failed for", props.connectionId, e);
+      console.warn("[NexDB] ensureConnected failed for", props.connectionId, e);
     }
     await loadInfo();
     await Promise.all([loadConfigsWithRetry(1), loadServicesWithRetry(1)]);
@@ -2683,7 +2683,7 @@ onMounted(async () => {
   try {
     await connectionStore.ensureConnected(props.connectionId);
   } catch (e) {
-    console.warn("[DBX] ensureConnected failed for", props.connectionId, e);
+    console.warn("[NexDB] ensureConnected failed for", props.connectionId, e);
   }
   await loadInfo();
   await Promise.all([loadConfigsWithRetry(configPageNo.value), loadServicesWithRetry(servicePageNo.value)]);

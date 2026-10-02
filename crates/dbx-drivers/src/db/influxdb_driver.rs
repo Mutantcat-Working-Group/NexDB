@@ -847,7 +847,7 @@ mod tests {
             "database": "metrics",
             "external_config": {
                 "version": "2",
-                "org": "DBX Org"
+                "org": "NexDB Org"
             }
         }))
         .unwrap();
@@ -857,12 +857,12 @@ mod tests {
         assert_eq!(client.version, InfluxdbApiVersion::V2);
         assert_eq!(client.username, None);
         assert_eq!(client.password.as_deref(), Some("token-value"));
-        assert_eq!(client.org.as_deref(), Some("DBX Org"));
+        assert_eq!(client.org.as_deref(), Some("NexDB Org"));
         assert_eq!(
             build_v2_buckets_url(&client, 0).unwrap(),
-            "http://localhost:8086/api/v2/buckets?org=DBX%20Org&limit=100&offset=0"
+            "http://localhost:8086/api/v2/buckets?org=NexDB%20Org&limit=100&offset=0"
         );
-        assert_eq!(build_v2_query_url(&client).unwrap(), "http://localhost:8086/api/v2/query?org=DBX%20Org");
+        assert_eq!(build_v2_query_url(&client).unwrap(), "http://localhost:8086/api/v2/query?org=NexDB%20Org");
     }
 
     #[test]

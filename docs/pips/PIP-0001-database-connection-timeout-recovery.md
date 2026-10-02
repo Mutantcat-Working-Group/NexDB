@@ -6,7 +6,7 @@ Proposed
 
 ## 摘要
 
-本 PIP 提议改进 DBX 在 PostgreSQL、openGauss、MySQL 连接空闲失效后的恢复机制，解决 Windows 环境下常见的查询永久执行中、取消无效、连接树持续加载、必须重启应用才能恢复的问题。
+本 PIP 提议改进 NexDB 在 PostgreSQL、openGauss、MySQL 连接空闲失效后的恢复机制，解决 Windows 环境下常见的查询永久执行中、取消无效、连接树持续加载、必须重启应用才能恢复的问题。
 
 核心改动是将连接池检出、连接健康检查、SQL 执行、取消、清理和前端状态恢复纳入统一的超时与恢复模型，避免任一阶段永久挂起。
 
@@ -24,7 +24,7 @@ Proposed
 - 退出并重启应用后恢复。
 - PostgreSQL、openGauss、MySQL 均受影响。
 
-该问题不是单一数据库驱动或 SQL 语句问题。三个数据库共同受影响，说明问题边界位于 DBX 的连接生命周期管理、超时控制、取消机制和前端状态收敛层。
+该问题不是单一数据库驱动或 SQL 语句问题。三个数据库共同受影响，说明问题边界位于 NexDB 的连接生命周期管理、超时控制、取消机制和前端状态收敛层。
 
 ## 问题定义
 
@@ -35,7 +35,7 @@ Proposed
 - Windows 睡眠、网络切换、Wi-Fi/VPN 断开后恢复。
 - TCP 半开连接未及时被操作系统发现。
 
-此时 DBX 仍可能持有旧连接池，并且前端仍认为连接有效。下一次操作可能卡在：
+此时 NexDB 仍可能持有旧连接池，并且前端仍认为连接有效。下一次操作可能卡在：
 
 - `ensureConnected`
 - `checkConnectionHealth`
@@ -359,7 +359,7 @@ PostgreSQL/openGauss 的 schema 执行上下文行为保持不变，但 `SET sea
 
 | 场景 | 错误来源 | 错误消息格式（lowercase） | 当前是否匹配 | 处理方式 |
 |------|----------|---------------------------|--------------|----------|
-| DBX query timeout | `tokio::time::timeout` | `"query timed out after {n} seconds"` | 已排除（`is_dbx_query_timeout_error`） | 保持排除，不触发清池 |
+| NexDB query timeout | `tokio::time::timeout` | `"query timed out after {n} seconds"` | 已排除（`is_dbx_query_timeout_error`） | 保持排除，不触发清池 |
 | PostgreSQL pool checkout timeout | `deadpool-postgres PoolError::Timeout(TimeoutType::Wait)` | `"pool wait timeout"` | **不匹配**（是 "timeout" 不是 "timed out"） | 需新增匹配 `"pool"` + `"timeout"` 组合，或匹配 deadpool 的 `TimeoutType` 枚举变体 |
 | PostgreSQL pool create timeout | `deadpool-postgres PoolError::Timeout(TimeoutType::Create)` | `"pool create timeout"` | **不匹配** | 同上 |
 | PostgreSQL pool recycle timeout | `deadpool-postgres PoolError::Timeout(TimeoutType::Recycle)` | `"pool recycle timeout"` | **不匹配** | 同上 |

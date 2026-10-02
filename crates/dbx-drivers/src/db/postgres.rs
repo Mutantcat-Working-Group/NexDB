@@ -966,7 +966,7 @@ fn pg_type_requires_text_protocol(pg_type: &Type, col_type: PgColType) -> bool {
     }
 
     // PostgreSQL's binary timestamptz decoder converts UTC into chrono::Local,
-    // which makes the DBX host timezone win over the server session timezone.
+    // which makes the NexDB host timezone win over the server session timezone.
     // Text output is formatted by PostgreSQL in the session timezone and keeps
     // timestamp-without-time-zone values as wall-clock text as well.
     if matches!(
@@ -2455,7 +2455,7 @@ pub async fn connect(url: &str, fallback_timeout: Duration) -> Result<Pool, Stri
 
 /// Creates a PostgreSQL pool with an explicit checkout bound.
 ///
-/// Session-scoped DBX pools use a single connection so temporary tables and
+/// Session-scoped NexDB pools use a single connection so temporary tables and
 /// other connection-local state cannot migrate between physical clients.
 pub async fn connect_with_max_connections(
     url: &str,
@@ -2463,7 +2463,7 @@ pub async fn connect_with_max_connections(
     max_connections: usize,
 ) -> Result<Pool, String> {
     // Leave the PostgreSQL session timezone untouched. PostgreSQL owns the
-    // timezone used for timestamptz text output; deriving one from DBX's host
+    // timezone used for timestamptz text output; deriving one from NexDB's host
     // would make the client's OS timezone override the server configuration.
     connect_with_optional_local_timezone_with_max_connections(url, fallback_timeout, None, max_connections).await
 }

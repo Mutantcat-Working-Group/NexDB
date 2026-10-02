@@ -130,7 +130,7 @@ async function loadQueues() {
   try {
     availableQueues.value = await mqListTopics(props.connectionId, ns, { includeNonPersistent: false });
   } catch (e: unknown) {
-    console.warn("[DBX] Failed to load queues for binding dialog:", e);
+    console.warn("[NexDB] Failed to load queues for binding dialog:", e);
   }
 }
 

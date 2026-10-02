@@ -248,7 +248,7 @@ describe("queryStore hidden primary key editing", () => {
     expect(tab.queryEditabilityReason).toBeUndefined();
   });
 
-  it("keeps insert disabled when a MySQL table has a physical primary key named like DBX ROWID", async () => {
+  it("keeps insert disabled when a MySQL table has a physical primary key named like NexDB ROWID", async () => {
     getColumns.mockResolvedValue([
       { name: "__DBX_ROWID", data_type: "varchar", is_nullable: false, column_default: null, is_primary_key: true, extra: null },
       { name: "name", data_type: "varchar", is_nullable: true, column_default: null, is_primary_key: false, extra: null },

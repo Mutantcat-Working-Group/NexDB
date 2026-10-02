@@ -84,7 +84,7 @@ pub async fn clear_database_export_cancellation(export_id: String) -> Result<(),
 }
 
 /// Returns whether a scheduled backup destination must be explicitly selected
-/// again before DBX can replace a legacy macOS filesystem identity.
+/// again before NexDB can replace a legacy macOS filesystem identity.
 #[tauri::command]
 pub async fn database_export_destination_needs_confirmation(
     state: State<'_, Arc<AppState>>,

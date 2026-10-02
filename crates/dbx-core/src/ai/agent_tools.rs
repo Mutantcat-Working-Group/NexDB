@@ -232,7 +232,7 @@ fn sql_risk_allowed(risk: SqlRisk, permissions: AgentSqlPermissions) -> bool {
     }
 }
 
-/// Returns true when an Agent attempted a write or DDL call before DBX has a
+/// Returns true when an Agent attempted a write or DDL call before NexDB has a
 /// user-confirmed SQL binding for the current run. The caller must turn that
 /// attempt into a confirmation proposal instead of sending it to the database.
 pub fn write_requires_confirmation(
@@ -469,7 +469,7 @@ fn execute_query_tool(sql_permissions: AgentSqlPermissions) -> ToolDefinition {
     } else if sql_permissions.allow_writes {
         "Execute SQL after the user explicitly confirmed this operation. Read queries and non-DDL writes are allowed for this run."
     } else {
-        "Execute a read-only SQL query and return results (default 50 rows, up to 1000 with the limit argument). Cross-database reads may use fully qualified names such as database.table (or database.schema.table for SQL Server) without switching the current database. This run cannot execute writes or DDL because no specific SQL has been confirmed yet; this does not mean the database itself is read-only. When the user requests a write, first propose the exact SQL in one ```sql code block and ask for confirmation. After confirmation, DBX starts a new run that can execute only that exact SQL. Only SELECT, WITH, SHOW, DESCRIBE, EXPLAIN statements may be executed in this run."
+        "Execute a read-only SQL query and return results (default 50 rows, up to 1000 with the limit argument). Cross-database reads may use fully qualified names such as database.table (or database.schema.table for SQL Server) without switching the current database. This run cannot execute writes or DDL because no specific SQL has been confirmed yet; this does not mean the database itself is read-only. When the user requests a write, first propose the exact SQL in one ```sql code block and ask for confirmation. After confirmation, NexDB starts a new run that can execute only that exact SQL. Only SELECT, WITH, SHOW, DESCRIBE, EXPLAIN statements may be executed in this run."
     };
     ToolDefinition {
         name: "execute_query",
@@ -501,7 +501,7 @@ fn execute_query_tool(sql_permissions: AgentSqlPermissions) -> ToolDefinition {
                 },
                 "client_session_id": {
                     "type": "string",
-                    "description": "Opaque DBX session handle that pins this query to the same backend connection as earlier queries in the session (preserves USE/SET/session state). Managed by DBX; agents should not invent values."
+                    "description": "Opaque NexDB session handle that pins this query to the same backend connection as earlier queries in the session (preserves USE/SET/session state). Managed by NexDB; agents should not invent values."
                 }
             },
             "required": ["sql"]
@@ -907,7 +907,7 @@ async fn execute_execute_query(
     );
 
     if targets_production {
-        return Err("Blocked: AI agents cannot execute writes or DDL on a production database. Return the SQL for the user to review and execute manually in DBX.".to_string());
+        return Err("Blocked: AI agents cannot execute writes or DDL on a production database. Return the SQL for the user to review and execute manually in NexDB.".to_string());
     }
     if !risk_allowed {
         if risk == SqlRisk::Transaction {
@@ -979,7 +979,7 @@ async fn execute_mongo_query(
     })?;
     if command.is_mutating() {
         return Err(
-            "Blocked: MongoDB Agent queries are read-only. Return the command for the user to review and execute manually in DBX."
+            "Blocked: MongoDB Agent queries are read-only. Return the command for the user to review and execute manually in NexDB."
                 .to_string(),
         );
     }

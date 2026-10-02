@@ -129,9 +129,9 @@ interface EmptyLineProtection {
 /**
  * Replaces blank source lines with unique line comments while the third-party
  * formatter runs. sql-formatter intentionally normalizes whitespace, whereas
- * the optional DBX setting needs to retain visual paragraph boundaries such as
+ * the optional NexDB setting needs to retain visual paragraph boundaries such as
  * the blank line between a heading comment and a query. Line comments are
- * valid at every SQL code boundary and are restored only after all DBX layout
+ * valid at every SQL code boundary and are restored only after all NexDB layout
  * post-processing is complete.
  */
 function protectEmptyLines(sql: string): EmptyLineProtection {
@@ -312,7 +312,7 @@ function protectDuckDbPrefixAliasSeparators(sql: string): { sql: string; marker:
     if (prefixAlias) {
       // sql-formatter tokenizes a compact DuckDB prefix alias as a named
       // parameter and inserts a space before `:`. Keeping an opaque separator
-      // through formatting preserves the boundary used by DBX's parameter scan.
+      // through formatting preserves the boundary used by NexDB's parameter scan.
       protectedSql += marker;
       replaced = true;
       index += 1;
@@ -391,7 +391,7 @@ export async function formatSqlText(sql: string, dialect: SqlFormatDialect = "ge
     return emptyLineProtection ? restoreProtectedEmptyLines(laidOut, emptyLineProtection.markers) : laidOut;
   };
 
-  // DBX's own layout printer produces the default style. It needs the AST and
+  // NexDB's own layout printer produces the default style. It needs the AST and
   // sql-formatter's internal layout machinery, so it can decline an input — an
   // unparseable statement, an internal shape that moved. `null` means "use the
   // public formatter", which is also what the tabular indent styles ask for:

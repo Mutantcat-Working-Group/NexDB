@@ -206,7 +206,7 @@ pub fn format_html(data: &QueryResultTextExportData) -> String {
     html.push_str("    <div class=\"hdr\">\n");
     html.push_str(&format!("      <h1>{}</h1>\n", html_escape(heading)));
     html.push_str(&format!(
-        "      <div class=\"meta\">{} rows &middot; {} columns &middot; {} &middot; DBX</div>\n",
+        "      <div class=\"meta\">{} rows &middot; {} columns &middot; {} &middot; NexDB</div>\n",
         row_count,
         col_count,
         html_escape(&now)
@@ -236,7 +236,7 @@ pub fn format_html(data: &QueryResultTextExportData) -> String {
     }
 
     html.push_str("          </tbody>\n        </table>\n      </div>\n    </div>\n");
-    html.push_str("    <div class=\"ftr\">Exported by DBX</div>\n");
+    html.push_str("    <div class=\"ftr\">Exported by NexDB</div>\n");
     html.push_str("  </div>\n</body>\n</html>\n");
     html
 }
@@ -338,7 +338,7 @@ mod tests {
         assert!(out.contains("<th>id</th>"), "column headers must be rendered");
         assert!(out.contains("<th>name</th>"));
         assert!(out.contains("1 rows &middot; 2 columns"), "row/column counts in meta line");
-        assert!(out.contains("Exported by DBX"), "footer watermark");
+        assert!(out.contains("Exported by NexDB"), "footer watermark");
     }
 
     #[test]

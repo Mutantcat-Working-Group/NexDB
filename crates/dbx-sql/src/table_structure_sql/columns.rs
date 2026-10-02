@@ -424,7 +424,7 @@ fn mysql_orphans_auto_increment_column(
 /// swaps two column names cannot credit one column's index to the other.
 ///
 /// This applies the InnoDB rule that the auto column must *lead* an index. MyISAM also accepts
-/// it in a later position of a multi-column index; DBX has no engine information here, so such
+/// it in a later position of a multi-column index; NexDB has no engine information here, so such
 /// a table loses AUTO_INCREMENT rather than every InnoDB table keeping an invalid one.
 fn mysql_column_leads_kept_index(options: &TableStructureSqlOptions, column: &EditableStructureColumn) -> bool {
     let Some(original_name) = column.original.as_ref().map(|original| original.name.as_str()) else {

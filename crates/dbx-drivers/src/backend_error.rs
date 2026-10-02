@@ -239,7 +239,7 @@ impl BackendError {
         )
     }
 
-    /// Create a retryable envelope for a manual transaction session that DBX
+    /// Create a retryable envelope for a manual transaction session that NexDB
     /// already rolled back before the requested SQL was executed.
     pub fn from_manual_transaction_session_expired(timeout_secs: u64) -> Self {
         let entry = catalog_entry(CatalogCode::TransactionSessionExpired);

@@ -31,7 +31,7 @@ pub(crate) fn install_dock_quit_handler(app: &AppHandle) {
 
         // Tao's app delegate does not implement applicationShouldTerminate:, so Dock Quit can
         // bypass Tauri's ExitRequested event. Add the method to Tao's registered delegate class
-        // and route that native quit request through DBX's normal close confirmation flow.
+        // and route that native quit request through NexDB's normal close confirmation flow.
         let added = unsafe {
             ffi::class_addMethod(
                 delegate_class as *const AnyClass as *mut AnyClass,

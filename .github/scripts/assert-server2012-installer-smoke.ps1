@@ -32,7 +32,7 @@ try {
     throw "Server 2012 R2 test installer failed with exit code $($installer.ExitCode)."
   }
 
-  $appPath = Join-Path $resolvedTestRoot "dbx.exe"
+  $appPath = Join-Path $resolvedTestRoot "nexdb.exe"
   $runtimePath = Join-Path $resolvedTestRoot "webview2-fixed-runtime\msedgewebview2.exe"
   foreach ($requiredPath in @($appPath, $runtimePath)) {
     if (!(Test-Path -LiteralPath $requiredPath -PathType Leaf)) {
@@ -55,7 +55,7 @@ try {
     } else {
       "<startup.log was not created>"
     }
-    throw "DBX exited during the Server 2012 R2 startup smoke test with code $($appProcess.ExitCode).`n$logText"
+    throw "NexDB exited during the Server 2012 R2 startup smoke test with code $($appProcess.ExitCode).`n$logText"
   }
 
   Write-Host "Server 2012 R2 installer smoke test passed after $StartupSeconds seconds: $installerPath"

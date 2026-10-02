@@ -334,7 +334,7 @@ export function useDataGridLargeValues(options: UseDataGridLargeValuesOptions) {
     } catch (error) {
       if (options.result.value === sourceResult && generation === visibleLargeValuePreviewRequestedGeneration && !failedVisibleLargeValuePreviewResults.has(sourceResult)) {
         failedVisibleLargeValuePreviewResults.add(sourceResult);
-        options.appendDebugLog("warn", "[DBX][DataGrid:visible-large-value-preview] disabled for result", error);
+        options.appendDebugLog("warn", "[NexDB][DataGrid:visible-large-value-preview] disabled for result", error);
       }
     }
   }
@@ -342,7 +342,7 @@ export function useDataGridLargeValues(options: UseDataGridLargeValuesOptions) {
   function cancelVisibleLargeValuePreviewHydrations() {
     for (const [generation, executionId] of visibleLargeValuePreviewExecutionIds) {
       visibleLargeValuePreviewExecutionIds.delete(generation);
-      void api.cancelQuery(executionId).catch((error) => options.appendDebugLog("warn", "[DBX][DataGrid:visible-large-value-preview] cancel failed", error));
+      void api.cancelQuery(executionId).catch((error) => options.appendDebugLog("warn", "[NexDB][DataGrid:visible-large-value-preview] cancel failed", error));
     }
   }
 

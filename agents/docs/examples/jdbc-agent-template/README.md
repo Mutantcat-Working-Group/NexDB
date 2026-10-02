@@ -1,6 +1,6 @@
 # JDBC Agent Template
 
-Copy this directory when adding a new JDBC-based DBX agent.
+Copy this directory when adding a new JDBC-based NexDB agent.
 
 Recommended flow:
 

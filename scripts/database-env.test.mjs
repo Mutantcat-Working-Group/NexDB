@@ -300,7 +300,7 @@ test('smoke commands use password and port overrides without invoking a shell', 
   );
 });
 
-test('generates DBX deep links from effective recipe connection values', () => {
+test('generates NexDB deep links from effective recipe connection values', () => {
   const recipe = discoverRecipes().find((item) => recipeSelector(item) === 'postgresql@17.4');
   assert.ok(recipe);
 
@@ -316,28 +316,28 @@ test('generates DBX deep links from effective recipe connection values', () => {
   assert.equal(params.get('database'), 'dbx');
 });
 
-test('prints DBX deep links for compatible connection types', () => {
+test('prints NexDB deep links for compatible connection types', () => {
   const repoRoot = join(DEFAULT_RECIPES_ROOT, '..', '..');
   const postgres = spawnSync(process.execPath, ['scripts/database-env.mjs', 'info', 'postgresql', '17.4'], {
     cwd: repoRoot,
     encoding: 'utf8',
   });
   assert.equal(postgres.status, 0, postgres.stderr);
-  assert.match(postgres.stdout, /DBX connection link: dbx:\/\/connection\/new\?type=postgres&/);
+  assert.match(postgres.stdout, /NexDB connection link: dbx:\/\/connection\/new\?type=postgres&/);
 
   const elasticsearch = spawnSync(process.execPath, ['scripts/database-env.mjs', 'info', 'elasticsearch', '6.8'], {
     cwd: repoRoot,
     encoding: 'utf8',
   });
   assert.equal(elasticsearch.status, 0, elasticsearch.stderr);
-  assert.match(elasticsearch.stdout, /DBX connection link: dbx:\/\/connection\/new\?type=elasticsearch&/);
+  assert.match(elasticsearch.stdout, /NexDB connection link: dbx:\/\/connection\/new\?type=elasticsearch&/);
 
   const consul = spawnSync(process.execPath, ['scripts/database-env.mjs', 'info', 'consul', '2.0.2'], {
     cwd: repoRoot,
     encoding: 'utf8',
   });
   assert.equal(consul.status, 0, consul.stderr);
-  assert.match(consul.stdout, /DBX connection link: dbx:\/\/connection\/new\?type=consul&/);
+  assert.match(consul.stdout, /NexDB connection link: dbx:\/\/connection\/new\?type=consul&/);
 });
 
 test('generates canonical service deep-link types from recipes', () => {

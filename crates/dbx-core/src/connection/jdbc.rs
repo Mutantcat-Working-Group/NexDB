@@ -8,7 +8,7 @@ use std::io::Read;
 use std::path::{Path, PathBuf};
 
 const JDBC_PLUGIN_DOWNLOAD_URL: &str =
-    "https://github.com/t8y2/dbx/releases/latest/download/dbx-jdbc-plugin-latest.zip";
+    "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest/download/dbx-jdbc-plugin-latest.zip";
 const JDBC_PLUGIN_R2_PATH: &str = "releases/latest/dbx-jdbc-plugin-latest.zip";
 const OFFLINE_JDBC_MANIFEST_ENTRY: &str = "jdbc/offline-manifest.json";
 const OFFLINE_JDBC_FORMAT_VERSION: u32 = 1;
@@ -620,7 +620,7 @@ fn install_jdbc_plugin_zip(bytes: &[u8], plugin_dir: &Path) -> Result<(), String
     if !temp_dir.join("manifest.json").exists() {
         let _ = std::fs::remove_dir_all(&temp_dir);
         return Err(format!(
-            "This ZIP is not a valid DBX JDBC plugin package (missing manifest.json). \
+            "This ZIP is not a valid NexDB JDBC plugin package (missing manifest.json). \
              The correct package is available at: {JDBC_PLUGIN_DOWNLOAD_URL}"
         ));
     }
@@ -636,7 +636,7 @@ fn install_jdbc_plugin_zip(bytes: &[u8], plugin_dir: &Path) -> Result<(), String
     if manifest.protocol_version != SUPPORTED_PLUGIN_PROTOCOL_VERSION {
         let _ = std::fs::remove_dir_all(&temp_dir);
         return Err(format!(
-            "Downloaded JDBC plugin uses protocol version {}, but this DBX build supports protocol version {}",
+            "Downloaded JDBC plugin uses protocol version {}, but this NexDB build supports protocol version {}",
             manifest.protocol_version, SUPPORTED_PLUGIN_PROTOCOL_VERSION
         ));
     }
@@ -1199,7 +1199,7 @@ mod tests {
         zip.write_all(
             br#"{
               "id": "jdbc",
-              "name": "DBX JDBC Plugin",
+              "name": "NexDB JDBC Plugin",
               "version": "0.1.30",
               "protocol_version": 1,
               "executable": "bin/dbx-jdbc-plugin",
@@ -1586,7 +1586,7 @@ mod tests {
         // above is still waiting on its simulated network round-trip.
         std::fs::write(
             plugin_dir.join("manifest.json"),
-            r#"{"id":"jdbc","name":"DBX JDBC Plugin","version":"0.1.30","protocol_version":1,"executable":"bin/dbx-jdbc-plugin","drivers":[]}"#,
+            r#"{"id":"jdbc","name":"NexDB JDBC Plugin","version":"0.1.30","protocol_version":1,"executable":"bin/dbx-jdbc-plugin","drivers":[]}"#,
         )
         .unwrap();
 

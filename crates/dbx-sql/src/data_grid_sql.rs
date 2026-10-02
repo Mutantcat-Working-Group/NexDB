@@ -2400,7 +2400,7 @@ pub fn format_grid_sql_literal_with_identifier_quote(
     }
     if is_mysql_binary_literal_column(database_type, column_info) {
         if let Some(literal) = format_mysql_binary_literal_text(&text) {
-            // DBX result values expose binary columns as prefixed hex; keep them
+            // NexDB result values expose binary columns as prefixed hex; keep them
             // as MySQL hex literals so copied INSERT/UPDATE SQL round-trips bytes.
             return literal;
         }

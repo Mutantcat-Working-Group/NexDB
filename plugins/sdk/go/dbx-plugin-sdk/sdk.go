@@ -361,7 +361,7 @@ func (server *Server) initialize(params json.RawMessage) (any, *PluginError) {
 			}, nil
 		}
 	}
-	return nil, NewError(-32001, "DBX and plugin do not share a protocol version")
+	return nil, NewError(-32001, "NexDB and plugin do not share a protocol version")
 }
 
 type protocolRequest struct {

@@ -435,15 +435,24 @@ fn local_agent_jar_candidates_include_monorepo_and_legacy_build_output() {
 #[test]
 fn github_agent_asset_urls_map_to_r2_paths_by_category() {
     assert_eq!(
-        github_url_to_r2_path("https://github.com/t8y2/dbx-agents/releases/download/v1/dbx-jre-21.tar.gz", "jre"),
+        github_url_to_r2_path(
+            "https://github.com/Mutantcat-Working-Group/NexDB-agents/releases/download/v1/dbx-jre-21.tar.gz",
+            "jre"
+        ),
         "agents/jre/dbx-jre-21.tar.gz"
     );
     assert_eq!(
-        github_url_to_r2_path("https://github.com/t8y2/dbx-agents/releases/download/v1/dbx-agent-h2.jar", "driver"),
+        github_url_to_r2_path(
+            "https://github.com/Mutantcat-Working-Group/NexDB-agents/releases/download/v1/dbx-agent-h2.jar",
+            "driver"
+        ),
         "agents/drivers/dbx-agent-h2.jar"
     );
     assert_eq!(
-        github_url_to_r2_path("https://github.com/t8y2/dbx/releases/download/agents-v0.3.0/dbx-agent-h2.jar", "driver"),
+        github_url_to_r2_path(
+            "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-v0.3.0/dbx-agent-h2.jar",
+            "driver"
+        ),
         "agents/drivers/dbx-agent-h2.jar"
     );
 }

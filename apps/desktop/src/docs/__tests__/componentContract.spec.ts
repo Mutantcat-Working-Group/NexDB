@@ -232,7 +232,7 @@ describe("docs viewer component contract", () => {
   });
 
   it("defines the group colour tokens for WebViews without oklch", () => {
-    // DBX supports legacy WebViews with no oklch (globals.css carries an
+    // NexDB supports legacy WebViews with no oklch (globals.css carries an
     // `@supports not (color: oklch(...))` block). The repo's convention is
     // progressive enhancement: a legacy-safe base value first, then the same
     // token redefined inside `@supports (color: oklch(1 0 0))`. Without the

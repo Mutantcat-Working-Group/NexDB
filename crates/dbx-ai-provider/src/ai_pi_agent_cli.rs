@@ -295,7 +295,7 @@ fn pi_agent_process_env_with_paths(
         let upper = key.to_ascii_uppercase();
         if upper.starts_with("DBX_MCP_") || upper.starts_with(PI_PRIVATE_ENV_PREFIX) {
             return Err(format!(
-                "[piAgentEnvReserved] `{key}` is managed by DBX for the scoped MCP bridge and cannot be set here."
+                "[piAgentEnvReserved] `{key}` is managed by NexDB for the scoped MCP bridge and cannot be set here."
             ));
         }
         values.insert(key.to_string(), value.clone());
@@ -595,7 +595,7 @@ fn configure_pi_bridge(
     let mcp = options
         .mcp_server_command
         .as_ref()
-        .ok_or_else(|| "[dbxMcpMissing] DBX MCP server was not resolved for Pi Coding Agent".to_string())?;
+        .ok_or_else(|| "[dbxMcpMissing] NexDB MCP server was not resolved for Pi Coding Agent".to_string())?;
     process.env("DBX_PI_MCP_PROGRAM", &mcp.program);
     process.env(
         "DBX_PI_MCP_ARGS",
@@ -622,7 +622,7 @@ async fn wait_for_bridge(process: &mut PiRpcProcess, runtime: &PiIsolatedRuntime
             if let Some(status) = process.child.try_wait().map_err(|error| classify_pi_run_error(&error.to_string()))? {
                 let stderr = process.stderr_text();
                 let message = if stderr.is_empty() {
-                    format!("Pi exited before the DBX MCP bridge started: {status}")
+                    format!("Pi exited before the NexDB MCP bridge started: {status}")
                 } else {
                     stderr
                 };
@@ -634,7 +634,7 @@ async fn wait_for_bridge(process: &mut PiRpcProcess, runtime: &PiIsolatedRuntime
     .await
     .map_err(|_| {
         let stderr = process.stderr_text();
-        classify_pi_run_error(if stderr.is_empty() { "DBX MCP bridge startup timed out" } else { &stderr })
+        classify_pi_run_error(if stderr.is_empty() { "NexDB MCP bridge startup timed out" } else { &stderr })
     })?
 }
 

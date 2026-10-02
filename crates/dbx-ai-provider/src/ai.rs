@@ -1735,7 +1735,7 @@ fn validate_config(config: &AiConfig) -> Result<(), String> {
         return Ok(());
     }
     if matches!(config.provider, AiProvider::MiniMax) && config.api_style != AiApiStyle::Completions {
-        return Err("MiniMax currently supports the Chat Completions API style in DBX; select Completions and retry"
+        return Err("MiniMax currently supports the Chat Completions API style in NexDB; select Completions and retry"
             .to_string());
     }
     if provider_requires_api_key(&config.provider) && config.api_key.trim().is_empty() {
@@ -1796,7 +1796,7 @@ pub fn claude_headers(config: &AiConfig) -> Result<HeaderMap, String> {
     Ok(headers)
 }
 
-/// Adds user-supplied gateway headers after DBX's provider headers. This
+/// Adds user-supplied gateway headers after NexDB's provider headers. This
 /// intentionally lets an explicit `Authorization` value replace the provider
 /// default, while protecting HTTP framing and JSON content semantics.
 fn append_custom_headers(headers: &mut HeaderMap, config: &AiConfig) -> Result<(), String> {
@@ -1807,7 +1807,7 @@ fn append_custom_headers(headers: &mut HeaderMap, config: &AiConfig) -> Result<(
         let name = HeaderName::from_bytes(raw_name.trim().as_bytes())
             .map_err(|_| format!("Invalid AI custom header name: {raw_name}"))?;
         if RESERVED.iter().any(|reserved| name.as_str().eq_ignore_ascii_case(reserved)) {
-            return Err(format!("Invalid AI custom header name: {raw_name} (reserved by DBX)"));
+            return Err(format!("Invalid AI custom header name: {raw_name} (reserved by NexDB)"));
         }
         if !seen.insert(name.clone()) {
             return Err(format!("Duplicate AI custom header name: {raw_name}"));
@@ -2740,7 +2740,7 @@ pub fn sensitive_values(config: &AiConfig) -> Vec<String> {
 }
 
 /// Whether a custom header name conventionally carries a credential rather
-/// than ordinary request metadata. DBX lets users override `Authorization`, so
+/// than ordinary request metadata. NexDB lets users override `Authorization`, so
 /// these values must be redacted even when a development gateway uses a short
 /// token.
 fn is_credential_header(name: &str) -> bool {
@@ -3608,7 +3608,7 @@ pub async fn complete(request: &AiCompletionRequest) -> Result<String, String> {
     validate_config(&request.config)?;
 
     if is_cli_provider(&request.config.provider) {
-        return Err("CLI providers are only supported in DBX AI agent mode".to_string());
+        return Err("CLI providers are only supported in NexDB AI agent mode".to_string());
     }
 
     let config = request.config.clone();
@@ -3675,7 +3675,7 @@ pub async fn stream(
     validate_config(&request.config)?;
 
     if is_cli_provider(&request.config.provider) {
-        return Err("CLI providers are only supported in DBX AI agent mode".to_string());
+        return Err("CLI providers are only supported in NexDB AI agent mode".to_string());
     }
 
     let stream_timeout = if runtime_thinking_enabled(&request.config) { 600 } else { 120 };
@@ -5032,7 +5032,7 @@ pub async fn stream_with_tools(
 ) -> Result<(Vec<crate::agent_events::ToolCall>, Option<TokenUsage>), String> {
     validate_config(config)?;
     if is_cli_provider(&config.provider) {
-        return Err("CLI providers are only supported through the DBX AI agent loop".to_string());
+        return Err("CLI providers are only supported through the NexDB AI agent loop".to_string());
     }
 
     let stream_timeout = if runtime_thinking_enabled(config) { 600 } else { 120 };
@@ -6641,7 +6641,7 @@ mod tests {
         let responses = AiConfig { max_output_tokens: None, api_style: AiApiStyle::Responses, ..config.clone() };
         assert_eq!(
             validate_config(&responses).unwrap_err(),
-            "MiniMax currently supports the Chat Completions API style in DBX; select Completions and retry"
+            "MiniMax currently supports the Chat Completions API style in NexDB; select Completions and retry"
         );
 
         let provider_json = serde_json::to_string(&AiProvider::MiniMax).unwrap();
@@ -6914,7 +6914,7 @@ mod tests {
         assert_eq!(headers.get(CONTENT_TYPE).unwrap(), "application/json");
 
         config.custom_headers = HashMap::from([("Content-Length".to_string(), "0".to_string())]);
-        assert!(maybe_bearer_headers(&config).unwrap_err().contains("reserved by DBX"));
+        assert!(maybe_bearer_headers(&config).unwrap_err().contains("reserved by NexDB"));
 
         config.custom_headers =
             HashMap::from([("X-Tenant".to_string(), "one".to_string()), ("x-tenant".to_string(), "two".to_string())]);

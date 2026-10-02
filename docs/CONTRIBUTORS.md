@@ -2,7 +2,7 @@
 
 ## Contributor certificate OAuth
 
-The contributors page treats an account as eligible only when it has authored at least one pull request merged into `t8y2/dbx`. Commit counts are displayed as an additional metric but do not grant eligibility by themselves.
+The contributors page treats an account as eligible only when it has authored at least one pull request merged into `Mutantcat-Working-Group/NexDB`. Commit counts are displayed as an additional metric but do not grant eligibility by themselves.
 
 Create a GitHub OAuth App with:
 
@@ -25,7 +25,7 @@ For a non-production callback origin, also configure `GITHUB_OAUTH_CALLBACK_URL`
 
 The `/issue` and `/issues` routes redirect to the localized anonymous feedback page. Creating a draft consumes one allowance from both a per-IP and a temporary-session rolling limit of 8 attempts per hour. Final submission does not consume another allowance. Cloudflare Turnstile is intentionally not used.
 
-Create a GitHub App installed only on `t8y2/dbx` with repository permission `Issues: Read and write`, then configure:
+Create a GitHub App installed only on `Mutantcat-Working-Group/NexDB` with repository permission `Issues: Read and write`, then configure:
 
 ```bash
 pnpm dlx wrangler secret put GITHUB_APP_ID
@@ -45,4 +45,4 @@ pnpm dlx wrangler secret put ISSUE_AI_MODEL
 
 `ISSUE_AI_API_BASE` may end at the host, `/v1`, or `/chat/completions`. The model must accept `image_url` data URLs when screenshots are attached.
 
-`docs/wrangler.json` binds `ISSUE_IMAGES` to the existing `dbx` R2 bucket and publishes generated image URLs under `https://dl.dbxio.com` by default. Set `ISSUE_IMAGE_PUBLIC_BASE_URL` if the bucket's public origin changes. Set `ISSUE_GITHUB_REPOSITORY` only when testing against a different repository; production defaults to `t8y2/dbx`.
+`docs/wrangler.json` binds `ISSUE_IMAGES` to the existing `dbx` R2 bucket and publishes generated image URLs under `https://dl.dbxio.com` by default. Set `ISSUE_IMAGE_PUBLIC_BASE_URL` if the bucket's public origin changes. Set `ISSUE_GITHUB_REPOSITORY` only when testing against a different repository; production defaults to `Mutantcat-Working-Group/NexDB`.

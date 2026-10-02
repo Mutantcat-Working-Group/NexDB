@@ -43,10 +43,10 @@ pub struct ListDatabasesRequest {
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 pub struct ConnectionSelector {
-    #[schemars(description = "Unique ID of the DBX connection")]
+    #[schemars(description = "Unique ID of the NexDB connection")]
     #[schemars(extend("type" = "string"))]
     pub connection_id: Option<String>,
-    #[schemars(description = "Name of the DBX connection")]
+    #[schemars(description = "Name of the NexDB connection")]
     #[schemars(extend("type" = "string"))]
     pub connection_name: Option<String>,
 }
@@ -188,7 +188,7 @@ pub struct DuplicateConnectionRequest {
 
 #[derive(Debug, Deserialize, schemars::JsonSchema)]
 pub struct RemoveConnectionRequest {
-    #[schemars(description = "Name of the DBX connection when connection_id is not provided")]
+    #[schemars(description = "Name of the NexDB connection when connection_id is not provided")]
     #[schemars(extend("type" = "string"))]
     pub connection_name: Option<String>,
     #[schemars(extend("type" = "string"))]
@@ -470,7 +470,7 @@ impl DbxMcpServer {
 impl DbxMcpServer {
     #[tool(
         name = "dbx_list_connections",
-        description = "List database connections configured in DBX. Returns connection IDs, names, group paths, database types, endpoints, and selected databases."
+        description = "List database connections configured in NexDB. Returns connection IDs, names, group paths, database types, endpoints, and selected databases."
     )]
     async fn list_connections(
         &self,
@@ -480,7 +480,7 @@ impl DbxMcpServer {
             return error;
         }
         match self.load_scoped_connections().await {
-            Ok(connections) if connections.is_empty() => text("No connections configured in DBX."),
+            Ok(connections) if connections.is_empty() => text("No connections configured in NexDB."),
             Ok(connections) => {
                 let group_paths = self.backend.load_connection_group_details().await.unwrap_or_default();
                 let rows = connections
@@ -500,7 +500,7 @@ impl DbxMcpServer {
 
     #[tool(
         name = "dbx_list_databases",
-        description = "List database names available through a DBX connection. When the connection has a database allowlist, returns only the databases allowed by DBX MCP settings; use this before listing tables if the connection has no default database."
+        description = "List database names available through a NexDB connection. When the connection has a database allowlist, returns only the databases allowed by NexDB MCP settings; use this before listing tables if the connection has no default database."
     )]
     async fn list_databases(&self, Parameters(request): Parameters<ListDatabasesRequest>) -> CallToolResult {
         if let Err(error) = self.ensure_tool_allowed("dbx_list_databases").await {
@@ -1146,7 +1146,7 @@ impl DbxMcpServer {
             return tool_error(
                 "REDIS_COMMAND_BLOCKED",
                 format!(
-                    "Dangerous Redis command \"{}\" is disabled in DBX MCP settings.",
+                    "Dangerous Redis command \"{}\" is disabled in NexDB MCP settings.",
                     argv[0].to_ascii_uppercase()
                 ),
             );
@@ -1154,7 +1154,7 @@ impl DbxMcpServer {
         if safety != RedisCommandSafety::Allowed && !permissions.allow_writes {
             return tool_error(
                 "REDIS_COMMAND_BLOCKED",
-                "MCP Redis command execution is read-only in DBX MCP settings.",
+                "MCP Redis command execution is read-only in NexDB MCP settings.",
             );
         }
         // Production protection is stricter than the opt-in write flags by design.
@@ -1190,7 +1190,7 @@ impl DbxMcpServer {
         #[cfg(not(feature = "mq-admin"))]
         {
             let _ = request;
-            tool_error("MQ_UNSUPPORTED", "Message queue support is not compiled into this DBX MCP build.")
+            tool_error("MQ_UNSUPPORTED", "Message queue support is not compiled into this NexDB MCP build.")
         }
         #[cfg(feature = "mq-admin")]
         {
@@ -1252,7 +1252,7 @@ impl DbxMcpServer {
         #[cfg(not(feature = "mq-admin"))]
         {
             let _ = request;
-            return tool_error("MQ_UNSUPPORTED", "Message queue support is not compiled into this DBX MCP build.");
+            return tool_error("MQ_UNSUPPORTED", "Message queue support is not compiled into this NexDB MCP build.");
         }
 
         #[cfg(feature = "mq-admin")]
@@ -1365,7 +1365,7 @@ impl DbxMcpServer {
         text(format_schema_context(&connection.name, &database, &schema, &tables, truncated))
     }
 
-    #[tool(name = "dbx_add_connection", description = "Add a new database connection to DBX")]
+    #[tool(name = "dbx_add_connection", description = "Add a new database connection to NexDB")]
     async fn add_connection(&self, Parameters(request): Parameters<AddConnectionRequest>) -> CallToolResult {
         if let Err(error) = self.ensure_tool_allowed("dbx_add_connection").await {
             return error;
@@ -1377,7 +1377,7 @@ impl DbxMcpServer {
         if policy.read_only {
             return tool_error(
                 "MCP_READ_ONLY",
-                "DBX global MCP read-only mode is enabled. Connection management is not allowed.",
+                "NexDB global MCP read-only mode is enabled. Connection management is not allowed.",
             );
         }
         let connections = match self.backend.load_connections().await {
@@ -1418,7 +1418,7 @@ impl DbxMcpServer {
 
     #[tool(
         name = "dbx_duplicate_connection",
-        description = "Duplicate a DBX connection with its complete settings, credentials, tunnels, and sidebar group"
+        description = "Duplicate a NexDB connection with its complete settings, credentials, tunnels, and sidebar group"
     )]
     async fn duplicate_connection(
         &self,
@@ -1434,7 +1434,7 @@ impl DbxMcpServer {
         if policy.read_only {
             return tool_error(
                 "MCP_READ_ONLY",
-                "DBX global MCP read-only mode is enabled. Connection management is not allowed.",
+                "NexDB global MCP read-only mode is enabled. Connection management is not allowed.",
             );
         }
         let connections = match self.backend.load_connections().await {
@@ -1484,7 +1484,7 @@ impl DbxMcpServer {
         }
     }
 
-    #[tool(name = "dbx_remove_connection", description = "Remove a database connection from DBX")]
+    #[tool(name = "dbx_remove_connection", description = "Remove a database connection from NexDB")]
     async fn remove_connection(&self, Parameters(request): Parameters<RemoveConnectionRequest>) -> CallToolResult {
         if let Err(error) = self.ensure_tool_allowed("dbx_remove_connection").await {
             return error;
@@ -1496,7 +1496,7 @@ impl DbxMcpServer {
         if policy.read_only {
             return tool_error(
                 "MCP_READ_ONLY",
-                "DBX global MCP read-only mode is enabled. Connection management is not allowed.",
+                "NexDB global MCP read-only mode is enabled. Connection management is not allowed.",
             );
         }
         let connections = match self.backend.load_connections().await {
@@ -1539,7 +1539,7 @@ impl DbxMcpServer {
         if !policy_allows_connection(&policy, group_paths.get(&target.id), &target) {
             return tool_error(
                 "CONNECTION_OUT_OF_SCOPE",
-                format!("Connection \"{}\" is not allowed by DBX MCP settings.", target.id),
+                format!("Connection \"{}\" is not allowed by NexDB MCP settings.", target.id),
             );
         }
         match self.backend.remove_connection_for_mcp(&target.id).await {
@@ -1549,7 +1549,7 @@ impl DbxMcpServer {
         }
     }
 
-    #[tool(name = "dbx_open_table", description = "Open a table in DBX desktop app. Requires DBX to be running.")]
+    #[tool(name = "dbx_open_table", description = "Open a table in NexDB desktop app. Requires NexDB to be running.")]
     async fn open_table(&self, Parameters(request): Parameters<OpenTableRequest>) -> CallToolResult {
         if let Err(error) = self.ensure_tool_allowed("dbx_open_table").await {
             return error;
@@ -1581,14 +1581,14 @@ impl DbxMcpServer {
             )
             .await
         {
-            Ok(()) => text(format!("Opened {} in DBX", request.table)),
+            Ok(()) => text(format!("Opened {} in NexDB", request.table)),
             Err(error) => backend_tool_error("DBX_NOT_RUNNING", error),
         }
     }
 
     #[tool(
         name = "dbx_execute_and_show",
-        description = "Execute a SQL query in DBX desktop app UI and show results there. Requires DBX to be running."
+        description = "Execute a SQL query in NexDB desktop app UI and show results there. Requires NexDB to be running."
     )]
     async fn execute_and_show(&self, Parameters(request): Parameters<ExecuteAndShowRequest>) -> CallToolResult {
         if let Err(error) = self.ensure_tool_allowed("dbx_execute_and_show").await {
@@ -1654,7 +1654,7 @@ impl DbxMcpServer {
             )
             .await
         {
-            Ok(()) => text("Query sent to DBX"),
+            Ok(()) => text("Query sent to NexDB"),
             Err(error) => backend_tool_error("DBX_NOT_RUNNING", error),
         }
     }
@@ -1665,7 +1665,7 @@ impl DbxMcpServer {
         match &resolved.database_scope {
             DatabaseScope::None => tool_error(
                 "DATABASE_OUT_OF_SCOPE",
-                "This connection is configured with no database access in DBX MCP settings.",
+                "This connection is configured with no database access in NexDB MCP settings.",
             ),
             DatabaseScope::Selected(databases) => text(format_database_names(databases)),
             DatabaseScope::All => match self.backend.list_databases(&resolved.connection).await {
@@ -1708,7 +1708,7 @@ impl DbxMcpServer {
         if policy_allows_tool(&policy, tool_name) {
             Ok(())
         } else {
-            Err(tool_error("TOOL_OUT_OF_SCOPE", format!("Tool \"{tool_name}\" is not allowed by DBX MCP settings.")))
+            Err(tool_error("TOOL_OUT_OF_SCOPE", format!("Tool \"{tool_name}\" is not allowed by NexDB MCP settings.")))
         }
     }
 
@@ -1818,13 +1818,13 @@ impl DbxMcpServer {
             if self.scope.connection_scope_enabled() && !self.scope.matches(&connection) {
                 return Err(tool_error(
                     "CONNECTION_OUT_OF_SCOPE",
-                    format!("Connection \"{id}\" is outside this DBX AI session scope."),
+                    format!("Connection \"{id}\" is outside this NexDB AI session scope."),
                 ));
             }
             if !policy_allows_connection(&policy, group_paths.get(&connection.id), &connection) {
                 return Err(tool_error(
                     "CONNECTION_OUT_OF_SCOPE",
-                    format!("Connection \"{id}\" is not allowed by DBX MCP settings."),
+                    format!("Connection \"{id}\" is not allowed by NexDB MCP settings."),
                 ));
             }
             return Ok(resolved_connection(policy, connection, group_paths.get(id)));
@@ -1833,19 +1833,19 @@ impl DbxMcpServer {
             let connection = connections
                 .into_iter()
                 .find(|connection| self.scope.matches(connection))
-                .ok_or_else(|| tool_error("CONNECTION_NOT_FOUND", "Scoped DBX connection was not found."))?;
+                .ok_or_else(|| tool_error("CONNECTION_NOT_FOUND", "Scoped NexDB connection was not found."))?;
             if let Some(name) = selector.connection_name.as_deref().map(str::trim).filter(|name| !name.is_empty()) {
                 if name != connection.name && name != connection.id {
                     return Err(tool_error(
                         "CONNECTION_OUT_OF_SCOPE",
-                        format!("Connection \"{name}\" is outside this DBX AI session scope."),
+                        format!("Connection \"{name}\" is outside this NexDB AI session scope."),
                     ));
                 }
             }
             if !policy_allows_connection(&policy, group_paths.get(&connection.id), &connection) {
                 return Err(tool_error(
                     "CONNECTION_OUT_OF_SCOPE",
-                    "The DBX AI session scope is outside the global MCP connection allowlist.",
+                    "The NexDB AI session scope is outside the global MCP connection allowlist.",
                 ));
             }
             let path = group_paths.get(&connection.id);
@@ -1867,7 +1867,7 @@ impl DbxMcpServer {
             }
             [] => Err(tool_error(
                 "CONNECTION_OUT_OF_SCOPE",
-                format!("Connection \"{name}\" is not allowed by DBX MCP settings."),
+                format!("Connection \"{name}\" is not allowed by NexDB MCP settings."),
             )),
             [connection] => Ok(resolved_connection(policy, connection.clone(), group_paths.get(&connection.id))),
             _ => Err(tool_error("AMBIGUOUS_CONNECTION", ambiguous_connections(name, &allowed))),
@@ -1880,7 +1880,7 @@ impl ServerHandler for DbxMcpServer {
     fn get_info(&self) -> ServerInfo {
         ServerInfo::new(ServerCapabilities::builder().enable_tools().build())
             .with_server_info(Implementation::new("dbx", env!("CARGO_PKG_VERSION")))
-            .with_instructions("Use DBX connections to inspect schemas and query databases safely.")
+            .with_instructions("Use NexDB connections to inspect schemas and query databases safely.")
     }
 
     /// Hide tools the global policy disallows from the advertised list, the
@@ -2065,7 +2065,7 @@ fn ensure_database_in_scope(scope: &DatabaseScope, database: &str) -> Result<(),
         DatabaseScope::Selected(allowed) if allowed.iter().any(|allowed| allowed == database) => Ok(()),
         DatabaseScope::Selected(_) | DatabaseScope::None => Err(tool_error(
             "DATABASE_OUT_OF_SCOPE",
-            format!("Database \"{database}\" is not allowed by DBX MCP settings for this connection."),
+            format!("Database \"{database}\" is not allowed by NexDB MCP settings for this connection."),
         )),
     }
 }
@@ -2087,7 +2087,7 @@ fn ensure_sql_database_scope(
     if sql_references_disallowed_database(sql, &connection.db_type, active_database, allowed_databases) {
         return Err(tool_error(
             "DATABASE_OUT_OF_SCOPE",
-            "SQL references a database that is not allowed by DBX MCP settings for this connection.",
+            "SQL references a database that is not allowed by NexDB MCP settings for this connection.",
         ));
     }
     Ok(())
@@ -2247,7 +2247,7 @@ fn validate_sql_policy(
     }
     let high_risk = risk == SqlRisk::Ddl || is_dangerous_sql_for_database(sql, connection.db_type);
     if high_risk && !policy.allow_dangerous_sql {
-        return Err(tool_error("SQL_BLOCKED", "High-risk SQL is disabled in DBX MCP settings."));
+        return Err(tool_error("SQL_BLOCKED", "High-risk SQL is disabled in NexDB MCP settings."));
     }
     if is_write && targets_production_database(connection, database, sql) {
         return Err(tool_error("PRODUCTION_WRITE_BLOCKED", "MCP cannot execute writes against a production database."));
@@ -2294,7 +2294,7 @@ fn validate_mongo_command_with_groups(
     if matches!(command_to_validate, MongoCommand::RunCommand { .. }) {
         return Err(tool_error(
             "SQL_BLOCKED",
-            "MongoDB runCommand is not available through MCP; review and execute it manually in DBX.",
+            "MongoDB runCommand is not available through MCP; review and execute it manually in NexDB.",
         ));
     }
     if let MongoCommand::Aggregate { pipeline, .. } = command_to_validate {
@@ -2328,14 +2328,14 @@ fn validate_mongo_command_with_groups(
         return Err(match error {
             MongoSafetyError::WritesDisabled => tool_error(
                 if effective_policy.read_only { "MCP_READ_ONLY" } else { "CONNECTION_READ_ONLY" },
-                "MCP MongoDB execution is read-only for this database in DBX MCP settings.",
+                "MCP MongoDB execution is read-only for this database in NexDB MCP settings.",
             ),
             MongoSafetyError::EmptyFilter => tool_error(
                 "SQL_BLOCKED",
-                "MongoDB update/delete commands must include a non-empty filter unless high-risk operations are enabled in DBX MCP settings.",
+                "MongoDB update/delete commands must include a non-empty filter unless high-risk operations are enabled in NexDB MCP settings.",
             ),
             MongoSafetyError::Dangerous => {
-                tool_error("SQL_BLOCKED", "Dangerous MongoDB command is disabled in DBX MCP settings.")
+                tool_error("SQL_BLOCKED", "Dangerous MongoDB command is disabled in NexDB MCP settings.")
             }
             MongoSafetyError::ProductionWrite => {
                 tool_error("PRODUCTION_WRITE_BLOCKED", "MCP cannot execute writes against a production database.")

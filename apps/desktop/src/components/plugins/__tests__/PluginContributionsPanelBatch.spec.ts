@@ -97,7 +97,7 @@ type PanelState = {
 
 function installed(id: string, version = "1.0.0"): InstalledPlugin {
   return {
-    manifest: { manifest_version: 1, id, name: id, version, publisher: "DBX", description: "", engines: { dbx: "", host_api: "" }, permissions: [], entrypoints: {}, contributions: [], drivers: [], protocol_version: 1 },
+    manifest: { manifest_version: 1, id, name: id, version, publisher: "NexDB", description: "", engines: { dbx: "", host_api: "" }, permissions: [], entrypoints: {}, contributions: [], drivers: [], protocol_version: 1 },
     compatibility: { compatible: true, errors: [], warnings: [], target: "darwin-arm64" },
   };
 }
@@ -113,7 +113,7 @@ function catalog(repositoryId: string, ids: string[], version = "3.0.0"): Plugin
         id,
         name: id,
         description: "",
-        publisher: "DBX",
+        publisher: "NexDB",
         verified: false,
         tags: [],
         permissions: [],

@@ -26,7 +26,7 @@ Environment:
 The result supports a Go Agent primarily for startup, connection, memory, and
 distribution-size improvements. Warm query differences are much smaller and
 shrink as server work and result decoding increase. This benchmark compares
-drivers directly; it does not include the DBX JSON-RPC Agent layer or prove
+drivers directly; it does not include the NexDB JSON-RPC Agent layer or prove
 feature and version compatibility parity.
 
 See `iotdb-2.0.8-macos-arm64.json` for all raw rounds.

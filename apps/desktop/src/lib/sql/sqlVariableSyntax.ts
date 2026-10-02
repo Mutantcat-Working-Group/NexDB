@@ -1,6 +1,6 @@
 // Per-database-type configuration for SQL variable/placeholder substitution.
 //
-// DBX runs two client-side substitution systems before sending SQL to a backend:
+// NexDB runs two client-side substitution systems before sending SQL to a backend:
 // the placeholder parameter dialog (`sqlParameters.ts`, five syntaxes) and the
 // `@set name = value;` expansion (`sqlVariables.ts`). This module lets users opt
 // out of individual syntaxes per database type. Every toggle defaults to `true`,

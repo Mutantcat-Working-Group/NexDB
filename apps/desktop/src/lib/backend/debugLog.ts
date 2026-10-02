@@ -153,16 +153,16 @@ export async function appendNativeProcessMemoryLog(event: string, context: Recor
   try {
     const { invoke } = await import("@tauri-apps/api/core");
     const memory = await invoke<NativeProcessMemorySnapshot>("get_process_memory_info");
-    appendDebugLog("info", `[DBX][native-memory:${event}]`, { ...context, ...memory });
+    appendDebugLog("info", `[NexDB][native-memory:${event}]`, { ...context, ...memory });
   } catch (error) {
-    appendDebugLog("warn", `[DBX][native-memory:${event}:error]`, { ...context, error });
+    appendDebugLog("warn", `[NexDB][native-memory:${event}:error]`, { ...context, error });
   }
 }
 
 export function setDebugLoggingEnabled(enabled: boolean) {
   safeLocalStorageSet(DEBUG_LOG_ENABLED_KEY, enabled ? "1" : "0");
   if (enabled) {
-    appendDebugLog("info", "[DBX][debug-log] enabled", {
+    appendDebugLog("info", "[NexDB][debug-log] enabled", {
       url: location.href,
       viewport: `${window.innerWidth}x${window.innerHeight}`,
       devicePixelRatio: window.devicePixelRatio,
@@ -178,7 +178,7 @@ export function clearDebugLogs() {
 
 export function getDebugLogText(): string {
   const entries = readEntries();
-  const header = [`DBX debug log`, `Exported: ${formatLocalTimestamp()}`, `User agent: ${navigator.userAgent}`, `Platform: ${navigator.platform}`, `Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown"}`, ""];
+  const header = [`NexDB debug log`, `Exported: ${formatLocalTimestamp()}`, `User agent: ${navigator.userAgent}`, `Platform: ${navigator.platform}`, `Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone || "unknown"}`, ""];
   const body = entries.map((entry) => `[${entry.timestamp}] [${entry.level.toUpperCase()}] ${entry.message}`);
   return [...header, ...body].join("\n");
 }

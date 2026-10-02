@@ -66,7 +66,7 @@ export function buildSafeHtmlPreview(content: string): string {
 
 /**
  * "Copy source" puts the raw AI HTML on the clipboard where it may later be
- * opened outside DBX. The first copy of a session requires an explicit risk
+ * opened outside NexDB. The first copy of a session requires an explicit risk
  * confirmation; the choice is remembered for the session only (it resets when
  * the app restarts), and later copies degrade to a risk toast instead of
  * repeating the confirmation.

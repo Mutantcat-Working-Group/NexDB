@@ -1,6 +1,6 @@
 # Apache IoTDB native Agent
 
-This module implements the DBX Agent protocol with the official Apache IoTDB
+This module implements the NexDB Agent protocol with the official Apache IoTDB
 Go client. Tree SQL is the default; set `sql_dialect=table` for the Table model.
 
 ## Build and test
@@ -26,7 +26,7 @@ The live tests default to `127.0.0.1:6667` with `root/root`. Override them with
 
 ## Connection options
 
-DBX connection fields and `jdbc:iotdb://...` connection strings are accepted.
+NexDB connection fields and `jdbc:iotdb://...` connection strings are accepted.
 The following URL parameters are supported:
 
 - `sql_dialect=tree|table`
@@ -39,7 +39,7 @@ The following URL parameters are supported:
 - `node_urls=host1:6667,host2:6667` for cluster sessions
 - `ssl=true` and `insecure_skip_verify=true`
 
-The standard DBX certificate fields provide CA and client certificate paths
+The standard NexDB certificate fields provide CA and client certificate paths
 for TLS or mTLS connections.
 
 ## Compatibility
@@ -58,7 +58,7 @@ for TLS or mTLS connections.
   misaligned aggregate result values against the SELECT column order on 1.3.x
   servers (the patched client maps value columns through the server-provided
   name index when the ordered index list is absent).
-- The Agent keeps one physical IoTDB session per logical DBX session and
+- The Agent keeps one physical IoTDB session per logical NexDB session and
   invalidates that session after cancellation, timeout, or connection failure.
 
 The historical JDBC-versus-Go driver benchmark and raw result summary are kept

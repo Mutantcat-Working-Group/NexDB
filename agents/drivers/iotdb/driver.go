@@ -216,9 +216,9 @@ func parseConnectionConfig(params connectParams) (connectionConfig, error) {
 func newSessionClient(config connectionConfig) (*sessionClient, error) {
 	var session client.Session
 	var err error
-	// DBX applies a table database with USE after switching dialects. Do not
+	// NexDB applies a table database with USE after switching dialects. Do not
 	// include a tree database in openSession: IoTDB 2.x rejects it there, while
-	// DBX still retains it for metadata and path qualification.
+	// NexDB still retains it for metadata and path qualification.
 	if len(config.NodeURLs) > 1 {
 		session, err = client.NewClusterSession(&client.ClusterConfig{
 			NodeUrls:        config.NodeURLs,

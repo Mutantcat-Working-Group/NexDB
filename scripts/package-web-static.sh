@@ -78,7 +78,7 @@ case "$base_path" in
   /*) ;;
   *) base_path="/$base_path" ;;
 esac
-printf 'DBX browser UI: http://127.0.0.1:%s%s\n' "$port" "$base_path"
+printf 'NexDB browser UI: http://127.0.0.1:%s%s\n' "$port" "$base_path"
 cd "$ROOT"
 exec "$ROOT/bin/dbx-web-bin" "$@"
 EOF
@@ -86,7 +86,7 @@ chmod +x "$package_dir/dbx"
 ln -sfn dbx "$package_dir/dbx-web"
 
 cat > "$package_dir/README.txt" <<EOF
-DBX ${arch_label} static browser package
+NexDB ${arch_label} static browser package
 
 Run:
   ./dbx

@@ -3,7 +3,7 @@
 `src/lib` is organized by product/runtime domain. Keep implementation modules inside a domain folder instead of adding new files at the root.
 
 - `backend`: Tauri, HTTP, platform, storage, and transport bridges.
-- `common`: generic helpers with no DBX feature ownership.
+- `common`: generic helpers with no NexDB feature ownership.
 - `app`, `tabs`, `sidebar`, `connection`: shell, navigation, and connection UI state helpers.
 - `database`, `metadata`, `schema`, `table`: relational database metadata, capabilities, DDL, and table-object helpers.
 - `sql`, `sql/semantic`, `editor`, `query`, `history`, `savedSql`: SQL editing, execution, diagnostics, history, and saved SQL behavior.

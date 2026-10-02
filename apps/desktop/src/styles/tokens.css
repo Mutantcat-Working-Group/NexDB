@@ -4,7 +4,7 @@
  *
  * These live apart from globals.css because the export's Tailwind entry
  * cannot import globals.css: its `@source` scans the whole application and
- * `@source` is additive, so the export would emit every utility in DBX. The
+ * `@source` is additive, so the export would emit every utility in NexDB. The
  * export still needs these tokens, and duplicating them is how the values
  * drift.
  *

@@ -39,7 +39,7 @@ use crate::sql_dialect::{quote_iris_identifier, resolve_for_db, CAP_TRANSACTIONA
 use crate::sql_risk::{classify_sql_risk_for_database, SqlRisk};
 
 pub const AGENT_PROTOCOL_MAX_ROWS: usize = i32::MAX as usize;
-pub const METADATA_POOL_BUSY_ERROR: &str = "DBX metadata pool is busy; please retry";
+pub const METADATA_POOL_BUSY_ERROR: &str = "NexDB metadata pool is busy; please retry";
 pub const MANUAL_TRANSACTION_IDLE_TIMEOUT_SECS: u64 = 300;
 pub const MANUAL_TRANSACTION_SESSION_NOT_FOUND_ERROR: &str =
     "Transaction session not found or expired; it may have been auto-rolled back due to inactivity";
@@ -2220,7 +2220,7 @@ async fn invoke_external_driver_query_page(
     match session.invoke_with_timeout::<db::QueryResult>("executeQueryPage", params.clone(), plugin_timeout).await {
         Ok(result) => Ok(result),
         Err(error) if is_external_driver_method_unsupported(&error, "executeQueryPage") => {
-            // Plugins installed by older DBX releases predate cursor pagination. Keep
+            // Plugins installed by older NexDB releases predate cursor pagination. Keep
             // basic queries usable until the user updates the plugin, without retrying
             // actual JDBC/SQL failures that may have side effects.
             log::warn!("[query][external-driver] executeQueryPage unsupported; falling back to executeQuery");

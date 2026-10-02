@@ -4,15 +4,15 @@ Status date: 2026-08-12.
 
 The migration is not complete until a capability is implemented, covered by
 automated tests, validated against a real compatible server, and included in
-the DBX native-agent build and release path. A unit test alone does not count as
+the NexDB native-agent build and release path. A unit test alone does not count as
 production parity.
 
 ## Baseline
 
-- DBX Java baseline: Apache Hive JDBC standalone 4.0.1.
+- NexDB Java baseline: Apache Hive JDBC standalone 4.0.1.
 - Compatibility reference: DBeaver keeps separate Hive 2 legacy and Hive 4+
   JDBC profiles. The Go migration must not infer Hive 2 support from Hive 3/4.
-- DBX protocol baseline: the Go Agent implements the same stdin/stdout JSON-RPC
+- NexDB protocol baseline: the Go Agent implements the same stdin/stdout JSON-RPC
   methods used by the Java Agent.
 - HS2 client protocol: Go requests `HIVE_CLI_SERVICE_PROTOCOL_V6`, matching the
   upstream GoHive compatibility baseline. Hive 3.1.3 and Hive 4.2.0 accepted
@@ -66,7 +66,7 @@ production parity.
 | Cancellation and timeout | yes | yes | no | no | real long-running query validation pending |
 | Large result and large complex values | yes | yes | partial | no | functional samples passed; boundary fixture pending |
 | JDBC client compatibility properties | yes | yes | partial | no | fetch/message sizing, retries, init file, application name, HTTP headers/cookies, request tracking, and browser settings are mapped |
-| Native DBX install/launch | yes | yes | local artifact smoke | no | DBX tests prove native launch without a JRE and replacement of a stale Hive `agent.jar`; packaged desktop upgrade remains pending |
+| Native NexDB install/launch | yes | yes | local artifact smoke | no | NexDB tests prove native launch without a JRE and replacement of a stale Hive `agent.jar`; packaged desktop upgrade remains pending |
 | Native CI/release artifacts | yes | yes | local build | cross-build | Hive version bumping, registry packaging, release notes, CI tests, and six native targets are wired |
 
 ## JDBC 4.0.1 client feature coverage
@@ -99,7 +99,7 @@ provided explicitly; it does not pretend that the Java credential provider was
 read successfully.
 
 The remaining migration work is therefore live compatibility validation and
-native DBX delivery verification, not another Java implementation.
+native NexDB delivery verification, not another Java implementation.
 
 ## Live evidence
 
@@ -116,7 +116,7 @@ init-file, and release-path completion pass had SHA-256:
 2053c4d127a2bb3fd67eb31b995998cce749b7adec7b13548e768f53435a2850
 ```
 
-The current Linux x86-64 native artifact after the DBX visible-schema and
+The current Linux x86-64 native artifact after the NexDB visible-schema and
 native-upgrade completion pass has SHA-256:
 
 ```text

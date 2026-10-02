@@ -1,13 +1,13 @@
 ---
 title: Web API 参考
-description: DBX Web 与 Docker UI 使用的内部 HTTP API，包括认证、查询、后台任务、上传和下载边界。
+description: NexDB Web 与 Docker UI 使用的内部 HTTP API，包括认证、查询、后台任务、上传和下载边界。
 ---
 
-<Callout type="warn">这套 API 主要服务于 DBX Web 界面，以及 MCP Web 模式等内部工具。它不是单独对外承诺的集成契约，路由和字段可能随版本调整。做脚本或 Agent 集成时，优先使用 [@dbx-app/cli](/cn/docs/cli) 或 [@dbx-app/mcp-server](/cn/docs/mcp)。</Callout>
+<Callout type="warn">这套 API 主要服务于 NexDB Web 界面，以及 MCP Web 模式等内部工具。它不是单独对外承诺的集成契约，路由和字段可能随版本调整。做脚本或 Agent 集成时，优先使用 [@dbx-app/cli](/cn/docs/cli) 或 [@dbx-app/mcp-server](/cn/docs/mcp)。</Callout>
 
 ## 基础地址
 
-DBX Web 默认监听 `4224` 端口：
+NexDB Web 默认监听 `4224` 端口：
 
 ```text
 http://localhost:4224
@@ -100,7 +100,7 @@ Cookie: dbx_session=...
 - 出错时通常返回带 `error` 字段的 JSON 和对应 HTTP 状态码。
 - 导出、导入、数据传输、SQL 文件和 AI 等长任务通常使用“启动请求 + SSE 进度 + 取消/下载”组合，不是一个同步响应。
 
-只有数据网格提取器当前提供受测试的局部 OpenAPI 文档：`/api/query/data-grid-extractor-openapi.json`。它不覆盖完整 DBX Web API，也不代表其它路由已经版本化。
+只有数据网格提取器当前提供受测试的局部 OpenAPI 文档：`/api/query/data-grid-extractor-openapi.json`。它不覆盖完整 NexDB Web API，也不代表其它路由已经版本化。
 
 ## 连接相关 API
 
@@ -317,7 +317,7 @@ Content-Type: application/json
 
 MCP Server 会自动处理登录和会话 Cookie。
 
-CLI 同样支持 `DBX_WEB_URL` 和 `DBX_WEB_PASSWORD`。两者都复用 Web 后端的连接、驱动、只读保护、生产保护和数据库权限，比复制内部路由字段更容易随 DBX 升级。
+CLI 同样支持 `DBX_WEB_URL` 和 `DBX_WEB_PASSWORD`。两者都复用 Web 后端的连接、驱动、只读保护、生产保护和数据库权限，比复制内部路由字段更容易随 NexDB 升级。
 
 ## 写入、安全和文件边界
 
@@ -331,9 +331,9 @@ CLI 同样支持 `DBX_WEB_URL` 和 `DBX_WEB_PASSWORD`。两者都复用 Web 后�
 
 仓库内示例：
 
-- [examples/web-api/automation.sh](https://github.com/t8y2/dbx/tree/main/examples/web-api/automation.sh)
-- [examples/docker/docker-compose.yml](https://github.com/t8y2/dbx/tree/main/examples/docker/docker-compose.yml)
-- [examples/cli/basic-workflow.sh](https://github.com/t8y2/dbx/tree/main/examples/cli/basic-workflow.sh)
+- [examples/web-api/automation.sh](https://github.com/Mutantcat-Working-Group/NexDB/tree/main/examples/web-api/automation.sh)
+- [examples/docker/docker-compose.yml](https://github.com/Mutantcat-Working-Group/NexDB/tree/main/examples/docker/docker-compose.yml)
+- [examples/cli/basic-workflow.sh](https://github.com/Mutantcat-Working-Group/NexDB/tree/main/examples/cli/basic-workflow.sh)
 
 ## 其他路由分组
 

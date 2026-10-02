@@ -1,31 +1,31 @@
 ---
-title: 开发和提交 DBX 插件
-description: 从 CLI、Manifest、Workbench 和 Sidecar 开始开发 DBX 插件，完成本地调试、打包、自动上架和官方签名发布。
+title: 开发和提交 NexDB 插件
+description: 从 CLI、Manifest、Workbench 和 Sidecar 开始开发 NexDB 插件，完成本地调试、打包、自动上架和官方签名发布。
 ---
 
-DBX 插件是独立安装的 `.dbxp` 包，可以提供连接类型、工作台、文件系统和原生 Sidecar。插件源码、DBX 插件框架和官方商店目录由不同仓库负责。
+NexDB 插件是独立安装的 `.dbxp` 包，可以提供连接类型、工作台、文件系统和原生 Sidecar。插件源码、NexDB 插件框架和官方商店目录由不同仓库负责。
 
 <Callout type="info">
   **推荐路径：** 使用 `dbx-plugin create` 创建项目，在自己的仓库开发并发布未签名候选包；`dbx-store` 会为已注册的插件自动创建或更新候选 PR，维护者审核并签名后才会进入官方目录。
 </Callout>
 
 <Callout type="warn">
-  **插件上架 Pull Request 提交到 [`t8y2/dbx-store`](https://github.com/t8y2/dbx-store)，不是 `t8y2/dbx`。** 插件自己的功能代码通常保留在开发者自己的源码仓库；只有修改 DBX Host、SDK、CLI、协议、Schema、文档或官方示例时，才向 [`t8y2/dbx`](https://github.com/t8y2/dbx) 提交 PR。
+  **插件上架 Pull Request 提交到 [`t8y2/dbx-store`](https://github.com/t8y2/dbx-store)，不是 `Mutantcat-Working-Group/NexDB`。** 插件自己的功能代码通常保留在开发者自己的源码仓库；只有修改 NexDB Host、SDK、CLI、协议、Schema、文档或官方示例时，才向 [`Mutantcat-Working-Group/NexDB`](https://github.com/Mutantcat-Working-Group/NexDB) 提交 PR。
 </Callout>
 
 ## 应该提交到哪个仓库
 
-| 你要修改的内容 | 提交位置 | 是否向 DBX 官方提 PR |
+| 你要修改的内容 | 提交位置 | 是否向 NexDB 官方提 PR |
 | --- | --- | --- |
 | 你的插件前端、Rust/Go 后端、测试和发布脚本 | 插件自己的源码仓库 | 不向 `dbx` 提交；在自己的仓库开发和发布 |
 | 新插件上架、版本更新、商店图标和介绍 | [`t8y2/dbx-store`](https://github.com/t8y2/dbx-store) | 是，目标分支为 `main` |
-| DBX 插件 Host、Manifest/Marketplace Schema、SDK、CLI、Packager | [`t8y2/dbx`](https://github.com/t8y2/dbx) | 是，目标分支为 `main` |
-| DBX 官方示例或插件开发文档 | [`t8y2/dbx`](https://github.com/t8y2/dbx) | 是 |
+| NexDB 插件 Host、Manifest/Marketplace Schema、SDK、CLI、Packager | [`Mutantcat-Working-Group/NexDB`](https://github.com/Mutantcat-Working-Group/NexDB) | 是，目标分支为 `main` |
+| NexDB 官方示例或插件开发文档 | [`Mutantcat-Working-Group/NexDB`](https://github.com/Mutantcat-Working-Group/NexDB) | 是 |
 | 某个第三方插件自身的 Bug | 该插件的源码仓库 | 不要提交到 `dbx-store` |
 | 自定义或企业私有仓库 | 你的私有仓库 | 不需要向官方商店提交 |
 | 数据库厂商 JDBC Driver JAR | 不提交到 Git 仓库 | 用户在本机或服务器中导入 |
 
-DBX 官方维护但需要独立发布节奏的插件，通常也应使用独立源码仓库。只有与 Host 强耦合的最小示例、SDK 验证项目或维护者明确同意的组件才放进 `t8y2/dbx`。
+NexDB 官方维护但需要独立发布节奏的插件，通常也应使用独立源码仓库。只有与 Host 强耦合的最小示例、SDK 验证项目或维护者明确同意的组件才放进 `Mutantcat-Working-Group/NexDB`。
 
 ## 插件由哪些部分组成
 
@@ -42,18 +42,18 @@ my-plugin/
 ```
 
 - `manifest.json` 声明插件身份、版本、权限、入口和 Contributions。
-- `ui/` 在沙箱工作台中运行，通过 Host API 与 DBX 交互。
-- `backend/` 是可选的原生 Sidecar，可以使用 Rust、Go 或其他能够实现 DBX JSON-RPC 协议的语言。
+- `ui/` 在沙箱工作台中运行，通过 Host API 与 NexDB 交互。
+- `backend/` 是可选的原生 Sidecar，可以使用 Rust、Go 或其他能够实现 NexDB JSON-RPC 协议的语言。
 - `.dbxp` 是安装包，不是源码仓库。
 - 前端插件可以发布一个 `universal` 包；包含原生 Sidecar 的插件需要按操作系统和 CPU 架构分别构建。
 
 ## Manifest 完整说明
 
-`manifest.json` 是运行时契约，文件名必须位于插件包根目录。Manifest v1 不接受未声明字段，建议在编辑器中引用仓库内的 [`plugins/manifest.schema.json`](https://github.com/t8y2/dbx/blob/main/plugins/manifest.schema.json)。最小的纯前端 Manifest 如下：
+`manifest.json` 是运行时契约，文件名必须位于插件包根目录。Manifest v1 不接受未声明字段，建议在编辑器中引用仓库内的 [`plugins/manifest.schema.json`](https://github.com/Mutantcat-Working-Group/NexDB/blob/main/plugins/manifest.schema.json)。最小的纯前端 Manifest 如下：
 
 ```json
 {
-  "$schema": "https://raw.githubusercontent.com/t8y2/dbx/main/plugins/manifest.schema.json",
+  "$schema": "https://raw.githubusercontent.com/Mutantcat-Working-Group/NexDB/main/plugins/manifest.schema.json",
   "manifest_version": 1,
   "id": "com.example.files",
   "name": "Example Files",
@@ -115,15 +115,15 @@ Manifest 中的路径相对于包根目录，不能以 `/` 开头、不能包含
 }
 ```
 
-- `engines.dbx` 是可选的 DBX 版本范围；`engines.host_api` 是必需的 Host API 版本声明。
+- `engines.dbx` 是可选的 NexDB 版本范围；`engines.host_api` 是必需的 Host API 版本声明。
 - `host.workbench` 允许打开另一个工作台，`host.events` 接收宿主事件，`host.binary` 使用二进制通道，`host.filesystem` 使用文件系统入口。
-- `host.network:https://host[:port]` 声明浏览器可访问的 HTTPS origin，DBX 将它加入 CSP 的 `connect-src`；最多 8 个，不允许路径、通配符或 Token。仍受目标服务 CORS 规则约束。该权限不是原生 Sidecar 的网络防火墙。
+- `host.network:https://host[:port]` 声明浏览器可访问的 HTTPS origin，NexDB 将它加入 CSP 的 `connect-src`；最多 8 个，不允许路径、通配符或 Token。仍受目标服务 CORS 规则约束。该权限不是原生 Sidecar 的网络防火墙。
 - `backend.transport` 默认是 `stdio-jsonl`；需要二进制帧时使用 `stdio-framed`，并同时声明 `host.binary`。
 - `backend.executable`、`ui.root` 和 `ui.entry` 必须指向包内文件；带原生后端的包必须为每个目标平台提供对应可执行文件。
 
 ### Connection Provider
 
-连接 Provider 负责声明连接表单，DBX 负责渲染表单和保存生命周期；插件只处理自己的连接协议。`binding` 决定字段语义：`config` 写入外部配置，`secret` 写入 Secret Store，`name`、`host`、`port`、`username`、`password`、`database` 映射到标准连接字段。
+连接 Provider 负责声明连接表单，NexDB 负责渲染表单和保存生命周期；插件只处理自己的连接协议。`binding` 决定字段语义：`config` 写入外部配置，`secret` 写入 Secret Store，`name`、`host`、`port`、`username`、`password`、`database` 映射到标准连接字段。
 
 ```json
 {
@@ -150,7 +150,7 @@ Manifest 中的路径相对于包根目录，不能以 `/` 开头、不能包含
 
 字段类型为 `text`、`password`、`number`、`boolean`、`select`、`radio` 或 `textarea`；`select`/`radio` 必须提供非空 `options`，每项包含 `label` 和字符串 `value`。`binding: "port"` 必须使用 `number`。不要把密码、Token 或私钥放进 `config`、Workbench context、事件或日志。
 
-每个字段必须声明 `key`、`label`、`type`，可选 `description`、`placeholder`、`required`、`default`、`options` 和 `binding`；默认值必须符合字段类型。省略 binding 的 `password` 字段默认按 `secret` 处理。`database_type` 是插件自定义类型标识，不会给 DBX 内置数据库枚举添加成员。
+每个字段必须声明 `key`、`label`、`type`，可选 `description`、`placeholder`、`required`、`default`、`options` 和 `binding`；默认值必须符合字段类型。省略 binding 的 `password` 字段默认按 `secret` 处理。`database_type` 是插件自定义类型标识，不会给 NexDB 内置数据库枚举添加成员。
 
 字段还支持条件显隐/条件必填。`visible_when` 与 `required_when` 接受单条子句 `{ "field": "mode", "one_of": ["custom"] }`（引用字段取到列表中的值时命中，按字符串比较，因此 `[false]` 与 `["false"]` 都能匹配布尔 `false`），并用 `all_of` / `any_of` / `not` 组合：
 
@@ -168,7 +168,7 @@ Manifest 中的路径相对于包根目录，不能以 `/` 开头、不能包含
 }
 ```
 
-条件会级联：子句引用的字段自身处于隐藏状态时该子句不参与判定，因此隐藏容器的默认值不会把孙级字段点亮；未填写或空值永不命中；组合树最多 8 层、64 个节点。DBX 在对话框与保存/测试/连接校验中使用同一套求值，不会出现「表单放行、宿主拒绝」的分歧。
+条件会级联：子句引用的字段自身处于隐藏状态时该子句不参与判定，因此隐藏容器的默认值不会把孙级字段点亮；未填写或空值永不命中；组合树最多 8 层、64 个节点。NexDB 在对话框与保存/测试/连接校验中使用同一套求值，不会出现「表单放行、宿主拒绝」的分歧。
 
 `text`、`password`、`textarea` 字段可以用 `picker` 声明**本机文件选择**（例如 SSH 私钥、keystore）：
 
@@ -182,9 +182,9 @@ Manifest 中的路径相对于包根目录，不能以 `/` 开头、不能包含
 }
 ```
 
-桌面端打开系统文件选择器，把选中的**绝对路径**写回该字段（插件后端同机运行，可自行读取文件）；网页端拿不到客户端路径，同一操作变成**上传**：DBX 读取文件内容写入声明的 `content_field` 兄弟字段，并清空路径字段。两者互相清除——选了路径就丢弃已上传内容，上传内容就清空路径，避免同时存在两份互相矛盾的来源。`kind` 还支持 `directory`（仅桌面端），`accept` 最多 16 条扩展名或 MIME 过滤，上传上限 1 MiB。
+桌面端打开系统文件选择器，把选中的**绝对路径**写回该字段（插件后端同机运行，可自行读取文件）；网页端拿不到客户端路径，同一操作变成**上传**：NexDB 读取文件内容写入声明的 `content_field` 兄弟字段，并清空路径字段。两者互相清除——选了路径就丢弃已上传内容，上传内容就清空路径，避免同时存在两份互相矛盾的来源。`kind` 还支持 `directory`（仅桌面端），`accept` 最多 16 条扩展名或 MIME 过滤，上传上限 1 MiB。
 
-插件在连接过程中需要用户输入时（堡垒机登录期 keyboard-interactive 验证码、主机密钥确认、账号选择等），可以调用 Host API 1.1 新增的 `host/requestUserInput`，通过 DBX 同一个阻塞对话框拿到用户输入，`连接测试` 与真实连接走同一条通道：
+插件在连接过程中需要用户输入时（堡垒机登录期 keyboard-interactive 验证码、主机密钥确认、账号选择等），可以调用 Host API 1.1 新增的 `host/requestUserInput`，通过 NexDB 同一个阻塞对话框拿到用户输入，`连接测试` 与真实连接走同一条通道：
 
 ```json
 {
@@ -195,11 +195,11 @@ Manifest 中的路径相对于包根目录，不能以 `/` 开头、不能包含
 }
 ```
 
-返回值为 `{ "action": "submit", "value": "123456" }`、`{ "action": "cancel" }` 或 `{ "action": "timeout" }`；只有 `submit` 带值，其余必须按「没有答案」处理并失败关闭。插件发起的请求使用字符串 id，DBX 自己的请求与响应继续使用数字 id；提示期间 DBX 会暂停等待该回答的请求超时计时，用户输入验证码不会被误判成连接超时。错误码 `-32001` 表示没有可用的用户界面（headless/MCP），`-32602` 参数非法，`-32601` 宿主不支持该方法，三种情况都要优雅降级。调用前请确认 `plugin/initialize` 通告的 `hostApiVersion` 为 `1.1.0`（或 `host.features` 含 `host.requestUserInput`）；Rust SDK 对应 `dbx_plugin_sdk::host_client()` 与 `HostClient::supports("host/requestUserInput")`、`HostClient::request_user_input(&UserInputPrompt::secret("Verification code"))`。
+返回值为 `{ "action": "submit", "value": "123456" }`、`{ "action": "cancel" }` 或 `{ "action": "timeout" }`；只有 `submit` 带值，其余必须按「没有答案」处理并失败关闭。插件发起的请求使用字符串 id，NexDB 自己的请求与响应继续使用数字 id；提示期间 NexDB 会暂停等待该回答的请求超时计时，用户输入验证码不会被误判成连接超时。错误码 `-32001` 表示没有可用的用户界面（headless/MCP），`-32602` 参数非法，`-32601` 宿主不支持该方法，三种情况都要优雅降级。调用前请确认 `plugin/initialize` 通告的 `hostApiVersion` 为 `1.1.0`（或 `host.features` 含 `host.requestUserInput`）；Rust SDK 对应 `dbx_plugin_sdk::host_client()` 与 `HostClient::supports("host/requestUserInput")`、`HostClient::request_user_input(&UserInputPrompt::secret("Verification code"))`。
 
-连接生命周期使用固定的 `connection/test`、`connection/connect`、`connection/disconnect`，自定义表单动作使用 `connection/action`，参数包含 `provider`、`connection`、`runtime`；动作额外包含 `action: { id }`。后端使用 `connection.id` 保存会话，并使用 `runtime.host`/`runtime.port` 连接经过 DBX 隧道或代理转换后的端点。仅在后端生命周期请求中接收补齐 Secret 的连接；前端通过 `connectionId` 使用已经建立的会话。
+连接生命周期使用固定的 `connection/test`、`connection/connect`、`connection/disconnect`，自定义表单动作使用 `connection/action`，参数包含 `provider`、`connection`、`runtime`；动作额外包含 `action: { id }`。后端使用 `connection.id` 保存会话，并使用 `runtime.host`/`runtime.port` 连接经过 NexDB 隧道或代理转换后的端点。仅在后端生命周期请求中接收补齐 Secret 的连接；前端通过 `connectionId` 使用已经建立的会话。
 
-多端点协议（Kafka `advertised.listeners`、集群发现等）在贡献点上声明 `proxy_route`。配置了传输层后，DBX 会在 payload 中下发 SOCKS5 路由而非静态转发：`runtime.host`/`runtime.port` 保留逻辑端点，插件通过 `runtime.proxy`（`{ "type": "socks5", "host": "...", "port": 1080, "username": "...", "password": "..." }`）拨号每个广播端点——SSH 末层暴露其动态 SOCKS5 端点，SOCKS5 代理层直接使用；代理凭据与连接 Secret 走同一加密通道，插件不得记录日志。未声明该旗标时传输层保持静态转发行为，要求标准 `host`/`port` 字段给出单一远端端点；对会隧道到空端点的插件连接，DBX 直接给出可行动的报错而非静默超时。
+多端点协议（Kafka `advertised.listeners`、集群发现等）在贡献点上声明 `proxy_route`。配置了传输层后，NexDB 会在 payload 中下发 SOCKS5 路由而非静态转发：`runtime.host`/`runtime.port` 保留逻辑端点，插件通过 `runtime.proxy`（`{ "type": "socks5", "host": "...", "port": 1080, "username": "...", "password": "..." }`）拨号每个广播端点——SSH 末层暴露其动态 SOCKS5 端点，SOCKS5 代理层直接使用；代理凭据与连接 Secret 走同一加密通道，插件不得记录日志。未声明该旗标时传输层保持静态转发行为，要求标准 `host`/`port` 字段给出单一远端端点；对会隧道到空端点的插件连接，NexDB 直接给出可行动的报错而非静默超时。
 
 动作的 `when` 可为 `always`、`create`、`edit`；`variant` 可为 `default`、`outline`、`secondary`、`destructive`、`ghost`；`timeout_ms` 为 1–120000。`requires_valid_form` 决定是否要求完整表单，`close_on_success` 决定成功后是否关闭。返回 `{ "success": true, "message": "...", "fieldValues": { "port": 443 } }` 可以更新已声明的字段；返回 `success: false` 表示失败。
 
@@ -214,11 +214,11 @@ Manifest 中的路径相对于包根目录，不能以 `/` 开头、不能包含
 
 同一插件内通过 `id` 互相引用：Connection Provider 的 `workbench` 必须指向一个已声明的工作台，`filesystem_provider` 必须指向一个已声明的文件系统 Provider。图标优先使用 Contribution 的 `icon`，缺失时回退到插件级 `icon`。
 
-自定义文件浏览器应使用 `workbench`：列表、虚拟滚动、预览、右键菜单和分栏由插件前端实现。只有希望使用 DBX 通用文件管理器时才选择 `filesystem_provider`；同时声明两者时默认打开工作台。`context-menu` 调用后端 `contextMenu/<contribution-id>`，`result-view` 则在工作台 context 中接收结果快照，被打开的 contribution id 会通过 `dbx-plugin-init` 负载下发，因此单个 UI 入口可以为多个工作台和结果视图服务；具体负载见[完整贡献点协议](https://github.com/t8y2/dbx/blob/main/plugins/README.md)。
+自定义文件浏览器应使用 `workbench`：列表、虚拟滚动、预览、右键菜单和分栏由插件前端实现。只有希望使用 NexDB 通用文件管理器时才选择 `filesystem_provider`；同时声明两者时默认打开工作台。`context-menu` 调用后端 `contextMenu/<contribution-id>`，`result-view` 则在工作台 context 中接收结果快照，被打开的 contribution id 会通过 `dbx-plugin-init` 负载下发，因此单个 UI 入口可以为多个工作台和结果视图服务；具体负载见[完整贡献点协议](https://github.com/Mutantcat-Working-Group/NexDB/blob/main/plugins/README.md)。
 
 ### 文件系统协议
 
-使用 DBX 通用文件管理器时，后端实现以下方法；自定义工作台也可以自行通过 RPC 使用这些方法，但不能把声明 Contribution 当成已经实现业务逻辑。
+使用 NexDB 通用文件管理器时，后端实现以下方法；自定义工作台也可以自行通过 RPC 使用这些方法，但不能把声明 Contribution 当成已经实现业务逻辑。
 
 | 方法 | 参数与返回 |
 | --- | --- |
@@ -255,7 +255,7 @@ Manifest 中的路径相对于包根目录，不能以 `/` 开头、不能包含
 
 ## Workbench 上下文契约
 
-Workbench 上下文跨越 DBX 与插件边界时是 JSON 数据快照。宿主会递归移除 Vue 响应式包装并发送独立副本，因此插件不能依赖 Vue ref、Proxy、DOM 节点、函数、组件实例或凭据。
+Workbench 上下文跨越 NexDB 与插件边界时是 JSON 数据快照。宿主会递归移除 Vue 响应式包装并发送独立副本，因此插件不能依赖 Vue ref、Proxy、DOM 节点、函数、组件实例或凭据。
 
 上下文可以包含 `null`、布尔值、有限数字、字符串、数组和普通对象。对象中的 `undefined` 字段会省略，数组中的 `undefined` 会转换为 `null`。Date、Map、Set、Symbol、BigInt、非有限数字、循环引用和自定义 class 实例会被拒绝并返回错误。上下文 UTF-8 编码后的大小上限为 2 MiB。
 
@@ -263,7 +263,7 @@ Workbench 上下文跨越 DBX 与插件边界时是 JSON 数据快照。宿主�
 
 ## 前端 Host API
 
-UI 在隔离的 iframe 中运行，DBX 通过 `window.dbxPlugin` 提供桥接对象。不要导入 DBX 的 Vue/Tauri 模块，也不要假设浏览器页面能直接访问 Node.js、文件系统或网络。
+UI 在隔离的 iframe 中运行，NexDB 通过 `window.dbxPlugin` 提供桥接对象。不要导入 NexDB 的 Vue/Tauri 模块，也不要假设浏览器页面能直接访问 Node.js、文件系统或网络。
 
 以下自定义 `objects/list` 和 `objects/changed` 需要由插件后端实现，资源示例假设包内存在 `ui/assets/empty-state.svg`：
 
@@ -283,7 +283,7 @@ const assetUrl = await window.dbxPlugin.readAssetUrl("assets/empty-state.svg");
 | `ready` | 等待 Host 完成初始化；应用启动逻辑放在 `await dbxPlugin.ready` 之后。 |
 | `context` / `onContext(fn)` | 读取或监听当前工作台上下文。 |
 | `locale` | 读取当前语言；插件 UI 需自行完成翻译。 |
-| `theme` | 读取 `appearance` 和 DBX 设计 tokens，适配明暗主题。 |
+| `theme` | 读取 `appearance` 和 NexDB 设计 tokens，适配明暗主题。 |
 | `request(method, params)` | 调用 Host API；常用内部方法包括 `host.getContext`、`ui.readAsset`。 |
 | `invoke(method, params, { timeoutMs })` | 向自己的 Sidecar 发送有响应的 RPC。 |
 | `notify(method, params)` | 向 Sidecar 发送无需返回业务结果的通知。 |
@@ -293,13 +293,13 @@ const assetUrl = await window.dbxPlugin.readAssetUrl("assets/empty-state.svg");
 | `openFilesystem(id, context)` | 打开本插件的文件系统入口；需要 `host.filesystem`。 |
 | `onInit(fn)` / `onEvent(fn)` | 监听初始化、环境变化或后端事件；转发后端事件需要 `host.events`。 |
 
-调用失败会以 Promise rejection 返回，处理时应展示可理解的错误并允许重试。通过 `request` 调用的宿主方法、参数和返回值以当前 Host API 版本为准，不要调用未在协议中声明的 DBX 内部函数。
+调用失败会以 Promise rejection 返回，处理时应展示可理解的错误并允许重试。通过 `request` 调用的宿主方法、参数和返回值以当前 Host API 版本为准，不要调用未在协议中声明的 NexDB 内部函数。
 
 `readAsset` 的路径相对于 `ui.root`，所以这里的 `assets/empty-state.svg` 对应包内 `ui/assets/empty-state.svg`。资源不用时调用 `URL.revokeObjectURL(assetUrl)`；组件销毁时调用 `onContext`/`onEvent` 等返回的取消订阅函数，避免重复监听。
 
 ### 主题、布局和静态资源
 
-DBX 将主题 tokens 注入文档根元素，并更新 `data-dbx-theme`。自定义组件库（包括 Svelte、shadcn-svelte）应使用这些变量，不要依赖父页面 CSS 自动穿透 iframe：
+NexDB 将主题 tokens 注入文档根元素，并更新 `data-dbx-theme`。自定义组件库（包括 Svelte、shadcn-svelte）应使用这些变量，不要依赖父页面 CSS 自动穿透 iframe：
 
 ```css
 body {
@@ -314,13 +314,13 @@ button {
 }
 ```
 
-使用 `window.addEventListener("dbx-plugin-env", handler)` 响应语言或主题变化。先读取 `dbxPlugin.locale`/`theme` 初始化，再在事件中刷新自己的状态。DBX 提供轻量 `dbx-btn`、`dbx-input` 等样式，但开发宿主不模拟完整组件 kit，自定义 token 样式在两者中更一致。
+使用 `window.addEventListener("dbx-plugin-env", handler)` 响应语言或主题变化。先读取 `dbxPlugin.locale`/`theme` 初始化，再在事件中刷新自己的状态。NexDB 提供轻量 `dbx-btn`、`dbx-input` 等样式，但开发宿主不模拟完整组件 kit，自定义 token 样式在两者中更一致。
 
 #### 主题负载携带什么
 
 env 消息的 `theme` 结构为 `{ appearance, tokens, editor? }`。`appearance` 是 `"light" | "dark"`；`tokens` 是按前缀扫取的根节点设计变量（`--color-*`、`--radius-*`、`--font-*`）；`editor` 是无 CSS 令牌载体的 SQL 编辑器设置结构化快照。投递矩阵：
 
-| DBX 设置 | 投递形式 |
+| NexDB 设置 | 投递形式 |
 | --- | --- |
 | 浅色/深色/跟随系统 | `theme.appearance` |
 | 调色板 + 自定义配色 | `--color-*` tokens |
@@ -372,11 +372,11 @@ fn main() -> std::io::Result<()> {
 
 Sidecar 约束：stdout 只能输出协议消息，日志写 stderr；请求 ID 必须支持并发关联；连接和断开应幂等；长任务应设计超时、取消和分块确认；不要在事件、context 或错误消息中泄露 Secret。
 
-上例可替换 Rust 模板的 `backend/src/main.rs`，同时让 Cargo 包版本与 Manifest 一致。Go 使用模板生成的 `dbxpluginsdk.NewServer(metadata, handler).Serve()`；当前 Go SDK 支持 JSONL，Rust SDK 还支持 framed transport。不要仅修改 Manifest transport 就认为 Go 已具备二进制帧处理能力。完整接口见 [Rust SDK](https://github.com/t8y2/dbx/tree/main/plugins/sdk/rust/dbx-plugin-sdk) 和 [Go SDK](https://github.com/t8y2/dbx/tree/main/plugins/sdk/go/dbx-plugin-sdk)。
+上例可替换 Rust 模板的 `backend/src/main.rs`，同时让 Cargo 包版本与 Manifest 一致。Go 使用模板生成的 `dbxpluginsdk.NewServer(metadata, handler).Serve()`；当前 Go SDK 支持 JSONL，Rust SDK 还支持 framed transport。不要仅修改 Manifest transport 就认为 Go 已具备二进制帧处理能力。完整接口见 [Rust SDK](https://github.com/Mutantcat-Working-Group/NexDB/tree/main/plugins/sdk/rust/dbx-plugin-sdk) 和 [Go SDK](https://github.com/Mutantcat-Working-Group/NexDB/tree/main/plugins/sdk/go/dbx-plugin-sdk)。
 
 ## 创建插件
 
-直接安装预编译 CLI，不需要 Rust，也不需要克隆 DBX 源码：
+直接安装预编译 CLI，不需要 Rust，也不需要克隆 NexDB 源码：
 
 ```bash
 npm install --global @dbx-app/plugin-cli
@@ -415,7 +415,7 @@ dbx-plugin create my-plugin \
   --id com.example.my-plugin \
   --name "My Plugin" \
   --publisher example \
-  --description "A DBX plugin." \
+  --description "A NexDB plugin." \
   --version 0.1.0 \
   --yes
 ```
@@ -429,7 +429,7 @@ npm run build
 dbx-plugin dev --port 5190
 ```
 
-生成项目后，先在自己的插件源码仓库开发、测试和维护版本记录。不要为了发布一个普通插件而把整个源码目录复制进 `t8y2/dbx`。
+生成项目后，先在自己的插件源码仓库开发、测试和维护版本记录。不要为了发布一个普通插件而把整个源码目录复制进 `Mutantcat-Working-Group/NexDB`。
 
 ## 构建候选包
 
@@ -454,13 +454,13 @@ dbx-plugin package . --target universal --output-dir dist --artifact-url https:/
 
 CLI 会只打包 `dbx-plugin.toml` 的 `[package].include` 声明目录，并拒绝符号链接、越界路径、`.dbx-dev`、过大的文件和不安全的输出位置。不要把 `dist/` 或开发数据再次作为输入目录。
 
-官方插件作者不创建或持有 DBX Store 私钥。生成的 GitHub Release 工作流会按目标平台构建候选包，并合并产生 `release-candidates.json`。
+官方插件作者不创建或持有 NexDB Store 私钥。生成的 GitHub Release 工作流会按目标平台构建候选包，并合并产生 `release-candidates.json`。
 
 本地测试未签名包时，需要在插件中心显式开启“允许安装未签名开发包”。该选项不会放宽官方商店安装校验。
 
 ## 本地调试和验证
 
-需要实时观察前端时，在插件项目根目录运行独立开发宿主；它不会启动 DBX 桌面端：
+需要实时观察前端时，在插件项目根目录运行独立开发宿主；它不会启动 NexDB 桌面端：
 
 ```bash
 dbx-plugin dev --path . --port 5190
@@ -490,13 +490,13 @@ ui_watch = ["npm", "run", "build:watch"]
 curl -sS 'http://127.0.0.1:5190/api/diagnostics?after=0&limit=100&level=error'
 ```
 
-后续请求使用响应里的 `nextAfter` 和 `instanceId`。开发宿主只模拟受支持的 Host API 子集；安装、签名、真实 Secret Store、桌面端生命周期和生产权限必须再用 DBX 验证。
+后续请求使用响应里的 `nextAfter` 和 `instanceId`。开发宿主只模拟受支持的 Host API 子集；安装、签名、真实 Secret Store、桌面端生命周期和生产权限必须再用 NexDB 验证。
 
 ### 本地验收清单
 
 - 关闭未使用的权限，确认 Manifest 中的权限与实际调用一致。
 - 用空配置、错误凭据、超时、断网和 Sidecar 重启分别测试失败路径。
-- 测试 DBX 浅色/深色主题和 `zh-CN`/`en`；不要依赖宿主替你翻译插件 UI。
+- 测试 NexDB 浅色/深色主题和 `zh-CN`/`en`；不要依赖宿主替你翻译插件 UI。
 - 测试重新连接、关闭工作台、重复打开同一工作台以及上下文为空的情况。
 - 检查包内所有资源路径、可执行文件权限和最终包是否包含不应发布的文件。
 
@@ -543,9 +543,9 @@ candidates/<plugin-id>.json
 
 允许的商店字段是 `name`、`description`、`icon`、`tags`、`permissions`、`source`、`homepage`、`license`、`releaseNotes` 和 `localizations`；`icon` 可以是包内相对路径，自动同步时会转换成源码 Tag 下的 HTTPS 地址。`autoUpdate` 是 `dbx-store/automation/plugin-sources.json` 的注册字段，不是这个文件的字段。
 
-自动同步只创建或更新候选 PR，**不会自动批准、签名或合并**。候选 PR 的目标仓库是 [`t8y2/dbx-store`](https://github.com/t8y2/dbx-store)，目标分支是 `main`，而不是 `t8y2/dbx`。
+自动同步只创建或更新候选 PR，**不会自动批准、签名或合并**。候选 PR 的目标仓库是 [`t8y2/dbx-store`](https://github.com/t8y2/dbx-store)，目标分支是 `main`，而不是 `Mutantcat-Working-Group/NexDB`。
 
-如果插件还没有登记到自动同步列表，首次上架可以手动 Fork `dbx-store`，向 `main` 提交**一个** PR，包含发布者首次需要的 `publishers/<publisher-id>.json` 和 `candidates/<plugin-id>.json`。不需要先创建单独的 Issue；CI 会在签名前有意保持 `open candidate(s) awaiting DBX Store signing`，签名 Workflow 回写正式目录后才会变绿。插件作者可以在 `dbx-store` 提交登记自动同步源的 PR，或请维护者登记；无需在插件仓库增加 App 私钥。
+如果插件还没有登记到自动同步列表，首次上架可以手动 Fork `dbx-store`，向 `main` 提交**一个** PR，包含发布者首次需要的 `publishers/<publisher-id>.json` 和 `candidates/<plugin-id>.json`。不需要先创建单独的 Issue；CI 会在签名前有意保持 `open candidate(s) awaiting NexDB Store signing`，签名 Workflow 回写正式目录后才会变绿。插件作者可以在 `dbx-store` 提交登记自动同步源的 PR，或请维护者登记；无需在插件仓库增加 App 私钥。
 
 候选文件的关键结构如下。它只引用插件仓库自己的未签名 Release 资产，不能填写官方 `signingKeyId`：
 
@@ -569,13 +569,13 @@ candidates/<plugin-id>.json
 
 新版本仅提交新增版本；生成的 `plugins/<plugin-id>.json` 和 `catalog/index.json` 不要手工编辑。
 
-### 第三步：DBX Store 审核并签名
+### 第三步：NexDB Store 审核并签名
 
-维护者会检查源码、Manifest、权限、候选 SHA-256、大小和原生行为。审核通过后，受保护的 DBX Store 工作流会：
+维护者会检查源码、Manifest、权限、候选 SHA-256、大小和原生行为。审核通过后，受保护的 NexDB Store 工作流会：
 
 1. 按已审核 SHA-256 和大小下载候选包；
 2. 确认候选包没有已有签名，并核对插件 ID 和版本；
-3. 使用 DBX Store 仓库密钥添加 Ed25519 签名；
+3. 使用 NexDB Store 仓库密钥添加 Ed25519 签名；
 4. 发布最终 `.dbxp`、最终 artifact metadata 和 signing receipt。
 
 开发者不会接触官方仓库私钥。
@@ -589,7 +589,7 @@ candidates/<plugin-id>.json
 - `.dbxp` 二进制；
 - 插件完整源码副本；
 - Ed25519 私钥、Token 或下载凭据；
-- 未经 DBX Store 签名的候选包 URL；
+- 未经 NexDB Store 签名的候选包 URL；
 - 自行伪造的 `verified: true`。
 
 ## 更新已有插件
@@ -607,11 +607,11 @@ candidates/<plugin-id>.json
 
 ## 签名和发布者身份
 
-DBX 当前使用单一仓库签名：
+NexDB 当前使用单一仓库签名：
 
 - `publisher` 表示作者归属和商店记录；
 - `signingKeyId` 表示发布最终安装包的仓库密钥；
-- 官方插件由 DBX Store 审核后统一签名；
+- 官方插件由 NexDB Store 审核后统一签名；
 - 自定义或私有仓库由仓库运营方维护自己的密钥；
 - 开发者签名或双签名不是当前上架要求。
 
@@ -624,13 +624,13 @@ dbx-plugin keygen company.plugins.release
 source .dbx-repository-signing-key.env
 ```
 
-该命令生成 32 字节 Ed25519 seed 的受保护环境文件（Unix 权限为 `0600`），并输出 Key ID 和 Base64 公钥；私钥文件绝不能提交 Git。自定义仓库还必须把公钥加入自己的 DBX 信任配置。官方商店的私钥只存在 `dbx-store` 受保护的 Environment Secret 中，公钥由 DBX 客户端随官方信任列表发布。
+该命令生成 32 字节 Ed25519 seed 的受保护环境文件（Unix 权限为 `0600`），并输出 Key ID 和 Base64 公钥；私钥文件绝不能提交 Git。自定义仓库还必须把公钥加入自己的 NexDB 信任配置。官方商店的私钥只存在 `dbx-store` 受保护的 Environment Secret 中，公钥由 NexDB 客户端随官方信任列表发布。
 
 `artifact.json` 中的 `target`、`url`、`sha256` 和 `size` 绑定确切字节；官方签名后才会增加 `signingKeyId`。已发布资产不可覆盖，任何字节变化都必须递增插件版本并重新审核。
 
 ## 相关资料
 
 - [JDBC 插件与数据库驱动](/cn/docs/plugins)
-- [参与 DBX 主仓库贡献](https://github.com/Mutantcat-Working-Group/NexDB)
-- [`t8y2/dbx` 插件平台源码](https://github.com/t8y2/dbx/tree/main/plugins)
+- [参与 NexDB 主仓库贡献](https://github.com/Mutantcat-Working-Group/NexDB)
+- [`Mutantcat-Working-Group/NexDB` 插件平台源码](https://github.com/Mutantcat-Working-Group/NexDB/tree/main/plugins)
 - [`t8y2/dbx-store` 官方商店仓库](https://github.com/t8y2/dbx-store)

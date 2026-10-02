@@ -4,11 +4,11 @@ import type { DocsLang } from "@/lib/i18n";
 const i18n = {
   en: {
     tagline: "25 MB to manage 90+ databases.",
-    copyright: `© ${new Date().getFullYear()} DBX. All rights reserved.`,
+    copyright: `© ${new Date().getFullYear()} NexDB. All rights reserved.`,
   },
   cn: {
     tagline: "25MB，管理90+种数据库。",
-    copyright: `© ${new Date().getFullYear()} DBX.`,
+    copyright: `© ${new Date().getFullYear()} NexDB.`,
   },
 };
 
@@ -30,7 +30,7 @@ export function LandingFooter({ lang }: { lang: DocsLang }) {
           {/* Logo */}
           <Link href={`/${lang}`} prefetch={false} className="flex min-h-11 items-center gap-2.5 text-[var(--color-landing-ink)] text-lg font-[820] shrink-0">
             <img src="/logo-64.png" alt="" aria-hidden="true" width={22} height={22} />
-            <span>DBX</span>
+            <span>NexDB</span>
           </Link>
 
           {/* Tagline */}
@@ -38,7 +38,7 @@ export function LandingFooter({ lang }: { lang: DocsLang }) {
 
           {/* Repo icons */}
           <div className="flex items-center gap-3 shrink-0">
-            <a href="https://github.com/t8y2/dbx" target="_blank" rel="noopener noreferrer" className="inline-flex size-11 items-center justify-center text-[var(--color-landing-muted)] hover:text-[var(--color-landing-ink)] transition-colors" aria-label="GitHub">
+            <a href="https://github.com/Mutantcat-Working-Group/NexDB" target="_blank" rel="noopener noreferrer" className="inline-flex size-11 items-center justify-center text-[var(--color-landing-muted)] hover:text-[var(--color-landing-ink)] transition-colors" aria-label="GitHub">
               <GithubIcon />
             </a>
             <a href="https://cnb.cool/dbxio.com/dbx" target="_blank" rel="noopener noreferrer" className="inline-flex size-11 items-center justify-center opacity-40 hover:opacity-100 transition-opacity" aria-label="CNB">

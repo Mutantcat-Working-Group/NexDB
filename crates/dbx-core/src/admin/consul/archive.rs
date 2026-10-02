@@ -358,7 +358,7 @@ fn preview_existing(
 
 fn validate_bundle(bundle: &ConsulKvBundle) -> Result<(), String> {
     if bundle.format != CONSUL_BUNDLE_FORMAT || bundle.version != CONSUL_BUNDLE_VERSION {
-        return Err("CONSUL_BUNDLE_UNSUPPORTED: Expected DBX Consul KV bundle version 1".to_string());
+        return Err("CONSUL_BUNDLE_UNSUPPORTED: Expected NexDB Consul KV bundle version 1".to_string());
     }
     if bundle.entries.len() > MAX_RECURSIVE_ENTRIES {
         return Err(format!("CONSUL_BUNDLE_TOO_LARGE: Bundle contains more than {MAX_RECURSIVE_ENTRIES} keys"));

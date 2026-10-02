@@ -91,7 +91,7 @@ pub async fn serve_streamable_http_with_shutdown(
 }
 
 /// Variant for hosts that must bind synchronously before reporting the server
-/// as healthy (for example, DBX Desktop settings UI).
+/// as healthy (for example, NexDB Desktop settings UI).
 pub async fn serve_streamable_http_on_listener(
     backend: Arc<dyn DbxBackend>,
     config: HttpRuntimeConfig,
@@ -108,7 +108,7 @@ pub async fn serve_streamable_http_on_listener(
     );
     let router = Router::new().route("/healthz", get(health)).route("/readyz", get(health)).merge(mcp_router);
 
-    eprintln!("DBX MCP Streamable HTTP listening on http://{}{}", config.bind_addr, config.path);
+    eprintln!("NexDB MCP Streamable HTTP listening on http://{}{}", config.bind_addr, config.path);
 
     axum::serve(listener, router)
         .with_graceful_shutdown(async move {

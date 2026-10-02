@@ -350,7 +350,7 @@ async fn initializes_lists_tools_and_calls_a_tool() {
 
     let result = client.peer().call_tool(CallToolRequestParams::new("dbx_list_connections")).await.expect("call tool");
     let response = result.content[0].as_text().expect("text response");
-    assert_eq!(response.text, "No connections configured in DBX.");
+    assert_eq!(response.text, "No connections configured in NexDB.");
 
     client.cancel().await.expect("close MCP client");
     server_task.abort();

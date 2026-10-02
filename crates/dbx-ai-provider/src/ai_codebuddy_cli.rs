@@ -20,7 +20,7 @@ use tokio::sync::Notify;
 const CODEBUDDY_INITIALIZE_TIMEOUT: Duration = Duration::from_secs(10);
 const CODEBUDDY_ACP_TIMEOUT: Duration = Duration::from_secs(20);
 const CODEBUDDY_SETTING_SOURCES: &str = "user";
-const CODEBUDDY_AUTH_PROBE_PROMPT: &str = "DBX CodeBuddy authentication test. Reply with OK only.";
+const CODEBUDDY_AUTH_PROBE_PROMPT: &str = "NexDB CodeBuddy authentication test. Reply with OK only.";
 const CODEBUDDY_EXECUTABLE_NAMES: &[&str] = &["codebuddy", "cbc"];
 
 pub type CodeBuddyRunOptions = CliAgentRunOptions;
@@ -290,7 +290,7 @@ pub fn codebuddy_cli_env(config: &AiConfig) -> Result<Vec<(String, String)>, Str
         }
         if is_reserved_dbx_mcp_env_name(key) {
             return Err(format!(
-                "[codeBuddyEnvReserved] `{key}` is managed by DBX for the scoped MCP server and cannot be set here."
+                "[codeBuddyEnvReserved] `{key}` is managed by NexDB for the scoped MCP server and cannot be set here."
             ));
         }
         env.insert(key.to_string(), value.clone());
@@ -351,7 +351,7 @@ fn build_codebuddy_command_with_mcp_arg(
     ];
     append_codebuddy_isolation_args(&mut args);
     // Supplying only NoDefer(MCP tool) entries keeps built-in file/shell tools
-    // out of the model context while making the scoped DBX tools immediately
+    // out of the model context while making the scoped NexDB tools immediately
     // available after the temporary server connects.
     args.push("--tools".to_string());
     args.push(enabled_tools.iter().map(|tool| format!("NoDefer({tool})")).collect::<Vec<_>>().join(","));
@@ -546,7 +546,7 @@ async fn resolve_codebuddy_model_effort_inner(config: &AiConfig, model_id: &str)
                     "fs": { "readTextFile": false, "writeTextFile": false },
                     "terminal": false,
                 },
-                "clientInfo": { "name": "DBX", "version": env!("CARGO_PKG_VERSION") },
+                "clientInfo": { "name": "NexDB", "version": env!("CARGO_PKG_VERSION") },
             }),
         )
         .await?;
@@ -817,7 +817,7 @@ pub async fn test_codebuddy_connection(config: &AiConfig) -> Result<AiTestConnec
 
 fn classify_codebuddy_spawn_error(message: &str) -> String {
     if message.contains("No such file") || message.contains("not found") || message.contains("os error 2") {
-        format!("[codeBuddyNotInstalled] CodeBuddy Code CLI was not found. Install it or set its executable path in DBX AI settings. {message}")
+        format!("[codeBuddyNotInstalled] CodeBuddy Code CLI was not found. Install it or set its executable path in NexDB AI settings. {message}")
     } else {
         format!("[codeBuddyRunFailed] Failed to start CodeBuddy Code CLI: {message}")
     }
@@ -1215,7 +1215,7 @@ case " $* " in
     ;;
 esac
 input=$(cat)
-if printf '%s' "$input" | grep -q 'DBX CodeBuddy authentication test'; then
+if printf '%s' "$input" | grep -q 'NexDB CodeBuddy authentication test'; then
   printf probed > "$DBX_TEST_AUTH_PROBE_MARKER"
   printf '%s\n' '{"type":"assistant","message":{"content":[{"type":"text","text":"OK"}]}}'
   printf '%s\n' '{"type":"result","subtype":"success"}'
@@ -1375,11 +1375,11 @@ exit 9
 
     #[cfg(unix)]
     #[tokio::test]
-    #[ignore = "requires CodeBuddy Code, a running DBX MCP bridge, and DBX_LIVE_MCP_CONNECTION_NAME/DATABASE"]
+    #[ignore = "requires CodeBuddy Code, a running NexDB MCP bridge, and DBX_LIVE_MCP_CONNECTION_NAME/DATABASE"]
     async fn live_scoped_dbx_mcp_agent_run() {
         let config = live_config();
         let connection_name = std::env::var("DBX_LIVE_MCP_CONNECTION_NAME")
-            .expect("set DBX_LIVE_MCP_CONNECTION_NAME to a saved DBX connection");
+            .expect("set DBX_LIVE_MCP_CONNECTION_NAME to a saved NexDB connection");
         let database = std::env::var("DBX_LIVE_MCP_DATABASE").expect("set DBX_LIVE_MCP_DATABASE to a visible database");
         let mcp_command = std::env::var("DBX_LIVE_MCP_COMMAND").unwrap_or_else(|_| "dbx-mcp-server".to_string());
         let options = CodeBuddyRunOptions {
@@ -1401,7 +1401,7 @@ exit 9
             Duration::from_secs(90),
             run_codebuddy_agent(
                 &config,
-                "You must use the DBX MCP list-connections tool. Reply with the visible connection name only.",
+                "You must use the NexDB MCP list-connections tool. Reply with the visible connection name only.",
                 options,
                 &Notify::new(),
                 move |event| captured.lock().unwrap().push(event),
@@ -1416,11 +1416,11 @@ exit 9
             events.iter().any(
                 |event| matches!(event, AgentEvent::ToolCallStart { tool_name, .. } if tool_name.contains("dbx_list_connections"))
             ),
-            "CodeBuddy did not emit a DBX tool-call start; result={result:?}, events={events:#?}"
+            "CodeBuddy did not emit a NexDB tool-call start; result={result:?}, events={events:#?}"
         );
         assert!(
             events.iter().any(|event| matches!(event, AgentEvent::ToolCallEnd { is_error: false, .. })),
-            "CodeBuddy did not emit a successful DBX tool-call end; result={result:?}, events={events:#?}"
+            "CodeBuddy did not emit a successful NexDB tool-call end; result={result:?}, events={events:#?}"
         );
         assert!(
             result.contains(&connection_name),
@@ -1430,11 +1430,11 @@ exit 9
 
     #[cfg(unix)]
     #[tokio::test]
-    #[ignore = "requires CodeBuddy Code, a running DBX MCP bridge, and a seeded DBX_LIVE_MCP connection"]
+    #[ignore = "requires CodeBuddy Code, a running NexDB MCP bridge, and a seeded DBX_LIVE_MCP connection"]
     async fn live_scoped_dbx_mcp_query() {
         let config = live_config();
         let connection_name = std::env::var("DBX_LIVE_MCP_CONNECTION_NAME")
-            .expect("set DBX_LIVE_MCP_CONNECTION_NAME to a saved DBX connection");
+            .expect("set DBX_LIVE_MCP_CONNECTION_NAME to a saved NexDB connection");
         let database = std::env::var("DBX_LIVE_MCP_DATABASE").expect("set DBX_LIVE_MCP_DATABASE to a visible database");
         let expected = std::env::var("DBX_LIVE_MCP_EXPECTED_VALUE").expect("set DBX_LIVE_MCP_EXPECTED_VALUE");
         let mcp_command = std::env::var("DBX_LIVE_MCP_COMMAND").unwrap_or_else(|_| "dbx-mcp-server".to_string());
@@ -1457,7 +1457,7 @@ exit 9
             Duration::from_secs(90),
             run_codebuddy_agent(
                 &config,
-                "Use the DBX MCP execute-query tool to run exactly this read-only SQL: SELECT metric_value FROM codebuddy_e2e_metrics WHERE metric_name = 'verified_rows'. Reply with the returned numeric value only.",
+                "Use the NexDB MCP execute-query tool to run exactly this read-only SQL: SELECT metric_value FROM codebuddy_e2e_metrics WHERE metric_name = 'verified_rows'. Reply with the returned numeric value only.",
                 options,
                 &Notify::new(),
                 move |event| captured.lock().unwrap().push(event),
@@ -1472,7 +1472,7 @@ exit 9
             events.iter().any(
                 |event| matches!(event, AgentEvent::ToolCallStart { tool_name, .. } if tool_name.contains("dbx_execute_query"))
             ),
-            "CodeBuddy did not invoke DBX execute-query; result={result:?}, events={events:#?}"
+            "CodeBuddy did not invoke NexDB execute-query; result={result:?}, events={events:#?}"
         );
         assert!(events.iter().any(|event| matches!(event, AgentEvent::ToolCallEnd { is_error: false, .. })));
         assert!(result.contains(&expected), "CodeBuddy did not return the seeded value; result={result:?}");

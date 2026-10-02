@@ -61,12 +61,13 @@ Core value:
     flatpak remote-add --if-not-exists flatpark https://dl.flatpark.org/flatpark.flatpakrepo
     flatpak install flatpark org.mutantcat.nexdb
     ```
+    Note: third-party distribution channels such as Homebrew and winget still use the legacy package name `dbx`; the installed application is NexDB.
     Linux users can also install in one step from the [Spark App Store](https://spk-resolv.spark-app.store/?spk=spk://store/development/dbx).
 2. Self-hosted Docker (Web): open `http://localhost:4224` in your browser.
     ```
     docker run -d --pull=always --name nexdb -p 4224:4224 -v nexdb-data:/app/data t8y2/dbx:latest
     ```
-    Use `docker.cnb.cool/dbxio.com/dbx:latest` for faster pulls in China. For Compose deployment, use `deploy/docker-compose.release.yml`.
+    The `t8y2/dbx` image is NexDB's Docker distribution channel. Use `docker.cnb.cool/dbxio.com/dbx:latest` for faster pulls in China; for Compose deployment, use `deploy/docker-compose.release.yml`.
 3. CLI:
     ```
     npm install -g @dbx-app/cli

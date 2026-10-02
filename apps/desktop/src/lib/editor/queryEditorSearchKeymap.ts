@@ -16,7 +16,7 @@ interface QueryEditorSearchKeymapOptions {
  *
  * macOS must not bind `Mod-h`: ⌘H is the system-wide Hide-App shortcut, and
  * because this binding calls `preventDefault()` the event never reaches AppKit,
- * so the menu's Hide key equivalent cannot fire and DBX becomes impossible to
+ * so the menu's Hide key equivalent cannot fire and NexDB becomes impossible to
  * hide with the standard shortcut (#9068). macOS therefore uses the platform's
  * conventional find-and-replace key — ⌥⌘F, as in VS Code and TextEdit —
  * while Windows/Linux keep Ctrl+H.

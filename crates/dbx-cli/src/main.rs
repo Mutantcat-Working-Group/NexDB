@@ -1,4 +1,4 @@
-// DBX CLI — 由异猫工作群（mutantcat.org）发行
+// NexDB CLI — 由异猫工作群（mutantcat.org）发行
 // GitHub: https://github.com/Mutantcat-Working-Group
 use std::{env, path::PathBuf, process::ExitCode, sync::Arc};
 
@@ -18,7 +18,7 @@ use serde_json::{json, Map, Value};
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 // Help is the only surface where the CLI states who ships it, so keep the line next to VERSION.
-const PUBLISHER_LINE: &str = "DBX CLI — 由异猫工作群（mutantcat.org）发行 · https://github.com/Mutantcat-Working-Group";
+const PUBLISHER_LINE: &str = "NexDB CLI — 由异猫工作群（mutantcat.org）发行 · https://github.com/Mutantcat-Working-Group";
 const DIRECT_QUERY_TYPES: &[&str] =
     &["postgres", "redshift", "mysql", "doris", "starrocks", "manticoresearch", "sqlite", "rqlite", "kwdb", "questdb"];
 const BRIDGE_REQUIRED_TYPES: &[&str] = &[
@@ -288,7 +288,7 @@ async fn run_with_backend(backend: &dyn DbxBackend, flags: Flags) -> Result<Stri
                 ("database", flags.database.clone().map(|value| json!(value))),
             ]));
         }
-        return Ok(format!("Opened {table} in DBX\n"));
+        return Ok(format!("Opened {table} in NexDB\n"));
     }
     Err(CliError::new("USAGE", usage()))
 }
@@ -337,7 +337,7 @@ async fn run_query(backend: &dyn DbxBackend, flags: &Flags) -> Result<String, Cl
     if connection.db_type == DatabaseType::Redis {
         return Err(CliError::new(
             "REDIS_COMMAND_REQUIRED",
-            "Redis connections do not accept SQL through dbx query. Use an MCP Redis command tool or DBX directly.",
+            "Redis connections do not accept SQL through dbx query. Use an MCP Redis command tool or NexDB directly.",
         ));
     }
     if connection.db_type == DatabaseType::MongoDb {
@@ -863,7 +863,7 @@ fn format_capabilities(format: OutputFormat) -> Result<String, CliError> {
         OutputFormat::Table => {
             let rows = vec![
                 json!({ "mode": "Direct", "types": DIRECT_QUERY_TYPES.join(", ") }),
-                json!({ "mode": "Requires DBX Desktop", "types": BRIDGE_REQUIRED_TYPES.join(", ") }),
+                json!({ "mode": "Requires NexDB Desktop", "types": BRIDGE_REQUIRED_TYPES.join(", ") }),
             ];
             Ok(format!("{}\n", markdown_table(&["Mode", "Types"], &rows, &["mode", "types"])))
         }
@@ -887,7 +887,7 @@ async fn diagnostics() -> Diagnostics {
             Err(error) => Err(error),
         }
     } else {
-        Err("DBX database does not exist.".to_string())
+        Err("NexDB database does not exist.".to_string())
     };
     let (load_connections_ok, connections, error) = match loaded {
         Ok(connections) => (true, connections, None),
@@ -917,7 +917,7 @@ fn format_diagnostics(value: &Diagnostics, format: OutputFormat) -> Result<Strin
     }
     let rows = vec![
         json!({ "check": "App data directory", "value": value.app_data_dir }),
-        json!({ "check": "DBX database", "value": if value.db_path_exists { format!("found ({})", value.db_path) } else { format!("missing ({})", value.db_path) } }),
+        json!({ "check": "NexDB database", "value": if value.db_path_exists { format!("found ({})", value.db_path) } else { format!("missing ({})", value.db_path) } }),
         json!({ "check": "Connections table", "value": if value.connections_table_exists { format!("{} row(s)", value.connection_row_count) } else { "missing".to_string() } }),
         json!({ "check": "Connection loading", "value": if value.load_connections_ok { format!("ok ({} loaded)", value.loaded_connection_count) } else { format!("failed ({})", value.load_connections_error.as_deref().unwrap_or("unknown error")) } }),
         json!({ "check": "Desktop bridge", "value": if value.bridge_port_file_exists { format!("available ({})", value.bridge_url.as_deref().unwrap_or(&value.bridge_port_file)) } else { "not running".to_string() } }),

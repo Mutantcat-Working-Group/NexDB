@@ -260,7 +260,7 @@ pub fn grok_cli_env(config: &AiConfig) -> Result<Vec<(String, String)>, String> 
         }
         if is_reserved_dbx_mcp_env_name(key) {
             return Err(format!(
-                "[grokCliEnvReserved] `{key}` is managed by DBX for the scoped MCP server and cannot be set here."
+                "[grokCliEnvReserved] `{key}` is managed by NexDB for the scoped MCP server and cannot be set here."
             ));
         }
         env.insert(key.to_string(), value.clone());
@@ -316,7 +316,7 @@ fn grok_mcp_config_toml(options: &GrokRunOptions) -> String {
 pub fn build_grok_command(config: &AiConfig, prompt_file: &Path, options: &GrokRunOptions) -> GrokCommandSpec {
     // Align with Grok Build headless docs (`--prompt-file`, `streaming-json`,
     // `--always-approve`, `--effort`). Prompt is written to a temp file so long
-    // DBX system+conversation prompts stay under OS argv limits.
+    // NexDB system+conversation prompts stay under OS argv limits.
     let mut args = vec![
         "--no-leader".to_string(),
         "--prompt-file".to_string(),
@@ -419,7 +419,7 @@ async fn discover_grok_models_acp(config: &AiConfig, program: String) -> Option<
                     "fs": { "readTextFile": false, "writeTextFile": false },
                     "terminal": false,
                 },
-                "clientInfo": { "name": "DBX", "version": env!("CARGO_PKG_VERSION") },
+                "clientInfo": { "name": "NexDB", "version": env!("CARGO_PKG_VERSION") },
             },
         }))
         .ok()?;
@@ -689,10 +689,10 @@ async fn test_grok_connection_with_timeout(
 
 fn classify_grok_spawn_error(message: &str) -> String {
     if message.contains("No such file") || message.contains("not found") {
-        "[grokCliNotInstalled] Grok CLI was not found. Install Grok CLI or set the Grok CLI path in DBX AI settings."
+        "[grokCliNotInstalled] Grok CLI was not found. Install Grok CLI or set the Grok CLI path in NexDB AI settings."
             .to_string()
     } else if is_command_line_too_long_error(message) {
-        "[grokCliCommandLineTooLong] Grok CLI command line is too long. Update DBX so Grok prompts are sent through a temporary prompt file."
+        "[grokCliCommandLineTooLong] Grok CLI command line is too long. Update NexDB so Grok prompts are sent through a temporary prompt file."
             .to_string()
     } else {
         format!("[grokCliRunFailed] Failed to start Grok CLI: {message}")
@@ -721,9 +721,9 @@ fn classify_grok_run_error(stderr: &str) -> String {
     {
         format!("[grokCliNotAuthenticated] Grok CLI is not authenticated. Run `grok login` and try again. {stderr}")
     } else if lower.contains("dbx-mcp-server") || lower.contains("enoent") {
-        format!("[dbxMcpMissing] DBX MCP server was not found. Install @dbx-app/mcp-server and try again. {stderr}")
+        format!("[dbxMcpMissing] NexDB MCP server was not found. Install @dbx-app/mcp-server and try again. {stderr}")
     } else if lower.contains("mcp") && (lower.contains("dbx") || lower.contains("server")) {
-        format!("[grokCliMcpStartupFailed] Grok could not start the DBX MCP server. {stderr}")
+        format!("[grokCliMcpStartupFailed] Grok could not start the NexDB MCP server. {stderr}")
     } else {
         format!("[grokCliRunFailed] Grok CLI failed. {stderr}")
     }

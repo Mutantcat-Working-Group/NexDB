@@ -14,7 +14,7 @@ Edit `ui/index.html` and run the browser development host with Node.js 22+:
 dbx-plugin dev --path . --port 5190
 ```
 
-No backend or DBX application is required. Open this plugin's workbench from the development shell; reload the page after edits. `.dbx-dev/` stores local development data and must not be committed or packaged. Use the real DBX host for final integration testing.
+No backend or NexDB application is required. Open this plugin's workbench from the development shell; reload the page after edits. `.dbx-dev/` stores local development data and must not be committed or packaged. Use the real NexDB host for final integration testing.
 
 Then package the plugin:
 
@@ -27,9 +27,9 @@ The command stages `manifest.json`, `assets/`, and `ui/`, then writes an unsigne
 ## Release
 
 1. Publish a GitHub Release. The generated workflow builds an unsigned universal candidate.
-2. If this repository is registered with `autoUpdate: true`, DBX Store automatically creates or updates a candidate PR. Otherwise, open one candidate PR against **`t8y2/dbx-store:main`** with the release and `release-candidates.json` URL; a submission Issue is not required.
-3. After review, DBX Store signs the approved candidate with the official repository key and updates the same PR with the installable asset and signed metadata.
+2. If this repository is registered with `autoUpdate: true`, NexDB Store automatically creates or updates a candidate PR. Otherwise, open one candidate PR against **`t8y2/dbx-store:main`** with the release and `release-candidates.json` URL; a submission Issue is not required.
+3. After review, NexDB Store signs the approved candidate with the official repository key and updates the same PR with the installable asset and signed metadata.
 
-Source code and the unsigned candidate stay in this repository. DBX users install the DBX Store-signed asset exposed by the official catalog.
+Source code and the unsigned candidate stay in this repository. NexDB users install the NexDB Store-signed asset exposed by the official catalog.
 
-Do not submit ordinary plugin source to `t8y2/dbx`; that repository accepts plugin host, SDK, CLI, schema, documentation, and official-example changes.
+Do not submit ordinary plugin source to `Mutantcat-Working-Group/NexDB`; that repository accepts plugin host, SDK, CLI, schema, documentation, and official-example changes.

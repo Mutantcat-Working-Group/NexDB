@@ -1,20 +1,20 @@
 ---
 title: Scheduled Database Backups
-description: Create manual, hourly, daily, or weekly SQL backup schedules for MySQL and PostgreSQL in DBX Desktop.
+description: Create manual, hourly, daily, or weekly SQL backup schedules for MySQL and PostgreSQL in NexDB Desktop.
 ---
 
-Scheduled database backups use the DBX database-export engine to generate SQL files for MySQL and PostgreSQL connections. They are useful for recurring logical backups of development, test, and small or medium databases and include table scope, retention, run history, and manual execution.
+Scheduled database backups use the NexDB database-export engine to generate SQL files for MySQL and PostgreSQL connections. They are useful for recurring logical backups of development, test, and small or medium databases and include table scope, retention, run history, and manual execution.
 
 For a backup that should run only once, use **Back up now** in Settings instead of creating a schedule. Configure the same connection, destination, database, table, and content scope, then choose **Start backup**. This one-shot run does not create or change a schedule, does not calculate a next run, and appears in the same backup history as scheduled runs.
 
-<Callout type="warn">Scheduled backups currently require DBX Desktop to remain running. They are not an independent server scheduler and do not replace physical backups, point-in-time recovery, WAL/binlog archiving, or cloud-provider backup services.</Callout>
+<Callout type="warn">Scheduled backups currently require NexDB Desktop to remain running. They are not an independent server scheduler and do not replace physical backups, point-in-time recovery, WAL/binlog archiving, or cloud-provider backup services.</Callout>
 
 ## Support Scope
 
 | Item | Current behavior |
 | --- | --- |
 | Databases | MySQL and PostgreSQL |
-| Platform | DBX Desktop |
+| Platform | NexDB Desktop |
 | Output | The default template creates one directory per scheduled run, containing one `.sql` file per database/schema target; directory and file-name templates can be customized |
 | Frequency | Every N hours, daily at a time, or weekly on a weekday and time |
 | Contents | Table structure, data, database objects, and optional `DROP TABLE IF EXISTS` |
@@ -68,7 +68,7 @@ For a backup that should run only once, use **Back up now** in Settings instead 
   <Step>
     ### Set directory and frequency
 
-    Select a local destination directory and configure the output path template, which combines a relative run-directory template with a file-name template. Directory templates support `{schedule}`, `{date}`, `{timestamp}`, and `{runId}`. File-name templates also support `{database}`. DBX previews the complete output path and automatically adds a missing database target. A run ID is included only when `{runId}` is explicitly present in the template; if a template resolves to a path already used by another run, DBX rejects the new run instead of overwriting the existing backup.
+    Select a local destination directory and configure the output path template, which combines a relative run-directory template with a file-name template. Directory templates support `{schedule}`, `{date}`, `{timestamp}`, and `{runId}`. File-name templates also support `{database}`. NexDB previews the complete output path and automatically adds a missing database target. A run ID is included only when `{runId}` is explicitly present in the template; if a template resolves to a path already used by another run, NexDB rejects the new run instead of overwriting the existing backup.
 
   </Step>
   <Step>
@@ -104,7 +104,7 @@ If an include rule matches no tables, the run fails instead of reporting an empt
 
 ## Consistency and Execution
 
-Each backup establishes a consistent snapshot session before exporting database/schema targets. DBX rolls back the read-only snapshot transaction afterward and does not commit business changes.
+Each backup establishes a consistent snapshot session before exporting database/schema targets. NexDB rolls back the read-only snapshot transaction afterward and does not commit business changes.
 
 Backup runs appear in the shared export task area and show:
 
@@ -114,7 +114,7 @@ Backup runs appear in the shared export task area and show:
 - Generated file list
 - Error details and timestamps
 
-Cancellation stops remaining exports. On failure or cancellation, DBX attempts to remove partial files from the run so incomplete output is not mistaken for a successful backup.
+Cancellation stops remaining exports. On failure or cancellation, NexDB attempts to remove partial files from the run so incomplete output is not mistaken for a successful backup.
 
 ## Retention and History
 
@@ -151,7 +151,7 @@ A successful backup run means file generation completed; it does not prove resto
 - Protect and encrypt the destination according to the data sensitivity level
 - Never commit SQL files containing business data to a public repository
 - Recheck scope after databases or tables are renamed
-- If DBX Desktop is closed, the computer sleeps, or the destination is unavailable, schedules do not run with server-scheduler reliability
+- If NexDB Desktop is closed, the computer sleeps, or the destination is unavailable, schedules do not run with server-scheduler reliability
 
 <Cards>
   <Card title="One-time database export" href="/en/docs/database-export">

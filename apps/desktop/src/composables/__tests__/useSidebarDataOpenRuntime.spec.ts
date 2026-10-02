@@ -731,7 +731,7 @@ describe("useSidebarDataOpenRuntime", () => {
     expect(mocks.tabs[0]?.tableMeta?.columns.map((column) => column.name)).toEqual(["id"]);
     expect(mocks.tabs[0]?.tableMetaUpdatedAt).toBeDefined();
 
-    // 外部 ALTER TABLE ... ADD age：DBX 断开→重连。断开时 connectionStore 会
+    // 外部 ALTER TABLE ... ADD age：NexDB 断开→重连。断开时 connectionStore 会
     // 清掉该连接下数据标签页的 freshness 戳（staleConnectionDataTabMetadata），
     // 此处等价模拟该生命周期边界。
     mocks.tabs[0]!.tableMetaUpdatedAt = undefined;

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Basic DBX CLI workflow.
+# Basic NexDB CLI workflow.
 # Replace "local" with one of your saved connection names.
 
 CONNECTION="${DBX_CONNECTION:-local}"
 
-echo "==> Checking local DBX setup"
+echo "==> Checking local NexDB setup"
 dbx doctor
 
 echo "==> Listing connections"

@@ -584,7 +584,7 @@ PG 的出错行列一直存在于 `DbError::position()`，只是被 `pg_error_to
 
 ## 10. 实现补充：下发语句漂移的处理（已落地）
 
-「位置相对实际下发语句」在本方案实现后暴露出一个高频问题：DBX 常在下发前改写语句（追加 `LIMIT/OFFSET`、用 `SELECT * FROM (…)` 包裹分页、为可编辑查询注入隐藏主键列），导致后端位置与用户原文对不上，定位会失败或偏移。已在前端增加一层投影，无需改动后端协议：
+「位置相对实际下发语句」在本方案实现后暴露出一个高频问题：NexDB 常在下发前改写语句（追加 `LIMIT/OFFSET`、用 `SELECT * FROM (…)` 包裹分页、为可编辑查询注入隐藏主键列），导致后端位置与用户原文对不上，定位会失败或偏移。已在前端增加一层投影，无需改动后端协议：
 
 1. `annotateQueryResultSources` 额外接收本次实际下发的 SQL（`sqlToExecute`），当某个 result 的语句文本与 `sourceStatement` 不同时，把实际下发的语句文本记录到 `QueryResult.executedStatement`（仅在前端内部使用）。
 2. `sqlErrorEditorOffset` 先把后端 `line/column` 解析到 `executedStatement`（位置本就相对它），再用 `mapExecutedOffsetToSource` 投影回 `sourceStatement`：

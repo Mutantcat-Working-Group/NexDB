@@ -2920,7 +2920,7 @@ function transportLayerDisplayName(layer: TransportLayerConfig, index: number): 
 
 const transportPathSegments = computed(() => {
   const layers = transportLayers.value.filter((layer) => layer.enabled !== false);
-  return ["DBX", ...layers.map(transportLayerDisplayName), form.value.host || "Database"];
+  return ["NexDB", ...layers.map(transportLayerDisplayName), form.value.host || "Database"];
 });
 
 function defaultDatabaseForProfile() {
@@ -4156,7 +4156,7 @@ function connectionConfigForSubmit(id: string, generatedName = "", validatePlugi
     if (resolvedPluginConnectTimeout !== undefined) {
       // A provider declaring its own connect_timeout_secs field makes it the
       // single source of truth (declared default or advanced-form value): the
-      // typed timeout mirrors it, and the generic global/per-connection DBX
+      // typed timeout mirrors it, and the generic global/per-connection NexDB
       // timeout radios do not apply. Otherwise the host RPC deadline and the
       // plugin's own handshake timeout could disagree and the host would kill
       // slow connects first.
@@ -4228,7 +4228,7 @@ function connectionConfigForSubmit(id: string, generatedName = "", validatePlugi
     config.database = alias;
     config.connection_string = buildOracleTnsConnectionString(alias, tnsAdmin);
   } else if (config.db_type === "oracle" && parseOracleTnsConnectionString(config.connection_string)) {
-    // Only clear DBX-generated TNS URLs when switching modes; preserve custom
+    // Only clear NexDB-generated TNS URLs when switching modes; preserve custom
     // service, SID, and descriptor JDBC strings exactly as before.
     config.connection_string = undefined;
   }

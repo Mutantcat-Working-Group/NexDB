@@ -1,4 +1,4 @@
-# DBX 数据库测试环境
+# NexDB 数据库测试环境
 
 此目录提供可重复创建的 Docker Compose 数据库环境，用于人工验证数据库功能。每个带版本的配方都固定镜像版本、使用命名卷、仅绑定本机回环地址、定义健康检查，并提供初始化数据或在验证阶段创建的冒烟数据。
 
@@ -17,7 +17,7 @@ make db-down DB=postgresql@17.4
 make db-reset DB=redis@7.4 CONFIRM=1
 ```
 
-主要 Make 目标为 `db-list`、`db`、`db-verify`、`db-down`、`db-reset` 和 `db-check`。`make db-list` 会按产品归并展示各版本，并列出每项默认的容器到宿主机端口映射、镜像和支持平台。执行 `make db` 会为每个配方输出一条可直接复制的启动命令；对于 DBX 已支持的连接类型，启动完成后还会输出预填的 `dbx://connection/new` 链接，可在已安装 DBX 桌面端的 macOS 上通过 `open '<链接>'` 打开新建连接窗口。该链接可能包含密码，请不要将其写入共享终端历史、日志或工单。没有对应 DBX 连接类型的配方会显示深链不可用。`make db-completion` 会输出 Bash、Zsh 和 PowerShell 补全加载命令，`completion/` 中的脚本会动态补全配方选择器。目标不再依赖 POSIX Shell 条件语法，可在 PowerShell、Git Bash 或 WSL 中通过 GNU Make 使用。诊断时可使用底层命令 `pnpm db:env -- info|status|logs|shell <product> <version>`。
+主要 Make 目标为 `db-list`、`db`、`db-verify`、`db-down`、`db-reset` 和 `db-check`。`make db-list` 会按产品归并展示各版本，并列出每项默认的容器到宿主机端口映射、镜像和支持平台。执行 `make db` 会为每个配方输出一条可直接复制的启动命令；对于 NexDB 已支持的连接类型，启动完成后还会输出预填的 `dbx://connection/new` 链接，可在已安装 NexDB 桌面端的 macOS 上通过 `open '<链接>'` 打开新建连接窗口。该链接可能包含密码，请不要将其写入共享终端历史、日志或工单。没有对应 NexDB 连接类型的配方会显示深链不可用。`make db-completion` 会输出 Bash、Zsh 和 PowerShell 补全加载命令，`completion/` 中的脚本会动态补全配方选择器。目标不再依赖 POSIX Shell 条件语法，可在 PowerShell、Git Bash 或 WSL 中通过 GNU Make 使用。诊断时可使用底层命令 `pnpm db:env -- info|status|logs|shell <product> <version>`。
 
 ## 配方结构
 

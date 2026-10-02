@@ -3,7 +3,7 @@ name = "dbx-plugin-packager"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
-description = "Build .dbxp archives for DBX plugins"
+description = "Build .dbxp archives for NexDB plugins"
 autobins = false
 
 [workspace]

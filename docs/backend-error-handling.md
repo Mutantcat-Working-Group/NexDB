@@ -1,6 +1,6 @@
 # 后端异常处理与错误码规范
 
-本文记录 DBX 当前已经落地的后端错误契约、恢复边界和前端展示规则。目标是让恢复逻辑依赖可验证的类型，让对外错误身份稳定，同时保留经过公共边界脱敏的数据库驱动诊断信息。
+本文记录 NexDB 当前已经落地的后端错误契约、恢复边界和前端展示规则。目标是让恢复逻辑依赖可验证的类型，让对外错误身份稳定，同时保留经过公共边界脱敏的数据库驱动诊断信息。
 
 本文描述的是现有实现，不引入新的 Agent Protocol V3。结构化错误是 Agent Protocol v2 的可选 capability：`structured_error_v1`。
 
@@ -61,7 +61,7 @@ Rust `BackendError` 的字段由 catalog 构造，字段定义如下（JSON 使�
 - `code` 和 `messageKey` 发布后永久保留，不能复用或改义；废弃错误码只能停止新增使用，不能重新分配给其他含义。
 - `source` 是 v1 兼容字段，表示旧的错误来源；新代码使用 `origin.subsystem` 和 `origin.adapter` 描述数据库、隧道、插件、AI、消息队列等子系统。客户端不能因为未知的 source/origin 值而丢弃整个 envelope。
 - `origin` 是可扩展元数据，至少包含 `subsystem` 和 `adapter`，可选 `driver`；它不参与错误分类、恢复或重试决策。
-- `diagnostics.adapterCode` 是适配器协议提供的可选错误码（例如 DuckDB worker 的 `duckdb_execute_failed`），仅用于诊断展示，不替代稳定的 DBX `code`。
+- `diagnostics.adapterCode` 是适配器协议提供的可选错误码（例如 DuckDB worker 的 `duckdb_execute_failed`），仅用于诊断展示，不替代稳定的 NexDB `code`。
 - `errorPosition` 是适配器提供的可选出错位置，只有能给出真实游标的驱动才会填充（目前为原生 PostgreSQL）。`line`/`column` 为 1-based、按 Unicode 码点计数，`offset` 为语句内 0-based 码点下标，均相对**实际下发的语句文本**；它不参与错误分类、重试或恢复。客户端只应在能证明该语句仍映射回当前编辑器内容时用于定位，否则忽略该字段。
 - `operationOutcome` 只能是 `not_started` 或 `unknown`。结果未知时不能自动重放用户操作。
 - `messageParams` 只能包含 catalog 声明的 string、number、boolean 标量，不得携带 SQL、URL、凭据或任意对象。
@@ -93,12 +93,12 @@ Rust `BackendError` 的字段由 catalog 构造，字段定义如下（JSON 使�
 
 ## detail 与安全边界
 
-`detail` 是数据库/驱动诊断的可选补充，不是分类依据。已类型化的 SQL 错误会保留数据库/驱动返回的原始正文；未知或连接类错误才使用 DBX 的凭据和 Session 清洗兜底：
+`detail` 是数据库/驱动诊断的可选补充，不是分类依据。已类型化的 SQL 错误会保留数据库/驱动返回的原始正文；未知或连接类错误才使用 NexDB 的凭据和 Session 清洗兜底：
 
 - 最多保留 64 KiB 的 UTF-8 文本；超出部分按字符边界截断，空内容会被丢弃。
 - 查询层需要补充上下文（例如说明 SQL 文本未随错误返回）时，使用独立换行符（`\n`）追加，不以空格拼接；消费者和测试应保留该换行边界。
 - 数据库厂商错误正文（例如 `ERROR: relation ... does not exist`、`ORA-00942`、约束冲突中的值和驱动返回的 statement 文本）会原样保留；连接配置和未知错误文本中的 JDBC URL、密码、token、授权头、密钥和 Session 标识会被替换或在只剩敏感内容时删除。
-- DBX 不解析、抽取或改写 SQL payload，也不会主动把执行 SQL 追加到错误；因此 SQL 方言、嵌套括号、引号和业务字面量不会被错误的通用字符串规则破坏。需要内部诊断时应单独记录原始请求，不得把内部日志对象直接复用为公共 envelope。
+- NexDB 不解析、抽取或改写 SQL payload，也不会主动把执行 SQL 追加到错误；因此 SQL 方言、嵌套括号、引号和业务字面量不会被错误的通用字符串规则破坏。需要内部诊断时应单独记录原始请求，不得把内部日志对象直接复用为公共 envelope。
 - `AgentErrorContext` 中的 `agentSessionId`、重试标记和内部恢复字段不会作为结构化字段进入公共 envelope；`connection` 等非 SQL 类别的驱动错误正文如果包含 Session 或凭据文本，公共 detail 仍会脱敏。
 - Rust 查询执行器生成的查询超时会使用 `DBX-JDBC-2002`（阶段 `execute`）摘要，同时保留超时诊断 detail；它不会作为 `DBX-LEGACY-0001` 展示。
 - PostgreSQL native driver 返回的标准服务端 `ERROR:` 诊断会使用 `DBX-JDBC-4001`（阶段 `execute`）摘要并保留原始 detail；当驱动给出游标位置时，会同时填充结构化的 `errorPosition`（用于前端“点击定位到出错行列”）。位置以可解析后缀在 `db` 层内部传递，并在 `query.rs` 还原为类型化字段；该后缀不会出现在 `detail` 或任何用户可见文本中。连接、超时、取消和清理错误不使用该分类。

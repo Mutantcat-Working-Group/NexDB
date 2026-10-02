@@ -786,7 +786,7 @@ class MongoAgentTest {
         assertEquals("orders", collection.get("name").getAsString());
         assertEquals("collection", collection.get("kind").getAsString());
 
-        // The pre-metadata response remains a string array for older DBX clients.
+        // The pre-metadata response remains a string array for older NexDB clients.
         MongoClient namesClient = recordingCloneMongoClient(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), true);
         JsonObject names = JsonParser.parseString(MongoAgent.handleRequest(
             "{\"jsonrpc\":\"2.0\",\"id\":36,\"method\":\"list_collections\","

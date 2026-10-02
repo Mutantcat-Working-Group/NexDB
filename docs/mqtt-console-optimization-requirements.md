@@ -4,7 +4,7 @@
 
 ## 一、背景与目标
 
-MQTT Broker 通常不提供客户端订阅配置的持久化管理。DBX 中保存的 Topic Filter、QoS、No Local、启用状态属于本地配置，如果没有纳入项目同步，在重装、换设备或恢复项目时容易丢失。
+MQTT Broker 通常不提供客户端订阅配置的持久化管理。NexDB 中保存的 Topic Filter、QoS、No Local、启用状态属于本地配置，如果没有纳入项目同步，在重装、换设备或恢复项目时容易丢失。
 
 本次优化目标：
 

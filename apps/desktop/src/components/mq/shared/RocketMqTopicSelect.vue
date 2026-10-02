@@ -202,7 +202,7 @@ async function loadTopics() {
     topics.value = loaded;
     emit("loaded", loaded);
   } catch (e: unknown) {
-    console.warn("[DBX] Failed to load RocketMQ topics:", e);
+    console.warn("[NexDB] Failed to load RocketMQ topics:", e);
   } finally {
     if (requestVersion === loadRequestVersion) loading.value = false;
   }

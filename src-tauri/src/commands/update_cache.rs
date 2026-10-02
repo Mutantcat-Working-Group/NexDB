@@ -41,10 +41,10 @@ fn write_synced(path: &Path, bytes: &[u8]) -> Result<(), String> {
         .write(true)
         .create_new(true)
         .open(path)
-        .map_err(|error| context("Failed to create the DBX update cache file", path, error))?;
+        .map_err(|error| context("Failed to create the NexDB update cache file", path, error))?;
     file.write_all(bytes)
         .and_then(|_| file.sync_all())
-        .map_err(|error| context("Failed to write the DBX update cache file", path, error))
+        .map_err(|error| context("Failed to write the NexDB update cache file", path, error))
 }
 
 pub(super) fn commit(root: &Path, record: &CacheRecord, bytes: &[u8]) -> Result<(), String> {
@@ -53,10 +53,10 @@ pub(super) fn commit(root: &Path, record: &CacheRecord, bytes: &[u8]) -> Result<
         return Err("Cached update exceeds size limits.".into());
     }
     fs::create_dir_all(root)
-        .map_err(|error| context("Failed to create the DBX update cache directory", root, error))?;
+        .map_err(|error| context("Failed to create the NexDB update cache directory", root, error))?;
     let staging = root.join(format!("partial-{}", uuid::Uuid::new_v4()));
     fs::create_dir(&staging)
-        .map_err(|error| context("Failed to create the DBX update cache staging directory", &staging, error))?;
+        .map_err(|error| context("Failed to create the NexDB update cache staging directory", &staging, error))?;
     let result = (|| {
         write_synced(&staging.join("package"), bytes)?;
         write_synced(&staging.join("metadata.json"), &metadata)?;
@@ -64,7 +64,7 @@ pub(super) fn commit(root: &Path, record: &CacheRecord, bytes: &[u8]) -> Result<
         fs::File::open(&staging).and_then(|dir| dir.sync_all()).map_err(|e| e.to_string())?;
         let ready = root.join("ready");
         fs::rename(&staging, &ready)
-            .map_err(|error| context("Failed to finalize the DBX update cache", &ready, error))?;
+            .map_err(|error| context("Failed to finalize the NexDB update cache", &ready, error))?;
         #[cfg(unix)]
         fs::File::open(root).and_then(|dir| dir.sync_all()).map_err(|e| e.to_string())?;
         Ok(())
@@ -79,15 +79,15 @@ pub(super) fn commit(root: &Path, record: &CacheRecord, bytes: &[u8]) -> Result<
 /// discovered mid-download, where it surfaces as a misleading download error.
 pub(super) fn ensure_writable(root: &Path) -> Result<(), String> {
     fs::create_dir_all(root)
-        .map_err(|error| context("Failed to create the DBX update cache directory", root, error))?;
+        .map_err(|error| context("Failed to create the NexDB update cache directory", root, error))?;
     let probe = root.join(format!("probe-{}", uuid::Uuid::new_v4()));
     fs::OpenOptions::new()
         .create_new(true)
         .write(true)
         .open(&probe)
-        .map_err(|error| context("The DBX update cache directory is not writable", root, error))?;
+        .map_err(|error| context("The NexDB update cache directory is not writable", root, error))?;
     fs::remove_file(&probe)
-        .map_err(|error| context("Failed to clean up the DBX update cache probe file", &probe, error))?;
+        .map_err(|error| context("Failed to clean up the NexDB update cache probe file", &probe, error))?;
     Ok(())
 }
 
@@ -97,16 +97,16 @@ pub(super) fn digest(bytes: &[u8]) -> String {
 
 fn read_bounded(path: &Path, limit: u64) -> Result<Vec<u8>, String> {
     let metadata = fs::symlink_metadata(path)
-        .map_err(|error| context("Failed to inspect the DBX update cache file", path, error))?;
+        .map_err(|error| context("Failed to inspect the NexDB update cache file", path, error))?;
     if !metadata.file_type().is_file() || metadata.len() > limit {
         return Err("Invalid cached update file.".into());
     }
     let mut bytes = Vec::new();
     fs::File::open(path)
-        .map_err(|error| context("Failed to open the DBX update cache file", path, error))?
+        .map_err(|error| context("Failed to open the NexDB update cache file", path, error))?
         .take(limit + 1)
         .read_to_end(&mut bytes)
-        .map_err(|error| context("Failed to read the DBX update cache file", path, error))?;
+        .map_err(|error| context("Failed to read the NexDB update cache file", path, error))?;
     if bytes.len() as u64 > limit {
         return Err("Cached update file exceeds limit.".into());
     }
@@ -118,7 +118,7 @@ pub(super) fn read(root: &Path) -> Result<Option<(CacheRecord, Vec<u8>)>, String
     let metadata = match fs::symlink_metadata(&ready) {
         Ok(metadata) => metadata,
         Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(None),
-        Err(e) => return Err(context("Failed to inspect the DBX update cache", &ready, e)),
+        Err(e) => return Err(context("Failed to inspect the NexDB update cache", &ready, e)),
     };
     if !metadata.file_type().is_dir() {
         return Err("Invalid cached update directory.".into());
@@ -140,14 +140,14 @@ pub(super) fn cleanup_partial(root: &Path) -> Result<(), String> {
     let entries = match fs::read_dir(root) {
         Ok(entries) => entries,
         Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(()),
-        Err(e) => return Err(context("Failed to read the DBX update cache directory", root, e)),
+        Err(e) => return Err(context("Failed to read the NexDB update cache directory", root, e)),
     };
     for entry in entries {
         let entry =
-            entry.map_err(|error| context("Failed to enumerate the DBX update cache directory", root, error))?;
+            entry.map_err(|error| context("Failed to enumerate the NexDB update cache directory", root, error))?;
         if entry.file_name().to_string_lossy().starts_with("partial-") {
             let path = entry.path();
-            let action = "Failed to remove an incomplete DBX update cache entry";
+            let action = "Failed to remove an incomplete NexDB update cache entry";
             if entry.file_type().map_err(|error| context(action, &path, error))?.is_dir() {
                 fs::remove_dir_all(&path).map_err(|error| context(action, &path, error))?;
             } else {
@@ -168,7 +168,7 @@ pub(super) fn discard(root: &Path) -> Result<(), String> {
     match result {
         Ok(()) => Ok(()),
         Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(()),
-        Err(e) => Err(context("Failed to clear the previous DBX update cache", &ready, e)),
+        Err(e) => Err(context("Failed to clear the previous NexDB update cache", &ready, e)),
     }
 }
 

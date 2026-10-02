@@ -1,4 +1,4 @@
-# DBX Rust 模块边界
+# NexDB Rust 模块边界
 
 ## 依赖方向
 

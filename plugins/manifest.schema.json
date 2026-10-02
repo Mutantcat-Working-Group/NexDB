@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://dbx.local/schemas/plugin-manifest-v1.json",
-  "title": "DBX Plugin Manifest v1",
+  "title": "NexDB Plugin Manifest v1",
   "type": "object",
   "additionalProperties": false,
   "required": ["manifest_version", "id", "name", "version", "publisher", "engines"],

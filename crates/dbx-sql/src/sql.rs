@@ -2985,7 +2985,7 @@ mod tests {
 
     #[test]
     fn mysql_split_skips_comment_only_statement() {
-        assert!(split_sql_statements_for_database("-- DBX SQL preview crash reproducer\n\n;", DatabaseType::Mysql)
+        assert!(split_sql_statements_for_database("-- NexDB SQL preview crash reproducer\n\n;", DatabaseType::Mysql)
             .is_empty());
     }
 
@@ -3063,7 +3063,7 @@ mod tests {
     #[test]
     fn mysql_keyword_detection_skips_comment_only_input() {
         assert!(!starts_with_executable_sql_keyword_for_database(
-            "-- DBX SQL preview crash reproducer\n\n",
+            "-- NexDB SQL preview crash reproducer\n\n",
             &["SELECT"],
             DatabaseType::Mysql,
         ));
@@ -3930,7 +3930,7 @@ END;";
         //   splitter must still treat them as part of the surrounding block comment)
         // - `IS BEGIN INSERT INTO ... ; END;`
         // The result panel showed three split fragments; if this test passes, the splitter
-        // is fine and the issue is on the DBX.app side.
+        // is fine and the issue is on the NexDB.app side.
         let sql = "CREATE OR REPLACE PROCEDURE SP_ETL_LOG\n\
 (\n\
   II_DATDATE       IN INT, --数据日期\n\

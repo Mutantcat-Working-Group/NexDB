@@ -634,7 +634,7 @@ async function handleDetachedTabLost(payload: unknown) {
     await queryStore.flushPendingPersist();
     await api.deleteDetachedTabHandoff(tabId);
   } catch (error) {
-    console.warn("[DBX][detached-tab:lost-restore:error]", error);
+    console.warn("[NexDB][detached-tab:lost-restore:error]", error);
   }
 }
 
@@ -1388,7 +1388,7 @@ const uiScaleApplyQueue = createUiScaleApplyQueue(
     window.dispatchEvent(new CustomEvent("dbx:ui-scale-applied", { detail: { scale } }));
   },
   (scale, error) => {
-    console.warn("[DBX] Failed to apply UI scale", { scale, error });
+    console.warn("[NexDB] Failed to apply UI scale", { scale, error });
   },
 );
 
@@ -2976,7 +2976,7 @@ function changeActiveSchema(tabId: string, schema: string | undefined) {
 }
 
 function openGitHub() {
-  openUrl("https://github.com/t8y2/dbx");
+  openUrl("https://github.com/Mutantcat-Working-Group/NexDB");
 }
 function openMcpGuide() {
   openUrl("https://dbxio.com/cn/docs/mcp");
@@ -3011,11 +3011,11 @@ function routeAiRedisCommand(command: string, execute: boolean): boolean {
   // recreate the original bug by opening a SQL tab for a Redis command.
   const routed = execute ? contentAreaRef.value?.executeRedisCommand(command) : contentAreaRef.value?.insertRedisCommand(command);
   if (!routed) {
-    console.warn("[DBX] Redis AI command could not reach the active Redis console");
+    console.warn("[NexDB] Redis AI command could not reach the active Redis console");
     return true;
   }
   void routed.then((handled: any) => {
-    if (!handled) console.warn("[DBX] Redis AI command could not reach the active Redis console");
+    if (!handled) console.warn("[NexDB] Redis AI command could not reach the active Redis console");
   });
   return true;
 }

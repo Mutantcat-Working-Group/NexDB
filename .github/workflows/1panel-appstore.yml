@@ -53,7 +53,7 @@ jobs:
               --repo "okxlin/appstore" \
               --head "${REPO_OWNER}:${BRANCH}" \
               --title "feat(dbx): release ${VERSION}" \
-              --body "Automated release of DBX v${VERSION}" \
+              --body "Automated release of NexDB v${VERSION}" \
               --base localApps
             echo "::notice::1Panel App Store PR created for ${VERSION}"
           fi

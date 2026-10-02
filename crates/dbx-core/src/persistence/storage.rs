@@ -341,7 +341,7 @@ pub enum McpDatabaseScope {
 
 /// Configuration for the optional MCP Streamable HTTP server managed by the
 /// desktop application. Credentials deliberately do not live here: the
-/// desktop service stores its token in a private file under the DBX data dir.
+/// desktop service stores its token in a private file under the NexDB data dir.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct McpHttpServerSettings {
@@ -3170,7 +3170,7 @@ fn ensure_mcp_connection_change_allowed_in_tx(
     let policy = load_mcp_global_policy_in_tx(tx)?;
     if policy.read_only {
         return Err(
-            "MCP_READ_ONLY: DBX global MCP read-only mode is enabled. Connection changes are blocked.".to_string()
+            "MCP_READ_ONLY: NexDB global MCP read-only mode is enabled. Connection changes are blocked.".to_string()
         );
     }
     if let Some(connection_id) = target_connection_id {
@@ -3193,7 +3193,7 @@ fn ensure_mcp_connection_change_allowed_in_tx(
         };
         if !crate::mcp_policy::policy_allows_connection(&policy, group_paths.get(connection_id), connection_id) {
             return Err(format!(
-                "CONNECTION_OUT_OF_SCOPE: connection '{connection_id}' is not allowed by the current DBX MCP policy"
+                "CONNECTION_OUT_OF_SCOPE: connection '{connection_id}' is not allowed by the current NexDB MCP policy"
             ));
         }
     }
@@ -3603,7 +3603,7 @@ impl Storage {
 
     /// Update only the persisted `database` of one saved connection.
     ///
-    /// Unlike `save_connections`, this is an in-place update for a value DBX discovered
+    /// Unlike `save_connections`, this is an in-place update for a value NexDB discovered
     /// while connecting (a legacy KingbaseES/Vastbase connection without a database) and
     /// must not replace the saved connection list or touch separately stored secrets.
     /// Returns `false` when the connection is not persisted, for example a temporary
@@ -7333,7 +7333,7 @@ mod tests {
         assert!(error.starts_with("MCP_READ_ONLY:"));
         assert_eq!(storage.load_connections().await.unwrap().len(), 3);
 
-        // Non-MCP callers remain governed by the ordinary DBX UI permissions.
+        // Non-MCP callers remain governed by the ordinary NexDB UI permissions.
         storage.save_connections(std::slice::from_ref(&kept)).await.unwrap();
         assert_eq!(storage.load_connections().await.unwrap()[0].id, kept.id);
 

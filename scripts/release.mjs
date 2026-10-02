@@ -12,7 +12,7 @@ import {
   resolveAgentReleaseBaseline,
 } from "../.github/scripts/bump-agent-versions.mjs";
 
-const REPO = "t8y2/dbx";
+const REPO = "Mutantcat-Working-Group/NexDB";
 const PACKAGES_WORKFLOW = "mcp-release.yml";
 const APP_PUBLISH_WORKFLOW = "publish-packages.yml";
 const APP_CNB_SYNC_WORKFLOW = "sync-cnb-release-assets.yml";

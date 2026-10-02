@@ -63,7 +63,7 @@ pub struct QueryPaginationExecutionPlan {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub exact_query_row_bound: Option<usize>,
     pub use_agent_result_session: bool,
-    /// Trailing helper column added by DBX's ROWNUM pagination wrapper.
+    /// Trailing helper column added by NexDB's ROWNUM pagination wrapper.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub pagination_row_number_column: Option<String>,
     /// True when the statement cannot be paginated server-side and must be
@@ -124,7 +124,7 @@ pub struct SortedQuerySqlOptions {
 pub fn build_query_pagination_execution_plan(
     options: QueryPaginationExecutionPlanOptions,
 ) -> QueryPaginationExecutionPlan {
-    // Every page DBX generates for this query is derived from the same
+    // Every page NexDB generates for this query is derived from the same
     // user-written statement, so a literal LIMIT/TOP the user already wrote
     // bounds the query's total row count regardless of how large the
     // underlying table is — a cheap, exact upper bound that needs no
@@ -679,7 +679,7 @@ fn has_top_level_select_into(sql: &str) -> bool {
 
 fn add_sql_server_offset_fetch(statement: &str, limit: usize, offset: usize) -> Option<String> {
     // FOR JSON/XML produces an unnamed result value and cannot be projected
-    // from a derived table used by DBX pagination.
+    // from a derived table used by NexDB pagination.
     if has_top_level_for_output_clause(statement) {
         return None;
     }
@@ -773,7 +773,7 @@ fn add_sql_server_rowcount_pagination(statement: &str, limit: usize, offset: usi
     let row_count = offset.saturating_add(limit);
     let escaped_statement = statement.replace('\'', "''");
     // Keep duplicate result-column names intact while bounding the server response
-    // on every SQL Server version supported by DBX. The dynamic batch scopes
+    // on every SQL Server version supported by NexDB. The dynamic batch scopes
     // SET ROWCOUNT to this execution instead of leaking it into the tab session.
     format!(
         "EXEC sys.sp_executesql N'SET ROWCOUNT {row_count}; {escaped_statement}'; {SQLSERVER_RESULT_OFFSET_PREFIX}{offset}{SQLSERVER_RESULT_OFFSET_SUFFIX}"
@@ -2439,7 +2439,7 @@ mod tests {
 
     /// Query shape from issue #7832: a MySQL GROUP BY over a LEFT JOIN with an
     /// aggregated derived table, COUNT(DISTINCT IF(...)) in the projection, and
-    /// inline `-- 中文` line comments. Locks in the invariants that keep DBX's
+    /// inline `-- 中文` line comments. Locks in the invariants that keep NexDB's
     /// derived page/count SQL row-count-identical to the user's statement:
     /// the statement splitter must keep it a single statement, the page SQL
     /// must preserve the GROUP BY while injecting deterministic pagination,

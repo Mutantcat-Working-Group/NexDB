@@ -208,8 +208,8 @@ export type QueryEditability = { editable: true; analysis: EditableQueryInfo } |
 
 /**
  * Parse a SELECT statement to determine if it's editable.
- * Parse a SELECT statement to determine whether DBX can bind result columns to
- * base-table columns. DBeaver uses result metadata for the same idea; DBX has to
+ * Parse a SELECT statement to determine whether NexDB can bind result columns to
+ * base-table columns. DBeaver uses result metadata for the same idea; NexDB has to
  * recover enough source mapping from SQL text before table metadata is loaded.
  *
  * Aggregated/set/query-derived results are rejected by this syntax-only pass.

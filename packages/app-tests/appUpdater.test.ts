@@ -14,8 +14,8 @@ function updateInfo(overrides: Partial<UpdateInfo> = {}): UpdateInfo {
     update_available: true,
     portable_mode: false,
     manual_update_only: false,
-    release_name: "DBX v0.5.26",
-    release_url: "https://github.com/t8y2/dbx/releases/tag/v0.5.26",
+    release_name: "NexDB v0.5.26",
+    release_url: "https://github.com/Mutantcat-Working-Group/NexDB/releases/tag/v0.5.26",
     release_notes: "",
     ...overrides,
   };
@@ -81,9 +81,9 @@ test("normalizes release tag versions", () => {
 });
 
 test("resolves release page URL from update download source", () => {
-  const fallbackUrl = "https://github.com/t8y2/dbx/releases/latest";
+  const fallbackUrl = "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest";
   assert.equal(resolveUpdateReleaseUrl(updateInfo({ latest_version: "0.5.39" }), "cnb", fallbackUrl), "https://cnb.cool/dbxio.com/dbx/-/releases/tag/v0.5.39");
-  assert.equal(resolveUpdateReleaseUrl(updateInfo({ release_url: "https://github.com/t8y2/dbx/releases/tag/v0.5.39" }), "official", fallbackUrl), "https://github.com/t8y2/dbx/releases/tag/v0.5.39");
+  assert.equal(resolveUpdateReleaseUrl(updateInfo({ release_url: "https://github.com/Mutantcat-Working-Group/NexDB/releases/tag/v0.5.39" }), "official", fallbackUrl), "https://github.com/Mutantcat-Working-Group/NexDB/releases/tag/v0.5.39");
   assert.equal(resolveUpdateReleaseUrl(null, "cnb", fallbackUrl), "https://cnb.cool/dbxio.com/dbx/-/releases");
 });
 

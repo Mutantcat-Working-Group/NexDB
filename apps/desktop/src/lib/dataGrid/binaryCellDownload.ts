@@ -267,7 +267,7 @@ export function binaryCellTextPreview(value: unknown, encoding: BinaryCellTextEn
 }
 
 // 复制到剪贴板时，把「文本型」MySQL VARBINARY 单元格还原成其原始字符串。
-// DBX 后端为保留任意 bytes，把该值统一序列化成 `0x<hex>`；前端只有在严格 UTF-8 解码、
+// NexDB 后端为保留任意 bytes，把该值统一序列化成 `0x<hex>`；前端只有在严格 UTF-8 解码、
 // 无控制字符且重新编码后与原 bytes 完全一致时，才把 payload（如 token）复制为文本；
 // UTF-8 解码失败时再按网格预览同一闸门尝试 GBK，保持「显示成 GBK 文本的单元格复制时
 // 还原成原字符串」。其余情况返回 null，让调用方沿用无损 hex。范围严格限定 MySQL

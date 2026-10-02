@@ -21,7 +21,7 @@ import { normalizeBackendError } from "@/lib/backend/errorUtils";
 import { uuid } from "@/lib/common/utils";
 import i18n from "@/i18n";
 
-const KEYLESS_GUARD_UNVERIFIED_ERROR = "Cannot safely update or delete this row: the table has no primary key, and DBX could not check on the server whether the row can be targeted uniquely. Add a primary key or unique index before editing.";
+const KEYLESS_GUARD_UNVERIFIED_ERROR = "Cannot safely update or delete this row: the table has no primary key, and NexDB could not check on the server whether the row can be targeted uniquely. Add a primary key or unique index before editing.";
 
 interface RowItem {
   id: number;
@@ -1675,7 +1675,7 @@ export function useDataGridEditor(options: UseDataGridEditorOptions) {
         error: message,
       });
     } catch (historyError) {
-      console.warn("[DBX] failed to record data grid history", historyError);
+      console.warn("[NexDB] failed to record data grid history", historyError);
     }
     return message;
   }
@@ -1789,7 +1789,7 @@ export function useDataGridEditor(options: UseDataGridEditorOptions) {
       try {
         await recordConditionalUpdateHistory(statement, Date.now() - startedAt, { affectedRows: result.affected_rows });
       } catch (historyError) {
-        console.warn("[DBX] failed to record conditional data grid update history", historyError);
+        console.warn("[NexDB] failed to record conditional data grid update history", historyError);
       }
       reloadCurrentData();
       return { affectedRows: result?.affected_rows };
@@ -1802,7 +1802,7 @@ export function useDataGridEditor(options: UseDataGridEditorOptions) {
         try {
           await recordConditionalUpdateHistory(statement, Date.now() - startedAt, { success: false, error: message });
         } catch (historyError) {
-          console.warn("[DBX] failed to record conditional data grid update history", historyError);
+          console.warn("[NexDB] failed to record conditional data grid update history", historyError);
         }
         reloadCurrentData();
       } else {
@@ -1996,7 +1996,7 @@ export function useDataGridEditor(options: UseDataGridEditorOptions) {
     }
     const start = Date.now();
     let apiResult: { affected_rows?: number } | undefined;
-    console.info("[DBX][dataGrid:save-statements]", {
+    console.info("[NexDB][dataGrid:save-statements]", {
       databaseType: databaseType.value,
       table: tableMeta.value ? [tableMeta.value.schema, tableMeta.value.tableName].filter(Boolean).join(".") : undefined,
       statements: stmts,
@@ -2044,7 +2044,7 @@ export function useDataGridEditor(options: UseDataGridEditorOptions) {
     try {
       await recordDataGridHistory(stmts, rollbackStmts, Date.now() - start, snapshot, apiResult);
     } catch (e) {
-      console.warn("[DBX] failed to record data grid history", e);
+      console.warn("[NexDB] failed to record data grid history", e);
     }
     applyDirtyRowsToResult(snapshot);
     options.onResultPayloadMutated?.();
@@ -2057,7 +2057,7 @@ export function useDataGridEditor(options: UseDataGridEditorOptions) {
           rows: result.value.rows,
         });
       } catch (error) {
-        console.warn("[DBX] failed to refresh saved data grid rows", error);
+        console.warn("[NexDB] failed to refresh saved data grid rows", error);
       }
     }
     snapshot.newRowRefs.forEach((row) => savingNewRows.delete(row));

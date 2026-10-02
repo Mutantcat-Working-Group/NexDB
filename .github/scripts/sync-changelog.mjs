@@ -5,7 +5,7 @@ import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const REPO = "t8y2/dbx";
+const REPO = "Mutantcat-Working-Group/NexDB";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || "";
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY || "";
 const OUT_CN = "releases-cn.json";

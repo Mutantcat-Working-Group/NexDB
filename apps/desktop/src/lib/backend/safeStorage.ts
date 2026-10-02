@@ -1,5 +1,5 @@
 function storageWarn(action: string, key: string, error: unknown) {
-  console.warn(`[DBX][storage:${action}] ${key}`, error);
+  console.warn(`[NexDB][storage:${action}] ${key}`, error);
 }
 
 export function safeLocalStorageGet(key: string): string | null {

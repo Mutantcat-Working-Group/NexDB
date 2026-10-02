@@ -6,7 +6,7 @@
 
 ## 背景
 
-达梦（Dameng）在 DBX 中是受支持方言，侧边栏已有 `dameng-job-admin`（作业管理）特殊节点。
+达梦（Dameng）在 NexDB 中是受支持方言，侧边栏已有 `dameng-job-admin`（作业管理）特殊节点。
 官方 DM 管理工具的用户/角色管理功能（DBA_USERS / DBA_ROLES / DBA_ROLE_PRIVS / DBA_SYS_PRIVS / DBA_TABLESPACES）
 尚未覆盖。本计划参照现有 `dameng-job-admin` + `user-admin` 模式新增"用户"、"角色"两类菜单。
 

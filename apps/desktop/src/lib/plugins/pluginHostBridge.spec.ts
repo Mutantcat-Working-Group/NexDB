@@ -87,16 +87,16 @@ describe("PluginHostBridge", () => {
     expect(
       bridge.handleWindowMessage({
         source: target,
-        data: { source: "dbx-plugin", version: 1, type: "request", id: "1", method: "backend.invoke", params: { method: "sample/hello", params: { name: "DBX" } } },
+        data: { source: "dbx-plugin", version: 1, type: "request", id: "1", method: "backend.invoke", params: { method: "sample/hello", params: { name: "NexDB" } } },
       } as MessageEvent),
     ).toBe(true);
     await vi.waitFor(() => expect(messages).toHaveLength(1));
 
-    expect(invoke).toHaveBeenCalledWith("sample", "sample/hello", { name: "DBX" }, undefined);
+    expect(invoke).toHaveBeenCalledWith("sample", "sample/hello", { name: "NexDB" }, undefined);
     expect(messages[0]).toMatchObject({ source: "dbx-host", type: "response", id: "1", result: { ok: true } });
   });
 
-  it("sends the current DBX locale in the init message", () => {
+  it("sends the current NexDB locale in the init message", () => {
     const messages: unknown[] = [];
     const target = { postMessage: (message: unknown) => messages.push(message) } as unknown as Window;
     const bridge = new PluginHostBridge(

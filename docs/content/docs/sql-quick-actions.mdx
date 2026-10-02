@@ -13,7 +13,7 @@ Open **Settings → Shortcuts** and scroll to **SQL Quick Actions**.
 
 ### Built-in templates
 
-DBX ships two built-in actions (shown as **Built-in** in the list):
+NexDB ships two built-in actions (shown as **Built-in** in the list):
 
 | Action | Default shortcut | Editable |
 | --- | --- | --- |
@@ -66,7 +66,7 @@ When a custom action is limited to specific database types, the SQL editor shows
 
 1. Select a table name or qualified identifier in the SQL editor, for example `orders` or `public.users`. You can also place the caret on the identifier without selecting it (quoted names and `schema.table` are included).
 2. Press the configured shortcut.
-3. For templates, DBX replaces every `${table}` token with the trimmed selection (using the per-database body when present). For first-N actions, it generates dialect-aware SQL using the selection as the table expression, then executes it.
+3. For templates, NexDB replaces every `${table}` token with the trimmed selection (using the per-database body when present). For first-N actions, it generates dialect-aware SQL using the selection as the table expression, then executes it.
 
 Example template:
 
@@ -74,17 +74,17 @@ Example template:
 SELECT COUNT(*) FROM ${table}
 ```
 
-With `orders` selected, DBX runs:
+With `orders` selected, NexDB runs:
 
 ```sql
 SELECT COUNT(*) FROM orders
 ```
 
-If there is a selection, DBX uses that text as `${table}`. Otherwise it uses the qualified identifier under the caret (including quotes and `schema.table`). If neither is available, the shortcut does nothing. If the action is scoped to other database types than the current connection, the shortcut is ignored for that tab.
+If there is a selection, NexDB uses that text as `${table}`. Otherwise it uses the qualified identifier under the caret (including quotes and `schema.table`). If neither is available, the shortcut does nothing. If the action is scoped to other database types than the current connection, the shortcut is ignored for that tab.
 
 ## Shortcut Conflicts
 
-DBX checks Quick Action shortcuts against:
+NexDB checks Quick Action shortcuts against:
 
 - Other Quick Actions whose **database scopes overlap** (all-databases counts as overlapping everything)
 - Built-in editor and global shortcuts shown in **Settings → Shortcuts**
@@ -93,9 +93,9 @@ The same shortcut may be reused for different database types when their scopes d
 
 ## Storage, Sync, and Safety
 
-Quick Actions are editor settings stored in the current DBX runtime. On Desktop, [Configuration Cloud Sync](/en/docs/cloud-sync) can synchronize them with your other editor settings. [Connection Config Migration](/en/docs/config-export) only moves database connections and does not include Quick Actions.
+Quick Actions are editor settings stored in the current NexDB runtime. On Desktop, [Configuration Cloud Sync](/en/docs/cloud-sync) can synchronize them with your other editor settings. [Connection Config Migration](/en/docs/config-export) only moves database connections and does not include Quick Actions.
 
-A Quick Action only generates SQL; it does not bypass database permissions or DBX production protection. Review the fully expanded statement before running templates that contain writes or DDL, and follow the [Production Safety](/en/docs/production-safety) guidance.
+A Quick Action only generates SQL; it does not bypass database permissions or NexDB production protection. Review the fully expanded statement before running templates that contain writes or DDL, and follow the [Production Safety](/en/docs/production-safety) guidance.
 
 <Cards>
   <Card title="SQL Snippets" href="/en/docs/sql-snippets">

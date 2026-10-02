@@ -989,13 +989,13 @@ describe("substituteSqlParameters", () => {
   });
 
   it("supports embedded placeholders in the issue reproduction", () => {
-    const sql = "INSERT INTO ${dbSchema}.dbx_smoke (note) VALUES ('${FOO} DBX smoke 中文 🚀')";
+    const sql = "INSERT INTO ${dbSchema}.dbx_smoke (note) VALUES ('${FOO} NexDB smoke 中文 🚀')";
     expect(
       substituteSqlParameters(sql, {
         dbSchema: { kind: "raw", value: "public" },
         FOO: { kind: "string", value: "O'Reilly" },
       }),
-    ).toBe("INSERT INTO public.dbx_smoke (note) VALUES ('O''Reilly DBX smoke 中文 🚀')");
+    ).toBe("INSERT INTO public.dbx_smoke (note) VALUES ('O''Reilly NexDB smoke 中文 🚀')");
   });
 
   it("ignores prefixed string literals such as E/U&/B/X/N quotes", () => {

@@ -1,9 +1,9 @@
 ---
 title: 数据库支持
-description: 了解 DBX 的连接 profile、驱动运行时、专用工作区和按能力启用的高级功能。
+description: 了解 NexDB 的连接 profile、驱动运行时、专用工作区和按能力启用的高级功能。
 ---
 
-DBX 的新建连接窗口提供 90+ 数据库和服务 profile。Profile 决定默认端口、表单字段、图标和驱动入口，但“能建立连接”不等于“支持所有高级功能”。
+NexDB 的新建连接窗口提供 90+ 数据库和服务 profile。Profile 决定默认端口、表单字段、图标和驱动入口，但“能建立连接”不等于“支持所有高级功能”。
 
 <Callout type="info">当前版本的连接选择器和 `crates/dbx-core/assets/database-drivers.manifest.json` 是数据库类型与能力的权威来源。文档不维护容易过期的全量静态矩阵。</Callout>
 
@@ -18,7 +18,7 @@ DBX 的新建连接窗口提供 90+ 数据库和服务 profile。Profile 决定�
 - Snowflake、Trino、PrestoSQL、Hive、Spark、DB2、Informix、Databricks、BigQuery 等 Agent/JDBC 分析数据库
 - Google Cloud Spanner 等云托管关系型服务（Agent/JDBC，支持 GoogleSQL 与 PostgreSQL 两种方言）
 
-兼容协议只说明连接和部分方言可以复用。数据库版本、系统表、DDL、权限和管理接口不同，DBX 会用独立 profile 或能力覆盖避免错误地启用功能。
+兼容协议只说明连接和部分方言可以复用。数据库版本、系统表、DDL、权限和管理接口不同，NexDB 会用独立 profile 或能力覆盖避免错误地启用功能。
 
 ### 文件、边缘和托管数据库
 
@@ -44,8 +44,8 @@ Desktop 的文件路径属于本机。Docker/Web 的文件路径属于服务器�
 
 | 运行方式 | 说明 | 典型边界 |
 | --- | --- | --- |
-| 内置原生 | Rust 驱动编译进 DBX | 安装后可直接使用 |
-| 原生 Agent / sidecar | DBX 管理独立 Go/Rust/外部进程 | 需要匹配平台文件；DuckDB、Oracle、KingbaseES、XuguDB、RabbitMQ 等路径可能使用独立运行时 |
+| 内置原生 | Rust 驱动编译进 NexDB | 安装后可直接使用 |
+| 原生 Agent / sidecar | NexDB 管理独立 Go/Rust/外部进程 | 需要匹配平台文件；DuckDB、Oracle、KingbaseES、XuguDB、RabbitMQ 等路径可能使用独立运行时 |
 | JDBC Agent | Java Agent 加厂商 JDBC 驱动 | 需要 JRE、Agent 和可合法获取的厂商 JAR |
 | JDBC 插件 | 可选通用 JDBC 扩展 | 未识别数据库按通用 JDBC 能力运行 |
 
@@ -53,7 +53,7 @@ Desktop 的文件路径属于本机。Docker/Web 的文件路径属于服务器�
 
 ## 能力等级
 
-DBX 驱动清单使用从连接到操作的能力等级，并允许按数据库覆盖单项能力：
+NexDB 驱动清单使用从连接到操作的能力等级，并允许按数据库覆盖单项能力：
 
 | 能力层 | 含义 |
 | --- | --- |
@@ -71,7 +71,7 @@ DBX 驱动清单使用从连接到操作的能力等级，并允许按数据库�
 - 字段血缘和执行计划
 - 创建数据库、用户管理和驱动管理
 
-因此菜单是否出现比“数据库名称是否在支持列表中”更能反映当前路径。缺少入口时，应检查 DBX 版本、数据库 profile、驱动模式和已安装组件。
+因此菜单是否出现比“数据库名称是否在支持列表中”更能反映当前路径。缺少入口时，应检查 NexDB 版本、数据库 profile、驱动模式和已安装组件。
 
 ## 功能边界
 
@@ -87,7 +87,7 @@ Redis、MongoDB、搜索、向量、HBase、配置中心和消息队列工作区
 
 - [数据库导出](/cn/docs/database-export) 是能力驱动的逻辑 SQL 导出
 - [数据库备份](/cn/docs/database-backup) 当前只在 Desktop 为 MySQL 和 PostgreSQL 提供定时一致性备份
-- 云同步和配置导出只迁移 DBX 配置，不会备份业务数据库
+- 云同步和配置导出只迁移 NexDB 配置，不会备份业务数据库
 
 ### Desktop 和 Docker/Web
 
@@ -99,7 +99,7 @@ Redis、MongoDB、搜索、向量、HBase、配置中心和消息队列工作区
 
 RabbitMQ 等服务可能同时有业务端口和管理 API 端口；自定义 AMQP 端口不能用于推断 Management API 端口。SSH 隧道、HTTP 代理、TLS SNI 和实际拨号目标也应分别确认。
 
-DBX 可以解析许多常见 DSN/URL，但不同数据库版本和云厂商参数差异很大。连接测试成功后仍应检查实际数据库、Schema、SSL 和权限范围。
+NexDB 可以解析许多常见 DSN/URL，但不同数据库版本和云厂商参数差异很大。连接测试成功后仍应检查实际数据库、Schema、SSL 和权限范围。
 
 ## 本地测试环境
 

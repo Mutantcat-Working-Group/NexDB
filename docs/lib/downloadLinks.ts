@@ -111,12 +111,12 @@ export function createInstallOptions(lang: InstallLang, version: string): Instal
     driverLinkLabel: artifact.driverLinkLabels?.[lang],
     descriptionSuffix: artifact.descriptionSuffixes?.[lang],
     badge: artifact.badges?.[lang],
-    href: `${DOWNLOAD_BASE_URL}/v${version}/DBX_${version}_${artifact.suffix}?v=${version}`,
+    href: `${DOWNLOAD_BASE_URL}/v${version}/NexDB_${version}_${artifact.suffix}?v=${version}`,
     action: artifact.action ?? "download",
     browserStaticDownloads: artifact.browserStaticSuffixes
       ? Object.entries(artifact.browserStaticSuffixes).map(([arch, suffix]) => ({
           arch: arch as BrowserStaticArch,
-          href: `${DOWNLOAD_BASE_URL}/v${version}/DBX_${version}_${suffix}?v=${version}`,
+          href: `${DOWNLOAD_BASE_URL}/v${version}/NexDB_${version}_${suffix}?v=${version}`,
         }))
       : undefined,
   }));

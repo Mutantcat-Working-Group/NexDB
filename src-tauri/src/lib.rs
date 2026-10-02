@@ -1,4 +1,4 @@
-// DBX Desktop shell — 由异猫工作群（mutantcat.org）发行
+// NexDB Desktop shell — 由异猫工作群（mutantcat.org）发行
 // GitHub: https://github.com/Mutantcat-Working-Group
 mod commands;
 mod data_dir;
@@ -763,16 +763,16 @@ fn locale_family(locale: &str) -> LocaleFamily {
 
 fn tray_menu_labels_for_locale(locale: &str) -> (&'static str, &'static str) {
     match locale_family(locale) {
-        LocaleFamily::SimplifiedChinese => ("显示 DBX", "退出 DBX"),
-        LocaleFamily::TraditionalChinese => ("顯示 DBX", "退出 DBX"),
-        LocaleFamily::Japanese => ("DBXを表示", "DBXを終了"),
-        LocaleFamily::Korean => ("DBX 표시", "DBX 종료"),
-        LocaleFamily::Azerbaijani => ("DBX-i göstər", "DBX-dən çıx"),
-        LocaleFamily::Spanish => ("Mostrar DBX", "Salir de DBX"),
-        LocaleFamily::Italian => ("Mostra DBX", "Esci da DBX"),
-        LocaleFamily::Turkish => ("DBX'i Göster", "DBX'ten Çık"),
-        LocaleFamily::Portuguese => ("Mostrar DBX", "Sair do DBX"),
-        LocaleFamily::English => ("Show DBX", "Quit DBX"),
+        LocaleFamily::SimplifiedChinese => ("显示 NexDB", "退出 NexDB"),
+        LocaleFamily::TraditionalChinese => ("顯示 NexDB", "退出 NexDB"),
+        LocaleFamily::Japanese => ("NexDBを表示", "NexDBを終了"),
+        LocaleFamily::Korean => ("NexDB 표시", "NexDB 종료"),
+        LocaleFamily::Azerbaijani => ("NexDB-i göstər", "NexDB-dən çıx"),
+        LocaleFamily::Spanish => ("Mostrar NexDB", "Salir de NexDB"),
+        LocaleFamily::Italian => ("Mostra NexDB", "Esci da NexDB"),
+        LocaleFamily::Turkish => ("NexDB'i Göster", "NexDB'ten Çık"),
+        LocaleFamily::Portuguese => ("Mostrar NexDB", "Sair do NexDB"),
+        LocaleFamily::English => ("Show NexDB", "Quit NexDB"),
     }
 }
 
@@ -856,7 +856,7 @@ fn setup_desktop_tray<R: tauri::Runtime, M: Manager<R>>(
 ) -> tauri::Result<()> {
     let menu = build_tray_menu(manager)?;
     let mut tray =
-        TrayIconBuilder::<R>::with_id(DESKTOP_TRAY_ID).tooltip("DBX").menu(&menu).show_menu_on_left_click(false);
+        TrayIconBuilder::<R>::with_id(DESKTOP_TRAY_ID).tooltip("NexDB").menu(&menu).show_menu_on_left_click(false);
     #[cfg(target_os = "macos")]
     {
         tray = tray.icon(MACOS_TRAY_ICON).icon_as_template(true);
@@ -1018,36 +1018,36 @@ mod tests {
 
     #[test]
     fn tray_menu_labels_follow_locale() {
-        assert_eq!(tray_menu_labels_for_locale("zh-CN"), ("显示 DBX", "退出 DBX"));
-        assert_eq!(tray_menu_labels_for_locale("zh_CN"), ("显示 DBX", "退出 DBX"));
-        assert_eq!(tray_menu_labels_for_locale("zh-Hans-CN"), ("显示 DBX", "退出 DBX"));
-        assert_eq!(tray_menu_labels_for_locale("zh"), ("显示 DBX", "退出 DBX"));
-        assert_eq!(tray_menu_labels_for_locale("zh-TW"), ("顯示 DBX", "退出 DBX"));
-        assert_eq!(tray_menu_labels_for_locale("zh-Hant-HK"), ("顯示 DBX", "退出 DBX"));
-        assert_eq!(tray_menu_labels_for_locale("zh-MO"), ("顯示 DBX", "退出 DBX"));
-        assert_eq!(tray_menu_labels_for_locale("ja-JP"), ("DBXを表示", "DBXを終了"));
-        assert_eq!(tray_menu_labels_for_locale("ko-KR"), ("DBX 표시", "DBX 종료"));
-        assert_eq!(tray_menu_labels_for_locale("az-AZ"), ("DBX-i göstər", "DBX-dən çıx"));
-        assert_eq!(tray_menu_labels_for_locale("es-ES"), ("Mostrar DBX", "Salir de DBX"));
-        assert_eq!(tray_menu_labels_for_locale("it-IT"), ("Mostra DBX", "Esci da DBX"));
-        assert_eq!(tray_menu_labels_for_locale("pt-BR"), ("Mostrar DBX", "Sair do DBX"));
-        assert_eq!(tray_menu_labels_for_locale("tr-TR"), ("DBX'i Göster", "DBX'ten Çık"));
-        assert_eq!(tray_menu_labels_for_locale("en-US"), ("Show DBX", "Quit DBX"));
+        assert_eq!(tray_menu_labels_for_locale("zh-CN"), ("显示 NexDB", "退出 NexDB"));
+        assert_eq!(tray_menu_labels_for_locale("zh_CN"), ("显示 NexDB", "退出 NexDB"));
+        assert_eq!(tray_menu_labels_for_locale("zh-Hans-CN"), ("显示 NexDB", "退出 NexDB"));
+        assert_eq!(tray_menu_labels_for_locale("zh"), ("显示 NexDB", "退出 NexDB"));
+        assert_eq!(tray_menu_labels_for_locale("zh-TW"), ("顯示 NexDB", "退出 NexDB"));
+        assert_eq!(tray_menu_labels_for_locale("zh-Hant-HK"), ("顯示 NexDB", "退出 NexDB"));
+        assert_eq!(tray_menu_labels_for_locale("zh-MO"), ("顯示 NexDB", "退出 NexDB"));
+        assert_eq!(tray_menu_labels_for_locale("ja-JP"), ("NexDBを表示", "NexDBを終了"));
+        assert_eq!(tray_menu_labels_for_locale("ko-KR"), ("NexDB 표시", "NexDB 종료"));
+        assert_eq!(tray_menu_labels_for_locale("az-AZ"), ("NexDB-i göstər", "NexDB-dən çıx"));
+        assert_eq!(tray_menu_labels_for_locale("es-ES"), ("Mostrar NexDB", "Salir de NexDB"));
+        assert_eq!(tray_menu_labels_for_locale("it-IT"), ("Mostra NexDB", "Esci da NexDB"));
+        assert_eq!(tray_menu_labels_for_locale("pt-BR"), ("Mostrar NexDB", "Sair do NexDB"));
+        assert_eq!(tray_menu_labels_for_locale("tr-TR"), ("NexDB'i Göster", "NexDB'ten Çık"));
+        assert_eq!(tray_menu_labels_for_locale("en-US"), ("Show NexDB", "Quit NexDB"));
         // Unknown and empty locales fall back to English; "ita" must not match "it".
-        assert_eq!(tray_menu_labels_for_locale("ita"), ("Show DBX", "Quit DBX"));
-        assert_eq!(tray_menu_labels_for_locale(""), ("Show DBX", "Quit DBX"));
+        assert_eq!(tray_menu_labels_for_locale("ita"), ("Show NexDB", "Quit NexDB"));
+        assert_eq!(tray_menu_labels_for_locale(""), ("Show NexDB", "Quit NexDB"));
     }
 
     #[test]
     fn app_menu_labels_follow_locale() {
-        assert_eq!(app_menu_quit_label("zh-CN", "DBX"), "退出 DBX");
-        assert_eq!(app_menu_quit_label("zh-TW", "DBX"), "退出 DBX");
-        assert_eq!(app_menu_quit_label("ja-JP", "DBX"), "DBXを終了");
-        assert_eq!(app_menu_quit_label("ko-KR", "DBX"), "DBX 종료");
-        assert_eq!(app_menu_quit_label("tr-TR", "DBX"), "DBX Uygulamasından Çık");
-        assert_eq!(app_menu_quit_label("az-AZ", "DBX"), "DBX-dən çıx");
-        assert_eq!(app_menu_quit_label("en-US", "DBX"), "Quit DBX");
-        assert_eq!(app_menu_quit_label("", "DBX"), "Quit DBX");
+        assert_eq!(app_menu_quit_label("zh-CN", "NexDB"), "退出 NexDB");
+        assert_eq!(app_menu_quit_label("zh-TW", "NexDB"), "退出 NexDB");
+        assert_eq!(app_menu_quit_label("ja-JP", "NexDB"), "NexDBを終了");
+        assert_eq!(app_menu_quit_label("ko-KR", "NexDB"), "NexDB 종료");
+        assert_eq!(app_menu_quit_label("tr-TR", "NexDB"), "NexDB Uygulamasından Çık");
+        assert_eq!(app_menu_quit_label("az-AZ", "NexDB"), "NexDB-dən çıx");
+        assert_eq!(app_menu_quit_label("en-US", "NexDB"), "Quit NexDB");
+        assert_eq!(app_menu_quit_label("", "NexDB"), "Quit NexDB");
         assert_eq!(app_menu_copy_support_info_label("zh-CN"), "复制支持信息");
         assert_eq!(app_menu_copy_support_info_label("zh-TW"), "複製支援資訊");
         assert_eq!(app_menu_copy_support_info_label("ko-KR"), "지원 정보 복사");
@@ -1335,7 +1335,7 @@ mod tests {
 
     #[test]
     fn enables_appimage_dmabuf_workaround_only_for_real_appimage_values() {
-        assert!(linux_appimage_requires_dmabuf_workaround(Some(OsStr::new("/opt/DBX.AppImage"))));
+        assert!(linux_appimage_requires_dmabuf_workaround(Some(OsStr::new("/opt/NexDB.AppImage"))));
         assert!(!linux_appimage_requires_dmabuf_workaround(Some(OsStr::new(""))));
         assert!(!linux_appimage_requires_dmabuf_workaround(None));
     }

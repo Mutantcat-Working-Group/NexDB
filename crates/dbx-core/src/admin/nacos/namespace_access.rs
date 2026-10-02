@@ -40,7 +40,7 @@ pub fn invalidate(connection_id: &str) {
     cache().lock().unwrap_or_else(|error| error.into_inner()).remove(connection_id);
 }
 
-/// Access-control changes can affect a different DBX connection that targets
+/// Access-control changes can affect a different NexDB connection that targets
 /// the same server with the edited account, so invalidate every cached account.
 pub fn invalidate_all() {
     cache().lock().unwrap_or_else(|error| error.into_inner()).clear();
@@ -362,7 +362,7 @@ fn namespace_authorization_unavailable(detail: &str) -> String {
         "namespaceAuthorizationUnavailable"
     };
     format!(
-        "NACOS_ERROR[{error_code}]: DBX cannot safely determine readable namespaces without per-namespace probes: {detail}"
+        "NACOS_ERROR[{error_code}]: NexDB cannot safely determine readable namespaces without per-namespace probes: {detail}"
     )
 }
 

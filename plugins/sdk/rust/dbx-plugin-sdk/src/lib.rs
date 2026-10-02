@@ -18,7 +18,7 @@ const DEFAULT_WORK_QUEUE_CAPACITY: usize = 256;
 /// bounded by their own `timeoutSecs`, so the default covers one prompt plus a
 /// little slack.
 const DEFAULT_HOST_REQUEST_TIMEOUT: Duration = Duration::from_secs(330);
-/// Host API method that relays a question to the DBX user interface.
+/// Host API method that relays a question to the NexDB user interface.
 pub const HOST_REQUEST_USER_INPUT_METHOD: &str = "host/requestUserInput";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -258,7 +258,7 @@ struct HostDescription {
     features: Vec<String>,
 }
 
-/// Client for Host API methods the plugin calls back into DBX. Create it by
+/// Client for Host API methods the plugin calls back into NexDB. Create it by
 /// running a [`PluginServer`]; [`host_client`] returns the running instance.
 ///
 /// Calls block the calling thread until the host answers, so call them from a
@@ -286,12 +286,12 @@ impl HostClient {
         }
     }
 
-    /// Host API version DBX reported at `plugin/initialize`.
+    /// Host API version NexDB reported at `plugin/initialize`.
     pub fn host_api_version(&self) -> Option<String> {
         self.host.lock().ok().and_then(|host| host.api_version.clone())
     }
 
-    /// Whether DBX advertised `method` for this session. Gate optional calls on
+    /// Whether NexDB advertised `method` for this session. Gate optional calls on
     /// this (or on [`HostClient::host_api_version`]) so a plugin still works
     /// against an older host that predates the capability.
     pub fn supports(&self, method: &str) -> bool {
@@ -342,7 +342,7 @@ impl HostClient {
         }
     }
 
-    /// Asks the user a question through the DBX UI. Fails when the host has no
+    /// Asks the user a question through the NexDB UI. Fails when the host has no
     /// user interface attached (headless/MCP runs), so the plugin can fall back
     /// to its own behaviour instead of waiting for an answer that cannot come.
     pub fn request_user_input(&self, prompt: &UserInputPrompt) -> Result<UserInputAnswer, PluginError> {
@@ -566,7 +566,7 @@ impl<H: PluginHandler> PluginServer<H> {
                     "plugin": { "id": self.metadata.id, "version": self.metadata.version }
                 }))
             } else {
-                Err(PluginError::new(-32001, "DBX and plugin do not share a protocol version"))
+                Err(PluginError::new(-32001, "NexDB and plugin do not share a protocol version"))
             };
             return emitter.respond(id, result).map_err(|error| error.message);
         }
@@ -847,7 +847,7 @@ mod tests {
         assert!(client.deliver_response(&serde_json::json!({
             "jsonrpc": "2.0",
             "id": request["id"],
-            "error": { "code": -32001, "message": "The DBX host cannot ask the user for input right now" }
+            "error": { "code": -32001, "message": "The NexDB host cannot ask the user for input right now" }
         })));
         let error = error_call.join().unwrap().unwrap_err();
         assert_eq!(error.code, -32001);

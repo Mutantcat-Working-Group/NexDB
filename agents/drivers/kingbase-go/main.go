@@ -543,7 +543,7 @@ type kingbaseEndpoint struct {
 }
 
 // clusterConnectEndpoints splits the host field into ordered endpoints for
-// cluster (multi-IP) configurations. DBX stores cluster hosts as
+// cluster (multi-IP) configurations. NexDB stores cluster hosts as
 // comma-separated entries, each optionally embedding its own `:port`
 // (mirroring the vastbase/openGauss driver semantics); semicolons are also
 // accepted because Kingbase deployments paste both separators. A native
@@ -1064,7 +1064,7 @@ func (s *server) schemaConn(ctx context.Context, schema string) (*sql.Conn, erro
 func (s *server) setSchema(ctx context.Context, conn *sql.Conn, schema string) error {
 	schema = strings.TrimSpace(schema)
 	// An omitted schema leaves the session search_path under user control.
-	// Reset it only after DBX applied an explicit schema.
+	// Reset it only after NexDB applied an explicit schema.
 	if schema == "" && !s.schemaSet {
 		return nil
 	}

@@ -24,7 +24,7 @@ The stage directory must contain `manifest.json` and the current-platform files 
 - optionally writes candidate artifact metadata containing the target, URL, package SHA-256, and size;
 - writes through a temporary file so a failed build does not truncate the previous package.
 
-Use `--target universal` only when the same `.dbxp` is valid on every DBX target. This is normally appropriate for frontend-only plugins. When a catalog contains both an exact platform artifact and `universal`, DBX selects the exact artifact first.
+Use `--target universal` only when the same `.dbxp` is valid on every NexDB target. This is normally appropriate for frontend-only plugins. When a catalog contains both an exact platform artifact and `universal`, NexDB selects the exact artifact first.
 
 The generated metadata has the shape expected by marketplace catalog v1:
 
@@ -39,7 +39,7 @@ The generated metadata has the shape expected by marketplace catalog v1:
 
 ## Repository signing
 
-Only a repository operator should sign packages. Plugin authors submit unsigned candidates. `DBX_PLUGIN_SIGNING_KEY` is a base64-encoded 32-byte Ed25519 repository private-key seed, and `--key-id` identifies the corresponding repository public key in DBX's trust store.
+Only a repository operator should sign packages. Plugin authors submit unsigned candidates. `DBX_PLUGIN_SIGNING_KEY` is a base64-encoded 32-byte Ed25519 repository private-key seed, and `--key-id` identifies the corresponding repository public key in NexDB's trust store.
 
 ```bash
 DBX_PLUGIN_SIGNING_KEY="..." \
@@ -58,4 +58,4 @@ Keep the private seed in protected repository-signing CI. Set `DBX_PLUGIN_SIGNIN
 
 ## GitHub Releases
 
-`../../templates/github/plugin-release.yml` is a caller template for DBX's reusable multi-platform author workflow. It uploads unsigned `.dbxp` candidates and publishes merged `release-candidates.json` metadata for review. Repository signing happens later in protected repository infrastructure.
+`../../templates/github/plugin-release.yml` is a caller template for NexDB's reusable multi-platform author workflow. It uploads unsigned `.dbxp` candidates and publishes merged `release-candidates.json` metadata for review. Repository signing happens later in protected repository infrastructure.

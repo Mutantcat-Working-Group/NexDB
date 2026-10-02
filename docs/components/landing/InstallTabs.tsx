@@ -12,7 +12,7 @@ type InstallTabsProps = {
   version: string;
 };
 
-const downloadLabel = { en: "Download DBX", cn: "下载 DBX" };
+const downloadLabel = { en: "Download NexDB", cn: "下载 NexDB" };
 const selectDownloadLabel = { en: "Choose a version", cn: "选择下载版本" };
 const selectMacLabel = { en: "Choose a macOS version", cn: "选择 macOS 版本" };
 const offlineHint = {
@@ -23,15 +23,15 @@ const offlineHint = {
 const browserStaticText = {
   en: {
     eyebrow: "Linux browser package",
-    intro: "For Kylin, UnionTech UOS, and other Linux distributions. DBX runs locally and opens in your browser.",
+    intro: "For Kylin, UnionTech UOS, and other Linux distributions. NexDB runs locally and opens in your browser.",
     extract: "Extract and enter the package directory",
-    start: "Start DBX",
+    start: "Start NexDB",
     open: "Open in your local browser",
     port: "Need a different port?",
     portHint: "Replace 8080 with any available local port.",
     browserStyle: "Page layout looks incorrect?",
     browserStyleHint: [
-      "Some browsers in intranet or enterprise Linux environments use older browser engines that may not fully support the modern web standards used by DBX, resulting in missing or incorrect styles.",
+      "Some browsers in intranet or enterprise Linux environments use older browser engines that may not fully support the modern web standards used by NexDB, resulting in missing or incorrect styles.",
       "For example, older QiAnXin browser versions based on Chromium 90 can show this behavior.",
       "Update the browser to its latest version, or use a current version of Chrome, Edge, or Firefox.",
     ],
@@ -42,14 +42,14 @@ const browserStaticText = {
   },
   cn: {
     eyebrow: "Linux 浏览器版",
-    intro: "适用于麒麟、统信 UOS 等 Linux 发行版。DBX 在本机运行，通过浏览器访问。",
+    intro: "适用于麒麟、统信 UOS 等 Linux 发行版。NexDB 在本机运行，通过浏览器访问。",
     extract: "解压并进入安装目录",
-    start: "启动 DBX",
+    start: "启动 NexDB",
     open: "在本机浏览器打开",
     port: "需要修改默认端口？",
     portHint: "将 8080 替换为其他可用端口即可。",
     browserStyle: "网页样式显示异常？",
-    browserStyleHint: ["部分信创或内网环境使用的浏览器内核版本较旧，可能无法完整支持 DBX 使用的现代 Web 标准，从而出现布局错位、样式缺失等问题。", "例如，基于 Chromium 90 内核的旧版奇安信浏览器可能出现此类情况。", "请优先升级当前浏览器；环境允许时，也可以改用新版 Chrome、Edge 或 Firefox。"],
+    browserStyleHint: ["部分信创或内网环境使用的浏览器内核版本较旧，可能无法完整支持 NexDB 使用的现代 Web 标准，从而出现布局错位、样式缺失等问题。", "例如，基于 Chromium 90 内核的旧版奇安信浏览器可能出现此类情况。", "请优先升级当前浏览器；环境允许时，也可以改用新版 Chrome、Edge 或 Firefox。"],
     download: "下载",
     close: "关闭安装说明",
     copy: "复制命令",

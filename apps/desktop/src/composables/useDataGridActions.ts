@@ -159,16 +159,16 @@ export function useDataGridActions(activeTab: ComputedRef<QueryTab | undefined>)
     const metadataGenerationAtStart = connectionStore.metadataGenerationFor(target.connectionId, target.database);
     const trace = options.trace;
 
-    console.info("[DBX][reloadData:metadata:ensure-connected:start]", { traceId: trace?.traceId, elapsed: trace?.elapsed() });
+    console.info("[NexDB][reloadData:metadata:ensure-connected:start]", { traceId: trace?.traceId, elapsed: trace?.elapsed() });
     await connectionStore.ensureConnected(target.connectionId);
-    console.info("[DBX][reloadData:metadata:ensure-connected:done]", { traceId: trace?.traceId, elapsed: trace?.elapsed() });
+    console.info("[NexDB][reloadData:metadata:ensure-connected:done]", { traceId: trace?.traceId, elapsed: trace?.elapsed() });
     if (metadataRequests.get(tab) !== requestToken || connectionStore.metadataGenerationFor(target.connectionId, target.database) !== metadataGenerationAtStart) {
-      console.info("[DBX][reloadData:metadata:superseded-by-connection-generation]", { traceId: trace?.traceId, elapsed: trace?.elapsed(), table: target.tableName });
+      console.info("[NexDB][reloadData:metadata:superseded-by-connection-generation]", { traceId: trace?.traceId, elapsed: trace?.elapsed(), table: target.tableName });
       return false;
     }
     const config = connectionStore.getConfig(target.connectionId);
     const querySchema = metadataSchemaForConnection(config, target.database, target.schema);
-    console.info("[DBX][reloadData:metadata:get-columns:start]", { traceId: trace?.traceId, elapsed: trace?.elapsed(), schema: querySchema, table: target.tableName, columnsOnly: options.columnsOnly === true });
+    console.info("[NexDB][reloadData:metadata:get-columns:start]", { traceId: trace?.traceId, elapsed: trace?.elapsed(), schema: querySchema, table: target.tableName, columnsOnly: options.columnsOnly === true });
     // 复用共享表元数据缓存（30s TTL + in-flight 去重），多个入口对同一张表
     // 不再各自往返 getColumns/listIndexes。跨连接生命周期的强制重建走 force，
     // 避免同一共享缓存把断链前的旧列再次交回本次 reload。
@@ -203,9 +203,9 @@ export function useDataGridActions(activeTab: ComputedRef<QueryTab | undefined>)
           return { columns: metadata.columns, primaryKeys: metadata.primaryKeys, rowIdentityResolved: metadata.rowIdentityResolved !== false };
         })();
     const columns = loaded.columns;
-    console.info("[DBX][reloadData:metadata:get-columns:done]", { traceId: trace?.traceId, elapsed: trace?.elapsed(), columnCount: columns.length });
+    console.info("[NexDB][reloadData:metadata:get-columns:done]", { traceId: trace?.traceId, elapsed: trace?.elapsed(), columnCount: columns.length });
     if (metadataRequests.get(tab) !== requestToken || connectionStore.metadataGenerationFor(target.connectionId, target.database) !== metadataGenerationAtStart) {
-      console.info("[DBX][reloadData:metadata:superseded-by-connection-generation]", { traceId: trace?.traceId, elapsed: trace?.elapsed(), table: target.tableName });
+      console.info("[NexDB][reloadData:metadata:superseded-by-connection-generation]", { traceId: trace?.traceId, elapsed: trace?.elapsed(), table: target.tableName });
       return false;
     }
     const current = queryStore.tabs.find((item) => item.id === target.tabId);
@@ -221,7 +221,7 @@ export function useDataGridActions(activeTab: ComputedRef<QueryTab | undefined>)
       (currentMeta.schema ?? "") !== (target.schema ?? "") ||
       (currentMeta.catalog ?? "") !== (target.catalog ?? "")
     ) {
-      console.info("[DBX][reloadData:metadata:stale-tab]", { traceId: trace?.traceId, elapsed: trace?.elapsed(), table: target.tableName });
+      console.info("[NexDB][reloadData:metadata:stale-tab]", { traceId: trace?.traceId, elapsed: trace?.elapsed(), table: target.tableName });
       return false;
     }
     const primaryKeys = loaded.primaryKeys;
@@ -288,7 +288,7 @@ export function useDataGridActions(activeTab: ComputedRef<QueryTab | undefined>)
         if (incomingSortMissing) tab.orderByInput = undefined;
         const pageLimit = limit ?? tab.resultPageLimit ?? tableOpenPageLimit(settingsStore.editorSettings.tableOpenPageSize);
         const pageOffset = offset ?? 0;
-        console.info("[DBX][reloadData:start]", {
+        console.info("[NexDB][reloadData:start]", {
           traceId,
           tabId: tab.id,
           connectionId: tab.connectionId,
@@ -304,11 +304,11 @@ export function useDataGridActions(activeTab: ComputedRef<QueryTab | undefined>)
         const hasRealTableMetaColumns = !!tab.tableMeta?.columns.length;
         if (hasRealTableMetaColumns) {
           try {
-            console.info("[DBX][reloadData:ensure-connected:start]", { traceId, elapsed: elapsed() });
+            console.info("[NexDB][reloadData:ensure-connected:start]", { traceId, elapsed: elapsed() });
             await connectionStore.ensureConnected(tab.connectionId);
-            console.info("[DBX][reloadData:ensure-connected:done]", { traceId, elapsed: elapsed() });
+            console.info("[NexDB][reloadData:ensure-connected:done]", { traceId, elapsed: elapsed() });
           } catch (e: any) {
-            console.warn("[DBX][reloadData:ensure-connected:error]", { traceId, elapsed: elapsed(), error: e });
+            console.warn("[NexDB][reloadData:ensure-connected:error]", { traceId, elapsed: elapsed(), error: e });
             stopPreparing();
             toast(e?.message || String(e), 5000);
             throw e;
@@ -326,19 +326,19 @@ export function useDataGridActions(activeTab: ComputedRef<QueryTab | undefined>)
         // 构建 SQL，否则第一次 toolbar reload 仍会沿用断链前的显式列列表。
         const deferMetadataRefresh = intent !== "refresh" && !lifecycleStale && effectiveDatabaseTypeForConnection(connectionStore.getConfig(tab.connectionId)) === "dameng";
         const startMetadataRefresh = () => {
-          console.info("[DBX][reloadData:metadata:background:start]", { traceId, elapsed: elapsed(), reason: hasRealTableMetaColumns ? "stale" : "missing", metadataAgeMs });
+          console.info("[NexDB][reloadData:metadata:background:start]", { traceId, elapsed: elapsed(), reason: hasRealTableMetaColumns ? "stale" : "missing", metadataAgeMs });
           void refreshDataTabTableMeta(tab, { force: lifecycleStale, trace: { traceId, elapsed } })
             .then(() => {
-              console.info("[DBX][reloadData:metadata:background:done]", { traceId, elapsed: elapsed() });
+              console.info("[NexDB][reloadData:metadata:background:done]", { traceId, elapsed: elapsed() });
             })
             .catch((e: any) => {
-              console.warn("[DBX][reloadData:metadata:background:error]", { traceId, elapsed: elapsed(), error: e });
+              console.warn("[NexDB][reloadData:metadata:background:error]", { traceId, elapsed: elapsed(), error: e });
               toast(e?.message || String(e), 5000);
             });
         };
         if (lifecycleStale || intent === "refresh") {
           tab.tableMetaPending = true;
-          console.info("[DBX][reloadData:metadata:await:start]", { traceId, elapsed: elapsed(), reason: intent === "refresh" ? "manual-refresh" : "lifecycle-stale", metadataAgeMs });
+          console.info("[NexDB][reloadData:metadata:await:start]", { traceId, elapsed: elapsed(), reason: intent === "refresh" ? "manual-refresh" : "lifecycle-stale", metadataAgeMs });
           try {
             if (intent === "refresh") {
               const meta = tableMetaForDataTab(tab)!;
@@ -353,9 +353,9 @@ export function useDataGridActions(activeTab: ComputedRef<QueryTab | undefined>)
               // 持久缓存（object-meta L2）删除只服务后续结构面板/DDL 读取的
               // 新鲜度，不参与本次查询构建：移出关键路径 fire-and-forget，
               // 失败不再中断刷新（网格侧已由上面的内存失效保证列新鲜）。
-              console.info("[DBX][reloadData:object-cache-invalidate:start]", { traceId, elapsed: elapsed() });
+              console.info("[NexDB][reloadData:object-cache-invalidate:start]", { traceId, elapsed: elapsed() });
               invalidateObjectMetadataCache(match).catch((e: unknown) => {
-                console.warn("[DBX][reloadData:object-cache-invalidate:error]", { traceId, elapsed: elapsed(), error: e });
+                console.warn("[NexDB][reloadData:object-cache-invalidate:error]", { traceId, elapsed: elapsed(), error: e });
               });
               if (!stillCurrent() || connectionStore.metadataGenerationFor(tab.connectionId, tab.database) !== connectionGeneration) {
                 stopPreparing();
@@ -366,13 +366,13 @@ export function useDataGridActions(activeTab: ComputedRef<QueryTab | undefined>)
             // 本次 SELECT 的正确性；主键/索引用旧值与新列求交，PK 名不进 SQL
             // 文本（仅作大值预览保护集合），查询本身不受索引元数据延迟影响。
             const rebuilt = await refreshDataTabTableMeta(tab, { force: true, columnsOnly: intent === "refresh" && !lifecycleStale && hasRealTableMetaColumns, trace: { traceId, elapsed } });
-            console.info("[DBX][reloadData:metadata:await:done]", { traceId, elapsed: elapsed(), rebuilt });
+            console.info("[NexDB][reloadData:metadata:await:done]", { traceId, elapsed: elapsed(), rebuilt });
             if (!rebuilt) {
               stopPreparing();
               return;
             }
           } catch (e: any) {
-            console.warn("[DBX][reloadData:metadata:await:error]", { traceId, elapsed: elapsed(), error: e });
+            console.warn("[NexDB][reloadData:metadata:await:error]", { traceId, elapsed: elapsed(), error: e });
             stopPreparing();
             toast(e?.message || String(e), 5000);
             throw e;
@@ -384,10 +384,10 @@ export function useDataGridActions(activeTab: ComputedRef<QueryTab | undefined>)
           if (intent === "refresh" && !lifecycleStale) {
             void refreshDataTabTableMeta(tab, { force: false, trace: { traceId, elapsed } })
               .then(() => {
-                console.info("[DBX][reloadData:metadata:background-indexes:done]", { traceId, elapsed: elapsed() });
+                console.info("[NexDB][reloadData:metadata:background-indexes:done]", { traceId, elapsed: elapsed() });
               })
               .catch((e: any) => {
-                console.warn("[DBX][reloadData:metadata:background-indexes:error]", { traceId, elapsed: elapsed(), error: e });
+                console.warn("[NexDB][reloadData:metadata:background-indexes:error]", { traceId, elapsed: elapsed(), error: e });
               });
           }
         } else if (shouldRefreshMetadata) {
@@ -397,25 +397,25 @@ export function useDataGridActions(activeTab: ComputedRef<QueryTab | undefined>)
           if (!hasRealTableMetaColumns) tab.tableMetaPending = true;
           if (!deferMetadataRefresh) startMetadataRefresh();
         } else {
-          console.info("[DBX][reloadData:metadata:skip]", { traceId, elapsed: elapsed(), columnCount: tab.tableMeta!.columns.length, metadataAgeMs });
+          console.info("[NexDB][reloadData:metadata:skip]", { traceId, elapsed: elapsed(), columnCount: tab.tableMeta!.columns.length, metadataAgeMs });
         }
         try {
-          console.info("[DBX][reloadData:build-sql:start]", { traceId, elapsed: elapsed() });
+          console.info("[NexDB][reloadData:build-sql:start]", { traceId, elapsed: elapsed() });
           const nextSql = await buildTableSql(tab, { whereInput, orderBy: incomingSortMissing ? undefined : orderBy, limit: pageLimit, offset: pageOffset });
-          console.info("[DBX][reloadData:build-sql:done]", { traceId, elapsed: elapsed() });
+          console.info("[NexDB][reloadData:build-sql:done]", { traceId, elapsed: elapsed() });
           if (!stillCurrent() || connectionStore.metadataGenerationFor(tab.connectionId, tab.database) !== connectionGeneration) {
             stopPreparing();
             return;
           }
           queryStore.updateSql(tab.id, nextSql);
-          console.info("[DBX][reloadData:execute:start]", { traceId, elapsed: elapsed() });
+          console.info("[NexDB][reloadData:execute:start]", { traceId, elapsed: elapsed() });
           await queryStore.executeTabSql(tab.id, nextSql, {
             pagination: { limit: pageLimit, offset: pageOffset },
             preserveResultDuringExecution: true,
           });
-          console.info("[DBX][reloadData:execute:done]", { traceId, elapsed: elapsed() });
+          console.info("[NexDB][reloadData:execute:done]", { traceId, elapsed: elapsed() });
         } catch (e) {
-          console.error("[DBX][reloadData:error]", { traceId, elapsed: elapsed(), error: e });
+          console.error("[NexDB][reloadData:error]", { traceId, elapsed: elapsed(), error: e });
           stopPreparing();
           if (shouldRefreshMetadata && deferMetadataRefresh) startMetadataRefresh();
           throw e;

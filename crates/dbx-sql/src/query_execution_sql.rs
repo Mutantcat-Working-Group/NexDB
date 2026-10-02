@@ -591,7 +591,7 @@ pub fn check_read_only(sql: &str, connection_name: &str, database_type: Database
 }
 
 /// Oracle-only, fail-closed classifier for manual-transaction UX. Returns true
-/// only for an ordinary top-level read that DBX can prove harmless: a single
+/// only for an ordinary top-level read that NexDB can prove harmless: a single
 /// top-level `SELECT` (not `WITH`) that after Oracle-aware comment/literal
 /// stripping contains no row-locking, transaction-control, DDL/DCL, `CALL`/
 /// `EXEC`, PL/SQL block, `EXECUTE IMMEDIATE`, database-link, sequence
@@ -617,7 +617,7 @@ pub fn is_oracle_proven_read_only_statement(sql: &str) -> bool {
 
     // Function invocation or subquery syntax: any '(' after literal stripping.
     // This deliberately excludes SELECT upper(name), COUNT(*), package
-    // functions, and subqueries DBX cannot prove harmless.
+    // functions, and subqueries NexDB cannot prove harmless.
     if lower.contains('(') {
         return false;
     }

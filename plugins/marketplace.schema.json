@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://dbx.example/schemas/plugin-marketplace-v1.json",
-  "title": "DBX Plugin Marketplace Catalog",
+  "title": "NexDB Plugin Marketplace Catalog",
   "type": "object",
   "additionalProperties": false,
   "required": ["catalogVersion", "repository", "plugins"],
@@ -50,7 +50,7 @@
           "minLength": 1,
           "maxLength": 64,
           "pattern": "^[a-z0-9-]+$",
-          "description": "DBX runtime target such as darwin-arm64, windows-x64, or linux-x64. Use universal only when the same package is valid on every supported target; exact target artifacts take precedence."
+          "description": "NexDB runtime target such as darwin-arm64, windows-x64, or linux-x64. Use universal only when the same package is valid on every supported target; exact target artifacts take precedence."
         },
         "url": { "type": "string", "format": "uri-reference" },
         "sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },

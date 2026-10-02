@@ -2,7 +2,7 @@
   "name": "@dbx-app/mongo-shell",
   "version": "0.4.36",
   "private": true,
-  "description": "MongoDB shell parsing helpers used by the DBX desktop editor",
+  "description": "MongoDB shell parsing helpers used by the NexDB desktop editor",
   "license": "Apache-2.0",
   "type": "module",
   "exports": {

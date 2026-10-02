@@ -7,7 +7,7 @@ The Redis workspace combines key browsing, type-specific editing, command execut
 
 ## Databases and Aliases
 
-Redis connections list available numeric databases. You can assign local aliases to `db0`, `db1`, and others, such as “Order cache” or “Development.” Aliases affect DBX display and search only; Redis commands still use numeric database IDs.
+Redis connections list available numeric databases. You can assign local aliases to `db0`, `db1`, and others, such as “Order cache” or “Development.” Aliases affect NexDB display and search only; Redis commands still use numeric database IDs.
 
 The scan page size is stored per connection. Reduce it for very large keyspaces or high-latency networks, and increase it carefully for small instances.
 
@@ -46,7 +46,7 @@ Large collection types load in pages and display total and loaded counts where a
 
 Choose a data type and initial content when creating a key. Set a positive TTL or choose a persistent key.
 
-When editing an existing value, DBX can:
+When editing an existing value, NexDB can:
 
 - Preserve the existing TTL
 - Make the key persistent
@@ -55,7 +55,7 @@ When editing an existing value, DBX can:
 - Format or compact JSON source before saving
 - Copy a reconstruction command for supported value types
 
-TTL values count down automatically, and the detail view can periodically refresh the complete value. If a key expires before refresh, DBX reports and clears the stale state.
+TTL values count down automatically, and the detail view can periodically refresh the complete value. If a key expires before refresh, NexDB reports and clears the stale state.
 
 <Callout type="info">Preserving TTL while changing a value prevents a temporary cache entry from becoming permanent accidentally. Review expiration behavior before saving.</Callout>
 
@@ -127,7 +127,7 @@ Direct Redis node connections, including their TLS and tunnel settings, are supp
 
 ## Safety and Performance Guidance
 
-- Use a read-only account or ACL for production and enable DBX read-only/production protection
+- Use a read-only account or ACL for production and enable NexDB read-only/production protection
 - Do not replace incremental browsing with `KEYS *`; prefer patterns and `SCAN`
 - Value search, memory statistics, and Slowlog can increase server load
 - Stream consumer-group details read pending and consumer state; avoid unbounded high-frequency refresh

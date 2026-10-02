@@ -16,7 +16,7 @@ Object checks are part of the single restore pass. They are not a separate full
 backup scan. Server-side collection validators are a different concern and are
 not disabled by this change.
 
-## DBX Behavior
+## NexDB Behavior
 
 - Directory previews upload only the manifest and metadata. After confirmation,
   upload the selected data files. Web retains the existing upload limit setting.
@@ -87,7 +87,7 @@ and the former double-parse pattern without database/network overhead.
 Parser-only smoke test: Windows x64, unoptimized Rust test build, an in-memory
 gzip fixture containing 8,192 documents (27.56 MiB decoded, 64 string fields per
 document). The old pattern is simulated by two object-parsing passes, not by
-running an older DBX binary.
+running an older NexDB binary.
 
 | Path | Passes | Elapsed |
 | --- | --- | --- |

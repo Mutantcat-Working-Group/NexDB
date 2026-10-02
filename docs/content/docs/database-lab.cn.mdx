@@ -1,9 +1,9 @@
 ---
 title: 数据库测试实验室
-description: 为 DBX 开发与验证启动可重复创建的本地数据库实例。
+description: 为 NexDB 开发与验证启动可重复创建的本地数据库实例。
 ---
 
-数据库测试实验室提供轻量、固定版本的 Docker Compose 环境，方便使用真实数据库版本验证 DBX。每个配方都使用命名数据卷、健康检查、初始化数据或验证阶段创建的冒烟数据，并且默认监听 `127.0.0.1`。
+数据库测试实验室提供轻量、固定版本的 Docker Compose 环境，方便使用真实数据库版本验证 NexDB。每个配方都使用命名数据卷、健康检查、初始化数据或验证阶段创建的冒烟数据，并且默认监听 `127.0.0.1`。
 
 <Callout type="warning">默认密码为 `123456`，但端口默认只能从本机访问。如需远程访问，请显式设置 `DB_BIND_ADDRESS=0.0.0.0`、修改 `DB_PASSWORD`，并配置常规防火墙规则。这些环境用于开发，不是生产部署模板。</Callout>
 
@@ -41,7 +41,7 @@ Nacos 使用管理员用户名 `nacos`、密码 `123456` 和默认 `public` 命�
 DB_PORT=11030 NACOS_CONSOLE_PORT=11031 NACOS_GRPC_PORT=11032 NACOS_RAFT_PORT=11033 make db DB=nacos@3.2
 ```
 
-r-nacos 使用管理员账号 `admin` 和密码 `123456`。DBX 配方的 HTTP、gRPC 和 Web 控制台宿主端口默认分别为 `11100`、`11101`、`11102`；上游单机 Compose 使用 `8848:8848`、`9848:9848`、`10848:10848`。
+r-nacos 使用管理员账号 `admin` 和密码 `123456`。NexDB 配方的 HTTP、gRPC 和 Web 控制台宿主端口默认分别为 `11100`、`11101`、`11102`；上游单机 Compose 使用 `8848:8848`、`9848:9848`、`10848:10848`。
 
 ```bash
 DB_PORT=11130 RNACOS_GRPC_PORT=11131 RNACOS_CONSOLE_PORT=11132 make db DB=rnacos@0.8
@@ -53,7 +53,7 @@ etcd 会创建密码为 `123456` 的 `root` 用户、授予 root 角色并开启
 DB_PORT=2379 ETCD_PEER_PORT=2380 make db DB=etcd@3.7
 ```
 
-Qdrant 将 `123456` 作为管理员 API Key。在 DBX 中请将用户名留空，并把 API Key 填入密码字段，驱动会通过 HTTP 请求头 `api-key` 发送。HTTP 和 gRPC 默认主机端口分别为 `11200`、`11201`。如需使用上游 Docker 命令中的端口，可执行：
+Qdrant 将 `123456` 作为管理员 API Key。在 NexDB 中请将用户名留空，并把 API Key 填入密码字段，驱动会通过 HTTP 请求头 `api-key` 发送。HTTP 和 gRPC 默认主机端口分别为 `11200`、`11201`。如需使用上游 Docker 命令中的端口，可执行：
 
 ```bash
 DB_PORT=6333 QDRANT_GRPC_PORT=6334 make db DB=qdrant@1.8
@@ -98,7 +98,7 @@ make db DB=consul@2.0.2
 make db DB=elasticsearch@6.8
 ```
 
-不带参数执行 `make db` 会输出当前全部支持的、可直接复制启动的命令，以及可选参数。传入 `DB=product@version` 后，`db` 会等待 Compose 健康检查通过并输出 DBX 连接字段；对于 DBX 已支持的连接类型，还会输出预填完成的 `dbx://connection/new` 深链。etcd、Consul、Nacos 2、Nacos 3 和 r-nacos 均已支持，其中 Nacos 配方会自动选择正确分流，Nacos 3 使用 API 端口而非独立控制台端口。复制该链接到浏览器或终端执行 `open '<链接>'`，即可打开桌面端的新建连接窗口。使用前请先安装并启动一次 DBX 桌面端以注册 `dbx://` 协议。深链可能包含数据库密码或 Consul ACL token，因此不要将其写入共享终端历史、日志或工单。Kafka、Pulsar 等尚未具备 DBX 连接类型的配方会明确显示深链不可用。`db-verify` 还会在数据库容器中执行配方中的冒烟命令，并校验预期输出；提交数据库相关修复前推荐执行此命令。
+不带参数执行 `make db` 会输出当前全部支持的、可直接复制启动的命令，以及可选参数。传入 `DB=product@version` 后，`db` 会等待 Compose 健康检查通过并输出 NexDB 连接字段；对于 NexDB 已支持的连接类型，还会输出预填完成的 `dbx://connection/new` 深链。etcd、Consul、Nacos 2、Nacos 3 和 r-nacos 均已支持，其中 Nacos 配方会自动选择正确分流，Nacos 3 使用 API 端口而非独立控制台端口。复制该链接到浏览器或终端执行 `open '<链接>'`，即可打开桌面端的新建连接窗口。使用前请先安装并启动一次 NexDB 桌面端以注册 `dbx://` 协议。深链可能包含数据库密码或 Consul ACL token，因此不要将其写入共享终端历史、日志或工单。Kafka、Pulsar 等尚未具备 NexDB 连接类型的配方会明确显示深链不可用。`db-verify` 还会在数据库容器中执行配方中的冒烟命令，并校验预期输出；提交数据库相关修复前推荐执行此命令。
 
 ## 命令和变量
 
@@ -153,7 +153,7 @@ compose.yaml
 init/
 ```
 
-`recipe.json` 提供 DBX 连接字段和冒烟命令数组。不要使用 shell 字符串，命令必须作为参数数组执行。Compose 文件必须固定镜像版本、使用命名卷和健康检查、将端口默认绑定至 `${DB_BIND_ADDRESS:-127.0.0.1}`，并把 `container_name` 设置为 `dbx-<product>-<version>`。
+`recipe.json` 提供 NexDB 连接字段和冒烟命令数组。不要使用 shell 字符串，命令必须作为参数数组执行。Compose 文件必须固定镜像版本、使用命名卷和健康检查、将端口默认绑定至 `${DB_BIND_ADDRESS:-127.0.0.1}`，并把 `container_name` 设置为 `dbx-<product>-<version>`。
 
 完成后运行：
 

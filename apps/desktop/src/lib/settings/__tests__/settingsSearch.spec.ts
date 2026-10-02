@@ -242,7 +242,7 @@ describe("settings search", () => {
       "settings.uiFontFamily": "Interface font",
       "settings.uiFontFamilyDescription": "Applies to the toolbar and dialogs",
       "settings.showTrayIcon": "Show tray icon",
-      "settings.showTrayIconDescription": "Keep DBX hidden in the background",
+      "settings.showTrayIconDescription": "Keep NexDB hidden in the background",
     };
     const entries = resolveSettingsSearchEntries(SETTINGS_SEARCH_DEFINITIONS, { isWeb: false, visibleCategories: new Set<SettingsCategory>(["appearance"]) }, (key) => descriptionTranslations[key] ?? key, categoryLabels);
 

@@ -70,7 +70,7 @@ export const nacosAccessControlMessages = {
   removeRole: "Remove role",
   removeRoleTitle: "Remove Nacos role",
   removeRoleDescription: "Remove role {role} from user {username}?",
-  protectedRole: "The built-in administrator role cannot be removed from DBX.",
+  protectedRole: "The built-in administrator role cannot be removed from NexDB.",
   close: "Close",
   accessSearchRoles: "Search roles",
   accessRoleCounts: "{members} members / {permissions} permissions",

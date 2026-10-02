@@ -1,9 +1,9 @@
 ---
 title: 专项工作台
-description: 使用 DBX 管理 Redis、MongoDB、搜索与向量数据库、HBase、消息队列、etcd、ZooKeeper、Nacos 和 Consul KV。
+description: 使用 NexDB 管理 Redis、MongoDB、搜索与向量数据库、HBase、消息队列、etcd、ZooKeeper、Nacos 和 Consul KV。
 ---
 
-除了 SQL 编辑器和数据表格，DBX 还会根据连接类型打开专项工作台。它们直接使用对应系统的对象模型和管理 API，例如 Redis Key、MongoDB 文档、向量集合、消息队列 Topic、etcd Key、ZooKeeper ZNode、Nacos 配置和 Consul KV。
+除了 SQL 编辑器和数据表格，NexDB 还会根据连接类型打开专项工作台。它们直接使用对应系统的对象模型和管理 API，例如 Redis Key、MongoDB 文档、向量集合、消息队列 Topic、etcd Key、ZooKeeper ZNode、Nacos 配置和 Consul KV。
 
 <Callout type="info">专项能力按数据库类型、服务端版本、驱动和当前账号权限动态开放。界面没有显示某个入口时，先查看 [数据库支持](/cn/docs/databases)、连接测试结果和账号权限。</Callout>
 
@@ -32,16 +32,16 @@ Redis 和 MongoDB 有独立的详细文档：
   </Card>
 </Cards>
 
-连接只读时，DBX 会禁用或拒绝 Redis、MongoDB 和 GridFS 中的修改操作。危险 Redis 命令还会经过独立的命令安全分类。
+连接只读时，NexDB 会禁用或拒绝 Redis、MongoDB 和 GridFS 中的修改操作。危险 Redis 命令还会经过独立的命令安全分类。
 
 ## 搜索与文档索引
 
-Elasticsearch、Easysearch、Meilisearch 和 Manticore Search 使用面向索引与文档的浏览方式。DBX 会根据驱动返回的对象结构展示索引或集合，并提供浏览、查询和查看文档的入口。
+Elasticsearch、Easysearch、Meilisearch 和 Manticore Search 使用面向索引与文档的浏览方式。NexDB 会根据驱动返回的对象结构展示索引或集合，并提供浏览、查询和查看文档的入口。
 
 使用时需要注意：
 
 - Elasticsearch、Easysearch 和 Meilisearch 使用 HTTP/HTTPS 服务端点，不是传统数据库 TCP 端口
-- Meilisearch 使用 DBX 内置的 Rust HTTP 驱动；API Key 填在连接密码字段，默认端口为 `7700`
+- Meilisearch 使用 NexDB 内置的 Rust HTTP 驱动；API Key 填在连接密码字段，默认端口为 `7700`
 - TLS、代理和认证方式取决于连接类型及服务端配置
 - 文档查询和写入能力会随驱动、服务端版本和账号权限变化
 - 结构对比、SQL 文件执行等 SQL 工作流只在对应引擎确实支持时开放
@@ -57,9 +57,9 @@ Qdrant、Milvus、Weaviate 和 ChromaDB 会打开向量集合工作台。根据�
 - Upsert 向量、Payload/Metadata 或文档
 - 按 ID 或请求条件删除记录
 
-不同产品的 API、集合模型和检索参数并不相同。DBX 会生成对应引擎的请求模板，但向量维度、字段名、距离度量和索引设置仍应以目标数据库定义为准。
+不同产品的 API、集合模型和检索参数并不相同。NexDB 会生成对应引擎的请求模板，但向量维度、字段名、距离度量和索引设置仍应以目标数据库定义为准。
 
-<Callout type="warn">向量 Upsert 和删除属于写入操作。生产连接建议同时使用数据库账号权限、DBX 只读/生产保护和人工请求审查。</Callout>
+<Callout type="warn">向量 Upsert 和删除属于写入操作。生产连接建议同时使用数据库账号权限、NexDB 只读/生产保护和人工请求审查。</Callout>
 
 ## HBase
 
@@ -108,15 +108,15 @@ Nacos 的配置历史可能依赖额外的控制台地址和凭据。连接成�
 
 Consul 工作台按需加载概览、KV、服务、健康检查、Session、ACL、作用域、Service Mesh、工具和 Operator 领域。能力探测会区分 supported、unsupported、forbidden 和 unknown，因此单个领域权限不足不会清空其他已经加载的数据。
 
-连接项支持 HTTP/HTTPS API 地址、ACL Token、Datacenter、Namespace、Admin Partition、读取一致性、CA 证书、mTLS 客户端身份、跳过证书校验、超时和 DBX Transport Layer。Agent Service/Check 写入还必须配置并验证明确的 Agent target；经过负载均衡而目标不明确时，DBX 会硬性拒绝写入。
+连接项支持 HTTP/HTTPS API 地址、ACL Token、Datacenter、Namespace、Admin Partition、读取一致性、CA 证书、mTLS 客户端身份、跳过证书校验、超时和 NexDB Transport Layer。Agent Service/Check 写入还必须配置并验证明确的 Agent target；经过负载均衡而目标不明确时，NexDB 会硬性拒绝写入。
 
-KV 已支持递归搜索、版本化前缀导出、不可变导入预览、CAS 冲突处理、事务、原子重命名/复制、受限事务前缀删除和可取消的 Blocking Query Watch。Consul 单事务最多 64 个操作；更大的导入和删除会按确定顺序分批，并明确标记跨批次不具备整体原子性。跨连接或跨 Datacenter 迁移是 DBX 客户端读写流程，不是 Consul 原生复制。
+KV 已支持递归搜索、版本化前缀导出、不可变导入预览、CAS 冲突处理、事务、原子重命名/复制、受限事务前缀删除和可取消的 Blocking Query Watch。Consul 单事务最多 64 个操作；更大的导入和删除会按确定顺序分批，并明确标记跨批次不具备整体原子性。跨连接或跨 Datacenter 迁移是 NexDB 客户端读写流程，不是 Consul 原生复制。
 
 Catalog 与 Health 保持只读浏览。Agent Service/Check、Session/Lock、ACL Token/Policy/Role、Enterprise Namespace/Partition 和 Service Mesh 使用各自领域 DTO 与确认流程。ACL Secret 和 Peering Token 作为一次性敏感值处理，不进入 Consul 前端缓存或普通导出格式。
 
 Prepared Query、Event 和 Coordinate 位于工具区。Operator 读取和 Snapshot 下载为实验性能力。Snapshot 恢复、Autopilot 修改、Raft 修改、Keyring 修改和 License 修改分别由默认关闭的独立开关控制，启用一个不会连带启用其他能力。
 
-<Callout type="warn">Consul 不提供单 Key 历史 API，也不提供原生跨 Datacenter KV 复制 API。`ModifyIndex`、Blocking Index 和 Snapshot 都不会被包装成 Key 历史。Enterprise 与 Operator 能力取决于 Consul 版本、Edition、Agent 角色、ACL 权限和显式启用的 DBX 安全设置。</Callout>
+<Callout type="warn">Consul 不提供单 Key 历史 API，也不提供原生跨 Datacenter KV 复制 API。`ModifyIndex`、Blocking Index 和 Snapshot 都不会被包装成 Key 历史。Enterprise 与 Operator 能力取决于 Consul 版本、Edition、Agent 角色、ACL 权限和显式启用的 NexDB 安全设置。</Callout>
 
 ## Dashboard 与管理视图
 
@@ -133,7 +133,7 @@ Prepared Query、Event 和 Coordinate 位于工具区。Operator 读取和 Snaps
 ## 安全与兼容边界
 
 - 专项工作台会尊重连接只读；MCP 暴露的专项命令还受全局 MCP 策略限制。
-- 生产环境保护对 DBX 识别到的写入继续生效，但数据库账号权限仍是最终边界。
+- 生产环境保护对 NexDB 识别到的写入继续生效，但数据库账号权限仍是最终边界。
 - 驱动只会公开能够可靠实现的 capability，同一类系统的标签页可能不同。
 - 管理 API 和数据协议可能使用不同端口，例如 RabbitMQ Management API、Nacos 控制台 API。
 - Docker/Web 中的文件路径和网络可达性属于服务器环境，不是浏览器电脑。

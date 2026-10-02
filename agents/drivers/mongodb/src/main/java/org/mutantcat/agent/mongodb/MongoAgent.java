@@ -371,7 +371,7 @@ public final class MongoAgent {
         boolean includeTypes = params.has("include_types")
             && !params.get("include_types").isJsonNull()
             && params.get("include_types").getAsBoolean();
-        // Older DBX clients expect a simple string array. Opt into collection
+        // Older NexDB clients expect a simple string array. Opt into collection
         // metadata so this RPC remains compatible with already-installed agents.
         if (includeTypes) {
             List<Map<String, String>> result = new ArrayList<>();

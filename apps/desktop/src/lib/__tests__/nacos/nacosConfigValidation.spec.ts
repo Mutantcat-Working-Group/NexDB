@@ -7,7 +7,7 @@ describe("Nacos config validation", () => {
     expect(validateNacosConfig("service:\n  port: 8080", "yaml")).toBeNull();
     expect(validateNacosConfig("<root><value>1</value></root>", "xml")).toBeNull();
     expect(validateNacosConfig("<html><body>ok</body></html>", "html")).toBeNull();
-    expect(validateNacosConfig('<!doctype html><html><head><meta charset="utf-8"><title>DBX</title></head><body><ul><li>one<li>two</ul><br></body></html>', "html")).toBeNull();
+    expect(validateNacosConfig('<!doctype html><html><head><meta charset="utf-8"><title>NexDB</title></head><body><ul><li>one<li>two</ul><br></body></html>', "html")).toBeNull();
     expect(validateNacosConfig("server.port=8080", "properties")).toBeNull();
     expect(validateNacosConfig("feature.enabled", "properties")).toBeNull();
     expect(validateNacosConfig("key=\\\\u12xz", "properties")).toBeNull();

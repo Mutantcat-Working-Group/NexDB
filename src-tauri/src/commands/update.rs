@@ -18,11 +18,11 @@ use tauri_plugin_updater::{Update, UpdaterExt};
 
 const OFFICIAL_UPDATE_ENDPOINTS: [&str; 2] = [
     "https://dl.dbxio.com/releases/latest/latest.json",
-    "https://github.com/t8y2/dbx/releases/latest/download/latest.json",
+    "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest/download/latest.json",
 ];
 const R2_LATEST_RELEASE_DOWNLOAD_PREFIX: &str = "https://dl.dbxio.com/releases/latest/";
 const CNB_RELEASE_DOWNLOAD_PREFIX: &str = "https://cnb.cool/dbxio.com/dbx/-/releases/download/";
-const GITHUB_RELEASE_DOWNLOAD_PREFIX: &str = "https://github.com/t8y2/dbx/releases/download/";
+const GITHUB_RELEASE_DOWNLOAD_PREFIX: &str = "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/";
 const UPDATE_DOWNLOAD_PROGRESS_EVENT: &str = "update-download-progress";
 const DOWNLOAD_CANCELED_ERROR: &str = "Download canceled by user.";
 const DOWNLOAD_STALL_TIMEOUT: Duration = Duration::from_secs(15);
@@ -465,7 +465,7 @@ pub fn get_downloaded_update(
         }
         Ok(None) => Ok(None),
         Err(error) => {
-            eprintln!("[DBX updater] discarded invalid cache: {error}");
+            eprintln!("[NexDB updater] discarded invalid cache: {error}");
             Ok(None)
         }
     }
@@ -517,7 +517,7 @@ pub async fn download_update(
             cache_id: uuid::Uuid::new_v4().to_string(),
             version: version.to_string(),
             portable_mode,
-            release_url: format!("https://github.com/t8y2/dbx/releases/tag/v{version}"),
+            release_url: format!("https://github.com/Mutantcat-Working-Group/NexDB/releases/tag/v{version}"),
             release_notes: release_notes.unwrap_or(notes),
             downloaded_at: std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
@@ -560,7 +560,7 @@ async fn download_update_inner(
     cancellation: &Arc<DownloadCancellation>,
 ) -> Result<(Update, Vec<u8>), String> {
     let endpoint_urls = source.endpoints(latest_version)?;
-    println!("[DBX updater] checking from {} endpoints: {}", source.label(), endpoint_urls.join(", "));
+    println!("[NexDB updater] checking from {} endpoints: {}", source.label(), endpoint_urls.join(", "));
     let mut endpoints = Vec::with_capacity(endpoint_urls.len());
     for endpoint_url in endpoint_urls {
         endpoints.push(endpoint_url.parse().map_err(|e| format!("Invalid update endpoint: {e}"))?);
@@ -590,7 +590,7 @@ async fn download_update_inner(
         return Err("Update version changed; check for updates again.".into());
     }
     let candidates = source.installer_asset_candidates(update.download_url.as_str(), latest_version);
-    println!("[DBX updater] candidates for installer download: {:?}", candidates);
+    println!("[NexDB updater] candidates for installer download: {:?}", candidates);
 
     let mut failures = Vec::new();
 
@@ -598,7 +598,7 @@ async fn download_update_inner(
         if cancellation.is_canceled() {
             return Err(DOWNLOAD_CANCELED_ERROR.to_string());
         }
-        println!("[DBX updater] downloading installer update from {candidate_url}");
+        println!("[NexDB updater] downloading installer update from {candidate_url}");
         let parsed_url = match reqwest::Url::parse(&candidate_url) {
             Ok(url) => url,
             Err(e) => {
@@ -673,7 +673,7 @@ async fn download_update_inner(
                 if cancellation.is_canceled() || error.contains("canceled") {
                     return Err(DOWNLOAD_CANCELED_ERROR.to_string());
                 }
-                println!("[DBX updater] installer candidate failed ({candidate_url}): {error}");
+                println!("[NexDB updater] installer candidate failed ({candidate_url}): {error}");
                 failures.push(format!("{candidate_url}: {error}"));
             }
         }
@@ -698,7 +698,7 @@ async fn download_portable_update_inner(
         if cancellation.is_canceled() {
             return Err(DOWNLOAD_CANCELED_ERROR.to_string());
         }
-        println!("[DBX updater] downloading portable update from {}", candidate.archive_url);
+        println!("[NexDB updater] downloading portable update from {}", candidate.archive_url);
         let result = async {
             let signature = download_bounded_bytes(
                 &client,
@@ -733,7 +733,7 @@ async fn download_portable_update_inner(
                 if cancellation.is_canceled() || error.contains("canceled") {
                     return Err(DOWNLOAD_CANCELED_ERROR.to_string());
                 }
-                println!("[DBX updater] portable update candidate failed: {error}");
+                println!("[NexDB updater] portable update candidate failed: {error}");
                 failures.push(format!("{}: {error}", candidate.archive_url));
             }
         }
@@ -1049,7 +1049,9 @@ mod tests {
     #[test]
     fn rewrites_github_asset_url_to_cnb() {
         let download_url = UpdateDownloadSource::Cnb
-            .rewrite_download_url("https://github.com/t8y2/dbx/releases/download/v0.5.39/DBX_0.5.39_aarch64.dmg")
+            .rewrite_download_url(
+                "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/v0.5.39/DBX_0.5.39_aarch64.dmg",
+            )
             .unwrap()
             .unwrap();
         assert_eq!(download_url, "https://cnb.cool/dbxio.com/dbx/-/releases/download/v0.5.39/DBX_0.5.39_aarch64.dmg");
@@ -1094,24 +1096,30 @@ mod tests {
     #[test]
     fn builds_installer_asset_candidates_for_cnb_source() {
         let candidates = UpdateDownloadSource::Cnb.installer_asset_candidates(
-            "https://github.com/t8y2/dbx/releases/download/v0.5.64/DBX_0.5.64_aarch64.dmg",
+            "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/v0.5.64/DBX_0.5.64_aarch64.dmg",
             Some("0.5.64"),
         );
         assert_eq!(candidates.len(), 3);
         assert_eq!(candidates[0], "https://cnb.cool/dbxio.com/dbx/-/releases/download/v0.5.64/DBX_0.5.64_aarch64.dmg");
         assert_eq!(candidates[1], format!("{R2_LATEST_RELEASE_DOWNLOAD_PREFIX}DBX_0.5.64_aarch64.dmg"));
-        assert_eq!(candidates[2], "https://github.com/t8y2/dbx/releases/download/v0.5.64/DBX_0.5.64_aarch64.dmg");
+        assert_eq!(
+            candidates[2],
+            "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/v0.5.64/DBX_0.5.64_aarch64.dmg"
+        );
     }
 
     #[test]
     fn builds_installer_asset_candidates_for_official_source() {
         let candidates = UpdateDownloadSource::Official.installer_asset_candidates(
-            "https://github.com/t8y2/dbx/releases/download/v0.5.64/DBX_0.5.64_aarch64.dmg",
+            "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/v0.5.64/DBX_0.5.64_aarch64.dmg",
             Some("0.5.64"),
         );
         assert_eq!(candidates.len(), 2);
         assert_eq!(candidates[0], format!("{R2_LATEST_RELEASE_DOWNLOAD_PREFIX}DBX_0.5.64_aarch64.dmg"));
-        assert_eq!(candidates[1], "https://github.com/t8y2/dbx/releases/download/v0.5.64/DBX_0.5.64_aarch64.dmg");
+        assert_eq!(
+            candidates[1],
+            "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/v0.5.64/DBX_0.5.64_aarch64.dmg"
+        );
         assert!(!candidates.iter().any(|url| url.contains("cnb.cool")));
     }
 

@@ -23,7 +23,7 @@ export function loadDocumentGridHiddenColumnKeys(scopeKey: string): string[] {
     if (!Array.isArray(parsed)) return [];
     return [...new Set(parsed.filter((key): key is string => typeof key === "string"))];
   } catch (error) {
-    console.warn(`[DBX][document-grid-column-visibility:parse] ${scopeKey}`, error);
+    console.warn(`[NexDB][document-grid-column-visibility:parse] ${scopeKey}`, error);
     return [];
   }
 }

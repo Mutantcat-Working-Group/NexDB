@@ -225,7 +225,7 @@ pub(super) fn pack(
     writer.write_all(&MAGIC.to_le_bytes()).map_err(|e| e.to_string())?;
     write_document(
         writer,
-        &doc! { "concurrent_collections": 1i32, "version": "0.1", "server_version": server_version, "tool_version": concat!("DBX ", env!("CARGO_PKG_VERSION")) },
+        &doc! { "concurrent_collections": 1i32, "version": "0.1", "server_version": server_version, "tool_version": concat!("NexDB ", env!("CARGO_PKG_VERSION")) },
     )?;
     for entry in entries {
         check()?;

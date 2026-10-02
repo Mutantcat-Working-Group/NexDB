@@ -3,7 +3,7 @@ title: Database Documentation
 description: Browse a schema as documentation, annotate tables and columns with notes and colour-coded groups, and export DBML for dbdiagram.io or CI drift checks.
 ---
 
-Database documentation turns a live schema into something readable. DBX collects tables, columns, indexes, and relationships into a snapshot, merges it with notes you write yourself, and renders a browsable reference. The same snapshot serializes to DBML, so the diagram tools and CI checks read exactly what the viewer shows.
+Database documentation turns a live schema into something readable. NexDB collects tables, columns, indexes, and relationships into a snapshot, merges it with notes you write yourself, and renders a browsable reference. The same snapshot serializes to DBML, so the diagram tools and CI checks read exactly what the viewer shows.
 
 Notes live in a plain JSON file that you can commit next to your migrations, which makes schema documentation reviewable in pull requests.
 
@@ -28,11 +28,11 @@ Groups store a **hue**, not a fixed colour. Lightness and chroma come from the a
 
 ## Local Notes and Database Comments
 
-A column that has a database `COMMENT ON` value and a note written in DBX shows your note marked **LOCAL**, with the database comment preserved underneath. Nothing is overwritten in the database — DBX never issues DDL for documentation, and the original comment is always recoverable.
+A column that has a database `COMMENT ON` value and a note written in NexDB shows your note marked **LOCAL**, with the database comment preserved underneath. Nothing is overwritten in the database — NexDB never issues DDL for documentation, and the original comment is always recoverable.
 
 ## Where Notes Are Stored
 
-By default each connection gets its own notes file inside the DBX data directory, so the feature works with no setup.
+By default each connection gets its own notes file inside the NexDB data directory, so the feature works with no setup.
 
 Set **Notes file** in the connection's **Advanced** settings (stored as `docs_notes_path`) to point it at a file in your repository instead. The notes file itself looks like this:
 
@@ -65,7 +65,7 @@ Documentation degrades visibly rather than silently. The viewer shows a banner w
 | No relationships available | The engine does not report foreign key metadata, so no edges could be derived. |
 | Database comments unavailable | The engine has no comment support, so every description comes from your own notes. |
 | Some notes no longer match anything | A note refers to a table or column that no longer exists. Nothing was deleted. |
-| Not representable in DBML | A construct is documented in DBX but cannot be expressed in exported DBML. |
+| Not representable in DBML | A construct is documented in NexDB but cannot be expressed in exported DBML. |
 
 ## DBML Export
 
@@ -88,7 +88,7 @@ Commit the result and let CI fail on unreviewed schema drift:
 
 - Relational engines only. Document databases and key-value stores have no DBML vocabulary and are not covered.
 - Tables, columns, indexes, relationships, and enums are documented. Triggers, procedures, functions, sequences, and grants are not.
-- DBML export is one-way. A `.dbml` file is an output, never a source of truth — DBX does not import it.
+- DBML export is one-way. A `.dbml` file is an output, never a source of truth — NexDB does not import it.
 - Engines without foreign key metadata produce documentation with no relationship edges, reported as a warning rather than an empty page.
 - Schema history and per-table "last updated" are not tracked. Snapshots are version-stamped so this can be added later.
 

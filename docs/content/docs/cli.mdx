@@ -1,9 +1,9 @@
 ---
-title: DBX CLI
-description: Use the native DBX CLI to read connections, schemas, query results, and AI context from terminals, scripts, CI, and Codex.
+title: NexDB CLI
+description: Use the native NexDB CLI to read connections, schemas, query results, and AI context from terminals, scripts, CI, and Codex.
 ---
 
-<Callout type="info">DBX CLI is a dedicated command line package for terminal, script, and coding-agent workflows. It shares DBX connection storage and SQL safety rules with the MCP server.</Callout>
+<Callout type="info">NexDB CLI is a dedicated command line package for terminal, script, and coding-agent workflows. It shares NexDB connection storage and SQL safety rules with the MCP server.</Callout>
 
 ## Install
 
@@ -32,7 +32,7 @@ chmod +x dbx
 ./dbx --version
 ```
 
-Set `DBX_DATA_DIR` when using a custom or portable DBX data directory.
+Set `DBX_DATA_DIR` when using a custom or portable NexDB data directory.
 
 Check the installed version:
 
@@ -59,7 +59,7 @@ dbx open local users
 
 ## Diagnostics
 
-Use `dbx doctor` to inspect local DBX paths, connection-store health, and whether the desktop bridge is available:
+Use `dbx doctor` to inspect local NexDB paths, connection-store health, and whether the desktop bridge is available:
 
 ```bash
 dbx doctor
@@ -73,14 +73,14 @@ npm uninstall -g @dbx-app/cli
 npm install -g @dbx-app/cli
 ```
 
-Use `dbx capabilities` to see which database types can be queried directly and which currently require DBX Desktop:
+Use `dbx capabilities` to see which database types can be queried directly and which currently require NexDB Desktop:
 
 ```bash
 dbx capabilities
 dbx capabilities --json
 ```
 
-The CLI binary currently lists PostgreSQL, Redshift, MySQL, Doris, StarRocks, Manticore Search, SQLite, rqlite, KWDB, and QuestDB as direct-query types. `dbx capabilities` is authoritative for the installed version. Other types require a running DBX Desktop bridge or their Agent/external-driver infrastructure.
+The CLI binary currently lists PostgreSQL, Redshift, MySQL, Doris, StarRocks, Manticore Search, SQLite, rqlite, KWDB, and QuestDB as direct-query types. `dbx capabilities` is authoritative for the installed version. Other types require a running NexDB Desktop bridge or their Agent/external-driver infrastructure.
 
 ## Execution Modes
 
@@ -90,12 +90,12 @@ By default, CLI reads the same `dbx.db` connection store used by Desktop and MCP
 
 - Direct-query types can run while Desktop is closed
 - Bridge types require Desktop to be running and discoverable through the bridge port file in the data directory
-- Agent/JDBC, DuckDB, and other external-driver paths still require matching components installed through DBX
+- Agent/JDBC, DuckDB, and other external-driver paths still require matching components installed through NexDB
 - `dbx open` is always a Desktop UI operation and returns `DBX_NOT_RUNNING` when the app is unavailable
 
-### DBX Web and Docker
+### NexDB Web and Docker
 
-Set `DBX_WEB_URL` to use a deployed DBX Web backend instead of local connection storage:
+Set `DBX_WEB_URL` to use a deployed NexDB Web backend instead of local connection storage:
 
 ```bash
 DBX_WEB_URL=https://dbx.example.com \
@@ -126,7 +126,7 @@ Errors are written to stderr and return a non-zero exit code.
 
 ## Query Controls
 
-`dbx query` executes SQL for SQL connections and accepts supported Mongo shell commands for MongoDB connections. Redis is not executed through this command; use the MCP Redis tool or the DBX workspace instead. Query mode is read-only by default.
+`dbx query` executes SQL for SQL connections and accepts supported Mongo shell commands for MongoDB connections. Redis is not executed through this command; use the MCP Redis tool or the NexDB workspace instead. Query mode is read-only by default.
 
 ```bash
 dbx query local "select * from users" --limit 50 --timeout 10s --json
@@ -140,7 +140,7 @@ Use `--allow-writes` for non-dangerous write statements:
 dbx query local "update users set name = 'Ada' where id = 1" --allow-writes
 ```
 
-Dangerous SQL such as `DROP`, `TRUNCATE`, and `ALTER` requires both `--allow-writes` and `--allow-dangerous-sql`. Explicit transaction statements remain blocked by CLI; use [MCP stateful sessions](/en/docs/mcp#stateful-query-sessions) or the DBX editor for pinned multi-step sessions.
+Dangerous SQL such as `DROP`, `TRUNCATE`, and `ALTER` requires both `--allow-writes` and `--allow-dangerous-sql`. Explicit transaction statements remain blocked by CLI; use [MCP stateful sessions](/en/docs/mcp#stateful-query-sessions) or the NexDB editor for pinned multi-step sessions.
 
 Writes and DDL against production databases remain blocked even when both flags are present. Production detection, SQL risk classification, connection read-only protection, and database privileges form independent upper bounds; the flags are not a production bypass.
 
@@ -162,17 +162,17 @@ CLI JSON errors use stable codes:
 | `UNKNOWN_OPTION`         | An unsupported flag was provided                    |
 | `INVALID_OPTION`         | A flag is missing a value or has an invalid value   |
 | `INVALID_ARGUMENT`       | Positional arguments are missing or conflicting     |
-| `CONNECTION_STORE_ERROR` | DBX connection storage exists but could not be read |
-| `CONNECTION_NOT_FOUND`   | No DBX connection matched the requested name        |
+| `CONNECTION_STORE_ERROR` | NexDB connection storage exists but could not be read |
+| `CONNECTION_NOT_FOUND`   | No NexDB connection matched the requested name        |
 | `SQL_BLOCKED`            | SQL safety rules blocked execution                  |
-| `DBX_NOT_RUNNING`        | DBX Desktop bridge is unavailable                   |
+| `DBX_NOT_RUNNING`        | NexDB Desktop bridge is unavailable                   |
 | `ERROR`                  | Unexpected runtime failure                          |
 
 ## Desktop Deep Links
 
-DBX Desktop supports deep links for launching the client from browsers, bastion hosts, or scripts.
+NexDB Desktop supports deep links for launching the client from browsers, bastion hosts, or scripts.
 
-Launch or focus DBX without opening another dialog:
+Launch or focus NexDB without opening another dialog:
 
 ```bash
 open 'dbx://open'
@@ -181,7 +181,7 @@ open 'dbx://open'
 A web button can link to the protocol directly:
 
 ```html
-<a href="dbx://open">Open in DBX</a>
+<a href="dbx://open">Open in NexDB</a>
 ```
 
 Use `dbx://connection/new` to open the new connection dialog with connection fields prefilled.
@@ -204,7 +204,7 @@ Supported fields:
 | ------------ | ---------------------------------------------------------------------------------------- |
 | `type`       | Database type; service types include `etcd`, `consul`, `nacos-v2`, `nacos-v3`, `r-nacos` |
 | `url`        | Database DSN; URL encoding is recommended                                                |
-| `name`       | Display name in DBX; when omitted, DBX uses `database`, then `host`                      |
+| `name`       | Display name in NexDB; when omitted, NexDB uses `database`, then `host`                      |
 | `host`       | Hostname or IP address                                                                   |
 | `port`       | Port                                                                                     |
 | `user`       | Username                                                                                 |
@@ -230,7 +230,7 @@ open 'dbx://connection/new?type=r-nacos&url=http%3A%2F%2F127.0.0.1%3A8848%2Fnaco
 
 `nacos` is an alias for `nacos-v2`, and `rnacos` is an alias for `r-nacos`. In URL mode, service endpoint paths are preserved; top-level `host`, `port`, `user`, `password`, and `ssl` fields override values from `url`. For Consul, `password` is the ACL token. Nacos requires `user` when `password` is present. Omitting `v` or using `v=1` selects the current deep-link protocol; other versions are rejected.
 
-<Callout type="info">Before testing system-level `dbx://` launches, install and open DBX Desktop once so the operating system can register the URL scheme. On macOS, use `open 'dbx://open'` or `open 'dbx://connection/new?...'` to test it.</Callout>
+<Callout type="info">Before testing system-level `dbx://` launches, install and open NexDB Desktop once so the operating system can register the URL scheme. On macOS, use `open 'dbx://open'` or `open 'dbx://connection/new?...'` to test it.</Callout>
 
 <Callout type="warning">A deep link may expose a database password or Consul ACL token in browser and terminal history. Do not put credential-bearing links in shared logs, shell history, tickets, or chat messages.</Callout>
 

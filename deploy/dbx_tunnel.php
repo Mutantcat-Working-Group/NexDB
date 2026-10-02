@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /*
- * DBX HTTP Script Tunnel
+ * NexDB HTTP Script Tunnel
  *
  * Upload this file to a PHP server that can reach the target database.
  *

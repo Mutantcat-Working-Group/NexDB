@@ -206,7 +206,7 @@ async fn sqlserver_extended_events_probe_captures_rpc_and_batch_events() {
                 .and_then(|value| value.as_str())
                 .is_some_and(|sql| sql.contains("DBX_INTERNAL_TRACE"))
         }) {
-            return Err("DBX internal health check was captured".to_string());
+            return Err("NexDB internal health check was captured".to_string());
         }
         Ok::<(), String>(())
     }

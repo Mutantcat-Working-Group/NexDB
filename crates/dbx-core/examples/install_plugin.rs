@@ -1,4 +1,4 @@
-//! One-shot plugin installer for local DBX app stores:
+//! One-shot plugin installer for local NexDB app stores:
 //!   cargo run -p dbx-core --example install_plugin -- <plugins-root> <dbxp> <app-version> [--rollback-plugin <id>]
 use dbx_core::plugins::{PluginInstallPolicy, PluginPackageInstaller};
 

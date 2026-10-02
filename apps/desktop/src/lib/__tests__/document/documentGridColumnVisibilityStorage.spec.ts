@@ -64,7 +64,7 @@ describe("document grid column visibility storage", () => {
     storedValues.set(`${STORAGE_PREFIX}${ordersScope}`, "{");
 
     expect(loadDocumentGridHiddenColumnKeys(ordersScope)).toEqual([]);
-    expect(warn).toHaveBeenCalledWith(expect.stringContaining("[DBX][document-grid-column-visibility:parse]"), expect.any(SyntaxError));
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining("[NexDB][document-grid-column-visibility:parse]"), expect.any(SyntaxError));
   });
 
   it("migrates legacy hidden fields into the unified layout once", () => {

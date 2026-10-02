@@ -3,7 +3,7 @@ name = "dbx-plugin-sdk"
 version = "0.1.0"
 edition = "2021"
 license = "Apache-2.0"
-description = "Sidecar protocol SDK for DBX plugins"
+description = "Sidecar protocol SDK for NexDB plugins"
 
 [workspace]
 

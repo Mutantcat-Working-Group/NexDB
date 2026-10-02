@@ -24,7 +24,7 @@ describe("sqlFormatterConfig shortcut storage", () => {
     expect(result.ok).toBe(true);
   });
 
-  it("merges DBX custom parameter types with user paramTypes", () => {
+  it("merges NexDB custom parameter types with user paramTypes", () => {
     const options = sqlFormatterOptions({
       paramTypes: {
         positional: false,
@@ -40,7 +40,7 @@ describe("sqlFormatterConfig shortcut storage", () => {
     });
   });
 
-  it("recognizes DBX positional and named parameter syntaxes by default", () => {
+  it("recognizes NexDB positional and named parameter syntaxes by default", () => {
     expect(sqlFormatterOptions({}).paramTypes).toEqual({
       positional: true,
       named: [":", "@"],

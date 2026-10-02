@@ -2,7 +2,7 @@
 
 ## 概述
 
-该功能为 DBX 增加了消息队列（Message Queue）管理能力，支持 **Apache Pulsar**、**Apache Kafka**、**Apache RocketMQ** 与 **RabbitMQ**。四种系统在连接对话框中为独立顶层入口；控制台复用 `MqAdminConsole` 壳层，按 `systemKind` 与 capabilities 展示可用面板。
+该功能为 NexDB 增加了消息队列（Message Queue）管理能力，支持 **Apache Pulsar**、**Apache Kafka**、**Apache RocketMQ** 与 **RabbitMQ**。四种系统在连接对话框中为独立顶层入口；控制台复用 `MqAdminConsole` 壳层，按 `systemKind` 与 capabilities 展示可用面板。
 
 ## 功能特性
 
@@ -70,7 +70,7 @@
 
 ### 1. 创建 Pulsar 连接
 
-在 DBX 中添加新连接，配置如下：
+在 NexDB 中添加新连接，配置如下：
 
 **基本信息**：
 - **数据库类型**：选择 `mq` (Message Queue)
@@ -409,7 +409,7 @@ Agent 构建与安装：
 ```bash
 cd agents/drivers/rocketmq
 CGO_ENABLED=0 go build -trimpath -ldflags='-s -w' -o agent .
-# 将可执行文件安装到 DBX 数据目录 agents/drivers/rocketmq/agent
+# 将可执行文件安装到 NexDB 数据目录 agents/drivers/rocketmq/agent
 ```
 
 Docker 快速启动（NameServer 9876 + Broker 10911，仅用于本地验证）：
@@ -446,7 +446,7 @@ Agent 构建与安装：
 cd agents
 cd drivers/rabbitmq
 go build -o agent .
-# 将原生 agent 安装到 DBX 数据目录 agents/drivers/rabbitmq/agent
+# 将原生 agent 安装到 NexDB 数据目录 agents/drivers/rabbitmq/agent
 ```
 
 Docker 快速启动（AMQP 5672 + Management 15672，仅用于本地验证）：
@@ -457,7 +457,7 @@ docker run -d --name dbx-rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-managem
 
 说明：RabbitMQ 适配器将 topic 映射为队列（queue），支持队列列表/声明/删除、清空队列（purge）、消费者列表、消息预览（basic.get + requeue）与发送（basic.publish）；vhost 映射为 namespace，可在控制台查看/创建/删除。AMQP 操作按 vhost 透传（agent 侧 per-vhost 通道缓存），tenant 语义不适用（固定合成 `_rabbitmq`）。
 
-RabbitMQ 的 AMQP 监听端口与 Management HTTP 监听端口是独立配置。使用默认 AMQP 端口时可将 `adminUrl` 留空，由 DBX 使用默认 Management 端口；使用非默认 AMQP 端口时必须填写实际的 Management API URL，例如 AMQP 为 `127.0.0.1:5673`、Management 为 `http://127.0.0.1:15673`。SSH、SOCKS 或 HTTP 隧道会分别转发 AMQP 与 Management 两个端点。
+RabbitMQ 的 AMQP 监听端口与 Management HTTP 监听端口是独立配置。使用默认 AMQP 端口时可将 `adminUrl` 留空，由 NexDB 使用默认 Management 端口；使用非默认 AMQP 端口时必须填写实际的 Management API URL，例如 AMQP 为 `127.0.0.1:5673`、Management 为 `http://127.0.0.1:15673`。SSH、SOCKS 或 HTTP 隧道会分别转发 AMQP 与 Management 两个端点。
 
 ### Kafka 适配器参考
 

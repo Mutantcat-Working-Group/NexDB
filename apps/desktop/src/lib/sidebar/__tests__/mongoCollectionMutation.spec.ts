@@ -129,7 +129,7 @@ describe("mongo shell previews", () => {
 
   it("describes the version-compatible clone primitives", () => {
     expect(mongoCloneCollectionPreview("app", " users ", " users_backup ")).toBe(
-      "// DBX copies collection options, documents, and non-_id indexes.\n" +
+      "// NexDB copies collection options, documents, and non-_id indexes.\n" +
         'db.getSiblingDB("app").createCollection(" users_backup ", /* source options */);\n' +
         'db.getSiblingDB("app").getCollection(" users ").find({}).forEach(function (document) { db.getSiblingDB("app").getCollection(" users_backup ").insertOne(document); });\n' +
         "// Recreate source indexes except the target's automatic _id index.",

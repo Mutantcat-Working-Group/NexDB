@@ -174,14 +174,14 @@ pub fn build_cli_agent_prompt(
     allow_write_sql: bool,
 ) -> String {
     let database_access = if allow_write_sql {
-        "The user explicitly confirmed the proposed database change. DBX MCP tools may execute write and DDL SQL for this run only."
+        "The user explicitly confirmed the proposed database change. NexDB MCP tools may execute write and DDL SQL for this run only."
     } else {
-        "Use the DBX MCP tools when you need live database schema or read-only query results."
+        "Use the NexDB MCP tools when you need live database schema or read-only query results."
     };
     let mut sections = vec![
-        format!("You are running inside DBX Desktop as the {provider_label} CLI provider."),
+        format!("You are running inside NexDB Desktop as the {provider_label} CLI provider."),
         database_access.to_string(),
-        "Do not modify files or run shell commands. The DBX MCP server is the only intended tool surface.".to_string(),
+        "Do not modify files or run shell commands. The NexDB MCP server is the only intended tool surface.".to_string(),
         String::new(),
         "## System instructions".to_string(),
         system_prompt.to_string(),

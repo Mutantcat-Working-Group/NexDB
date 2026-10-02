@@ -228,7 +228,7 @@ test("does not sync invalid JSON drafts", () => {
   assert.deepEqual(synced, DEFAULT_SQL_FORMATTER_SETTINGS);
 });
 
-test("maps DBX formatter settings to sql-formatter options", () => {
+test("maps NexDB formatter settings to sql-formatter options", () => {
   assert.deepEqual(
     sqlFormatterOptions({
       ...DEFAULT_SQL_FORMATTER_SETTINGS,

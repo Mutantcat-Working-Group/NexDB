@@ -185,7 +185,7 @@ pub trait DbxBackend: Send + Sync {
         let _ = entry;
         Err("Query history is not supported by this backend.".to_string())
     }
-    /// Return database names visible to the DBX connection itself. The MCP
+    /// Return database names visible to the NexDB connection itself. The MCP
     /// server applies its own database-scope policy before exposing these
     /// names to a client.
     async fn list_databases(&self, connection: &ConnectionConfig) -> Result<Vec<String>, String> {
@@ -358,7 +358,7 @@ pub trait DbxBackend: Send + Sync {
     }
     async fn bridge_request(&self, path: &str, body: Value) -> Result<(), String> {
         let _ = (path, body);
-        Err("DBX is not running. Please start DBX first.".to_string())
+        Err("NexDB is not running. Please start NexDB first.".to_string())
     }
     async fn collect_docs_snapshot(
         &self,
@@ -497,14 +497,14 @@ impl WebBackend {
         }
         let check: AuthCheck = response.json().await.map_err(|error| format!("Invalid auth response: {error}"))?;
         if check.setup_required {
-            return Err("DBX Web password setup is required before MCP Web mode can access APIs.".to_string());
+            return Err("NexDB Web password setup is required before MCP Web mode can access APIs.".to_string());
         }
         if !check.required || check.authenticated {
             auth.checked = true;
             return Ok(());
         }
         if self.password.is_empty() {
-            return Err("DBX Web authentication is required. Set DBX_WEB_PASSWORD for MCP Web mode.".to_string());
+            return Err("NexDB Web authentication is required. Set DBX_WEB_PASSWORD for MCP Web mode.".to_string());
         }
         let mut request = self.client.post(format!("{}/api/auth/login", self.base_url));
         for (name, value) in &self.headers {
@@ -523,7 +523,7 @@ impl WebBackend {
             .get(reqwest::header::SET_COOKIE)
             .and_then(|value| value.to_str().ok())
             .and_then(extract_session_cookie)
-            .ok_or_else(|| "Authentication failed: DBX Web did not return a session cookie.".to_string())?;
+            .ok_or_else(|| "Authentication failed: NexDB Web did not return a session cookie.".to_string())?;
         auth.session_cookie = Some(cookie);
         auth.checked = true;
         Ok(())
@@ -580,7 +580,7 @@ impl WebBackend {
 }
 
 impl LocalBackend {
-    /// Reuse an already initialized DBX application state, for hosts that
+    /// Reuse an already initialized NexDB application state, for hosts that
     /// embed MCP alongside their own HTTP server.
     pub fn from_app_state(state: Arc<AppState>, data_dir: PathBuf) -> Self {
         Self { state, data_dir }
@@ -588,9 +588,9 @@ impl LocalBackend {
 
     pub async fn open(path: &Path) -> Result<Self, String> {
         // The standalone MCP binary and CLI are versioned independently from
-        // the DBX app, so their crate version must not stand in for the app
+        // the NexDB app, so their crate version must not stand in for the app
         // version during plugin `engines.dbx` checks: a plugin requiring
-        // DBX >= 0.5.68 would be rejected against e.g. 0.4.90 (#9595). An
+        // NexDB >= 0.5.68 would be rejected against e.g. 0.4.90 (#9595). An
         // empty version makes the compatibility check skip that requirement.
         Self::open_with_app_version(path, "").await
     }
@@ -682,7 +682,7 @@ impl LocalBackend {
     /// Sync the latest connection list from storage into the `AppState.configs` in-memory cache:
     /// upsert new/changed entries and remove connections deleted from storage. Only LocalBackend
     /// needs this — WebBackend talks HTTP and holds no local AppState, and the desktop mcp_bridge
-    /// shares the DBX process so it is unaffected by this cache desync.
+    /// shares the NexDB process so it is unaffected by this cache desync.
     async fn sync_runtime_configs(&self, configs: &[ConnectionConfig]) {
         let pool_ids_to_drop = {
             let mut runtime = self.state.configs.write().await;
@@ -769,7 +769,7 @@ impl DbxBackend for LocalBackend {
 
     async fn load_connections(&self) -> Result<Vec<ConnectionConfig>, String> {
         let configs = self.state.storage.load_connections().await?;
-        // Connections created/modified/deleted in the DBX desktop UI after this process started
+        // Connections created/modified/deleted in the NexDB desktop UI after this process started
         // only update the shared SQLite storage; the AppState.configs in-memory cache is not kept
         // in sync. Sync the latest config into the runtime cache after each read, otherwise DB
         // operations that look up the pool by id via get_or_create_pool fail with
@@ -1085,17 +1085,17 @@ impl DbxBackend for LocalBackend {
     async fn bridge_request(&self, path: &str, body: Value) -> Result<(), String> {
         let port = tokio::fs::read_to_string(self.data_dir.join("mcp-bridge-port"))
             .await
-            .map_err(|_| "DBX is not running. Please start DBX first.".to_string())?;
+            .map_err(|_| "NexDB is not running. Please start NexDB first.".to_string())?;
         let response = reqwest::Client::new()
             .post(format!("http://127.0.0.1:{}{}", port.trim(), path))
             .json(&body)
             .send()
             .await
-            .map_err(|_| "DBX is not running. Please start DBX first.".to_string())?;
+            .map_err(|_| "NexDB is not running. Please start NexDB first.".to_string())?;
         if response.status().is_success() {
             Ok(())
         } else {
-            Err(response.text().await.unwrap_or_else(|_| "DBX bridge request failed.".to_string()))
+            Err(response.text().await.unwrap_or_else(|_| "NexDB bridge request failed.".to_string()))
         }
     }
 }
@@ -1199,11 +1199,11 @@ impl DbxBackend for WebBackend {
         let explicit_cell_window = QueryCellWindow::explicit_from_arguments(&arguments);
         let result = async {
             if tool_name != "execute_query" {
-                return Err(format!("Unsupported DBX Web agent tool: {tool_name}"));
+                return Err(format!("Unsupported NexDB Web agent tool: {tool_name}"));
             }
             if connection.db_type == DatabaseType::MongoDb {
                 return Err(
-                    "MongoDB shell commands in DBX Web mode are not implemented by the Rust MCP yet.".to_string()
+                    "MongoDB shell commands in NexDB Web mode are not implemented by the Rust MCP yet.".to_string()
                 );
             }
             self.ensure_connected(connection).await?;
@@ -1321,7 +1321,7 @@ impl DbxBackend for WebBackend {
         timeout_secs: Option<u64>,
     ) -> Result<dbx_core::db::QueryResult, String> {
         if connection.db_type == DatabaseType::MongoDb {
-            return Err("MongoDB shell commands in DBX Web mode are not implemented by the Rust CLI yet.".to_string());
+            return Err("MongoDB shell commands in NexDB Web mode are not implemented by the Rust CLI yet.".to_string());
         }
         self.ensure_connected(connection).await?;
         self.request(
@@ -1344,7 +1344,7 @@ impl DbxBackend for WebBackend {
         options: dbx_core::query::QueryExecutionOptions,
     ) -> Result<Vec<BatchStatementResult>, String> {
         if connection.db_type == DatabaseType::MongoDb {
-            return Err("MongoDB batch execution in DBX Web mode is not implemented by the Rust CLI yet.".to_string());
+            return Err("MongoDB batch execution in NexDB Web mode is not implemented by the Rust CLI yet.".to_string());
         }
         self.ensure_connected(connection).await?;
         let mut body = json!({
@@ -1701,7 +1701,7 @@ impl DbxBackend for WebBackend {
                 dbx_core::mongo_ops::mongo_show_databases_query_result(result.documents, 100)
             }
             MongoCommand::RunCommand { .. } => {
-                Err("MongoDB runCommand is not available through the DBX MCP backend".to_string())
+                Err("MongoDB runCommand is not available through the NexDB MCP backend".to_string())
             }
             MongoCommand::Find { collection, filter, projection, sort, collation, skip, limit } => {
                 let result = self
@@ -2156,7 +2156,7 @@ fn normalize_scheme(base_url: &str) -> String {
     base_url.trim().split("://").next().unwrap_or_default().to_ascii_lowercase()
 }
 
-/// Resolves the standard proxy environment variables for a DBX Web backend.
+/// Resolves the standard proxy environment variables for a NexDB Web backend.
 ///
 /// Follows the conventional precedence: the scheme-specific variable
 /// (`HTTPS_PROXY`/`https_proxy` for https URLs, `HTTP_PROXY`/`http_proxy`
@@ -2204,7 +2204,7 @@ fn first_non_empty_env(names: &[&str]) -> Option<String> {
 }
 
 /// Parses the `DBX_WEB_HEADERS` JSON object into a `HeaderMap`. Every parsed
-/// header is attached to each DBX Web request, including auth checks.
+/// header is attached to each NexDB Web request, including auth checks.
 fn parse_custom_headers(headers_json: Option<&str>) -> Result<HeaderMap, String> {
     let mut headers = HeaderMap::new();
     let Some(value) = headers_json.map(str::trim).filter(|value| !value.is_empty()) else {
@@ -2228,7 +2228,7 @@ fn parse_custom_headers(headers_json: Option<&str>) -> Result<HeaderMap, String>
             "proxy-authorization",
         ];
         if RESERVED.iter().any(|reserved| header_name.as_str().eq_ignore_ascii_case(reserved)) {
-            return Err(format!("Invalid DBX_WEB_HEADERS header name: {name} (reserved by DBX)"));
+            return Err(format!("Invalid DBX_WEB_HEADERS header name: {name} (reserved by NexDB)"));
         }
         let Value::String(header_value) = value else {
             return Err(format!("Invalid DBX_WEB_HEADERS value for {name}: expected a string"));
@@ -3586,7 +3586,7 @@ mod tests {
         .unwrap_err();
         assert!(error.contains("expected a string"), "{error}");
 
-        // Reserved headers that DBX manages internally are rejected.
+        // Reserved headers that NexDB manages internally are rejected.
         let error = WebBackend::new_with_config(
             "http://127.0.0.1:1".to_string(),
             String::new(),
@@ -3597,7 +3597,7 @@ mod tests {
             None,
         )
         .unwrap_err();
-        assert!(error.contains("reserved by DBX"), "{error}");
+        assert!(error.contains("reserved by NexDB"), "{error}");
 
         let error = WebBackend::new_with_config(
             "http://127.0.0.1:1".to_string(),
@@ -3609,11 +3609,11 @@ mod tests {
             None,
         )
         .unwrap_err();
-        assert!(error.contains("reserved by DBX"), "{error}");
+        assert!(error.contains("reserved by NexDB"), "{error}");
     }
 
     /// Starts a TLS server with a freshly generated self-signed certificate
-    /// for 127.0.0.1, answering the DBX Web auth/check + connection/list
+    /// for 127.0.0.1, answering the NexDB Web auth/check + connection/list
     /// endpoints. Returns (base_url, ca_pem_path, tempdir) — the caller must
     /// hold the tempdir so the certificate file stays readable for the test.
     async fn spawn_self_signed_https_server() -> (String, std::path::PathBuf, tempfile::TempDir) {
@@ -3794,7 +3794,7 @@ mod tests {
             jdbc_plugin_dir.join("manifest.json"),
             r#"{
                 "id": "jdbc",
-                "name": "DBX JDBC Plugin",
+                "name": "NexDB JDBC Plugin",
                 "drivers": [{
                     "id": "jdbc",
                     "label": "JDBC",

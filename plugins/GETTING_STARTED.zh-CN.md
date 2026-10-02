@@ -1,13 +1,13 @@
-# DBX 插件开发快速开始
+# NexDB 插件开发快速开始
 
-本文面向第一次开发 DBX 插件的开发者，覆盖 CLI 安装、项目创建、前后端模板选择、本地打包、签名、DBX 安装测试和发布前准备。
+本文面向第一次开发 NexDB 插件的开发者，覆盖 CLI 安装、项目创建、前后端模板选择、本地打包、签名、NexDB 安装测试和发布前准备。
 
 当前插件契约由以下部分组成：
 
 - Manifest v1：描述插件身份、权限、入口和贡献点。
-- Host API 1.x：沙箱前端与 DBX 宿主通信的接口。
-- Sidecar Protocol v1：可选原生后端与 DBX 通信的协议。
-- `.dbxp`：DBX 最终安装的插件包。
+- Host API 1.x：沙箱前端与 NexDB 宿主通信的接口。
+- Sidecar Protocol v1：可选原生后端与 NexDB 通信的协议。
+- `.dbxp`：NexDB 最终安装的插件包。
 
 插件可以在 `manifest.json` 中声明可选的 `source`（源码仓库）和 `homepage`（项目主页）。这两个字段会随插件包签名并在“已安装”页面本地显示，因此不依赖联网；市场目录可以重复这些字段用于展示未安装插件。
 
@@ -15,13 +15,13 @@
 
 ## 先说结论：SDK 不需要“启动”
 
-DBX 插件 SDK 不是一个常驻服务，不需要先启动 SDK Server。
+NexDB 插件 SDK 不是一个常驻服务，不需要先启动 SDK Server。
 
 开发时实际使用的是三类工具：
 
 1. `dbx-plugin` CLI：创建项目、构建后端、打包和生成签名密钥。
 2. Rust/Go SDK：仅供需要原生后端的插件链接使用。
-3. DBX Host API：由 DBX 在插件沙箱页面中注入，前端通过 `window.dbxPlugin` 调用。
+3. NexDB Host API：由 NexDB 在插件沙箱页面中注入，前端通过 `window.dbxPlugin` 调用。
 
 典型流程如下：
 
@@ -38,12 +38,12 @@ dbx-plugin package
         └── *.artifact.json
                 │
                 ▼
-DBX 插件中心本地安装，或上传 Release 后进入插件商店
+NexDB 插件中心本地安装，或上传 Release 后进入插件商店
 ```
 
 ## 1. 安装 CLI
 
-推荐直接安装预编译的 npm 包。安装过程不会编译 CLI，也不需要克隆 DBX 源码：
+推荐直接安装预编译的 npm 包。安装过程不会编译 CLI，也不需要克隆 NexDB 源码：
 
 ```bash
 npm install --global @dbx-app/plugin-cli
@@ -58,7 +58,7 @@ npx @dbx-app/plugin-cli create my-plugin
 
 npm 主包会自动安装 macOS、Linux 或 Windows 当前平台对应的预编译二进制，并携带匹配版本的 Rust/Go 插件 SDK。纯前端插件只需要 Node.js；只有插件自身包含 Rust 或 Go 后端时才需要对应语言的编译环境。
 
-只有开发 CLI 本身或验证尚未发布的 SDK 改动时，才需要从 DBX 源码安装：
+只有开发 CLI 本身或验证尚未发布的 SDK 改动时，才需要从 NexDB 源码安装：
 
 ```bash
 cd /path/to/dbx
@@ -99,9 +99,9 @@ dbx-plugin create ~/Desktop/dbx-plugin-svelte --template svelte
 dbx-plugin create ~/Desktop/dbx-plugin-demo \
   --template frontend \
   --id com.example.dbx-plugin-demo \
-  --name "DBX Plugin Demo" \
+  --name "NexDB Plugin Demo" \
   --publisher example \
-  --description "A small DBX frontend plugin." \
+  --description "A small NexDB frontend plugin." \
   --version 0.1.0 \
   --yes
 ```
@@ -120,14 +120,14 @@ dbx-plugin-demo/
 
 其中：
 
-- `manifest.json` 是 DBX 运行时读取的插件契约，声明名称、图标、权限、入口、国际化和贡献点。
+- `manifest.json` 是 NexDB 运行时读取的插件契约，声明名称、图标、权限、入口、国际化和贡献点。
 - `dbx-plugin.toml` 是开发和打包配置，决定要包含哪些目录，以及是否需要构建原生后端。
 - `ui/index.html` 是沙箱前端入口，可以换成构建后的 Vue、React、Svelte 或其他静态资源。
-- `assets/plugin.svg` 是插件提供的图标；未提供可用图标时，DBX 才使用默认图标。
+- `assets/plugin.svg` 是插件提供的图标；未提供可用图标时，NexDB 才使用默认图标。
 
 ## 4. 修改前端和使用 Host API
 
-生成的前端示例已经可以调用 DBX Host API：
+生成的前端示例已经可以调用 NexDB Host API：
 
 ```html
 <script>
@@ -142,13 +142,13 @@ dbx-plugin-demo/
 
 常用对象：
 
-- `window.dbxPlugin.ready`：等待 DBX 完成宿主桥接初始化。
-- `window.dbxPlugin.locale`：读取当前 DBX 界面语言。
+- `window.dbxPlugin.ready`：等待 NexDB 完成宿主桥接初始化。
+- `window.dbxPlugin.locale`：读取当前 NexDB 界面语言。
 - `window.dbxPlugin.context`：读取当前工作台允许访问的上下文。
 - `window.dbxPlugin.request(...)`：调用宿主提供的方法。
 - `window.dbxPlugin.invoke(...)`：调用插件自己的原生 Sidecar 方法。
 
-插件前端运行在沙箱中，不能直接导入 DBX 内部 Vue 组件，也不能直接访问 Tauri、Node.js 或任意本地文件。需要的能力必须通过 Manifest 权限和 Host API 明确暴露。
+插件前端运行在沙箱中，不能直接导入 NexDB 内部 Vue 组件，也不能直接访问 Tauri、Node.js 或任意本地文件。需要的能力必须通过 Manifest 权限和 Host API 明确暴露。
 
 ### 国际化
 
@@ -179,7 +179,7 @@ curl -sS 'http://127.0.0.1:5190/api/diagnostics?after=0&limit=100'
 
 浏览器刷新或关闭后，旧页面的工作台会保留 30 秒，允许事件流短暂断开后重连；超时后回收工作台，并断开没有其他页面使用的连接。已保存的连接配置不受影响。
 
-使用包含 `dev` 子命令的 CLI，可不启动 DBX 进行前后端联调：
+使用包含 `dev` 子命令的 CLI，可不启动 NexDB 进行前后端联调：
 
 ```bash
 dbx-plugin dev --path /path/to/my-plugin --port 5190
@@ -199,7 +199,7 @@ ui_watch = ["npm", "run", "build:watch"]
 
 点击“重载页面”右侧的“调试”，底部显示最近 500 条构建、后端状态、RPC 和请求校验日志，包含端口、项目与请求路径、耗时，以及可展开的 JSON 入参和出参。支持级别筛选、清空视图和自动滚动，终端同步输出 `[dbx-dev]` 日志。密码、令牌及 Manifest 声明的敏感字段脱敏，二进制内容省略，长内容截断；普通业务内容仍可见，仅用于本地开发。重启服务后历史清空。
 
-开发环境提供声明式连接表单、工作台 Tab、RPC、事件、资源读取和主题切换。普通配置与凭据以本地明文形式保存在 `.dbx-dev/`，默认忽略提交，可通过 `--data-dir` 更换。它不读取 DBX 用户数据，也不替代真实宿主的安装、Secret Store 或生命周期验收。
+开发环境提供声明式连接表单、工作台 Tab、RPC、事件、资源读取和主题切换。普通配置与凭据以本地明文形式保存在 `.dbx-dev/`，默认忽略提交，可通过 `--data-dir` 更换。它不读取 NexDB 用户数据，也不替代真实宿主的安装、Secret Store 或生命周期验收。
 
 源码构建和支持范围见[开发运行时说明](sdk/dev-host/README.md)。
 
@@ -220,24 +220,24 @@ dist/
 └── com.example.dbx-plugin-demo-0.1.0-universal.artifact.json
 ```
 
-- `.dbxp` 是交给 DBX 安装的文件。
+- `.dbxp` 是交给 NexDB 安装的文件。
 - `.artifact.json` 包含目标平台、URL、SHA-256 和文件大小；签名构建还会写入 `signingKeyId`。
 - 本地开发默认不签名。
 
-未签名构建生成的元数据只适合本地检查，不能直接进入插件商店目录。商店条目必须包含 `signingKeyId`，安装前 DBX 会同时比对包内 Manifest 的 ID、版本、发布者、权限和签名 Key ID。
+未签名构建生成的元数据只适合本地检查，不能直接进入插件商店目录。商店条目必须包含 `signingKeyId`，安装前 NexDB 会同时比对包内 Manifest 的 ID、版本、发布者、权限和签名 Key ID。
 
-## 6. 在 DBX 中安装测试
+## 6. 在 NexDB 中安装测试
 
 未签名包只用于自己构建的本地开发测试：
 
-1. 打开 DBX 顶部工具栏的“插件中心”。
+1. 打开 NexDB 顶部工具栏的“插件中心”。
 2. 切换到“设置”。
 3. 展开“第三方与开发者选项”。
 4. 开启“允许安装未签名开发包”。
 5. 点击“安装 `.dbxp`”，选择 `dist/` 中的文件。
 6. 安装完成后切换到“已安装”，打开插件提供的工作台或其他入口。
 
-本地开发包允许用相同版本重新安装，DBX 会替换当前开发版本并重启对应插件运行时；正式签名包仍不允许覆盖同版本。
+本地开发包允许用相同版本重新安装，NexDB 会替换当前开发版本并重启对应插件运行时；正式签名包仍不允许覆盖同版本。
 
 测试结束后建议关闭“允许安装未签名开发包”。该开关只影响手动本地安装，不会放宽官方插件商店的签名校验。
 
@@ -265,7 +265,7 @@ cd ~/Desktop/dbx-go-plugin
 dbx-plugin package .
 ```
 
-`--sdk-root` 让生成项目直接使用当前 DBX 工作区里的 SDK，适合 SDK 尚未发布或正在联调时使用。如果项目已经创建，也可以在打包前设置：
+`--sdk-root` 让生成项目直接使用当前 NexDB 工作区里的 SDK，适合 SDK 尚未发布或正在联调时使用。如果项目已经创建，也可以在打包前设置：
 
 ```bash
 export DBX_PLUGIN_SDK_ROOT=/path/to/dbx
@@ -293,8 +293,8 @@ dbx-plugin package .
 官方发布流程只要求开发者提交源码、Release 和未签名候选包：
 
 1. 开发者 CI 构建候选 `.dbxp` 和 `.artifact.json`。
-2. DBX Store 审核源码、Manifest、权限、哈希和版本信息。
-3. 受保护的 DBX Store 工作流使用官方仓库密钥签名审核通过的候选包。
+2. NexDB Store 审核源码、Manifest、权限、哈希和版本信息。
+3. 受保护的 NexDB Store 工作流使用官方仓库密钥签名审核通过的候选包。
 4. 商店目录只引用最终签名包。
 
 `publisher` 表示作者和商店归属，不表示签名密钥所有者。当前 v1 不要求开发者签名，也不做双签名。以后只有在商业分发或供应链证明确实需要时，才会新增独立的“作者证明”，不会改变现有仓库签名含义。
@@ -340,14 +340,14 @@ cargo run --release \
 
 不要提交 `.dbx-repository-signing-key.env`。它包含仓库私钥，只能保存在密码管理器或受保护的仓库签名 CI Secret 中。官方插件开发者不需要执行本节。
 
-### 在 DBX 中信任自定义仓库
+### 在 NexDB 中信任自定义仓库
 
 使用自定义或私有仓库时，在插件中心“设置”的“自定义仓库信任”中填写：
 
 - 仓库密钥 ID：`dbx-plugin keygen` 使用的 Key ID。
 - Ed25519 公钥：`dbx-plugin keygen` 打印的 Base64 公钥。
 
-官方插件商店的公钥由 DBX 管理，普通用户不需要手工添加。人工审核决定插件能否进入商店，仓库签名保证审核后的安装包没有被替换，两者不能互相替代。
+官方插件商店的公钥由 NexDB 管理，普通用户不需要手工添加。人工审核决定插件能否进入商店，仓库签名保证审核后的安装包没有被替换，两者不能互相替代。
 
 ## 9. 发布到 GitHub Release
 
@@ -360,7 +360,7 @@ cargo run --release \
 - 每个候选包对应的 `.artifact.json`。
 - 合并后的 `release-candidates.json`。
 
-这些 `.dbxp` 不能直接作为官方商店安装地址。若插件仓库已登记 `autoUpdate: true`，发布 Release 后 DBX Store 会自动创建或更新候选 PR；未登记时，开发者手动向 [`t8y2/dbx-store`](https://github.com/t8y2/dbx-store) 提交一个候选 PR 即可，不需要先创建 Issue。审核通过后，DBX Store 的受保护工作流在同一个 PR 流程中生成最终签名包并更新目录。源码放在插件自己的 Git 仓库；`dbx-store` Git 仓库只保存商店元数据、最终下载地址、哈希、大小、仓库公钥和审核信息。
+这些 `.dbxp` 不能直接作为官方商店安装地址。若插件仓库已登记 `autoUpdate: true`，发布 Release 后 NexDB Store 会自动创建或更新候选 PR；未登记时，开发者手动向 [`t8y2/dbx-store`](https://github.com/t8y2/dbx-store) 提交一个候选 PR 即可，不需要先创建 Issue。审核通过后，NexDB Store 的受保护工作流在同一个 PR 流程中生成最终签名包并更新目录。源码放在插件自己的 Git 仓库；`dbx-store` Git 仓库只保存商店元数据、最终下载地址、哈希、大小、仓库公钥和审核信息。
 
 ## 10. 常用命令
 
@@ -399,7 +399,7 @@ NO_COLOR=1 dbx-plugin --help
 
 ### 独立调试插件
 
-无需启动 DBX，使用 Node.js 22+ 在浏览器中调试真实插件前后端：
+无需启动 NexDB，使用 Node.js 22+ 在浏览器中调试真实插件前后端：
 
 ```bash
 # 在插件目录启动，默认端口 5190
@@ -432,12 +432,12 @@ npx @dbx-app/plugin-cli --help
 
 ### 为什么原生插件不能只构建一个包？
 
-Rust/Go Sidecar 是操作系统原生二进制，不同系统和 CPU 架构不能混用。插件源码是一份，但 CI 会生成多个目标包；DBX 插件商店自动选择当前平台对应的包。
+Rust/Go Sidecar 是操作系统原生二进制，不同系统和 CPU 架构不能混用。插件源码是一份，但 CI 会生成多个目标包；NexDB 插件商店自动选择当前平台对应的包。
 
-### `.dbxp` 会增加 DBX 主安装包体积吗？
+### `.dbxp` 会增加 NexDB 主安装包体积吗？
 
-不会。可选插件不打进 DBX 基础安装包。只有用户安装插件后，该插件才占用本机插件存储空间。
+不会。可选插件不打进 NexDB 基础安装包。只有用户安装插件后，该插件才占用本机插件存储空间。
 
 ### 开发者提交源码还是 `.dbxp`？
 
-两者都需要，但用途不同：源码保留在开发者仓库供审查和协作；开发者 CI 生成未签名候选 `.dbxp`；审核通过后由 DBX Store 发布最终签名 `.dbxp`；官方商店 Git 仓库只登记元数据和产物地址，不接收私钥，也不把大型二进制提交到 Git 历史。
+两者都需要，但用途不同：源码保留在开发者仓库供审查和协作；开发者 CI 生成未签名候选 `.dbxp`；审核通过后由 NexDB Store 发布最终签名 `.dbxp`；官方商店 Git 仓库只登记元数据和产物地址，不接收私钥，也不把大型二进制提交到 Git 历史。

@@ -21,5 +21,5 @@ test("software structured data stays localized and versioned", () => {
   assert.match(english.description, /90\+ databases/);
   assert.equal(chinese.inLanguage, "zh-CN");
   assert.match(chinese.description, /90\+ 种数据库/);
-  assert.equal(chinese.license, "https://github.com/t8y2/dbx/blob/main/LICENSE");
+  assert.equal(chinese.license, "https://github.com/Mutantcat-Working-Group/NexDB/blob/main/LICENSE");
 });

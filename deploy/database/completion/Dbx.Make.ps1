@@ -1,4 +1,4 @@
-# Dot-source this file to complete DBX database Make targets and DB=<product>@<version> values.
+# Dot-source this file to complete NexDB database Make targets and DB=<product>@<version> values.
 
 $script:DbxMakeRepositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..')).Path
 
@@ -55,7 +55,7 @@ $script:DbxMakeNativeCompleter = {
     if ($target -eq 'db-reset') { $parameters += 'CONFIRM=1' }
     $parameters |
         Where-Object { $_ -like "$wordToComplete*" } |
-        ForEach-Object { New-DbxMakeCompletionResult $_ 'DBX database parameter' }
+        ForEach-Object { New-DbxMakeCompletionResult $_ 'NexDB database parameter' }
 }
 
 $register = Get-Command Register-ArgumentCompleter

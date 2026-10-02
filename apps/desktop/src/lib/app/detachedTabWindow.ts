@@ -68,7 +68,7 @@ export async function openDetachedTabWindow(tabId: string, title: string, positi
           } catch (error) {
             // Keep the reservation if removal is uncertain, rather than
             // allowing restart to race a still-initializing webview.
-            console.error("[DBX][detached-tab:late-create:close-error]", error);
+            console.error("[NexDB][detached-tab:late-create:close-error]", error);
           }
           return;
         }
@@ -88,7 +88,7 @@ export async function openDetachedTabWindow(tabId: string, title: string, positi
       });
       void child.once("tauri://error", (event) => {
         const error = errorMessage(event?.payload);
-        console.error("[DBX][detached-tab:create:error]", error);
+        console.error("[NexDB][detached-tab:create:error]", error);
         finish({ opened: false, error });
         finishNativeCreation();
       });
@@ -99,7 +99,7 @@ export async function openDetachedTabWindow(tabId: string, title: string, positi
     });
   } catch (error) {
     const message = errorMessage(error);
-    console.error("[DBX][detached-tab:create:error]", error);
+    console.error("[NexDB][detached-tab:create:error]", error);
     return { opened: false, error: message };
   } finally {
     finishOperation?.();

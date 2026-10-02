@@ -1,13 +1,13 @@
 ---
 title: Web API Reference
-description: Internal HTTP APIs used by the DBX Web and Docker UI, including authentication, queries, background jobs, uploads, and downloads.
+description: Internal HTTP APIs used by the NexDB Web and Docker UI, including authentication, queries, background jobs, uploads, and downloads.
 ---
 
-<Callout type="warn">This API powers the DBX Web UI and internal tooling such as the MCP Web backend. It is not a separate public integration contract. Endpoints and payloads may change between releases. For scripting and agent workflows, prefer [@dbx-app/cli](/en/docs/cli) or [@dbx-app/mcp-server](/en/docs/mcp) when possible.</Callout>
+<Callout type="warn">This API powers the NexDB Web UI and internal tooling such as the MCP Web backend. It is not a separate public integration contract. Endpoints and payloads may change between releases. For scripting and agent workflows, prefer [@dbx-app/cli](/en/docs/cli) or [@dbx-app/mcp-server](/en/docs/mcp) when possible.</Callout>
 
 ## Base URL
 
-By default, DBX Web listens on port `4224`:
+By default, NexDB Web listens on port `4224`:
 
 ```text
 http://localhost:4224
@@ -88,7 +88,7 @@ Cookie: dbx_session=...
 | `DBX_DISABLE_PASSWORD=1` | Disable password protection entirely |
 | `DBX_PORT` | Change the listen port (default `4224`) |
 | `DBX_DATA_DIR` | Data directory containing `dbx.db` |
-| `DBX_PUBLIC_BASE_PATH` | Serve DBX under a subpath such as `/dbx` |
+| `DBX_PUBLIC_BASE_PATH` | Serve NexDB under a subpath such as `/dbx` |
 | `DBX_MAX_UPLOAD_MB` | Override the general request and uploaded-file limit; default 1024 MB. Multipart routes reserve fixed protocol overhead (set at least `4096` for a 4 GiB file) |
 | `DBX_AGENT_DIR` | Override the Web Agent/driver directory; defaults to `agents` under the data directory |
 | `DBX_STATIC_DIR` | Override the Web static asset directory |
@@ -100,7 +100,7 @@ Cookie: dbx_session=...
 - Errors usually return JSON with an `error` field and an HTTP status code.
 - Long-running export, import, transfer, SQL-file, and AI operations commonly use a start request plus SSE progress and cancel/download routes rather than one synchronous response.
 
-Only the data-grid extractor currently exposes a tested, scoped OpenAPI document at `/api/query/data-grid-extractor-openapi.json`. It does not cover the complete DBX Web API or version the other routes.
+Only the data-grid extractor currently exposes a tested, scoped OpenAPI document at `/api/query/data-grid-extractor-openapi.json`. It does not cover the complete NexDB Web API or version the other routes.
 
 ## Connection APIs
 
@@ -317,7 +317,7 @@ When MCP runs against a deployed Web instance, set:
 
 The MCP server handles login and session cookies for you.
 
-CLI supports the same `DBX_WEB_URL` and `DBX_WEB_PASSWORD` variables. Both integrations reuse server-side connections, drivers, read-only protection, production protection, and database privileges, making them easier to maintain across DBX upgrades than copied internal route payloads.
+CLI supports the same `DBX_WEB_URL` and `DBX_WEB_PASSWORD` variables. Both integrations reuse server-side connections, drivers, read-only protection, production protection, and database privileges, making them easier to maintain across NexDB upgrades than copied internal route payloads.
 
 ## Writes, Safety, and File Boundaries
 
@@ -331,9 +331,9 @@ CLI supports the same `DBX_WEB_URL` and `DBX_WEB_PASSWORD` variables. Both integ
 
 See the repository examples:
 
-- [examples/web-api/automation.sh](https://github.com/t8y2/dbx/tree/main/examples/web-api/automation.sh)
-- [examples/docker/docker-compose.yml](https://github.com/t8y2/dbx/tree/main/examples/docker/docker-compose.yml)
-- [examples/cli/basic-workflow.sh](https://github.com/t8y2/dbx/tree/main/examples/cli/basic-workflow.sh)
+- [examples/web-api/automation.sh](https://github.com/Mutantcat-Working-Group/NexDB/tree/main/examples/web-api/automation.sh)
+- [examples/docker/docker-compose.yml](https://github.com/Mutantcat-Working-Group/NexDB/tree/main/examples/docker/docker-compose.yml)
+- [examples/cli/basic-workflow.sh](https://github.com/Mutantcat-Working-Group/NexDB/tree/main/examples/cli/basic-workflow.sh)
 
 ## Route Groups
 

@@ -1,11 +1,11 @@
 {
   "name": "@dbx-app/mcp-win32-arm64",
   "version": "0.4.91",
-  "description": "Precompiled DBX MCP Rust binary for win32 arm64",
+  "description": "Precompiled NexDB MCP Rust binary for win32 arm64",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/t8y2/dbx",
+    "url": "https://github.com/Mutantcat-Working-Group/NexDB",
     "directory": "packages/mcp-win32-arm64"
   },
   "os": [

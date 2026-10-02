@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DBX Hello Workbench</title>
+    <title>NexDB Hello Workbench</title>
     <style>
       :root {
         color-scheme: light dark;
@@ -121,11 +121,11 @@
   <body>
     <main>
       <section class="card">
-        <div id="eyebrow" class="eyebrow">Sandboxed DBX plugin</div>
+        <div id="eyebrow" class="eyebrow">Sandboxed NexDB plugin</div>
         <h1 id="title-copy">Sidecar + UI, end to end.</h1>
-        <p id="description">This page cannot access Tauri or the filesystem directly. It talks only to the DBX Host Bridge, which binds every request to this plugin.</p>
+        <p id="description">This page cannot access Tauri or the filesystem directly. It talks only to the NexDB Host Bridge, which binds every request to this plugin.</p>
         <div class="controls">
-          <input id="name" value="DBX" aria-label="Name" />
+          <input id="name" value="NexDB" aria-label="Name" />
           <button id="greet">Invoke sidecar</button>
           <button id="files" class="secondary">Open host files</button>
         </div>
@@ -141,9 +141,9 @@
     <script>
       const translations = {
         en: {
-          eyebrow: "Sandboxed DBX plugin",
+          eyebrow: "Sandboxed NexDB plugin",
           title: "Sidecar + UI, end to end.",
-          description: "This page cannot access Tauri or the filesystem directly. It talks only to the DBX Host Bridge, which binds every request to this plugin.",
+          description: "This page cannot access Tauri or the filesystem directly. It talks only to the NexDB Host Bridge, which binds every request to this plugin.",
           name: "Name",
           invoke: "Invoke sidecar",
           files: "Open host files",
@@ -159,9 +159,9 @@
           error: "Error",
         },
         "zh-CN": {
-          eyebrow: "受沙箱保护的 DBX 插件",
+          eyebrow: "受沙箱保护的 NexDB 插件",
           title: "Sidecar 与界面完整联动。",
-          description: "此页面不能直接访问 Tauri 或文件系统，只能通过 DBX Host Bridge 通信；宿主会把每个请求绑定到当前插件。",
+          description: "此页面不能直接访问 Tauri 或文件系统，只能通过 NexDB Host Bridge 通信；宿主会把每个请求绑定到当前插件。",
           name: "名称",
           invoke: "调用 Sidecar",
           files: "打开宿主文件浏览器",
@@ -177,9 +177,9 @@
           error: "错误",
         },
         "zh-TW": {
-          eyebrow: "受沙箱保護的 DBX 外掛",
+          eyebrow: "受沙箱保護的 NexDB 外掛",
           title: "Sidecar 與介面完整串接。",
-          description: "此頁面無法直接存取 Tauri 或檔案系統，只能透過 DBX Host Bridge 通訊；主程式會將每個請求綁定到目前外掛。",
+          description: "此頁面無法直接存取 Tauri 或檔案系統，只能透過 NexDB Host Bridge 通訊；主程式會將每個請求綁定到目前外掛。",
           name: "名稱",
           invoke: "呼叫 Sidecar",
           files: "開啟主程式檔案瀏覽器",
@@ -195,9 +195,9 @@
           error: "錯誤",
         },
         ja: {
-          eyebrow: "サンドボックス化された DBX プラグイン",
+          eyebrow: "サンドボックス化された NexDB プラグイン",
           title: "Sidecar と UI をエンドツーエンドで連携。",
-          description: "このページは Tauri やファイルシステムへ直接アクセスできません。各リクエストを現在のプラグインに関連付ける DBX Host Bridge のみを使用します。",
+          description: "このページは Tauri やファイルシステムへ直接アクセスできません。各リクエストを現在のプラグインに関連付ける NexDB Host Bridge のみを使用します。",
           name: "名前",
           invoke: "Sidecar を呼び出す",
           files: "ホストのファイルを開く",
@@ -213,9 +213,9 @@
           error: "エラー",
         },
         es: {
-          eyebrow: "Plugin de DBX aislado",
+          eyebrow: "Plugin de NexDB aislado",
           title: "Sidecar e interfaz, de extremo a extremo.",
-          description: "Esta página no puede acceder directamente a Tauri ni al sistema de archivos. Solo se comunica con DBX Host Bridge, que vincula cada solicitud a este plugin.",
+          description: "Esta página no puede acceder directamente a Tauri ni al sistema de archivos. Solo se comunica con NexDB Host Bridge, que vincula cada solicitud a este plugin.",
           name: "Nombre",
           invoke: "Invocar sidecar",
           files: "Abrir archivos del host",
@@ -231,9 +231,9 @@
           error: "Error",
         },
         it: {
-          eyebrow: "Plugin DBX in sandbox",
+          eyebrow: "Plugin NexDB in sandbox",
           title: "Sidecar e interfaccia, end-to-end.",
-          description: "Questa pagina non può accedere direttamente a Tauri o al file system. Comunica solo con DBX Host Bridge, che associa ogni richiesta a questo plugin.",
+          description: "Questa pagina non può accedere direttamente a Tauri o al file system. Comunica solo con NexDB Host Bridge, che associa ogni richiesta a questo plugin.",
           name: "Nome",
           invoke: "Invoca sidecar",
           files: "Apri file dell'host",
@@ -249,9 +249,9 @@
           error: "Errore",
         },
         "pt-BR": {
-          eyebrow: "Plugin DBX em sandbox",
+          eyebrow: "Plugin NexDB em sandbox",
           title: "Sidecar e interface, de ponta a ponta.",
-          description: "Esta página não pode acessar diretamente o Tauri nem o sistema de arquivos. Ela se comunica apenas com o DBX Host Bridge, que vincula cada solicitação a este plugin.",
+          description: "Esta página não pode acessar diretamente o Tauri nem o sistema de arquivos. Ela se comunica apenas com o NexDB Host Bridge, que vincula cada solicitação a este plugin.",
           name: "Nome",
           invoke: "Invocar sidecar",
           files: "Abrir arquivos do host",

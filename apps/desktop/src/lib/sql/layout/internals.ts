@@ -10,7 +10,7 @@ import type { AstNode, StatementNode } from "sql-formatter/dist/esm/parser/ast.j
  * Access to sql-formatter's bundled parser and layout machinery.
  *
  * sql-formatter's public surface is `format()` / `formatDialect()`, and its
- * output layout is not configurable enough for the default style DBX targets:
+ * output layout is not configurable enough for the default style NexDB targets:
  * clause keywords must sit flush left, a clause's continuation lines align under
  * its first item, and parenthesized groups stay inline while they fit. All of
  * that needs the AST plus the "measure, don't wrap" layout the package only
@@ -31,7 +31,7 @@ type IndentationCtor = typeof Indentation;
 
 /**
  * The values `Params` resolves placeholders against, as sql-formatter types them:
- * `cfg.params`, which DBX never sets — the config importer rejects that legacy
+ * `cfg.params`, which NexDB never sets — the config importer rejects that legacy
  * key — so placeholders keep their literal text in the output.
  */
 export type SqlFormatterParamValues = ConstructorParameters<ParamsCtor>[0];

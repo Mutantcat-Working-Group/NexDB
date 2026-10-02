@@ -3,7 +3,7 @@ import { test } from "vitest";
 import { sortContributorActivity, type ContributorActivityData } from "./contributorActivity";
 
 const data: ContributorActivityData = {
-  repository: "t8y2/dbx",
+  repository: "Mutantcat-Working-Group/NexDB",
   generatedAt: "2026-07-19T00:00:00.000Z",
   stars: 100,
   contributors: [

@@ -16,6 +16,6 @@ Supported databases: MySQL, PostgreSQL, SQLite, Redis, MongoDB, DuckDB, ClickHou
 
 ## Links
 
-- GitHub: https://github.com/t8y2/dbx
+- GitHub: https://github.com/Mutantcat-Working-Group/NexDB
 - Discord: https://discord.gg/W7NyVDRt6a
 - QQ 群: 1087880322

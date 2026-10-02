@@ -21,7 +21,7 @@ function platformTarget() {
   const platform = `${process.platform}-${process.arch}`;
   const target = platformPackages[platform];
   if (!target) {
-    throw new Error(`DBX Plugin CLI does not provide a binary for ${platform}.`);
+    throw new Error(`NexDB Plugin CLI does not provide a binary for ${platform}.`);
   }
   return target;
 }
@@ -46,7 +46,7 @@ function resolveBinary() {
 
   const binary = join(dirname(manifest), "bin", binaryName);
   if (!existsSync(binary)) {
-    throw new Error(`The DBX Plugin CLI binary is missing from ${packageName}.`);
+    throw new Error(`The NexDB Plugin CLI binary is missing from ${packageName}.`);
   }
   return binary;
 }

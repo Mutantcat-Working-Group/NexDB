@@ -463,8 +463,8 @@ function printConnection(recipe) {
   console.log(`${recipe.name} (${recipe.version})`);
   for (const [key, value] of Object.entries(connection)) console.log(`${key}: ${value}`);
   const deepLink = dbxConnectionDeepLink(recipe);
-  if (deepLink) console.log(`DBX connection link: ${deepLink}`);
-  else console.log(`DBX connection link: unavailable (DBX has no compatible ${recipe.name} connection type)`);
+  if (deepLink) console.log(`NexDB connection link: ${deepLink}`);
+  else console.log(`NexDB connection link: unavailable (NexDB has no compatible ${recipe.name} connection type)`);
   if (recipe.notes) console.log(`notes: ${recipe.notes}`);
   const warning = architectureWarning(recipe);
   if (warning) console.warn(`warning: ${warning}`);

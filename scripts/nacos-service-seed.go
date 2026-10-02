@@ -7,7 +7,7 @@
 //	go run ./scripts/nacos-service-seed.go -target both -serve
 //
 // Nacos 3 registration intentionally uses the 8848 Admin API. The generated
-// instances can then be inspected through a separate 8080 Console API DBX
+// instances can then be inspected through a separate 8080 Console API NexDB
 // connection to verify the reduced Console capability set.
 package main
 

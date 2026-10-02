@@ -362,7 +362,7 @@ fn run_create(arguments: Vec<String>) -> Result<(), String> {
             "--version" => inputs.version = Some(value_after(&arguments, &mut index)?.to_string()),
             "--signing-key-id" => {
                 return Err(
-                    "--signing-key-id is no longer used when creating plugins; official packages are signed by DBX Store after review"
+                    "--signing-key-id is no longer used when creating plugins; official packages are signed by NexDB Store after review"
                         .to_string(),
                 );
             }
@@ -551,7 +551,7 @@ fn resolve_create_options<R: BufRead, W: Write>(
     writer: &mut W,
 ) -> Result<Option<CreateOptions>, String> {
     if interactive {
-        writeln!(writer, "{}", styled_stdout("Create a DBX plugin", ANSI_ACCENT)).map_err(|error| error.to_string())?;
+        writeln!(writer, "{}", styled_stdout("Create a NexDB plugin", ANSI_ACCENT)).map_err(|error| error.to_string())?;
     }
     let directory = resolve_project_directory(inputs.directory, inputs.force, interactive, reader, writer)?;
     let slug = project_slug(&directory)?;
@@ -766,7 +766,7 @@ fn print_create_summary<W: Write>(options: &CreateOptions, writer: &mut W) -> Re
         writer,
         "  {}        {}",
         styled_stdout("Release:", ANSI_PROMPT),
-        styled_stdout("builds unsigned candidates; DBX Store signs approved official releases", ANSI_MUTED)
+        styled_stdout("builds unsigned candidates; NexDB Store signs approved official releases", ANSI_MUTED)
     )
     .map_err(|error| error.to_string())?;
     if let Some(sdk_root) = &options.sdk_root {
@@ -986,7 +986,7 @@ fn package_manifest(mut manifest: Value, backend: Option<&BackendConfig>, target
         .and_then(Value::as_object_mut)
     {
         if ui_entrypoint.contains_key("kind") {
-            return Err("manifest.json entrypoints.ui.kind is obsolete; DBX plugin UI is always sandboxed".to_string());
+            return Err("manifest.json entrypoints.ui.kind is obsolete; NexDB plugin UI is always sandboxed".to_string());
         }
     }
     if let Some(backend) = backend {
@@ -1006,7 +1006,7 @@ fn package_manifest(mut manifest: Value, backend: Option<&BackendConfig>, target
         }
         if backend_entrypoint.contains_key("protocol") {
             return Err(
-                "manifest.json entrypoints.backend.protocol is obsolete; DBX manifest v1 uses the DBX JSON-RPC protocol"
+                "manifest.json entrypoints.backend.protocol is obsolete; NexDB manifest v1 uses the NexDB JSON-RPC protocol"
                     .to_string(),
             );
         }
@@ -1461,9 +1461,9 @@ fn title_word(word: &str) -> String {
 
 fn default_description(name: &str) -> String {
     if name.to_ascii_lowercase().ends_with(" plugin") {
-        format!("{name} for DBX.")
+        format!("{name} for NexDB.")
     } else {
-        format!("{name} plugin for DBX.")
+        format!("{name} plugin for NexDB.")
     }
 }
 
@@ -1527,7 +1527,7 @@ fn print_usage() {
     println!(
         "{} {}",
         styled_stdout("dbx-plugin", ANSI_ACCENT),
-        styled_stdout("Create, sign, and package DBX plugins", ANSI_MUTED)
+        styled_stdout("Create, sign, and package NexDB plugins", ANSI_MUTED)
     );
     println!("\n{}", styled_stdout("Usage:", ANSI_PROMPT));
     println!("  dbx-plugin <command> [options]");
@@ -1552,7 +1552,7 @@ fn print_usage() {
 }
 
 fn print_create_help() {
-    println!("{}", styled_stdout("Create a DBX plugin project", ANSI_ACCENT));
+    println!("{}", styled_stdout("Create a NexDB plugin project", ANSI_ACCENT));
     println!("\n{}\n  {}", styled_stdout("Usage:", ANSI_PROMPT), create_usage());
     println!("\n{}", styled_stdout("Templates:", ANSI_PROMPT));
     println!("  {}   Sandboxed UI only; packages once as universal", styled_stdout("frontend", ANSI_SUCCESS));
@@ -1568,15 +1568,15 @@ fn print_create_help() {
     println!("      --publisher NAME      Publisher identifier");
     println!("      --description TEXT    Plugin description");
     println!("      --version VERSION     Strict semantic version (default: 0.1.0)");
-    println!("      --sdk-root PATH       Local DBX SDK checkout for Rust or Go templates");
+    println!("      --sdk-root PATH       Local NexDB SDK checkout for Rust or Go templates");
     println!("      --force               Overwrite generated files");
     println!("  -y, --yes                 Use defaults without prompts");
     println!("  -h, --help                Print this help");
-    println!("\nGenerated release workflows publish unsigned candidates for DBX Store review and signing.");
+    println!("\nGenerated release workflows publish unsigned candidates for NexDB Store review and signing.");
 }
 
 fn print_package_help() {
-    println!("{}", styled_stdout("Package a DBX plugin", ANSI_ACCENT));
+    println!("{}", styled_stdout("Package a NexDB plugin", ANSI_ACCENT));
     println!("\n{}\n  {}", styled_stdout("Usage:", ANSI_PROMPT), package_usage());
     println!("\n{}", styled_stdout("Behavior:", ANSI_PROMPT));
     println!("  Frontend-only projects default to target universal.");
@@ -1596,7 +1596,7 @@ fn print_keygen_help() {
     println!("\n{}", styled_stdout("Output:", ANSI_PROMPT));
     println!("  Writes a private environment file with mode 0600 on Unix.");
     println!(
-        "  Intended for private or custom repository operators; official DBX Store authors do not need this command."
+        "  Intended for private or custom repository operators; official NexDB Store authors do not need this command."
     );
     println!("\n{}", styled_stdout("Options:", ANSI_PROMPT));
     println!("      --key-id ID       Public repository key identifier");
@@ -2014,20 +2014,20 @@ mod tests {
         assert_eq!(options.plugin_id, "com.acme.wizard");
         assert_eq!(options.name, "Wizard Plugin");
         assert_eq!(options.publisher, "acme");
-        assert_eq!(options.description, "Wizard Plugin for DBX.");
+        assert_eq!(options.description, "Wizard Plugin for NexDB.");
         assert_eq!(options.version, "1.2.3");
         let output = String::from_utf8(output).unwrap();
         assert!(output.contains("Invalid: choose 1/Frontend, 2/Svelte, 3/Rust, or 4/Go"));
         assert!(output.contains("Invalid: plugin id must use lowercase letters"));
         assert!(output.contains("Invalid: Version must be valid SemVer"));
-        assert!(output.contains("DBX Store signs approved official releases"));
+        assert!(output.contains("NexDB Store signs approved official releases"));
         assert!(output.contains("Plugin configuration:"));
         assert!(output.contains("Invalid: enter y or n"));
     }
 
     #[test]
     fn formats_common_plugin_acronyms_and_validates_semver() {
-        assert_eq!(title_from_slug("dbx-ssh-sftp-workbench"), "DBX SSH SFTP Workbench");
+        assert_eq!(title_from_slug("dbx-ssh-sftp-workbench"), "NexDB SSH SFTP Workbench");
         validate_semver("1.2.3-beta.1+darwin.arm64").unwrap();
         assert!(validate_semver("1.2.3-").is_err());
         assert!(validate_semver("01.2.3").is_err());

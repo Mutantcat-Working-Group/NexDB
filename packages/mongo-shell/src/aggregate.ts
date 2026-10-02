@@ -26,7 +26,7 @@ const UNCLOSED_DELIMITERS = "MongoDB command has unclosed parentheses, brackets,
 const UNSUPPORTED_CHAINING = "Unsupported MongoDB aggregate form. Use db.collection.aggregate(pipeline) or " + "db.collection.aggregate(pipeline, options). Chaining (for example .limit()) is not supported.";
 
 /**
- * Cursor methods that change nothing here: DBX always materialises results, so
+ * Cursor methods that change nothing here: NexDB always materialises results, so
  * the `.toArray()` that mongosh and Compass append can simply be dropped.
  */
 const NOOP_CURSOR_CHAIN = /^(?:\s*\.\s*(?:toArray|pretty)\s*\(\s*\))*\s*$/;

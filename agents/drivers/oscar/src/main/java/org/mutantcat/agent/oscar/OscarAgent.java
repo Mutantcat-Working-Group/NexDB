@@ -21,7 +21,7 @@ import java.util.Locale;
  *       schema 切换改用 PG 风格的 {@code SET SEARCH_PATH TO "x"}（已验证可用，且不影响 ALL_* 视图的 OWNER 过滤）。</li>
  * </ul>
  *
- * <p>建表/表结构编辑由 DBX 核心的 Oracle 方言 SQL 生成器负责（神通实测支持 ALTER TABLE
+ * <p>建表/表结构编辑由 NexDB 核心的 Oracle 方言 SQL 生成器负责（神通实测支持 ALTER TABLE
  * ADD/MODIFY/DROP/RENAME COLUMN、DROP/ADD PRIMARY KEY、COMMENT ON、CREATE/DROP INDEX），
  * 本 agent 仅需提供元数据（继承 ConfiguredJdbcAgent 的标准 JDBC metadata）与对象源码。
  */

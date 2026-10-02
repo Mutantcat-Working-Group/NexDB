@@ -189,7 +189,7 @@ fn replace_old_jre_dir(path: &Path) -> Result<Option<PathBuf>, String> {
     }
 }
 
-const REGISTRY_PATH: &str = "https://github.com/t8y2/dbx/releases/download/agents-latest/agent-registry.json";
+const REGISTRY_PATH: &str = "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/agents-latest/agent-registry.json";
 const REGISTRY_R2_PATH: &str = "agents/agent-registry.json";
 
 static REGISTRY_CACHE: std::sync::LazyLock<
@@ -2453,7 +2453,7 @@ pub fn ensure_driver_app_version(
         return Ok(());
     }
     Err(format!(
-        "{db_type} driver {} requires DBX {} or newer. Current DBX version is {}.",
+        "{db_type} driver {} requires NexDB {} or newer. Current NexDB version is {}.",
         driver.version, driver.min_app_version, current_version
     ))
 }

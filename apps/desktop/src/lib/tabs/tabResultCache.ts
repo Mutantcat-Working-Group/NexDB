@@ -194,7 +194,7 @@ function openCacheDb(): Promise<IDBDatabase | null> {
     };
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => {
-      console.warn("[DBX][tab-result-cache:open:error]", request.error);
+      console.warn("[NexDB][tab-result-cache:open:error]", request.error);
       resolve(null);
     };
     request.onblocked = () => resolve(null);
@@ -520,7 +520,7 @@ async function writeRemoteRuntimeCache(key: string, bytes: Uint8Array, stats: { 
     });
     return response.ok;
   } catch (error) {
-    console.warn("[DBX][tab-result-cache:remote-write:error]", { key, error });
+    console.warn("[NexDB][tab-result-cache:remote-write:error]", { key, error });
     return false;
   }
 }
@@ -589,7 +589,7 @@ async function readRemoteRuntimeCache(key: string): Promise<Uint8Array | undefin
     const entry = (await response.json()) as { payloadBase64?: string } | null;
     return entry?.payloadBase64 ? base64ToBytes(entry.payloadBase64) : undefined;
   } catch (error) {
-    console.warn("[DBX][tab-result-cache:remote-read:error]", { key, error });
+    console.warn("[NexDB][tab-result-cache:remote-read:error]", { key, error });
     return undefined;
   }
 }
@@ -664,7 +664,7 @@ export async function writeResultCacheBackends(backends: ResultCacheBackend[], k
     try {
       if (await backend.write(key, bytes, stats, ownerId)) return true;
     } catch (error) {
-      console.warn("[DBX][tab-result-cache:write:error]", { key, backend: backend.name, error });
+      console.warn("[NexDB][tab-result-cache:write:error]", { key, backend: backend.name, error });
     }
   }
   return false;
@@ -676,7 +676,7 @@ export async function readResultCacheBackends(backends: ResultCacheBackend[], ke
       const bytes = await backend.read(key);
       if (bytes) return { bytes, backend };
     } catch (error) {
-      console.warn("[DBX][tab-result-cache:read:error]", { key, backend: backend.name, error });
+      console.warn("[NexDB][tab-result-cache:read:error]", { key, backend: backend.name, error });
     }
   }
   return undefined;
@@ -826,7 +826,7 @@ export async function deleteTabResultSnapshot(key: string): Promise<void> {
     await Promise.all(availableResultCacheBackends().map((backend) => backend.delete(key)));
     clearVersionLater();
   } catch (error) {
-    console.warn("[DBX][tab-result-cache:delete:error]", { key, error });
+    console.warn("[NexDB][tab-result-cache:delete:error]", { key, error });
     clearVersionLater();
   }
 }

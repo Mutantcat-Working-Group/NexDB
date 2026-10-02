@@ -1,6 +1,6 @@
-# Publishing DBX plugins
+# Publishing NexDB plugins
 
-DBX separates plugin source, unsigned review candidates, repository-signed installable artifacts, and catalog metadata. These artifacts have different owners and should not be copied into one Git repository.
+NexDB separates plugin source, unsigned review candidates, repository-signed installable artifacts, and catalog metadata. These artifacts have different owners and should not be copied into one Git repository.
 
 The signing rationale and future author-attestation boundary are documented in [`SIGNING.md`](SIGNING.md).
 
@@ -15,9 +15,9 @@ The plugin author keeps the following in the plugin's own Git repository:
 - package scripts and GitHub Actions workflows;
 - public release notes and issue tracker links.
 
-The source may live inside `t8y2/dbx` for a tightly coupled official plugin or in an independent author repository. Official and verified submissions must give DBX reviewers access to the corresponding source. Open-source plugins normally provide a public source URL; a future closed-source commercial flow may use private reviewer access.
+The source may live inside `Mutantcat-Working-Group/NexDB` for a tightly coupled official plugin or in an independent author repository. Official and verified submissions must give NexDB reviewers access to the corresponding source. Open-source plugins normally provide a public source URL; a future closed-source commercial flow may use private reviewer access.
 
-Official plugin authors do not receive or maintain the DBX Store signing key.
+Official plugin authors do not receive or maintain the NexDB Store signing key.
 
 ### Candidate artifact storage
 
@@ -32,7 +32,7 @@ vendor.example-1.2.0-linux-arm64.dbxp
 release-candidates.json
 ```
 
-Frontend-only or otherwise platform-independent plugins may publish one `vendor.example-1.2.0-universal.dbxp` candidate. Use `universal` only when the exact same package is valid on every supported DBX target.
+Frontend-only or otherwise platform-independent plugins may publish one `vendor.example-1.2.0-universal.dbxp` candidate. Use `universal` only when the exact same package is valid on every supported NexDB target.
 
 Candidates are not normal Marketplace installation assets. They deliberately contain no `signature.json`, and their `.artifact.json` records contain no `signingKeyId`.
 
@@ -58,7 +58,7 @@ A store submission references:
 - each final artifact URL, size, SHA-256, target, and repository signing key ID;
 - reviewer status and any revocation information.
 
-Human review decides whether a plugin is allowed in the official catalog. SHA-256 and Ed25519 repository signing ensure the installed bytes are the reviewed bytes. DBX also compares the package Manifest ID, version, publisher, and permissions with the selected catalog entry before activation.
+Human review decides whether a plugin is allowed in the official catalog. SHA-256 and Ed25519 repository signing ensure the installed bytes are the reviewed bytes. NexDB also compares the package Manifest ID, version, publisher, and permissions with the selected catalog entry before activation.
 
 ## Author release workflow
 
@@ -68,7 +68,7 @@ Install the precompiled CLI and run `dbx-plugin create <directory> --template fr
 npm install --global @dbx-app/plugin-cli@0.1.2
 ```
 
-Pin both the reusable workflow reference and `plugin-cli-version`. The npm package contains the matching CLI binary, packager, and Rust/Go SDK sources. Building the CLI from a DBX checkout is reserved for SDK development and can be enabled with `install-plugin-cli-from-source: true` plus a reviewed `sdk-ref`.
+Pin both the reusable workflow reference and `plugin-cli-version`. The npm package contains the matching CLI binary, packager, and Rust/Go SDK sources. Building the CLI from a NexDB checkout is reserved for SDK development and can be enabled with `install-plugin-cli-from-source: true` plus a reviewed `sdk-ref`.
 
 Before publishing a new CLI version, update the CLI and npm manifests together, merge them to `main`, then run the **Plugin CLI Release** workflow. The workflow creates `plugin-cli-v<version>`, builds six platform packages, publishes `@dbx-app/plugin-cli`, and verifies clean npm installation with frontend, Rust, and Go templates.
 
@@ -93,8 +93,8 @@ The default native matrix covers `darwin-arm64`, `darwin-x64`, `windows-x64`, `l
 1. The author opens a Plugin submission Issue in `t8y2/dbx-store` with the source tag and `release-candidates.json` URL.
 2. Review the source tag, Manifest, permissions, release notes, and candidate metadata.
 3. Verify every candidate URL is immutable and matches `release-candidates.json`.
-4. Run the protected `dbx-store` signing workflow with the expected plugin ID, version, target, output filename, and reviewed DBX SDK ref.
-5. The workflow downloads the candidate, rejects pre-existing signatures, verifies Manifest identity, appends the DBX Store signature, and publishes the signed asset plus final metadata.
+4. Run the protected `dbx-store` signing workflow with the expected plugin ID, version, target, output filename, and reviewed NexDB SDK ref.
+5. The workflow downloads the candidate, rejects pre-existing signatures, verifies Manifest identity, appends the NexDB Store signature, and publishes the signed asset plus final metadata.
 6. The author opens the final catalog PR against `t8y2/dbx-store:main`, adding the final artifact URL, size, SHA-256, and repository `signingKeyId`.
 7. Run store validation and complete maintainer review before making the version visible.
 

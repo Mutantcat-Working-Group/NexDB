@@ -12,7 +12,7 @@ AI suggestions are not verified diagnoses, proof that an issue is valid, or rele
 
 | AI label | Repair / implementation priority |
 | --- | --- |
-| `ai-priority/P0` | Critical security exposure, irreversible persistent data loss/corruption caused by normal DBX operations, or widespread core failure without a viable workaround; concrete evidence and high confidence required. Destructive defects are not downgraded solely because few users or one engine are currently affected, or because backups exist. Immediate maintainer review. |
+| `ai-priority/P0` | Critical security exposure, irreversible persistent data loss/corruption caused by normal NexDB operations, or widespread core failure without a viable workaround; concrete evidence and high confidence required. Destructive defects are not downgraded solely because few users or one engine are currently affected, or because backups exist. Immediate maintainer review. |
 | `ai-priority/P1` | Major non-destructive core workflow blocked, significant regression, serious recoverable risk, or a missing capability demonstrably blocking a common core workflow; P0 conditions take precedence. |
 | `ai-priority/P2` | Meaningful functional bug or useful feature with limited impact or a practical workaround. |
 | `ai-priority/P3` | Cosmetic issues, minor convenience, optional polish or narrowly useful low-impact enhancements. |

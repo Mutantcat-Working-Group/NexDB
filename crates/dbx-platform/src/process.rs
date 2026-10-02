@@ -15,7 +15,7 @@ pub fn hide_std_console_window(command: &mut std::process::Command) {
     #[cfg(windows)]
     {
         use std::os::windows::process::CommandExt;
-        // DBX is a GUI app; console subprocesses should not flash a window.
+        // NexDB is a GUI app; console subprocesses should not flash a window.
         command.creation_flags(CREATE_NO_WINDOW);
     }
 }

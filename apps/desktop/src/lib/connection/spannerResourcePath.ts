@@ -3,7 +3,7 @@ import type { ConnectionConfig } from "@/types/database";
 /**
  * Cloud Spanner has no host/port identity: a database is addressed by the
  * resource path `projects/{project}/instances/{instance}/databases/{database}`.
- * DBX stores that whole path in `ConnectionConfig.database` and lets the
+ * NexDB stores that whole path in `ConnectionConfig.database` and lets the
  * connection dialog edit it either as three IDs or as the raw path.
  *
  * Partial paths (`projects/p/instances//databases/`) are intentionally

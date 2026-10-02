@@ -64,7 +64,7 @@ function readGroups(): SqlExecutionTargetGroup[] {
     }
     return sortGroups(groups);
   } catch (error) {
-    console.warn("[DBX][sql-execution-target-groups:load] invalid persisted state", error);
+    console.warn("[NexDB][sql-execution-target-groups:load] invalid persisted state", error);
     return [];
   }
 }

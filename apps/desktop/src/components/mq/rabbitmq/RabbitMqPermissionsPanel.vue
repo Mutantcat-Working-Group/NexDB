@@ -107,7 +107,7 @@ async function loadVhosts() {
     const namespaces = await mqListNamespaces(props.connectionId, RABBITMQ_MQ_TENANT);
     vhosts.value = namespaces.map((ns) => ns.namespace);
   } catch (e: unknown) {
-    console.warn("[DBX] Failed to load RabbitMQ vhosts:", e);
+    console.warn("[NexDB] Failed to load RabbitMQ vhosts:", e);
   }
 }
 

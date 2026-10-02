@@ -181,13 +181,13 @@ async fn write_callback_response(stream: &mut tokio::net::TcpStream, success: bo
         (
             "200 OK",
             "Authorization received",
-            "DBX received the authorization response. Return to DBX while it completes the connection.",
+            "NexDB received the authorization response. Return to NexDB while it completes the connection.",
         )
     } else {
         (
             "400 Bad Request",
             "Authentication failed",
-            "DBX could not complete authentication. Return to DBX for details.",
+            "NexDB could not complete authentication. Return to NexDB for details.",
         )
     };
     let html = format!(

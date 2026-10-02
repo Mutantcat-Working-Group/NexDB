@@ -270,7 +270,7 @@ async fn official_tools_round_trip_through_dbx_core() {
         assert_eq!(summary.batches_committed, 3);
         assert_eq!(collection_bytes(&client, &database, imported).await, expected);
 
-        // This file is produced by DBX, with no official metadata sidecar beside it.
+        // This file is produced by NexDB, with no official metadata sidecar beside it.
         let exported = directory.path().join(format!("dbx-output.{extension}"));
         let export = MongoExportRequest {
             export_id: uuid::Uuid::new_v4().to_string(),
@@ -301,7 +301,7 @@ async fn official_tools_round_trip_through_dbx_core() {
         args.push(exported.to_str().unwrap());
         run_tool(&tools, "mongorestore", &args);
         assert_eq!(collection_bytes(&client, &database, restored).await, expected);
-        println!("{extension}: official -> DBX -> official, 1207 documents, BSON bytes match");
+        println!("{extension}: official -> NexDB -> official, 1207 documents, BSON bytes match");
 
         let mut empty_export = export.clone();
         empty_export.collection = "empty".into();

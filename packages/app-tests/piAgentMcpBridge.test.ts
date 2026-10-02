@@ -20,7 +20,7 @@ afterEach(() => {
 });
 
 describe("Pi Coding Agent MCP bridge", () => {
-  it("registers an allowed DBX MCP tool and forwards its result", async () => {
+  it("registers an allowed NexDB MCP tool and forwards its result", async () => {
     const directory = await mkdtemp(join(tmpdir(), "dbx-pi-bridge-test-"));
     const readyPath = join(directory, "ready");
     const fakeMcp = String.raw`
@@ -34,7 +34,7 @@ describe("Pi Coding Agent MCP bridge", () => {
           result = {
             tools: [{
               name: "dbx_ping",
-              title: "DBX Ping",
+              title: "NexDB Ping",
               description: "Return a deterministic value",
               inputSchema: {
                 type: "object",

@@ -733,7 +733,7 @@ function refreshPendingInvalidatedTableSearchScopes() {
     if (!findNodePathByIdentity(store.treeNodes, scope.parentNodeId, scope)) continue;
     pendingInvalidatedTableSearchScopes.delete(scopeKey);
     void loadLocalTableSearchResults(scope.parentNodeId, true, undefined, scope).catch((error) => {
-      console.debug("[DBX][sidebar-table-search:index-rebuild-failed]", { scope, error });
+      console.debug("[NexDB][sidebar-table-search:index-rebuild-failed]", { scope, error });
     });
   }
 }

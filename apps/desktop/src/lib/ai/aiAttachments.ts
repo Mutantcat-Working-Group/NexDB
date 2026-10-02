@@ -51,7 +51,7 @@ export function imageAttachmentMediaType(file: Pick<File, "name" | "type">): str
 }
 
 /**
- * Report whether DBX has an image-capable transport for this provider.
+ * Report whether NexDB has an image-capable transport for this provider.
  * Model capability is intentionally left to the provider instead of being
  * guessed from model names, which change independently of the application.
  */

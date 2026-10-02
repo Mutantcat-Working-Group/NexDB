@@ -14,7 +14,7 @@ Proposed（设计已确认，待实现）
 
 当前目标表已存在且结构与源不一致时，传输会 fail-fast，错误原文即：
 
-> DBX does not alter an existing target table's columns during transfer — drop the target table or adjust its structure to match the source first.
+> NexDB does not alter an existing target table's columns during transfer — drop the target table or adjust its structure to match the source first.
 
 见 `crates/dbx-core/src/transfer.rs:1633-1662`（`validate_preexisting_target_columns`）。用户必须离开传输对话框、手工删表、再回来重跑。本功能把这句提示自动化。
 

@@ -57,7 +57,7 @@ export function normalizeMongoTlsFormState(ssl: boolean, urlParams: string | und
 export function mongodbAuthFailureHint(message: string): string {
   const normalizedMessage = message.toLowerCase();
   if (normalizedMessage.includes("tlsallowinvalidhostnames is an invalid option")) {
-    return `${message}\n\nDBX uses the Rust MongoDB driver (rustls), which does not accept tlsAllowInvalidHostnames in the connection string. Use tlsAllowInvalidCertificates=true instead. This is commonly required for AWS DocumentDB over an SSH tunnel because the local endpoint is 127.0.0.1 while the server certificate is issued for the DocumentDB hostname.`;
+    return `${message}\n\nNexDB uses the Rust MongoDB driver (rustls), which does not accept tlsAllowInvalidHostnames in the connection string. Use tlsAllowInvalidCertificates=true instead. This is commonly required for AWS DocumentDB over an SSH tunnel because the local endpoint is 127.0.0.1 while the server certificate is issued for the DocumentDB hostname.`;
   }
 
   if (message.includes('certificate not valid for name "127.0.0.1"') || (message.includes("invalid peer certificate") && message.includes("127.0.0.1") && message.includes("docdb"))) {

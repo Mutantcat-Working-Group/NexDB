@@ -19,5 +19,5 @@
     ]
   },
   "shell": ["/usr/local/bin/etcdctl", "--endpoints=http://127.0.0.1:2379", "--user", "root:${DB_PASSWORD}"],
-  "smoke": { "steps": [{ "name": "write authenticated smoke key", "command": ["/usr/local/bin/etcdctl", "--endpoints=http://127.0.0.1:2379", "--user", "root:${DB_PASSWORD}", "put", "dbx:smoke", "DBX smoke"], "expect": "OK" }, { "name": "read authenticated smoke key", "command": ["/usr/local/bin/etcdctl", "--endpoints=http://127.0.0.1:2379", "--user", "root:${DB_PASSWORD}", "get", "dbx:smoke"], "expect": "DBX smoke" }] }
+  "smoke": { "steps": [{ "name": "write authenticated smoke key", "command": ["/usr/local/bin/etcdctl", "--endpoints=http://127.0.0.1:2379", "--user", "root:${DB_PASSWORD}", "put", "dbx:smoke", "NexDB smoke"], "expect": "OK" }, { "name": "read authenticated smoke key", "command": ["/usr/local/bin/etcdctl", "--endpoints=http://127.0.0.1:2379", "--user", "root:${DB_PASSWORD}", "get", "dbx:smoke"], "expect": "NexDB smoke" }] }
 }

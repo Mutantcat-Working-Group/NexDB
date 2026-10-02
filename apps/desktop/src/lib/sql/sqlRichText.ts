@@ -59,7 +59,7 @@ export async function renderSqlRichTextHtml(code: string): Promise<string> {
     const body = lines.map((line) => line.map(tokenToHtml).join("")).join("\n");
     return wrapInPre(body);
   } catch (error) {
-    console.warn("[DBX][sqlRichText] Failed to highlight SQL, falling back to plain markup:", error);
+    console.warn("[NexDB][sqlRichText] Failed to highlight SQL, falling back to plain markup:", error);
     return wrapInPre(escapeHtml(code));
   }
 }

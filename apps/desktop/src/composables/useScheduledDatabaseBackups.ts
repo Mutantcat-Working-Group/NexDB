@@ -181,7 +181,7 @@ export function useScheduledDatabaseBackups(options: { scheduler?: boolean } = {
       runs.value = runs.value.filter((run) => !staleIds.has(run.id));
       persistRuns();
     } catch (error) {
-      appendDebugLog("error", "[DBX][database-backup:retention-error]", error);
+      appendDebugLog("error", "[NexDB][database-backup:retention-error]", error);
     }
   }
 
@@ -195,7 +195,7 @@ export function useScheduledDatabaseBackups(options: { scheduler?: boolean } = {
     try {
       await Promise.all([...exportIds].map((exportId) => api.cancelDatabaseExport(exportId)));
     } catch (error) {
-      appendDebugLog("warn", "[DBX][database-backup:cancel-request-error]", error);
+      appendDebugLog("warn", "[NexDB][database-backup:cancel-request-error]", error);
       cancellationRequested.delete(runId);
       cancellingRunIds.delete(runId);
       restoreDatabaseExportTaskRunning(runId);
@@ -265,7 +265,7 @@ export function useScheduledDatabaseBackups(options: { scheduler?: boolean } = {
             const result = await api.executeQuery(config.connectionId, "", "SHOW VARIABLES LIKE 'lower_case_table_names'", undefined, undefined, { maxRows: 1 });
             tableNamesCaseSensitive = databaseBackupTableNamesAreCaseSensitive(connection.db_type, result.rows[0]?.[1] ?? result.rows[0]?.[0]);
           } catch (error) {
-            appendDebugLog("warn", "[DBX][database-backup:table-name-case-detection-error]", error);
+            appendDebugLog("warn", "[NexDB][database-backup:table-name-case-detection-error]", error);
           }
           if (cancellationRequested.has(runId)) {
             finalStatus = "cancelled";
@@ -420,7 +420,7 @@ export function useScheduledDatabaseBackups(options: { scheduler?: boolean } = {
         // for a pool connection. Unlike child exports, it has no exporter
         // task that can clear that key after completion.
         await api.clearDatabaseExportCancellation(runId).catch((error) => {
-          appendDebugLog("warn", "[DBX][database-backup:cancel-clear-error]", error);
+          appendDebugLog("warn", "[NexDB][database-backup:cancel-clear-error]", error);
         });
         if (finalStatus !== "success" && generatedPaths.length > 0) {
           try {
@@ -428,7 +428,7 @@ export function useScheduledDatabaseBackups(options: { scheduler?: boolean } = {
             if (cleanupPaths.length > 0) await api.deleteDatabaseBackupFiles(cleanupPaths, [config.destinationDirectory]);
             run.files = [];
           } catch (error: any) {
-            appendDebugLog("error", "[DBX][database-backup:partial-cleanup-error]", error);
+            appendDebugLog("error", "[NexDB][database-backup:partial-cleanup-error]", error);
             const cleanupError = error?.message || String(error);
             finalError = finalError ? `${finalError}; failed to remove partial backup files: ${cleanupError}` : cleanupError;
           }
@@ -460,7 +460,7 @@ export function useScheduledDatabaseBackups(options: { scheduler?: boolean } = {
           overallPercent: finalStatus === "success" ? 100 : lastProgressPercent,
         });
 
-        appendDebugLog(finalStatus === "success" ? "info" : "error", `[DBX][database-backup:${finalStatus}]`, {
+        appendDebugLog(finalStatus === "success" ? "info" : "error", `[NexDB][database-backup:${finalStatus}]`, {
           scheduleId: request.scheduleId,
           runId,
           files: run.files.length,
@@ -524,11 +524,11 @@ export function useScheduledDatabaseBackups(options: { scheduler?: boolean } = {
       const dueSchedules = schedules.value.filter((schedule) => databaseBackupScheduleIsDue(schedule, now));
       for (const schedule of dueSchedules) {
         await runSchedule(schedule.id, "scheduled").catch((error) => {
-          appendDebugLog("error", "[DBX][database-backup:scheduler-error]", error);
+          appendDebugLog("error", "[NexDB][database-backup:scheduler-error]", error);
         });
       }
     } catch (error) {
-      appendDebugLog("error", "[DBX][database-backup:scheduler-init-error]", error);
+      appendDebugLog("error", "[NexDB][database-backup:scheduler-init-error]", error);
     } finally {
       processingDueSchedules = false;
     }

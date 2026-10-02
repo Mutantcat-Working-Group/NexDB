@@ -4,7 +4,7 @@ import { appendDebugLog, getBrowserMemorySnapshot, isDebugLoggingEnabled } from 
 export async function saveTextFile(content: string, defaultFileName: string, filterName: string, filterExt: string, diagnostics: { exportId?: string; operation?: string } = {}) {
   const logSaveStage = (stage: string, details: Record<string, unknown> = {}) => {
     if (!isDebugLoggingEnabled()) return;
-    appendDebugLog("info", `[DBX][export:save:${stage}]`, {
+    appendDebugLog("info", `[NexDB][export:save:${stage}]`, {
       ...diagnostics,
       filterName,
       filterExt,

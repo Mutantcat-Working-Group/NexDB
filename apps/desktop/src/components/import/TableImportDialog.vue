@@ -843,7 +843,7 @@ async function startImport() {
     store.invalidateMetadataCache(props.prefillConnectionId, props.prefillDatabase || "", props.prefillSchema || undefined, tableName);
     if (targetMode.value === "create") {
       store.refreshObjectListTreeNode(props.prefillConnectionId, props.prefillDatabase || "", props.prefillSchema || undefined).catch((error) => {
-        console.warn("[DBX][table-import:refresh-created-table-failed]", error);
+        console.warn("[NexDB][table-import:refresh-created-table-failed]", error);
       });
     }
   } catch (e: any) {
@@ -948,7 +948,7 @@ async function startBatchImport() {
     progress.value = { importId: importId.value, status: "done", phase: "done", rowsImported: completedRows, totalRows: completedRows, totalRowsExact: true, bytesRead: totalBytes, totalBytes, elapsedMs: liveElapsedMs.value };
     toast(t("tableImport.success", { count: completedRows }), 2500);
     store.refreshObjectListTreeNode(props.prefillConnectionId, props.prefillDatabase || "", props.prefillSchema || undefined).catch((error) => {
-      console.warn("[DBX][table-import:refresh-created-table-failed]", error);
+      console.warn("[NexDB][table-import:refresh-created-table-failed]", error);
     });
   } catch (e: any) {
     const task = batchTasks.value[activeTaskIndex.value];

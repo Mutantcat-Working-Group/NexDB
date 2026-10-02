@@ -10,5 +10,5 @@
   "connection": { "host": "127.0.0.1", "port": 11500, "authentication": "none", "database": "dbx", "transportPort": 11501 },
   "hostPorts": { "DB_PORT": 11500, "ELASTICSEARCH_TRANSPORT_PORT": 11501 },
   "shell": ["bash"],
-  "smoke": { "steps": [{ "name": "index a smoke document", "command": ["bash", "-c", "curl --fail --silent --show-error -X PUT -H 'Content-Type: application/json' -d '{\"message\":\"DBX smoke\"}' 'http://127.0.0.1:9200/dbx-smoke/_doc/1?refresh=true'"], "expect": "\"result\"" }, { "name": "read the smoke document", "command": ["bash", "-c", "curl --fail --silent --show-error http://127.0.0.1:9200/dbx-smoke/_doc/1"], "expect": "DBX smoke" }] }
+  "smoke": { "steps": [{ "name": "index a smoke document", "command": ["bash", "-c", "curl --fail --silent --show-error -X PUT -H 'Content-Type: application/json' -d '{\"message\":\"NexDB smoke\"}' 'http://127.0.0.1:9200/dbx-smoke/_doc/1?refresh=true'"], "expect": "\"result\"" }, { "name": "read the smoke document", "command": ["bash", "-c", "curl --fail --silent --show-error http://127.0.0.1:9200/dbx-smoke/_doc/1"], "expect": "NexDB smoke" }] }
 }

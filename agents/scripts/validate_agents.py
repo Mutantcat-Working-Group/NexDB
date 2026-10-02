@@ -298,7 +298,7 @@ def validate_release_runtime_keys(root: Path) -> list[str]:
         ),
         (
             r"legacy-placeholder\.jar",
-            "native-only registry entries must publish a legacy jar placeholder for older DBX clients",
+            "native-only registry entries must publish a legacy jar placeholder for older NexDB clients",
         ),
     ]
     for pattern, message in required_patterns:

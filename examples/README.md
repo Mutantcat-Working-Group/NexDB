@@ -1,18 +1,18 @@
-# DBX Examples
+# NexDB Examples
 
-Runnable samples for common DBX workflows.
+Runnable samples for common NexDB workflows.
 
 | Directory | What it shows |
 | --- | --- |
 | [cli/](cli/) | Terminal queries with `@dbx-app/cli` |
 | [mcp/](mcp/) | MCP configs for Cursor and Claude Code |
 | [docker/](docker/) | Self-hosted Docker deployment |
-| [web-api/](web-api/) | Minimal HTTP API automation against DBX Web |
+| [web-api/](web-api/) | Minimal HTTP API automation against NexDB Web |
 
 ## Before You Run
 
-1. Install DBX Desktop, or start the Docker/Web version.
-2. Create at least one connection in DBX.
+1. Install NexDB Desktop, or start the Docker/Web version.
+2. Create at least one connection in NexDB.
 3. For CLI examples, install the CLI:
 
 ```bash
@@ -25,14 +25,14 @@ npm install -g @dbx-app/cli
 npm install -g @dbx-app/mcp-server
 ```
 
-MCP connection access and execution permissions are configured centrally in **DBX Settings → MCP**. The client examples intentionally contain no permission or connection-scope environment variables.
+MCP connection access and execution permissions are configured centrally in **NexDB Settings → MCP**. The client examples intentionally contain no permission or connection-scope environment variables.
 
 ## Suggested Learning Path
 
 1. Read [Getting Started](https://dbxio.com/en/docs/getting-started)
 2. Try the CLI workflow in `cli/basic-workflow.sh`
 3. Copy an MCP config from `mcp/` into your project
-4. If you self-host DBX, use `docker/docker-compose.yml`
+4. If you self-host NexDB, use `docker/docker-compose.yml`
 5. For custom integrations, inspect `web-api/automation.sh`
 
 More docs:

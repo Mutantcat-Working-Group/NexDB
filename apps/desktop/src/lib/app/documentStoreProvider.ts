@@ -156,7 +156,7 @@ const meilisearchDocumentProvider: DocumentStoreProvider = {
   sortInputLabel: "sort",
   documentsLabel: ({ total }) => `${total} Documents`,
   queryPreview: ({ collection, filterJson, sortJson, skip, limit }) => {
-    const lines = ["DBX MEILISEARCH FETCH DOCUMENTS", `index: ${JSON.stringify(collection)}`, `offset: ${skip}`, `limit: ${limit}`];
+    const lines = ["NexDB MEILISEARCH FETCH DOCUMENTS", `index: ${JSON.stringify(collection)}`, `offset: ${skip}`, `limit: ${limit}`];
     const filter = documentStorePreviewJson(filterJson);
     if (filter) lines.push("filter:", filter);
     const sort = documentStorePreviewJson(sortJson);

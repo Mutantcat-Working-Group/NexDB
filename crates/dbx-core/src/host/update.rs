@@ -2,12 +2,13 @@ pub use dbx_platform::version::{is_newer_version, normalize_version, parse_versi
 
 use serde::{Deserialize, Serialize};
 
-const LATEST_JSON_GITHUB_PATH: &str = "https://github.com/t8y2/dbx/releases/latest/download/latest.json";
+const LATEST_JSON_GITHUB_PATH: &str =
+    "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest/download/latest.json";
 const LATEST_JSON_R2_PATH: &str = "releases/latest/latest.json";
 const LATEST_JSON_CNB_PATH: &str = "https://cnb.cool/dbxio.com/dbx/-/releases/latest/download/latest.json";
 const LATEST_EN_NOTES_R2_PATH: &str = "changelog/latest-en.json";
-const GITHUB_RELEASE_API_PREFIX: &str = "https://api.github.com/repos/t8y2/dbx/releases/tags/v";
-const RELEASE_URL_PREFIX: &str = "https://github.com/t8y2/dbx/releases/tag/v";
+const GITHUB_RELEASE_API_PREFIX: &str = "https://api.github.com/repos/Mutantcat-Working-Group/NexDB/releases/tags/v";
+const RELEASE_URL_PREFIX: &str = "https://github.com/Mutantcat-Working-Group/NexDB/releases/tag/v";
 
 #[derive(Debug, Deserialize)]
 pub struct TauriRelease {
@@ -172,7 +173,7 @@ pub fn build_update_info(release: TauriRelease, current_version: &str) -> Update
     let release_name = github
         .and_then(|metadata| non_empty(metadata.name.as_deref()))
         .map(ToOwned::to_owned)
-        .unwrap_or_else(|| format!("DBX v{latest_version}"));
+        .unwrap_or_else(|| format!("NexDB v{latest_version}"));
     let release_url = github
         .and_then(|metadata| non_empty(metadata.html_url.as_deref()))
         .map(ToOwned::to_owned)
@@ -222,7 +223,7 @@ mod tests {
               "jdbc_plugin": {
                 "version": "0.1.3",
                 "protocol_version": 1,
-                "url": "https://github.com/t8y2/dbx/releases/latest/download/dbx-jdbc-plugin-latest.zip"
+                "url": "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest/download/dbx-jdbc-plugin-latest.zip"
               },
               "platforms": {}
             }"#,
@@ -233,7 +234,10 @@ mod tests {
 
         assert_eq!(jdbc.version, "0.1.3");
         assert_eq!(jdbc.protocol_version, 1);
-        assert_eq!(jdbc.url, "https://github.com/t8y2/dbx/releases/latest/download/dbx-jdbc-plugin-latest.zip");
+        assert_eq!(
+            jdbc.url,
+            "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest/download/dbx-jdbc-plugin-latest.zip"
+        );
     }
 
     #[test]
@@ -243,8 +247,8 @@ mod tests {
             notes: Some("See the assets below to download and install.".to_string()),
             jdbc_plugin: None,
             github: Some(GithubReleaseMetadata {
-                name: Some("DBX v0.5.3".to_string()),
-                html_url: Some("https://github.com/t8y2/dbx/releases/tag/v0.5.3".to_string()),
+                name: Some("NexDB v0.5.3".to_string()),
+                html_url: Some("https://github.com/Mutantcat-Working-Group/NexDB/releases/tag/v0.5.3".to_string()),
                 body: Some("### 新功能\n\n真实发布说明".to_string()),
             }),
             notes_en: None,
@@ -252,8 +256,8 @@ mod tests {
 
         let info = build_update_info(release, "0.5.2");
 
-        assert_eq!(info.release_name, "DBX v0.5.3");
-        assert_eq!(info.release_url, "https://github.com/t8y2/dbx/releases/tag/v0.5.3");
+        assert_eq!(info.release_name, "NexDB v0.5.3");
+        assert_eq!(info.release_url, "https://github.com/Mutantcat-Working-Group/NexDB/releases/tag/v0.5.3");
         assert_eq!(info.release_notes, "### 新功能\n\n真实发布说明");
         assert!(!info.portable_mode);
     }
@@ -266,8 +270,8 @@ mod tests {
             notes: Some("See the assets below to download and install.".to_string()),
             jdbc_plugin: None,
             github: Some(GithubReleaseMetadata {
-                name: Some("DBX v0.5.3".to_string()),
-                html_url: Some("https://github.com/t8y2/dbx/releases/tag/v0.5.3".to_string()),
+                name: Some("NexDB v0.5.3".to_string()),
+                html_url: Some("https://github.com/Mutantcat-Working-Group/NexDB/releases/tag/v0.5.3".to_string()),
                 body: Some("### 新功能\n\n真实发布说明".to_string()),
             }),
             notes_en: Some("### New Features\n\nReal release notes".to_string()),
@@ -299,7 +303,7 @@ mod tests {
             super::update_check_candidates(crate::DownloadSource::Official),
             vec![
                 "https://dl.dbxio.com/releases/latest/latest.json",
-                "https://github.com/t8y2/dbx/releases/latest/download/latest.json",
+                "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest/download/latest.json",
             ]
         );
         assert_eq!(
@@ -307,7 +311,7 @@ mod tests {
             vec![
                 "https://cnb.cool/dbxio.com/dbx/-/releases/latest/download/latest.json",
                 "https://dl.dbxio.com/releases/latest/latest.json",
-                "https://github.com/t8y2/dbx/releases/latest/download/latest.json",
+                "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest/download/latest.json",
             ]
         );
     }

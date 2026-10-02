@@ -82,7 +82,7 @@ async function createIndex() {
     try {
       await connectionStore.loadElasticsearchIndices(props.connectionId);
     } catch (refreshError) {
-      console.warn("[DBX][meilisearch-index-refresh:error]", refreshError);
+      console.warn("[NexDB][meilisearch-index-refresh:error]", refreshError);
     }
   } catch (cause: any) {
     createError.value = cause?.message || String(cause);

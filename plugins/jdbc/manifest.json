@@ -1,9 +1,9 @@
 {
   "id": "jdbc",
-  "name": "DBX JDBC Plugin",
+  "name": "NexDB JDBC Plugin",
   "version": "0.1.39",
   "protocol_version": 1,
-  "description": "Adds optional JDBC driver support to DBX.",
+  "description": "Adds optional JDBC driver support to NexDB.",
   "executable": "bin/dbx-jdbc-plugin",
   "drivers": [
     {

@@ -492,8 +492,8 @@ pub fn effective_delimited_config(
     })
 }
 
-/// Undo the `="..."` force-text wrapper that older DBX versions wrote around
-/// temporal CSV cells. Without this, importing an older DBX export stores the
+/// Undo the `="..."` force-text wrapper that older NexDB versions wrote around
+/// temporal CSV cells. Without this, importing an older NexDB export stores the
 /// literal `="2026-06-24 02:00:07"` instead of the timestamp, which every
 /// temporal column type then rejects.
 ///

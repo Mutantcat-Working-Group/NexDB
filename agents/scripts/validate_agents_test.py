@@ -439,7 +439,7 @@ class ValidateAgentsTest(unittest.TestCase):
                     "release workflow JRE must include jdk.security.jgss for Kafka GSSAPI SASL support",
                     "release workflow JRE must include jdk.crypto.ec for Kafka EC TLS support",
                     "release workflow must build the managed JRE for windows-aarch64",
-                    "native-only registry entries must publish a legacy jar placeholder for older DBX clients",
+                    "native-only registry entries must publish a legacy jar placeholder for older NexDB clients",
                     "release workflow must not build Java 21 under JRE key 17",
                     "agents must not use JRE key 17",
                     "registry must not publish Java 21 under JRE key 17",

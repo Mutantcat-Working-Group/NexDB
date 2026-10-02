@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * Kafka admin agent for DBX. Communicates with the Rust bridge via JSON-RPC
+ * Kafka admin agent for NexDB. Communicates with the Rust bridge via JSON-RPC
  * over stdin/stdout. Uses kafka-clients AdminClient for admin operations and
  * KafkaProducer for message production.
  */

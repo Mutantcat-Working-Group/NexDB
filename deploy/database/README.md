@@ -1,4 +1,4 @@
-# DBX Database Test Environments
+# NexDB Database Test Environments
 
 This directory contains reproducible Docker Compose environments for manual database verification. Each versioned recipe uses a pinned image, a named volume, a loopback-only port binding, a health check, and initialization data or smoke data created during verification.
 
@@ -17,7 +17,7 @@ Each product has a dedicated `101xx`-`115xx` default host-port range, so checked
 make db-reset DB=redis@7.4 CONFIRM=1
 ```
 
-The primary Make targets are `db-list`, `db`, `db-verify`, `db-down`, `db-reset`, and `db-check`. `make db-list` groups recipe versions by product and shows each container-to-host default port mapping, image, and supported platform. Run `make db` to print one copyable start command for every recipe. For connection types supported by DBX, a completed startup also prints a prefilled `dbx://connection/new` link; on macOS with DBX Desktop installed, run `open '<link>'` to open the new-connection dialog. The link can contain a password, so do not save it in shared terminal history, logs, or tickets. Recipes with no compatible DBX connection type explicitly report that no deep link is available. `make db-completion` prints Bash, Zsh, and PowerShell completion setup; the scripts in `completion/` dynamically complete recipe selectors. The targets avoid POSIX-shell conditionals and work with GNU Make in PowerShell, Git Bash, or WSL. For diagnosis, use the lower-level `pnpm db:env -- info|status|logs|shell <product> <version>` commands.
+The primary Make targets are `db-list`, `db`, `db-verify`, `db-down`, `db-reset`, and `db-check`. `make db-list` groups recipe versions by product and shows each container-to-host default port mapping, image, and supported platform. Run `make db` to print one copyable start command for every recipe. For connection types supported by NexDB, a completed startup also prints a prefilled `dbx://connection/new` link; on macOS with NexDB Desktop installed, run `open '<link>'` to open the new-connection dialog. The link can contain a password, so do not save it in shared terminal history, logs, or tickets. Recipes with no compatible NexDB connection type explicitly report that no deep link is available. `make db-completion` prints Bash, Zsh, and PowerShell completion setup; the scripts in `completion/` dynamically complete recipe selectors. The targets avoid POSIX-shell conditionals and work with GNU Make in PowerShell, Git Bash, or WSL. For diagnosis, use the lower-level `pnpm db:env -- info|status|logs|shell <product> <version>` commands.
 
 ## Recipe layout
 

@@ -79,9 +79,9 @@ function loadDataGridComponent() {
     dataGridComponentPromise = (async () => {
       const shouldLogTiming = isDebugLoggingEnabled();
       const startedAt = shouldLogTiming ? performance.now() : 0;
-      if (shouldLogTiming) appendDebugLog("info", "[DBX][DataGrid:load:start]");
+      if (shouldLogTiming) appendDebugLog("info", "[NexDB][DataGrid:load:start]");
       const component = await import("@/components/grid/DataGrid.vue");
-      if (shouldLogTiming) appendDebugLog("info", "[DBX][DataGrid:load:done]", { elapsed: `${Math.round(performance.now() - startedAt)}ms` });
+      if (shouldLogTiming) appendDebugLog("info", "[NexDB][DataGrid:load:done]", { elapsed: `${Math.round(performance.now() - startedAt)}ms` });
       return component;
     })();
   }
@@ -830,7 +830,7 @@ watch(
     if (!result) return;
     if (!isDebugLoggingEnabled()) return;
     const startedAt = performance.now();
-    appendDebugLog("info", "[DBX][ContentArea:result:observed]", {
+    appendDebugLog("info", "[NexDB][ContentArea:result:observed]", {
       tabId: props.activeTab.id,
       rowCount: result.rows.length,
       columnCount: result.columns.length,
@@ -838,13 +838,13 @@ watch(
       isExecuting: props.activeTab.isExecuting,
     });
     nextTick(() => {
-      appendDebugLog("info", "[DBX][ContentArea:result:nextTick]", {
+      appendDebugLog("info", "[NexDB][ContentArea:result:nextTick]", {
         tabId: props.activeTab.id,
         elapsed: `${Math.round(performance.now() - startedAt)}ms`,
         isExecuting: props.activeTab.isExecuting,
       });
       requestAnimationFrame(() => {
-        appendDebugLog("info", "[DBX][ContentArea:result:first-frame]", {
+        appendDebugLog("info", "[NexDB][ContentArea:result:first-frame]", {
           tabId: props.activeTab.id,
           elapsed: `${Math.round(performance.now() - startedAt)}ms`,
           isExecuting: props.activeTab.isExecuting,
@@ -936,7 +936,7 @@ async function onHandleClickColumn(matchedCols: Array<{ name: string; table: str
     columnInfoColumns.value = results;
   } catch (e: any) {
     // Silently ignore errors
-    console.error("[DBX] Failed to fetch column info:", e);
+    console.error("[NexDB] Failed to fetch column info:", e);
     return;
   } finally {
     columnInfoLoading.value = false;

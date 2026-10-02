@@ -9,5 +9,5 @@ const logoSrc = computed(() => webPath(isBlackLogo.value ? "/logo-black.png" : "
 </script>
 
 <template>
-  <img :src="logoSrc" alt="DBX" :class="isBlackLogo ? 'dark:invert' : ''" />
+  <img :src="logoSrc" alt="NexDB" :class="isBlackLogo ? 'dark:invert' : ''" />
 </template>

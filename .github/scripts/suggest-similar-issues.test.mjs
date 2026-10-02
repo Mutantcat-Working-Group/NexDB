@@ -25,7 +25,7 @@ MySQL 8.0
 
 ### 支持信息
 
-DBX 版本: v0.5.62`,
+NexDB 版本: v0.5.62`,
   labels: [{ name: "bug" }, { name: "db/mysql" }],
 };
 

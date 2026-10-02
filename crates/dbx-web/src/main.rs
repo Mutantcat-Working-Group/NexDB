@@ -34,7 +34,7 @@ const DATA_GRID_EXTRACTOR_BODY_LIMIT_BYTES: usize = 96 * 1024 * 1024;
 
 #[derive(OpenApi)]
 #[openapi(
-    info(title = "DBX Data Grid Extractor API", description = "HTTP contract for data-grid clipboard extraction."),
+    info(title = "NexDB Data Grid Extractor API", description = "HTTP contract for data-grid clipboard extraction."),
     paths(routes::query::extract_data_grid_selection),
     tags((name = "data-grid", description = "Data grid extraction and clipboard formats"))
 )]
@@ -150,7 +150,7 @@ fn mount_public_base_path(mut app: Router, public_base_path: &str, static_dir: O
 
 /// Builds the native Web MCP endpoint. It is intentionally opt-in: exposing a
 /// token-bearing MCP server on a Web listener must never happen merely because
-/// DBX Web itself was started.
+/// NexDB Web itself was started.
 fn web_mcp_router(web_state: &Arc<WebState>) -> Result<Option<Router>, String> {
     let token = web_mcp_token()?;
     let Some(token) = token else {
@@ -159,7 +159,7 @@ fn web_mcp_router(web_state: &Arc<WebState>) -> Result<Option<Router>, String> {
 
     let allowed_hosts = comma_separated_env("DBX_WEB_MCP_ALLOWED_HOSTS");
     if allowed_hosts.is_empty() {
-        return Err("DBX_WEB_MCP_ALLOWED_HOSTS is required when DBX Web MCP is enabled".into());
+        return Err("DBX_WEB_MCP_ALLOWED_HOSTS is required when NexDB Web MCP is enabled".into());
     }
 
     let allowed_origins = comma_separated_env("DBX_WEB_MCP_ALLOWED_ORIGINS");
@@ -1187,9 +1187,9 @@ async fn main() {
         .layer(CompressionLayer::new().compress_when(web_compression_predicate()))
         .layer(tower_http::trace::TraceLayer::new_for_http());
 
-    if let Some(mcp_router) = web_mcp_router(&web_state).expect("Invalid DBX Web MCP configuration") {
+    if let Some(mcp_router) = web_mcp_router(&web_state).expect("Invalid NexDB Web MCP configuration") {
         app = app.merge(mcp_router);
-        tracing::info!("DBX Web MCP is enabled at /mcp");
+        tracing::info!("NexDB Web MCP is enabled at /mcp");
     }
 
     let static_dir = std::env::var_os("DBX_STATIC_DIR").map(std::path::PathBuf::from);
@@ -1199,9 +1199,9 @@ async fn main() {
     let port: u16 = std::env::var("DBX_PORT").ok().and_then(|p| p.parse().ok()).unwrap_or(4224);
     let addr = SocketAddr::from(([0, 0, 0, 0], port));
 
-    tracing::info!("DBX Web server starting on http://{}", addr);
+    tracing::info!("NexDB Web server starting on http://{}", addr);
     if public_base_path != "/" {
-        tracing::info!("Serving DBX Web under context path {}", public_base_path);
+        tracing::info!("Serving NexDB Web under context path {}", public_base_path);
     }
     if password_disabled {
         tracing::info!("Password protection is disabled");

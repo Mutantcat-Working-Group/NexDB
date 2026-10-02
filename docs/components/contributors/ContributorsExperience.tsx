@@ -12,8 +12,8 @@ type AuthState = { status: "loading" } | { status: "signed-out" } | { status: "s
 
 const copy = {
   en: {
-    title: "Your work is part of DBX.",
-    intro: "Sign in with GitHub to verify your identity and collect a shareable certificate for pull requests merged into DBX.",
+    title: "Your work is part of NexDB.",
+    intro: "Sign in with GitHub to verify your identity and collect a shareable certificate for pull requests merged into NexDB.",
     signIn: "Verify with GitHub",
     signingIn: "Checking GitHub session…",
     contributors: "verified contributors",
@@ -27,21 +27,21 @@ const copy = {
     noResults: "No matching contributor.",
     signedInAs: "Verified as",
     claim: "Open my certificate",
-    notEligible: "This GitHub account does not have a merged pull request in DBX yet.",
+    notEligible: "This GitHub account does not have a merged pull request in NexDB yet.",
     contributionCallout: "Ship a focused pull request and join the wall.",
     viewGuide: "Contribution guide",
     signOut: "Sign out",
     certificate: "Open-source contributor",
     awardedTo: "Presented to",
-    certificateBody: "For work accepted and merged into DBX, helping make database tools better for everyone.",
+    certificateBody: "For work accepted and merged into NexDB, helping make database tools better for everyone.",
     download: "Download certificate",
     close: "Close",
     mergedLabel: "MERGED PULL REQUESTS",
     verified: "GITHUB IDENTITY VERIFIED",
   },
   cn: {
-    title: "你的代码，已经成为 DBX 的一部分。",
-    intro: "使用 GitHub 验证身份，领取一张属于你的贡献者证书，记录被 DBX 接受并合并的 Pull Request。",
+    title: "你的代码，已经成为 NexDB 的一部分。",
+    intro: "使用 GitHub 验证身份，领取一张属于你的贡献者证书，记录被 NexDB 接受并合并的 Pull Request。",
     signIn: "使用 GitHub 验证身份",
     signingIn: "正在检查 GitHub 登录状态…",
     contributors: "位贡献者",
@@ -55,13 +55,13 @@ const copy = {
     noResults: "没有匹配的贡献者。",
     signedInAs: "已验证身份",
     claim: "打开我的证书",
-    notEligible: "这个 GitHub 账号暂时还没有被 DBX 合并的 Pull Request。",
+    notEligible: "这个 GitHub 账号暂时还没有被 NexDB 合并的 Pull Request。",
     contributionCallout: "提交一个专注、可合并的 PR，加入这面贡献者墙。",
     viewGuide: "查看贡献指南",
     signOut: "退出验证",
     certificate: "开源项目贡献者",
     awardedTo: "授予",
-    certificateBody: "感谢你的代码被 DBX 接受并合并，让每个人都能使用更好的数据库工具。",
+    certificateBody: "感谢你的代码被 NexDB 接受并合并，让每个人都能使用更好的数据库工具。",
     download: "下载贡献者证书",
     close: "关闭",
     mergedLabel: "已合并 PULL REQUEST",
@@ -115,7 +115,7 @@ async function drawCertificate(contributor: ContributorActivity, lang: Language)
   if (logo) context.drawImage(logo, 196, 174, 58, 58);
   context.fillStyle = "#5b67d9";
   context.font = "800 32px ui-monospace, monospace";
-  context.fillText("DBX · OPEN SOURCE DATABASE TOOL", 276, 216);
+  context.fillText("NexDB · OPEN SOURCE DATABASE TOOL", 276, 216);
   context.fillStyle = "#a17c21";
   context.font = "700 22px ui-monospace, monospace";
   context.fillText(text.verified, 196, 260);
@@ -175,7 +175,7 @@ async function drawCertificate(contributor: ContributorActivity, lang: Language)
 
   context.fillStyle = "#8b8998";
   context.font = "500 19px ui-monospace, monospace";
-  context.fillText(`t8y2/dbx · ${new Date().toISOString().slice(0, 10)}`, 196, 948);
+  context.fillText(`NexDB · ${new Date().toISOString().slice(0, 10)}`, 196, 948);
 
   const link = document.createElement("a");
   link.download = `dbx-contributor-${contributor.login}.png`;
@@ -256,7 +256,7 @@ export function ContributorsExperience({ data, lang }: { data: ContributorActivi
 
         <div className={styles.heroCertificate}>
           <div className={styles.certificatePreview}>
-            <div className={styles.previewTop}><span><img src="/logo-64.png" alt="" aria-hidden="true" width={28} height={28} />DBX</span><ShieldCheck size={18} /></div>
+            <div className={styles.previewTop}><span><img src="/logo-64.png" alt="" aria-hidden="true" width={28} height={28} />NexDB</span><ShieldCheck size={18} /></div>
             <small>{text.certificate}</small>
             <strong>@{verifiedContributor?.login ?? "YOUR_NAME"}</strong>
             <p>{text.certificateBody}</p>
@@ -300,7 +300,7 @@ export function ContributorsExperience({ data, lang }: { data: ContributorActivi
         <div className={styles.modalBackdrop} role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setCertificateOpen(false); }}>
           <section className={styles.modal} role="dialog" aria-modal="true" aria-label={text.certificate}>
             <div className={styles.fullCertificate}>
-              <div className={styles.previewTop}><span><img src="/logo-64.png" alt="" aria-hidden="true" width={30} height={30} />DBX · OPEN SOURCE DATABASE TOOL</span><ShieldCheck size={20} /></div>
+              <div className={styles.previewTop}><span><img src="/logo-64.png" alt="" aria-hidden="true" width={30} height={30} />NexDB · OPEN SOURCE DATABASE TOOL</span><ShieldCheck size={20} /></div>
               <span className={styles.verifiedText}>{text.verified}</span>
               <small>{text.certificate}</small>
               <em>{text.awardedTo}</em>
@@ -311,7 +311,7 @@ export function ContributorsExperience({ data, lang }: { data: ContributorActivi
                 <div><b>{verifiedContributor.commits}</b><span>COMMITS</span></div>
               </div>
               <div className={styles.fullSeal}><img src={verifiedContributor.avatarUrl} alt={verifiedContributor.login} width={128} height={128} /></div>
-              <footer><span>t8y2/dbx</span><span>dbxio.com</span></footer>
+              <footer><span>NexDB</span><span>dbxio.com</span></footer>
             </div>
             <div className={styles.modalActions}>
               <button type="button" onClick={() => drawCertificate(verifiedContributor, lang)}><Download size={17} /> {text.download}</button>

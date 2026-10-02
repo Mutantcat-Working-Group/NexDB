@@ -721,7 +721,7 @@ impl PluginSidecarSession {
             .with_echo(spec.echo)
             .into_request("", 0);
         let Some(receiver) = ssh_prompt::request_ssh_prompt(prompt) else {
-            return Err(PluginHostRequestError::new(-32001, "The DBX host cannot ask the user for input right now"));
+            return Err(PluginHostRequestError::new(-32001, "The NexDB host cannot ask the user for input right now"));
         };
 
         self.prompts.begin();

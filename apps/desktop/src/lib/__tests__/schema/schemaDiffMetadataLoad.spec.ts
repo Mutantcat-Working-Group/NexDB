@@ -18,13 +18,13 @@ function wait(ms: number) {
   return new Promise<void>((resolve) => setTimeout(resolve, ms));
 }
 
-const METADATA_POOL_BUSY = "DBX metadata pool is busy; please retry";
+const METADATA_POOL_BUSY = "NexDB metadata pool is busy; please retry";
 
 /**
  * Mirrors the backend metadata gate (`crates/dbx-core/src/connection/mod.rs`):
  * at most `capacity` in-flight metadata requests per gate key, and any request
  * that cannot start is what `METADATA_POOL_ACQUIRE_TIMEOUT` (5s) reports as
- * `DBX metadata pool is busy; please retry`.
+ * `NexDB metadata pool is busy; please retry`.
  *
  * The fake rejects waiting requests instead of modelling the 5s wait, which is
  * the conservative side of the real timeout: a test that passes here proves the
@@ -142,7 +142,7 @@ describe("schemaDiffMetadataLoad", () => {
   it("keeps a large SQL Server schema inside the metadata gate", async () => {
     // Regression for #9596 at the reporter's scale: compares over a handful of
     // tables succeed there, while "more than 100 tables" reproduces
-    // `DBX metadata pool is busy` every time. 100 is a field observation, not
+    // `NexDB metadata pool is busy` every time. 100 is a field observation, not
     // a code threshold -- the failure comes from the 6-wide fan-out queueing on
     // a capacity-1 resource, and a bigger schema adds metadata volume, tail
     // latency and time windows where other metadata work shares the same
@@ -230,7 +230,7 @@ describe("schemaDiffMetadataLoad", () => {
     // which at SQL Server's concurrency of 1 fires at every table boundary --
     // mid-compare. A compare starting there built a second 1-wide lane, and the
     // two fan-outs together overran the backend's capacity-1 gate with
-    // `DBX metadata pool is busy`. The lane must instead live as long as the
+    // `NexDB metadata pool is busy`. The lane must instead live as long as the
     // compares actively using it hold it.
     const gate = createMetadataGate(1);
     const { api } = gateMetadataApi(gate, { ddl: 4, metadata: 1 });

@@ -125,7 +125,7 @@ export class Sidecar extends EventEmitter {
                 id: message.id,
                 error: {
                   code: -32001,
-                  message: `The DBX development host cannot answer '${message.method}': run the plugin in DBX to reach the user interface`,
+                  message: `The NexDB development host cannot answer '${message.method}': run the plugin in NexDB to reach the user interface`,
                 },
               }),
             ),

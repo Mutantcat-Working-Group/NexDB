@@ -47,7 +47,7 @@ func TestConnectionInfoReportsArgoIdentity(t *testing.T) {
 		t.Fatalf("unexpected Argo connection info: %#v", info)
 	}
 	databaseInfo, ok := info["databaseInfo"].(map[string]string)
-	if !ok || databaseInfo["productName"] != "ArgoDB (Transwarp)" || databaseInfo["driverName"] != "DBX ArgoDB Go Agent" {
+	if !ok || databaseInfo["productName"] != "ArgoDB (Transwarp)" || databaseInfo["driverName"] != "NexDB ArgoDB Go Agent" {
 		t.Fatalf("unexpected Argo database identity: %#v", info["databaseInfo"])
 	}
 }

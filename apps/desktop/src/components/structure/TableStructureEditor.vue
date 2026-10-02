@@ -172,7 +172,7 @@ const emit = defineEmits<{
 
 const activeTab = ref<TableInfoTab>("columns");
 
-// DBX hides native scrollbars, so the columns/indexes tables only had the custom
+// NexDB hides native scrollbars, so the columns/indexes tables only had the custom
 // horizontal bar. Render the same overlay affordance vertically for whichever
 // table tab is active; the bar occupies the tab panel's second grid column.
 const activeStructureTableScrollerRef = computed<HTMLElement | null>(() => structureScrollerElement(activeTab.value === "indexes" ? indexesScrollerRef.value : columnsScrollerRef.value) ?? null);
@@ -1562,7 +1562,7 @@ async function hydrateRestoredDraftFromDatabase() {
     markDraftHydratedAndSync();
     shouldRefreshPreview = true;
   } catch (e: any) {
-    console.warn("[DBX][structure-editor:draft-hydration-failed]", e);
+    console.warn("[NexDB][structure-editor:draft-hydration-failed]", e);
   } finally {
     hydratingRestoredDraft = false;
     if (shouldRefreshPreview) scheduleSqlPreviewRefresh();
@@ -2001,7 +2001,7 @@ async function loadVisibleTableComment(force = false, preserveDraft = false) {
       if (!preserveDraft || !hasCommentDraft) tableComment.value = value;
       loadedMetadataFacets.add("comment");
     } catch (error) {
-      if (requestId === tableCommentLoadRequestId) console.warn("[DBX][structure-editor:comment-metadata-failed]", error);
+      if (requestId === tableCommentLoadRequestId) console.warn("[NexDB][structure-editor:comment-metadata-failed]", error);
     }
   })();
   tableCommentLoadPromise = loadPromise;
@@ -2265,7 +2265,7 @@ async function loadStructure(
       ];
       const failedFacets = secondaryResults.filter((entry): entry is { facet: ObjectMetadataFacet; result: PromiseRejectedResult } => entry.result.status === "rejected");
       for (const { facet, result } of failedFacets) {
-        console.warn(`[DBX][structure-editor:${facet}-metadata-failed]`, result.reason);
+        console.warn(`[NexDB][structure-editor:${facet}-metadata-failed]`, result.reason);
       }
       if (showErrors && failedFacets.length > 0) {
         for (const { facet, result } of failedFacets) {
@@ -2300,7 +2300,7 @@ async function loadStructure(
     secondaryMetadataScheduled = true;
     const secondaryMetadataPromise = applySecondaryMetadata()
       .catch((error) => {
-        console.warn("[DBX][structure-editor:secondary-metadata-failed]", error);
+        console.warn("[NexDB][structure-editor:secondary-metadata-failed]", error);
       })
       .finally(() => {
         if (requestId === structureLoadRequestId) setSecondaryMetadataLoading(effectiveScope, false);
@@ -2321,7 +2321,7 @@ async function loadStructure(
     if (showErrors) {
       errorMessage.value = e?.message || String(e);
     } else {
-      console.warn("[DBX][structure-editor:refresh-failed]", e);
+      console.warn("[NexDB][structure-editor:refresh-failed]", e);
     }
   } finally {
     if (!secondaryMetadataScheduled && requestId === structureLoadRequestId) {
@@ -2361,8 +2361,8 @@ async function revalidateCachedStructureMetadata(loadRequestId: number, scope: {
     const [columnsResult, commentResult] = await Promise.allSettled([columnsPromise, commentPromise] as const);
     // A newer load or revalidation supersedes this one.
     if (revalidationId !== structureMetadataRevalidationId || loadRequestId !== structureLoadRequestId) return;
-    if (columnsResult.status === "rejected") console.warn("[DBX][structure-editor:columns-metadata-revalidation-failed]", columnsResult.reason);
-    if (commentResult.status === "rejected") console.warn("[DBX][structure-editor:comment-metadata-revalidation-failed]", commentResult.reason);
+    if (columnsResult.status === "rejected") console.warn("[NexDB][structure-editor:columns-metadata-revalidation-failed]", columnsResult.reason);
+    if (commentResult.status === "rejected") console.warn("[NexDB][structure-editor:comment-metadata-revalidation-failed]", commentResult.reason);
 
     let applied = false;
     const nextColumns = columnsResult.status === "fulfilled" ? columnsResult.value?.value : undefined;
@@ -2379,7 +2379,7 @@ async function revalidateCachedStructureMetadata(loadRequestId: number, scope: {
     }
     if (applied) syncDraftToParent();
   } catch (e) {
-    console.warn("[DBX][structure-editor:metadata-revalidation-failed]", e);
+    console.warn("[NexDB][structure-editor:metadata-revalidation-failed]", e);
   }
 }
 
@@ -2387,7 +2387,7 @@ async function refreshStructureAfterSave(scope: TableStructureRefreshScope, char
   try {
     await Promise.all([loadStructure(true, scope, false, { blockSecondaryMetadata: true, characterLengthUnitsAfterSave }), loadTableOwner(true), loadMysqlTableEngine(false)]);
   } catch (e) {
-    console.warn("[DBX][structure-editor:post-save-refresh-failed]", e);
+    console.warn("[NexDB][structure-editor:post-save-refresh-failed]", e);
   } finally {
     postSaveRefreshing.value = false;
     if (mysqlAutoIncrementValue.value !== originalMysqlAutoIncrementValue.value) scheduleSqlPreviewRefresh();
@@ -3702,7 +3702,7 @@ async function recordStructureHistory(sql: string, start: number, success: boole
       affected_rows: success ? result?.affected_rows : undefined,
     });
   } catch (e) {
-    console.warn("[DBX][structure-history:save-failed]", e);
+    console.warn("[NexDB][structure-history:save-failed]", e);
   }
 }
 

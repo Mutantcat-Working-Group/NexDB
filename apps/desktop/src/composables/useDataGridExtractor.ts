@@ -86,7 +86,7 @@ export function useDataGridExtractor(options: UseDataGridExtractorOptions) {
   }
 
   // 除 SQL 外的剪贴板展示格式都可把文本型 MySQL VARBINARY 从 `0x<hex>` 还原为原始字符串。
-  // SQL 必须继续持有 hex 才能保证 round-trip；rawRows 则始终保存原值，供 DBX 内部网格回粘使用。
+  // SQL 必须继续持有 hex 才能保证 round-trip；rawRows 则始终保存原值，供 NexDB 内部网格回粘使用。
   function extractorCellValue(value: unknown, columnType: string | undefined, normalizeValues: boolean, presentBinaryText: boolean, columnIndex: number): unknown {
     if (presentBinaryText) {
       const text = binaryCellClipboardText(value, columnType, options.databaseType.value);

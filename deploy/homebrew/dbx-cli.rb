@@ -1,6 +1,6 @@
 class DbxCli < Formula
-  desc "Command-line interface for DBX database connections, schema, and safe queries"
-  homepage "https://github.com/t8y2/dbx"
+  desc "Command-line interface for NexDB database connections, schema, and safe queries"
+  homepage "https://github.com/Mutantcat-Working-Group/NexDB"
   url "https://registry.npmjs.org/@dbx-app/cli/-/cli-0.4.7.tgz"
   sha256 "d507138dc5bd9611ad1e668a14e5a099754e8a1a3994742f2d03dbc22da911d8"
   license "Apache-2.0"

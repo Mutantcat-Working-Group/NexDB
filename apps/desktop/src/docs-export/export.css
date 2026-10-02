@@ -3,7 +3,7 @@
  *
  * `source(none)` turns OFF automatic content detection, which otherwise scans
  * the whole repository from the project root and would emit every utility in
- * DBX — the same reason this file cannot simply import globals.css. `@source`
+ * NexDB — the same reason this file cannot simply import globals.css. `@source`
  * is additive with no way to un-source, so the narrowing has to happen here,
  * at the import.
  */

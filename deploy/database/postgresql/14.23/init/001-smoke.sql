@@ -5,4 +5,4 @@ CREATE TABLE IF NOT EXISTS dbx_smoke (
   created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS idx_dbx_smoke_note ON dbx_smoke (note);
-INSERT INTO dbx_smoke (note, nullable_value) VALUES ('DBX smoke 中文 🚀', NULL);
+INSERT INTO dbx_smoke (note, nullable_value) VALUES ('NexDB smoke 中文 🚀', NULL);

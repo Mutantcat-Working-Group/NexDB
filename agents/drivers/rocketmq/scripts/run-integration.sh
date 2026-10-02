@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# The DBX RocketMQ agent under test is the Go binary in this directory. Maven
+# The NexDB RocketMQ agent under test is the Go binary in this directory. Maven
 # only supplies disposable official RocketMQ NameServer/Broker server JARs.
 version="${1:?RocketMQ version is required}"
 module_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)

@@ -24,7 +24,7 @@ use crate::storage::{DesktopSettings, SnippetPendingCleanup, Storage};
 const SNAPSHOT_SCHEMA_VERSION: u32 = 1;
 const ENCRYPTED_SNIPPET_SNAPSHOT_FORMAT: &str = "dbx-encrypted-sync-snapshot";
 const ENCRYPTED_SNIPPET_SNAPSHOT_VERSION: u32 = 1;
-const DEFAULT_REMOTE_PATH: &str = "DBX/sync/snapshot.json";
+const DEFAULT_REMOTE_PATH: &str = "NexDB/sync/snapshot.json";
 const DEFAULT_SNIPPET_FILE_NAME: &str = "dbx-sync.json";
 const GITHUB_API_BASE: &str = "https://api.github.com";
 const GITEE_API_BASE: &str = "https://gitee.com/api/v5";
@@ -659,15 +659,15 @@ impl SnippetSyncClient {
             let existing_content = self.load_snippet_content(id).await?;
             if !is_encrypted_snippet_snapshot(&existing_content) {
                 // Never delete an arbitrary snippet merely because it is not an
-                // encrypted DBX envelope. It must first prove to be a legacy DBX
+                // encrypted NexDB envelope. It must first prove to be a legacy NexDB
                 // snapshot, and the caller must explicitly request migration.
                 if !is_legacy_dbx_snapshot(&existing_content) {
-                    return Err("The selected snippet is not a DBX sync snapshot; refusing to replace or delete it."
+                    return Err("The selected snippet is not a NexDB sync snapshot; refusing to replace or delete it."
                         .to_string());
                 }
                 if !self.config.replace_legacy_snippet {
                     return Err(
-                        "This snippet contains a legacy unencrypted DBX snapshot. Use the secure migration action to create an encrypted replacement and delete the legacy snippet only after the new one is created."
+                        "This snippet contains a legacy unencrypted NexDB snapshot. Use the secure migration action to create an encrypted replacement and delete the legacy snippet only after the new one is created."
                             .to_string(),
                     );
                 }
@@ -710,7 +710,7 @@ impl SnippetSyncClient {
         let response = match self.config.provider {
             SnippetProvider::GitHub => {
                 let payload = serde_json::json!({
-                    "description": "DBX encrypted configuration sync",
+                    "description": "NexDB encrypted configuration sync",
                     "public": false,
                     "files": { DEFAULT_SNIPPET_FILE_NAME: { "content": content } }
                 });
@@ -828,7 +828,7 @@ impl SnippetSyncClient {
         Ok(match self.config.provider {
             SnippetProvider::GitHub => request
                 .header(header::ACCEPT, "application/vnd.github+json")
-                .header(header::USER_AGENT, "DBX")
+                .header(header::USER_AGENT, "NexDB")
                 .header("X-GitHub-Api-Version", "2022-11-28")
                 .bearer_auth(token),
             // Gitee API v5 documents access_token as a request parameter rather than an Authorization header.
@@ -1359,8 +1359,8 @@ fn is_encrypted_snippet_snapshot(content: &str) -> bool {
 }
 
 /// Keep the migration guard deliberately more tolerant than deserializing the
-/// current `SyncSnapshot`: older DBX releases may not contain fields added
-/// since their snapshot was written. At the same time, require the stable DBX
+/// current `SyncSnapshot`: older NexDB releases may not contain fields added
+/// since their snapshot was written. At the same time, require the stable NexDB
 /// snapshot markers before a destructive remote delete is allowed.
 fn is_legacy_dbx_snapshot(content: &str) -> bool {
     serde_json::from_str::<serde_json::Value>(content).ok().is_some_and(|snapshot| {
@@ -1375,10 +1375,11 @@ fn is_legacy_dbx_snapshot(content: &str) -> bool {
 
 fn parse_legacy_dbx_snapshot(content: &str) -> Result<SyncSnapshot, String> {
     if !is_legacy_dbx_snapshot(content) {
-        return Err("The selected snippet is not a DBX sync snapshot; refusing to replace or delete it.".to_string());
+        return Err("The selected snippet is not a NexDB sync snapshot; refusing to replace or delete it.".to_string());
     }
     serde_json::from_str(content).map_err(|_| {
-        "The legacy DBX snapshot is incompatible with this version, so it will not be replaced or deleted.".to_string()
+        "The legacy NexDB snapshot is incompatible with this version, so it will not be replaced or deleted."
+            .to_string()
     })
 }
 
@@ -1547,7 +1548,7 @@ fn snippet_response_id(value: &serde_json::Value) -> Option<String> {
 
 fn gitee_snippet_payload(content: String) -> serde_json::Value {
     serde_json::json!({
-        "description": "DBX configuration sync",
+        "description": "NexDB configuration sync",
         "public": false,
         "files": { DEFAULT_SNIPPET_FILE_NAME: { "content": content } }
     })
@@ -1968,17 +1969,17 @@ mod tests {
 
     #[test]
     fn normalizes_empty_remote_path_to_default() {
-        assert_eq!(normalized_remote_path(None), "DBX/sync/snapshot.json");
-        assert_eq!(normalized_remote_path(Some("")), "DBX/sync/snapshot.json");
-        assert_eq!(normalized_remote_path(Some("///\\\\//")), "DBX/sync/snapshot.json");
+        assert_eq!(normalized_remote_path(None), "NexDB/sync/snapshot.json");
+        assert_eq!(normalized_remote_path(Some("")), "NexDB/sync/snapshot.json");
+        assert_eq!(normalized_remote_path(Some("///\\\\//")), "NexDB/sync/snapshot.json");
     }
 
     #[test]
     fn normalizes_remote_path_separators() {
         assert_eq!(normalized_remote_path(Some("/custom/snapshot.json")), "custom/snapshot.json");
-        assert_eq!(normalized_remote_path(Some(r"\DBX\sync\snapshot.json")), "DBX/sync/snapshot.json");
-        assert_eq!(normalized_remote_path(Some("///DBX//sync/./snapshot.json")), "DBX/sync/snapshot.json");
-        assert_eq!(normalized_remote_path(Some("DBX/sync/../snapshot.json")), "DBX/snapshot.json");
+        assert_eq!(normalized_remote_path(Some(r"\NexDB\sync\snapshot.json")), "NexDB/sync/snapshot.json");
+        assert_eq!(normalized_remote_path(Some("///NexDB//sync/./snapshot.json")), "NexDB/sync/snapshot.json");
+        assert_eq!(normalized_remote_path(Some("NexDB/sync/../snapshot.json")), "NexDB/snapshot.json");
     }
 
     #[test]
@@ -2020,8 +2021,8 @@ mod tests {
     fn returns_parent_collection_paths_from_leaf() {
         assert_eq!(parent_collection_paths("dbx/sync/snapshot.json"), vec!["dbx".to_string(), "dbx/sync".to_string()]);
         assert_eq!(
-            parent_collection_paths(&normalized_remote_path(Some(r"\DBX\sync\snapshot.json"))),
-            vec!["DBX".to_string(), "DBX/sync".to_string()]
+            parent_collection_paths(&normalized_remote_path(Some(r"\NexDB\sync\snapshot.json"))),
+            vec!["NexDB".to_string(), "NexDB/sync".to_string()]
         );
     }
 
@@ -2515,7 +2516,7 @@ mod tests {
         let local_snapshot = build_sync_snapshot(&storage, "local-version", None, None).await.unwrap();
         let remote_snapshot = build_sync_snapshot(&storage, "remote-version", None, None).await.unwrap();
         let mut legacy = serde_json::to_value(remote_snapshot).unwrap();
-        // This field did not exist in snapshots written by older DBX versions.
+        // This field did not exist in snapshots written by older NexDB versions.
         legacy.as_object_mut().unwrap().remove("tunnelProfiles");
 
         let content = serde_json::to_string(&legacy).unwrap();

@@ -45,7 +45,7 @@ export function useTauriEvents(deps: {
             }
             focusCurrentWindow();
           } catch (e) {
-            console.error("[DBX] mcp-open-table error:", e);
+            console.error("[NexDB] mcp-open-table error:", e);
           }
         }).then((unlisten) => unlistenHandles.push(unlisten));
 
@@ -63,7 +63,7 @@ export function useTauriEvents(deps: {
             // the OS focus interrupted whatever the user was doing.
             await queryStore.openPluginConnection(connection_id);
           } catch (e) {
-            console.error("[DBX] mcp-open-connection-workbench error:", e);
+            console.error("[NexDB] mcp-open-connection-workbench error:", e);
           }
         }).then((unlisten) => unlistenHandles.push(unlisten));
 
@@ -80,7 +80,7 @@ export function useTauriEvents(deps: {
             if (!connectionStore.getConfig(connectionId)) return;
             connectionStore.markConnectionOffline(connectionId);
           } catch (e) {
-            console.error("[DBX] dbx-plugin-event (ssh/session/state) error:", e);
+            console.error("[NexDB] dbx-plugin-event (ssh/session/state) error:", e);
           }
         }).then((unlisten) => unlistenHandles.push(unlisten));
 
@@ -88,7 +88,7 @@ export function useTauriEvents(deps: {
           try {
             await connectionStore.initFromDisk();
           } catch (e) {
-            console.error("[DBX] mcp-reload-connections error:", e);
+            console.error("[NexDB] mcp-reload-connections error:", e);
           }
         }).then((unlisten) => unlistenHandles.push(unlisten));
 
@@ -107,7 +107,7 @@ export function useTauriEvents(deps: {
             queryStore.showExecutedQueryResults(connection_id, database, sql, results);
             focusCurrentWindow();
           } catch (e) {
-            console.error("[DBX] mcp-execute-query error:", e);
+            console.error("[NexDB] mcp-execute-query error:", e);
           }
         }).then((unlisten) => unlistenHandles.push(unlisten));
 
@@ -118,7 +118,7 @@ export function useTauriEvents(deps: {
             }
             focusCurrentWindow();
           } catch (e) {
-            console.error("[DBX] dbx-open-sql-files error:", e);
+            console.error("[NexDB] dbx-open-sql-files error:", e);
           }
         }).then((unlisten) => unlistenHandles.push(unlisten));
 
@@ -129,7 +129,7 @@ export function useTauriEvents(deps: {
             }
             focusCurrentWindow();
           } catch (e) {
-            console.error("[DBX] dbx-open-db-files error:", e);
+            console.error("[NexDB] dbx-open-db-files error:", e);
           }
         }).then((unlisten) => unlistenHandles.push(unlisten));
 
@@ -140,7 +140,7 @@ export function useTauriEvents(deps: {
             }
             focusCurrentWindow();
           } catch (e) {
-            console.error("[DBX] dbx-open-connection-links error:", e);
+            console.error("[NexDB] dbx-open-connection-links error:", e);
           }
         }).then((unlisten) => unlistenHandles.push(unlisten));
 
@@ -151,7 +151,7 @@ export function useTauriEvents(deps: {
             }
             focusCurrentWindow();
           } catch (e) {
-            console.error("[DBX] dbx-open-ai-config-links error:", e);
+            console.error("[NexDB] dbx-open-ai-config-links error:", e);
           }
         }).then((unlisten) => unlistenHandles.push(unlisten));
 
@@ -162,7 +162,7 @@ export function useTauriEvents(deps: {
             }
             focusCurrentWindow();
           } catch (e) {
-            console.error("[DBX] dbx-open-plugin-install-links error:", e);
+            console.error("[NexDB] dbx-open-plugin-install-links error:", e);
           }
         }).then((unlisten) => unlistenHandles.push(unlisten));
 

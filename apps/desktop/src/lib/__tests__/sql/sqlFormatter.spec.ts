@@ -299,7 +299,7 @@ OR inside$$ as note
     expect(formatted).toContain("FROM source_table m");
   });
 
-  it("preserves DBX brace placeholders in generic and MySQL SQL", async () => {
+  it("preserves NexDB brace placeholders in generic and MySQL SQL", async () => {
     const sql = "SELECT ${x} AS shell_value, #{x} AS mybatis_value, '${date}' AS quoted_value";
 
     for (const dialect of ["generic", "mysql"] as const) {
@@ -334,7 +334,7 @@ OR inside$$ as note
     expect(formatted).toContain("filters.like");
   });
 
-  it.each(["mysql", "sqlite"] as const)("does not rewrite LIKE inside DBX placeholders in the %s dialect", async (dialect) => {
+  it.each(["mysql", "sqlite"] as const)("does not rewrite LIKE inside NexDB placeholders in the %s dialect", async (dialect) => {
     for (const [lowerPlaceholder, upperPlaceholder] of [
       ["${like}", "${LIKE}"],
       ["#{like}", "#{LIKE}"],

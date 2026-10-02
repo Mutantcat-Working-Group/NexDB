@@ -143,9 +143,9 @@ struct RNacosConsoleCaptchaToken {
     expires_at: Instant,
 }
 
-/// Short-lived r-nacos console state shared by clients for one DBX connection.
+/// Short-lived r-nacos console state shared by clients for one NexDB connection.
 /// It deliberately remains in memory so closing a console tab does not trigger
-/// a new CAPTCHA, while restarting DBX still requires authentication.
+/// a new CAPTCHA, while restarting NexDB still requires authentication.
 #[derive(Debug, Default)]
 pub(crate) struct RNacosConsoleSession {
     token: Option<RNacosConsoleToken>,
@@ -1086,7 +1086,7 @@ impl NacosOpenApiAdmin {
         if !selector.is_object() {
             return Err("Nacos service selector must be a JSON object".to_string());
         }
-        // Both supported Nacos generations reject `{}`. DBX owns the
+        // Both supported Nacos generations reject `{}`. NexDB owns the
         // version-neutral "no selector" semantic and sends the canonical
         // none selector instead, which also allows an existing selector to be
         // cleared during an update.
@@ -1735,7 +1735,7 @@ impl NacosAdmin for NacosOpenApiAdmin {
         }
         if self.is_rnacos_compatible() && self.cfg.rnacos_console_addr.trim().is_empty() {
             // r-nacos's compatible discovery API hides disabled instances.
-            // Without its console API, DBX cannot safely prove a service is
+            // Without its console API, NexDB cannot safely prove a service is
             // empty before deletion, so keep this destructive action closed.
             capabilities.delete_service =
                 NacosOperationCapability::unsupported(NacosCapabilityReason::EndpointUnavailable);
@@ -1772,7 +1772,7 @@ impl NacosAdmin for NacosOpenApiAdmin {
         // Server-state endpoints are console APIs and r-nacos deliberately only
         // guarantees the client OpenAPI. Treat state/health as best-effort;
         // successful authentication and namespace access below prove that this
-        // connection can perform the DBX operations it exposes.
+        // connection can perform the NexDB operations it exposes.
         let state = self.get_server_state().await.ok();
         // Namespace discovery must use r-nacos' compatible v1 API as soon as
         // its health response identifies the implementation. Delaying this
@@ -3054,7 +3054,7 @@ impl NacosAdmin for NacosOpenApiAdmin {
             // The compatible discovery API only lists enabled instances. When
             // the optional r-nacos console has been configured, prefer its
             // authenticated management endpoint so disabled persistent
-            // instances remain operable in DBX as well.
+            // instances remain operable in NexDB as well.
             if !self.cfg.rnacos_console_addr.is_empty() {
                 match self.list_rnacos_console_instances(&query, &namespace, &requested_clusters).await {
                     Ok(instances) => return Ok(instances),
@@ -3125,7 +3125,7 @@ impl NacosAdmin for NacosOpenApiAdmin {
         if self.is_rnacos_compatible() {
             if self.cfg.rnacos_console_addr.trim().is_empty() {
                 return Err(
-                    "NACOS_ERROR[endpointUnavailable]: r-nacos service deletion requires a configured r-nacos console address so DBX can verify disabled instances"
+                    "NACOS_ERROR[endpointUnavailable]: r-nacos service deletion requires a configured r-nacos console address so NexDB can verify disabled instances"
                         .to_string(),
                 );
             }

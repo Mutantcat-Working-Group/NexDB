@@ -90,7 +90,7 @@ export function mongoRenameCollectionPreview(database: string, oldName: string, 
 }
 
 /**
- * DBX executes these stable primitives in the backend instead of MongoDB's
+ * NexDB executes these stable primitives in the backend instead of MongoDB's
  * deprecated clone commands, which vary across server generations.
  */
 export function mongoCloneCollectionPreview(database: string, sourceName: string, targetName: string): string {
@@ -98,7 +98,7 @@ export function mongoCloneCollectionPreview(database: string, sourceName: string
   const source = `${db}.getCollection(${JSON.stringify(sourceName)})`;
   const target = `${db}.getCollection(${JSON.stringify(targetName)})`;
   return [
-    `// DBX copies collection options, documents, and non-_id indexes.`,
+    `// NexDB copies collection options, documents, and non-_id indexes.`,
     `${db}.createCollection(${JSON.stringify(targetName)}, /* source options */);`,
     `${source}.find({}).forEach(function (document) { ${target}.insertOne(document); });`,
     `// Recreate source indexes except the target's automatic _id index.`,

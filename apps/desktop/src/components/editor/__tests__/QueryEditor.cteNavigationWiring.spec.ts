@@ -145,7 +145,7 @@ describe("QueryEditor Ctrl+点击的 CTE 跳转接线", () => {
   });
 
   it("解析失败只告警，不阻断后续表/列跳转", () => {
-    expect(source).toContain('console.warn("[DBX] CTE ctrl+click resolution failed:", error);');
+    expect(source).toContain('console.warn("[NexDB] CTE ctrl+click resolution failed:", error);');
 
     const cteBlock = source.slice(positionOf("const cteModel = getEditorSemanticModel(doc, pos, currentView.state);"), positionOf("// 1. Local table lookup with the resolved scope"));
     // 两个成功分支各自提前 return；catch 分支只能 warn，否则会吞掉原有的表/列跳转。

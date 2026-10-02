@@ -13,7 +13,7 @@ SQL 快捷操作允许你在查询编辑器中先选中表名（或限定标识�
 
 ### 内置模板
 
-DBX 默认提供两条内置操作（列表中标记为 **内置模板**）：
+NexDB 默认提供两条内置操作（列表中标记为 **内置模板**）：
 
 | 操作 | 默认快捷键 | 可编辑 |
 | --- | --- | --- |
@@ -66,7 +66,7 @@ SQL 快捷操作**仅在 SQL 编辑器中生效**（MySQL、PostgreSQL、Hive、
 
 1. 在 SQL 编辑器中选中表名或限定标识符，例如 `orders` 或 `public.users`。也可以不选中，只把光标放在标识符上（会带上引号与 `schema.table`）。
 2. 按下已配置的快捷键。
-3. 对 SQL 模板，DBX 会把 `${table}` 替换为选区文本（若有按库正文则优先使用）；对「查前 N 条」，会按当前库类型生成 SQL 后执行。
+3. 对 SQL 模板，NexDB 会把 `${table}` 替换为选区文本（若有按库正文则优先使用）；对「查前 N 条」，会按当前库类型生成 SQL 后执行。
 
 示例模板：
 
@@ -74,7 +74,7 @@ SQL 快捷操作**仅在 SQL 编辑器中生效**（MySQL、PostgreSQL、Hive、
 SELECT COUNT(*) FROM ${table}
 ```
 
-选中 `orders` 后，DBX 会执行：
+选中 `orders` 后，NexDB 会执行：
 
 ```sql
 SELECT COUNT(*) FROM orders
@@ -84,7 +84,7 @@ SELECT COUNT(*) FROM orders
 
 ## 快捷键冲突
 
-DBX 会检查快捷操作是否与以下快捷键冲突：
+NexDB 会检查快捷操作是否与以下快捷键冲突：
 
 - 适用数据库范围有交集的其他快捷操作（「全部数据库」与任意范围都视为有交集）
 - **设置 → 快捷键** 中的内置编辑器和全局快捷键
@@ -93,9 +93,9 @@ DBX 会检查快捷操作是否与以下快捷键冲突：
 
 ## 保存、同步与安全
 
-快捷操作属于编辑器设置，保存在当前 DBX 运行环境中。桌面版的[配置云同步](/cn/docs/cloud-sync)可以连同其他编辑器设置一起同步；[连接配置迁移](/cn/docs/config-export)只处理数据库连接，不包含快捷操作。
+快捷操作属于编辑器设置，保存在当前 NexDB 运行环境中。桌面版的[配置云同步](/cn/docs/cloud-sync)可以连同其他编辑器设置一起同步；[连接配置迁移](/cn/docs/config-export)只处理数据库连接，不包含快捷操作。
 
-快捷操作只是生成 SQL，不会绕过数据库权限或 DBX 的生产保护。执行包含写入或 DDL 的模板前，仍应检查展开后的完整 SQL，并遵循[生产安全](/cn/docs/production-safety)建议。
+快捷操作只是生成 SQL，不会绕过数据库权限或 NexDB 的生产保护。执行包含写入或 DDL 的模板前，仍应检查展开后的完整 SQL，并遵循[生产安全](/cn/docs/production-safety)建议。
 
 <Cards>
   <Card title="SQL 代码片段" href="/cn/docs/sql-snippets">

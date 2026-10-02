@@ -1,7 +1,7 @@
 {
   "name": "@dbx-app/mcp-server",
   "version": "0.4.91",
-  "description": "MCP server for DBX — query databases from Claude Code, Cursor, and other AI agents",
+  "description": "MCP server for NexDB — query databases from Claude Code, Cursor, and other AI agents",
   "keywords": [
     "ai-agent",
     "claude",
@@ -11,11 +11,11 @@
     "mysql",
     "postgresql"
   ],
-  "homepage": "https://github.com/t8y2/dbx/tree/main/packages/mcp-server",
+  "homepage": "https://github.com/Mutantcat-Working-Group/NexDB/tree/main/packages/mcp-server",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/t8y2/dbx",
+    "url": "https://github.com/Mutantcat-Working-Group/NexDB",
     "directory": "packages/mcp-server"
   },
   "bin": {

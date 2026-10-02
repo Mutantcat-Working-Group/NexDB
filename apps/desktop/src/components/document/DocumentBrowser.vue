@@ -956,7 +956,7 @@ async function closeElasticsearchCursor(cursor?: string) {
   try {
     await api.closeQuerySession(props.connectionId, props.database, cursor);
   } catch (error) {
-    console.warn("[DBX] failed to close Elasticsearch cursor", error);
+    console.warn("[NexDB] failed to close Elasticsearch cursor", error);
   }
 }
 
@@ -2630,7 +2630,7 @@ onMounted(async () => {
     // the only round trip left on the switch.
     await connectionStore.ensureConnected(props.connectionId, restoredDocumentData ? { verifyHealth: false } : {});
   } catch (e) {
-    console.warn("[DBX] ensureConnected failed for", props.connectionId, e);
+    console.warn("[NexDB] ensureConnected failed for", props.connectionId, e);
   }
   await loadDynamoDbTableDescription();
   // Mapping metadata enriches the filter builder, but it must not delay the

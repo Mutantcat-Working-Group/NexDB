@@ -5,7 +5,7 @@ import { clauseChildContext, collapsedContext, emitText, isBodyNode, isCallParen
 export type { SqlLayoutContext, SqlLayoutOptions } from "./primitives";
 
 /**
- * SQL layout — DBX's default formatting style.
+ * SQL layout — NexDB's default formatting style.
  *
  * The rules:
  *
@@ -37,7 +37,7 @@ function printClause(writer: Writer, clause: ClauseNode, baseColumn: number, ctx
   const keyword = keywordText(clause.nameKw.text, ctx);
   const items = splitByComma(clause.children);
   const itemColumn = baseColumn + keyword.length + 1;
-  // `FROM` is the one clause DBX lets users push its first source off of, so it
+  // `FROM` is the one clause NexDB lets users push its first source off of, so it
   // skips both the collapse and the "element on the keyword's line" rule.
   const sourceOnOwnLine = clause.nameKw.text.toUpperCase() === "FROM" && !ctx.options.fromClauseSourceOnSameLine;
   const childCtx = clauseChildContext(ctx, clause);

@@ -9,7 +9,7 @@ and wired into the native build and release path.
 
 ## Baseline
 
-- DBX Java baseline: jetcd 0.8.x `EtcdAgent`; all protocol shapes, capability
+- NexDB Java baseline: jetcd 0.8.x `EtcdAgent`; all protocol shapes, capability
   strings, and error signal texts were copied verbatim.
 - Go client: `go.etcd.io/etcd/client/v3` v3.7.1 over gRPC.
 - Capabilities (exact Java set, no `structured_error_v1`): `connect`,

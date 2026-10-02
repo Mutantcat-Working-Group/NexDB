@@ -1,6 +1,6 @@
-# DBX DuckDB Standalone Driver
+# NexDB DuckDB Standalone Driver
 
-This directory contains the standalone Rust DuckDB sidecar. It reuses DBX's
+This directory contains the standalone Rust DuckDB sidecar. It reuses NexDB's
 existing newline-delimited JSON worker runtime, while keeping DuckDB and
 `libduckdb-sys` outside the main application dependency graph.
 
@@ -11,14 +11,14 @@ cd agents/drivers/duckdb
 cargo build --release --bin dbx-duckdb-driver
 ```
 
-Point DBX at the resulting executable with:
+Point NexDB at the resulting executable with:
 
 ```bash
 DBX_DUCKDB_DRIVER_PATH=/absolute/path/to/dbx-duckdb-driver \
   cargo run -p dbx --no-default-features --features duckdb-sidecar
 ```
 
-Release builds publish this driver through the DBX driver registry. Driver
+Release builds publish this driver through the NexDB driver registry. Driver
 Manager installs it as `~/.dbx/agents/drivers/duckdb/agent` (or `agent.exe` on
 Windows). `DBX_DUCKDB_DRIVER_PATH` remains available for local development.
 
@@ -32,7 +32,7 @@ agent-registry.json
 drivers/dbx-agent-duckdb-<version>-<platform>[.exe]
 ```
 
-DBX decompresses the package itself, so users do not need to install `zstd`,
+NexDB decompresses the package itself, so users do not need to install `zstd`,
 DuckDB, or a separate database driver. The existing aggregate offline `.zip`
 packages remain supported for backward compatibility.
 
@@ -43,4 +43,4 @@ on fresh Windows installations without a separate redistributable package.
 
 The driver implements connect, execute, database/schema/table/column metadata,
 table DDL, view source, completion assistance, attach, cancel, and shutdown over
-the DBX sidecar protocol.
+the NexDB sidecar protocol.

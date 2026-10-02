@@ -529,7 +529,7 @@ export const useSavedSqlStore = defineStore("savedSql", () => {
       bumpVersion();
       return saved;
     } catch (error) {
-      console.warn("[DBX][saved-sql:usage:error]", error);
+      console.warn("[NexDB][saved-sql:usage:error]", error);
       return existing;
     }
   }
@@ -626,7 +626,7 @@ export const useSavedSqlStore = defineStore("savedSql", () => {
     try {
       await syncPromise;
     } catch (error) {
-      console.warn("[DBX][saved-sql:sync:error]", error);
+      console.warn("[NexDB][saved-sql:sync:error]", error);
     } finally {
       if (pendingSync === syncPromise) {
         pendingSync = null;

@@ -105,7 +105,7 @@ test("ensureRelease explicitly marks a promoted release as latest", async (t) =>
 
   await client.ensureRelease(
     "v1.2.3",
-    { name: "DBX v1.2.3", body: "Stable", isPrerelease: false },
+    { name: "NexDB v1.2.3", body: "Stable", isPrerelease: false },
     { makeLatest: true },
   );
 
@@ -115,7 +115,7 @@ test("ensureRelease explicitly marks a promoted release as latest", async (t) =>
       method: "PATCH",
       url: "/dbxio.com/dbx/-/releases/release-latest",
       body: {
-        name: "DBX v1.2.3",
+        name: "NexDB v1.2.3",
         body: "Stable",
         prerelease: false,
         make_latest: "true",
@@ -159,7 +159,7 @@ test("metadata-only sync can mark the release as latest without reading an asset
   const releasePath = join(tempDir, "release.json");
   await writeFile(
     releasePath,
-    JSON.stringify({ tagName: "v1.2.3", name: "DBX v1.2.3", body: "Stable", isPrerelease: false }),
+    JSON.stringify({ tagName: "v1.2.3", name: "NexDB v1.2.3", body: "Stable", isPrerelease: false }),
   );
 
   const address = server.address();
@@ -192,7 +192,7 @@ test("metadata-only sync can mark the release as latest without reading an asset
       method: "PATCH",
       url: "/dbxio.com/dbx/-/releases/release-2",
       body: {
-        name: "DBX v1.2.3",
+        name: "NexDB v1.2.3",
         body: "Stable",
         prerelease: false,
         make_latest: "true",

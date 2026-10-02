@@ -644,7 +644,7 @@ pub struct PluginWorkbenchContribution {
     pub icon: Option<String>,
 }
 
-/// Native context-menu entry contributed to DBX surfaces. v1 targets the
+/// Native context-menu entry contributed to NexDB surfaces. v1 targets the
 /// saved-connection sidebar menu; clicks are dispatched to the plugin backend
 /// as `contextMenu/<id>` requests.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -811,12 +811,12 @@ impl PluginManifest {
             if self.publisher.trim().is_empty() {
                 errors.push("Manifest v1 plugins must declare a publisher".to_string());
             }
-            validate_engine_requirement("DBX", &self.engines.dbx, dbx_version, &mut errors);
+            validate_engine_requirement("NexDB", &self.engines.dbx, dbx_version, &mut errors);
             if self.engines.host_api.trim().is_empty() {
                 errors.push("Manifest v1 plugins must declare engines.host_api".to_string());
             } else {
                 validate_engine_requirement(
-                    "DBX Host API",
+                    "NexDB Host API",
                     &self.engines.host_api,
                     SUPPORTED_PLUGIN_HOST_API_VERSION,
                     &mut errors,
@@ -1010,7 +1010,7 @@ fn validate_engine_requirement(label: &str, requirement: &str, actual: &str, err
         return;
     }
     // An empty installed version means the host could not identify itself (the
-    // standalone MCP binary and CLI are versioned independently from the DBX
+    // standalone MCP binary and CLI are versioned independently from the NexDB
     // app). The requirement is unverifiable there, not unsatisfied, so skip it
     // instead of failing every plugin (#9595).
     if actual.trim().is_empty() {

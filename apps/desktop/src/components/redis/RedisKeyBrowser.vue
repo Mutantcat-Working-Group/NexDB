@@ -3006,7 +3006,7 @@ onMounted(async () => {
   try {
     await connectionStore.ensureConnected(props.connectionId);
   } catch (e) {
-    console.warn("[DBX] ensureConnected failed for", props.connectionId, e);
+    console.warn("[NexDB] ensureConnected failed for", props.connectionId, e);
   }
   void loadKeys();
 });
@@ -3020,7 +3020,7 @@ onActivated(async () => {
   try {
     await connectionStore.ensureConnected(props.connectionId);
   } catch (e) {
-    console.warn("[DBX] ensureConnected failed for", props.connectionId, e);
+    console.warn("[NexDB] ensureConnected failed for", props.connectionId, e);
   }
   // loadKeys resets the cursor before requesting its first page. A nonzero
   // retained cursor therefore distinguishes an applied empty page from a
@@ -3050,7 +3050,7 @@ watch(
     try {
       await connectionStore.ensureConnected(connectionId);
     } catch (error) {
-      console.warn("[DBX] ensureConnected failed for", connectionId, error);
+      console.warn("[NexDB] ensureConnected failed for", connectionId, error);
     }
     if (connectionId !== props.connectionId || db !== props.db) return;
     void loadKeys();

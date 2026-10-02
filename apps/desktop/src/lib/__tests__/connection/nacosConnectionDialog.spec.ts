@@ -66,7 +66,7 @@ describe("Nacos connection dialog layout", () => {
   it("documents product default ports instead of local Docker mappings", () => {
     expect(source).toContain('t("nacos.nacosServiceAddressHint")');
     expect(source).toContain('t("nacos.nacosMetricsHint")');
-    expect(source).not.toContain("DBX 不需要配置该地址");
+    expect(source).not.toContain("NexDB 不需要配置该地址");
     const mainStart = source.indexOf("data-nacos-profile-selector");
     const mainEnd = source.indexOf("<!-- Redis: host, port, user, password, ssl -->", mainStart);
     expect(source.slice(mainStart, mainEnd)).not.toContain("data-nacos-managed-namespaces");

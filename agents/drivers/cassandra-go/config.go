@@ -352,7 +352,7 @@ func applyCassandraURLParams(config *cassandraConfig, params url.Values) error {
 			config.kerberos.useTicketCache = enabled
 			config.kerberos.useTicketCacheSet = true
 		case "compliancemode":
-			// JDBC compliance modes only alter java.sql behavior. The native DBX
+			// JDBC compliance modes only alter java.sql behavior. The native NexDB
 			// JSON-RPC contract already defines statement and transaction behavior.
 		default:
 			return fmt.Errorf("unsupported Cassandra URL parameter: %s", rawKey)

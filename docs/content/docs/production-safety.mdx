@@ -3,7 +3,7 @@ title: Production and Write Safety
 description: Reduce database mistakes with read-only connections, production protection, SQL review, AI limits, and MCP policies.
 ---
 
-DBX separates write safety into independent layers: database privileges, connection read-only state, production protection, dangerous-operation confirmation, AI execution rules, and MCP policy. Together they reduce mistakes, but they do not replace database permissions, auditing, backups, or change approval.
+NexDB separates write safety into independent layers: database privileges, connection read-only state, production protection, dangerous-operation confirmation, AI execution rules, and MCP policy. Together they reduce mistakes, but they do not replace database permissions, auditing, backups, or change approval.
 
 <Callout type="warn">No client-side safeguard replaces database permissions. Production systems should still use least-privilege accounts, database auditing, reliable backups, and team approval workflows.</Callout>
 
@@ -12,14 +12,14 @@ DBX separates write safety into independent layers: database privileges, connect
 | Layer | Purpose | Can a higher-level tool bypass it? |
 | --- | --- | --- |
 | Database account privileges | The database server ultimately decides which objects can be read, changed, or administered | No |
-| Connection read-only | Blocks recognizable writes in the DBX core query path and disables multiple mutation entry points | AI, CLI, and MCP cannot widen it. The workbench can unlock writes for 1 or 5 minutes after explicit confirmation; the saved setting stays on |
+| Connection read-only | Blocks recognizable writes in the NexDB core query path and disables multiple mutation entry points | AI, CLI, and MCP cannot widen it. The workbench can unlock writes for 1 or 5 minutes after explicit confirmation; the saved setting stays on |
 | Production protection | Marks an entire connection or selected databases as production and requires a fresh confirmation for writes | Normal confirmation and Agent authorization cannot permanently skip it |
 | Dangerous SQL/command confirmation | Adds prompts or blocks for DDL, unbounded mutations, risky Redis commands, and similar operations | Controlled by its setting, but never widens read-only or production protection |
 | Global MCP policy | Restricts all MCP clients through a connection allowlist and three execution modes | Client environment variables cannot widen the saved central policy |
 
 ## Configure a Read-Only Connection
 
-Enable **Read-only connection** when creating or editing a connection. DBX carries the flag into core query execution and database-specific operations.
+Enable **Read-only connection** when creating or editing a connection. NexDB carries the flag into core query execution and database-specific operations.
 
 Read-only connections are useful for:
 
@@ -27,7 +27,7 @@ Read-only connections are useful for:
 - Workflows that only need to browse schemas, rows, documents, keys, or monitoring data
 - Connections exposed to the CLI, MCP, or AI where no data changes should be possible
 
-Read-only protection is not only a hidden button. DBX rejects recognizable SQL writes in the core execution path, while MCP, MongoDB, Redis, message queues, and multiple specialized workspaces recheck the connection state.
+Read-only protection is not only a hidden button. NexDB rejects recognizable SQL writes in the core execution path, while MCP, MongoDB, Redis, message queues, and multiple specialized workspaces recheck the connection state.
 
 ### Temporary write unlock
 
@@ -72,7 +72,7 @@ MCP and CLI have no confirmation UI and keep using the saved read-only flag, so 
   </Step>
 </Steps>
 
-When production protection is active, the workbench shows a production indicator. If DBX detects that the active connection, active database, or explicit SQL target belongs to the protected scope and the operation mutates data or schema, it opens the shared confirmation dialog.
+When production protection is active, the workbench shows a production indicator. If NexDB detects that the active connection, active database, or explicit SQL target belongs to the protected scope and the operation mutates data or schema, it opens the shared confirmation dialog.
 
 Every production write requires a new explicit decision. Confirmation is not persisted and cannot be skipped by disabling the normal dangerous-SQL prompt.
 
@@ -100,13 +100,13 @@ Ask mode generates, explains, optimizes, or repairs SQL. Model output is not exe
 
 Agent can execute reads based on user intent and can handle limited writes when policy permits. A write confirmation is scoped to the current target and operation.
 
-When the active database is protected as production, Agent does not receive autonomous write permission. DBX places the proposed SQL in the editor and requires manual confirmation through the production-write dialog.
+When the active database is protected as production, Agent does not receive autonomous write permission. NexDB places the proposed SQL in the editor and requires manual confirmation through the production-write dialog.
 
 See [AI Assistant](/en/docs/ai-assistant) for SQL classification and mode details.
 
 ## MCP Permissions
 
-DBX stores one central policy under **Settings → MCP**, and every MCP request reloads that policy.
+NexDB stores one central policy under **Settings → MCP**, and every MCP request reloads that policy.
 
 | Mode | Representative operations |
 | --- | --- |
@@ -125,7 +125,7 @@ See [MCP Integration](/en/docs/mcp) for complete configuration, client examples,
 
 ## Dangerous SQL and Specialized Commands
 
-Outside production protection, DBX applies additional rules to selected high-risk operations:
+Outside production protection, NexDB applies additional rules to selected high-risk operations:
 
 - The query editor can show a confirmation before dangerous SQL runs
 - Redis can block or confirm risky commands
@@ -139,7 +139,7 @@ Outside production protection, DBX applies additional rules to selected high-ris
 | --- | --- |
 | Local development | Use a normal connection, keep dangerous-SQL confirmation, and prefer MCP Data read/write over Full access |
 | Test or staging | Use obvious connection names and colors, keep dangerous-SQL confirmation, and limit the MCP allowlist |
-| Production read-only | Use a database read-only account plus DBX read-only and production protection; keep MCP in Read only |
+| Production read-only | Use a database read-only account plus NexDB read-only and production protection; keep MCP in Read only |
 | Production changes | Use a separate least-privilege account, enable production protection, review SQL, retain backups and approvals, and avoid MCP Full access |
 | Shared Docker | Set a login password, persist `/app/data`, restrict network access, and use separate database privileges for each target |
 
@@ -147,8 +147,8 @@ Outside production protection, DBX applies additional rules to selected high-ris
 
 - SQL and command classification is conservative but cannot replace server-side privileges.
 - Stored procedures, vendor extensions, and dynamic SQL may have effects that cannot be determined from text alone.
-- Production protection covers operations initiated through DBX; other clients require their own permissions and auditing.
-- Configuration sync and export migrate DBX settings and are not backups of business databases.
+- Production protection covers operations initiated through NexDB; other clients require their own permissions and auditing.
+- Configuration sync and export migrate NexDB settings and are not backups of business databases.
 
 <Cards>
   <Card title="Create a safer connection" href="/en/docs/getting-started">

@@ -92,7 +92,7 @@ Usage:
   pnpm bench:mongodb-count [options]
 
 Options:
-  --api-base=http://127.0.0.1:4224/api  DBX Web API base URL
+  --api-base=http://127.0.0.1:4224/api  NexDB Web API base URL
   --container=dbx-issue-2959-mongo       MongoDB Docker container name
   --image=mongo:3.4                      MongoDB image used when creating the container
   --port=12959                           Host port for MongoDB
@@ -101,16 +101,16 @@ Options:
   --expected-count=21606536              Expected collection count
   --iterations=5                         Timed iterations per case
   --warmups=1                            Warmup iterations per case
-  --dbx-data-dir=/tmp/dbx-bench          Copy local Mongo agent jar into this DBX data dir
+  --dbx-data-dir=/tmp/dbx-bench          Copy local Mongo agent jar into this NexDB data dir
   --seed                                 Seed the collection if its count does not match
   --force-seed                           Drop and reseed even if the collection exists
   --seed-batch-size=10000                Number of docs per insertMany batch
   --json                                 Print JSON only
 
-Before running this benchmark, start DBX Web with the same data dir, for example:
+Before running this benchmark, start NexDB Web with the same data dir, for example:
   DBX_DATA_DIR=/tmp/dbx-bench DBX_DISABLE_PASSWORD=1 cargo run -p dbx-web
 
-The benchmark saves one temporary connection into that DBX data dir, so use an
+The benchmark saves one temporary connection into that NexDB data dir, so use an
 isolated DBX_DATA_DIR instead of your normal desktop profile.
 `);
 }
@@ -427,13 +427,13 @@ async function main() {
   const seed = await seedMongo(options);
   const agentJar = syncMongoAgentJar(options);
 
-  if (!options.json) console.log("Connecting DBX Web API...");
+  if (!options.json) console.log("Connecting NexDB Web API...");
   const connectionId = await ensureDbxConnection(options);
 
   const measurements = [
     await measureCase("mongo runCommand count", options.iterations, options.warmups, () => measureNativeMongoCount(options)),
-    await measureCase("DBX find-documents total", options.iterations, options.warmups, () => measureDbxFindTotal(options, connectionId)),
-    await measureCase("DBX count-documents", options.iterations, options.warmups, () => measureDbxDedicatedCount(options, connectionId)),
+    await measureCase("NexDB find-documents total", options.iterations, options.warmups, () => measureDbxFindTotal(options, connectionId)),
+    await measureCase("NexDB count-documents", options.iterations, options.warmups, () => measureDbxDedicatedCount(options, connectionId)),
   ];
 
   const result = {

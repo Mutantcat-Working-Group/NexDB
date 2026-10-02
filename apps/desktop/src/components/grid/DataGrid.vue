@@ -599,7 +599,7 @@ const autoRefreshEnabled = autoRefresh.enabled;
 const autoRefreshLabel = computed(() => (autoRefreshEnabled.value ? t("tabs.autoRefreshEvery", { seconds: autoRefreshIntervalSeconds.value }) : t("tabs.autoRefresh")));
 
 if (isDebugLoggingEnabled()) {
-  logDataGridTiming("[DBX][DataGrid:setup]", {
+  logDataGridTiming("[NexDB][DataGrid:setup]", {
     traceId: dataGridTraceId,
     cacheKey: props.cacheKey,
     rowCount: props.result.rows.length,
@@ -637,7 +637,7 @@ watch(
   (result) => {
     if (!isDebugLoggingEnabled()) return;
     const startedAt = performance.now();
-    logDataGridTiming("[DBX][DataGrid:result:prop]", {
+    logDataGridTiming("[NexDB][DataGrid:result:prop]", {
       traceId: dataGridTraceId,
       cacheKey: props.cacheKey,
       rowCount: result.rows.length,
@@ -648,14 +648,14 @@ watch(
     });
 
     nextTick(() => {
-      logDataGridTiming("[DBX][DataGrid:result:nextTick]", {
+      logDataGridTiming("[NexDB][DataGrid:result:nextTick]", {
         traceId: dataGridTraceId,
         cacheKey: props.cacheKey,
         elapsed: `${Math.round(performance.now() - startedAt)}ms`,
         loading: props.loading,
       });
       requestAnimationFrame(() => {
-        logDataGridTiming("[DBX][DataGrid:result:first-frame]", {
+        logDataGridTiming("[NexDB][DataGrid:result:first-frame]", {
           traceId: dataGridTraceId,
           cacheKey: props.cacheKey,
           elapsed: `${Math.round(performance.now() - startedAt)}ms`,
@@ -4627,7 +4627,7 @@ watch(
     const shouldLogTiming = isDebugLoggingEnabled();
     const startedAt = shouldLogTiming ? performance.now() : 0;
     if (shouldLogTiming) {
-      logDataGridTiming("[DBX][DataGrid:display-items:ready]", {
+      logDataGridTiming("[NexDB][DataGrid:display-items:ready]", {
         traceId: dataGridTraceId,
         cacheKey: props.cacheKey,
         displayItemCount: length,
@@ -4644,7 +4644,7 @@ watch(
       if (!shouldLogTiming) return;
       requestAnimationFrame(() => {
         const renderedRows = gridRef.value?.querySelectorAll(".vue-recycle-scroller__item-view").length;
-        logDataGridTiming("[DBX][DataGrid:display-items:first-frame]", {
+        logDataGridTiming("[NexDB][DataGrid:display-items:first-frame]", {
           traceId: dataGridTraceId,
           cacheKey: props.cacheKey,
           displayItemCount: length,
@@ -10804,7 +10804,7 @@ async function loadForeignKeyDisplayLabels() {
           );
           if (!referenceKeys || !foreignKeyDisplayRequests.isCurrent(requestGeneration)) return;
           if (!manualReferenceKeyColumnIsUnique(columns, referenceKeys, config.refColumn, config.filter)) {
-            appendDebugLog("warn", "[DBX][DataGrid:foreign-key-display:unsafe-manual-reference]", {
+            appendDebugLog("warn", "[NexDB][DataGrid:foreign-key-display:unsafe-manual-reference]", {
               column: props.result.columns[columnIndex],
               reference: `${schema}.${config.refTable}.${config.refColumn}`,
             });
@@ -10883,7 +10883,7 @@ async function loadForeignKeyDisplayLabels() {
         foreignKeyDisplayLabels.value = next;
       } catch (error: any) {
         if (!foreignKeyDisplayRequests.isCurrent(requestGeneration)) return;
-        appendDebugLog("warn", "[DBX][DataGrid:foreign-key-display:error]", {
+        appendDebugLog("warn", "[NexDB][DataGrid:foreign-key-display:error]", {
           column: props.result.columns[columnIndex],
           message: String(error?.message || error),
         });
@@ -11143,7 +11143,7 @@ function startLoadingElapsedTimer(reset = false) {
 watch(gridSurfaceBusy, (isLoading) => {
   stopLoadingElapsedTimer();
   if (isDebugLoggingEnabled()) {
-    logDataGridTiming(isLoading ? "[DBX][DataGrid:loading:start]" : "[DBX][DataGrid:loading:stop]", {
+    logDataGridTiming(isLoading ? "[NexDB][DataGrid:loading:start]" : "[NexDB][DataGrid:loading:stop]", {
       traceId: dataGridTraceId,
       cacheKey: props.cacheKey,
       elapsedSinceSetup: dataGridElapsed(),
@@ -11154,7 +11154,7 @@ watch(gridSurfaceBusy, (isLoading) => {
   } else if (isDebugLoggingEnabled()) {
     nextTick(() => {
       requestAnimationFrame(() => {
-        logDataGridTiming("[DBX][DataGrid:loading:stop:first-frame]", {
+        logDataGridTiming("[NexDB][DataGrid:loading:stop:first-frame]", {
           traceId: dataGridTraceId,
           cacheKey: props.cacheKey,
           elapsedSinceSetup: dataGridElapsed(),

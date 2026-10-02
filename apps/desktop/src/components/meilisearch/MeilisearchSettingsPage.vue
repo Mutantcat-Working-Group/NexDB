@@ -121,7 +121,7 @@ async function confirmDeleteIndex() {
     try {
       await connectionStore.loadElasticsearchIndices(props.connectionId);
     } catch (refreshError) {
-      console.warn("[DBX][meilisearch-index-refresh:error]", refreshError);
+      console.warn("[NexDB][meilisearch-index-refresh:error]", refreshError);
     }
     // The tab may have been closed while the delete was in flight.
     if (ownerTabId && queryStore.tabs.some((tab) => tab.id === ownerTabId)) queryStore.closeTab(ownerTabId);

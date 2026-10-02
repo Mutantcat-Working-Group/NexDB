@@ -653,7 +653,7 @@ public final class SqlServerLegacyAgent extends ConfiguredJdbcAgent {
 
     private static String legacyTlsDiagnostics(String jdbcVersion) {
         String disabledAlgorithms = Security.getProperty(TLS_DISABLED_ALGORITHMS_KEY);
-        return "DBX SQL Server legacy TLS diagnostics: java=" + System.getProperty("java.version", "unknown")
+        return "NexDB SQL Server legacy TLS diagnostics: java=" + System.getProperty("java.version", "unknown")
             + ", javaVendor=" + System.getProperty("java.vendor", "unknown")
             + ", jdbc=" + jdbcVersion
             + ", sslProtocol=TLSv1"

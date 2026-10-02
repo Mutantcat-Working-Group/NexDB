@@ -182,7 +182,7 @@ pub fn cursor_cli_env(config: &AiConfig) -> Result<Vec<(String, String)>, String
         }
         if is_reserved_env_name(key) {
             return Err(format!(
-                "[cursorEnvReserved] `{key}` is managed by DBX for the isolated Cursor session and cannot be set here."
+                "[cursorEnvReserved] `{key}` is managed by NexDB for the isolated Cursor session and cannot be set here."
             ));
         }
         values.insert(key.to_string(), value.clone());
@@ -561,11 +561,11 @@ mod tests {
     }
 
     #[tokio::test]
-    #[ignore = "requires Cursor, a running DBX MCP bridge, and DBX_LIVE_MCP_CONNECTION_NAME/DATABASE"]
+    #[ignore = "requires Cursor, a running NexDB MCP bridge, and DBX_LIVE_MCP_CONNECTION_NAME/DATABASE"]
     async fn live_scoped_dbx_mcp_agent_run() {
         let config = live_config();
         let connection_name = std::env::var("DBX_LIVE_MCP_CONNECTION_NAME")
-            .expect("set DBX_LIVE_MCP_CONNECTION_NAME to a saved DBX connection");
+            .expect("set DBX_LIVE_MCP_CONNECTION_NAME to a saved NexDB connection");
         let database = std::env::var("DBX_LIVE_MCP_DATABASE").expect("set DBX_LIVE_MCP_DATABASE to a visible database");
         let mcp_command = std::env::var("DBX_LIVE_MCP_COMMAND").unwrap_or_else(|_| "dbx-mcp-server".to_string());
         let options = CursorRunOptions {
@@ -587,7 +587,7 @@ mod tests {
             Duration::from_secs(90),
             run_cursor_agent(
                 &config,
-                "You must use the DBX MCP list-connections tool. Reply with the visible connection name only.",
+                "You must use the NexDB MCP list-connections tool. Reply with the visible connection name only.",
                 options,
                 &Notify::new(),
                 move |event| captured.lock().unwrap().push(event),
@@ -603,7 +603,7 @@ mod tests {
             events.iter().any(|event| {
                 matches!(event, AgentEvent::ToolCallStart { tool_name, .. } if tool_name.contains("dbx_list_connections"))
             }),
-            "Cursor events did not expose the expected DBX tool name: {events:#?}"
+            "Cursor events did not expose the expected NexDB tool name: {events:#?}"
         );
     }
 }

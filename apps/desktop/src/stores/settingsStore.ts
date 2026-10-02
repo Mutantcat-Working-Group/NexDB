@@ -479,8 +479,8 @@ export const AI_PROVIDER_PARTNER_PRESETS: readonly AiPartnerProviderPreset[] = [
     apiStyle: "completions",
     authMethod: "bearer",
     requiresApiKey: true,
-    websiteUrl: "https://api.hualong.online/register?promo=DBX%26HUALONG",
-    apiKeyUrl: "https://api.hualong.online/register?promo=DBX%26HUALONG",
+    websiteUrl: "https://api.hualong.online/register?promo=NexDB%26HUALONG",
+    apiKeyUrl: "https://api.hualong.online/register?promo=NexDB%26HUALONG",
     descriptionKey: "ai.hualongDescription",
   },
 ];
@@ -774,7 +774,7 @@ export interface EditorSettings {
   executeMode: "all" | "current";
   executeModeDefaultVersion: number;
   executeAllOnBlankLine: boolean;
-  /** Whether DBX blocks Redis commands classified as high risk. */
+  /** Whether NexDB blocks Redis commands classified as high risk. */
   blockDangerousRedisCommands: boolean;
   globalConnectTimeoutSecs: number;
   connectTimeoutInheritConnectionIds: string[];
@@ -1521,7 +1521,7 @@ export function normalizeEditorSettings(settings: Partial<EditorSettings>, exist
   const dataGridExtractorOptions = isLegacyExtractorOptions && normalizedExtractorOptions.dsv.nullText === "NULL" ? { ...normalizedExtractorOptions, dsv: { ...normalizedExtractorOptions.dsv, nullText: "" } } : normalizedExtractorOptions;
   // Preserve the explicit intent behind the legacy update controls. Disabling
   // update reminders was a full opt-out; disabling automatic downloads only
-  // opted out of downloading the DBX package itself.
+  // opted out of downloading the NexDB package itself.
   const legacyUpdateOptOut = settings.updateNotificationsEnabled === false;
   const legacyAutoDownload = typeof settings.autoDownloadUpdates === "boolean" ? settings.autoDownloadUpdates : undefined;
   const autoUpdateApp = typeof settings.autoUpdateApp === "boolean" ? settings.autoUpdateApp : legacyUpdateOptOut ? false : (legacyAutoDownload ?? DEFAULT_EDITOR_SETTINGS.autoUpdateApp);

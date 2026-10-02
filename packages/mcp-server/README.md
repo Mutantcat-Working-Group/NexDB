@@ -1,8 +1,8 @@
-# DBX MCP Server
+# NexDB MCP Server
 
-Rust-powered Model Context Protocol server for [DBX](https://github.com/t8y2/dbx). It lets MCP-compatible AI agents inspect schemas and run safe database operations using connections configured in DBX.
+Rust-powered Model Context Protocol server for [NexDB](https://github.com/Mutantcat-Working-Group/NexDB). It lets MCP-compatible AI agents inspect schemas and run safe database operations using connections configured in NexDB.
 
-[中文说明](#中文说明) | [npm](https://www.npmjs.com/package/@dbx-app/mcp-server) | [Native releases](https://github.com/t8y2/dbx/releases?q=packages-v)
+[中文说明](#中文说明) | [npm](https://www.npmjs.com/package/@dbx-app/mcp-server) | [Native releases](https://github.com/Mutantcat-Working-Group/NexDB/releases?q=packages-v)
 
 ## Architecture
 
@@ -17,17 +17,17 @@ The MCP protocol, connection loading, SQL safety, schema access, Redis support, 
 
 ## Features
 
-- **18 MCP tools** for connection and database discovery, schemas, SQL, Redis, sessions, messages, and DBX UI integration
+- **18 MCP tools** for connection and database discovery, schemas, SQL, Redis, sessions, messages, and NexDB UI integration
 - **Precompiled native binaries** with no local Rust, Cargo, Python, or C/C++ build requirement
 - **No `better-sqlite3` runtime dependency** and no Node native-addon ABI coupling
 - **Local, Web, and Docker modes** using the same tool interface
 - **Optional Streamable HTTP transport** protected by a bearer token, while stdio remains the default
 - **Direct native execution** for supported SQL, Redis, and MongoDB connections
-- **Agent/JDBC database support** through DBX agent infrastructure when the required agent and JRE are installed
-- **DBX-managed access policy** with a connection allowlist and three execution modes
+- **Agent/JDBC database support** through NexDB agent infrastructure when the required agent and JRE are installed
+- **NexDB-managed access policy** with a connection allowlist and three execution modes
 - **SQL, Redis, and MongoDB safety controls** that reload the policy for every request
 - **Offline execution** through downloadable native binaries
-- **Optional desktop integration** for opening tables and displaying query results in DBX
+- **Optional desktop integration** for opening tables and displaying query results in NexDB
 
 ## Installation
 
@@ -68,7 +68,7 @@ The npm package automatically installs the native package matching the current o
 
 ### Native binary / offline install
 
-Every package release publishes native archives and `SHA256SUMS` in [GitHub Releases](https://github.com/t8y2/dbx/releases?q=packages-v):
+Every package release publishes native archives and `SHA256SUMS` in [GitHub Releases](https://github.com/Mutantcat-Working-Group/NexDB/releases?q=packages-v):
 
 | Platform | Release asset | npm platform package |
 | --- | --- | --- |
@@ -101,7 +101,7 @@ Configure the MCP client to run the extracted file directly:
 }
 ```
 
-Direct native execution does not require Node.js. GitHub package releases are intentionally not marked as the repository's latest release, so they do not replace the latest DBX desktop release.
+Direct native execution does not require Node.js. GitHub package releases are intentionally not marked as the repository's latest release, so they do not replace the latest NexDB desktop release.
 
 ## Requirements
 
@@ -118,25 +118,25 @@ Direct native execution does not require Node.js. GitHub package releases are in
 
 ### Database configuration
 
-DBX MCP reads connection profiles from DBX storage. DBX does not need to remain open for native connections. However:
+NexDB MCP reads connection profiles from NexDB storage. NexDB does not need to remain open for native connections. However:
 
-- the connection must already exist in DBX storage, unless it is added through `dbx_add_connection`;
-- DBX Agent/JDBC databases require the matching agent, JDBC driver, and JRE to be installed;
-- `dbx_open_table` and `dbx_execute_and_show` require a running DBX desktop application;
-- DBX Web mode requires a reachable DBX Web server.
+- the connection must already exist in NexDB storage, unless it is added through `dbx_add_connection`;
+- NexDB Agent/JDBC databases require the matching agent, JDBC driver, and JRE to be installed;
+- `dbx_open_table` and `dbx_execute_and_show` require a running NexDB desktop application;
+- NexDB Web mode requires a reachable NexDB Web server.
 
 ## Usage Examples
 
 Ask the MCP client to:
 
-- "List my DBX connections"
+- "List my NexDB connections"
 - "Show tables in the production PostgreSQL connection"
 - "Describe the `orders` table"
 - "Build schema context for the billing database"
 - "Count orders created in the last seven days"
 - "Run `INFO memory` on the Redis connection"
 - "Find the latest MongoDB documents in the events collection"
-- "Open the orders table in DBX"
+- "Open the orders table in NexDB"
 
 ## Tools
 
@@ -144,9 +144,9 @@ Ask the MCP client to:
 | --- | --- |
 | `dbx_list_connections` | List connections visible to the MCP session |
 | `dbx_list_databases` | List databases available through a connection, respecting its MCP database scope |
-| `dbx_add_connection` | Add a connection to DBX storage |
-| `dbx_duplicate_connection` | Duplicate a DBX connection with its complete settings |
-| `dbx_remove_connection` | Remove a connection from DBX storage |
+| `dbx_add_connection` | Add a connection to NexDB storage |
+| `dbx_duplicate_connection` | Duplicate a NexDB connection with its complete settings |
+| `dbx_remove_connection` | Remove a connection from NexDB storage |
 | `dbx_list_tables` | List tables, views, collections, or message queue topics |
 | `dbx_describe_table` | Return columns and table metadata |
 | `dbx_list_routines` | List stored procedures and functions in a schema, with an optional `routine_type` filter (PROCEDURE or FUNCTION) |
@@ -159,8 +159,8 @@ Ask the MCP client to:
 | `dbx_execute_redis_command` | Execute a Redis command |
 | `dbx_peek_messages` | Read Kafka messages without committing consumer offsets |
 | `dbx_send_message` | Send a message to a supported message queue topic |
-| `dbx_open_table` | Open a table in the running DBX desktop application |
-| `dbx_execute_and_show` | Execute a query and display the result in the DBX desktop application |
+| `dbx_open_table` | Open a table in the running NexDB desktop application |
+| `dbx_execute_and_show` | Execute a query and display the result in the NexDB desktop application |
 
 When connection scoping is enabled, mutating connection tools and desktop UI tools are hidden.
 
@@ -174,13 +174,13 @@ When connection scoping is enabled, mutating connection tools and desktop UI too
 
 ### Local native mode
 
-This is the default. MCP reads DBX connection storage and executes supported connections locally in the Rust process.
+This is the default. MCP reads NexDB connection storage and executes supported connections locally in the Rust process.
 
-Common native paths include PostgreSQL, MySQL, SQLite, compatible SQL databases, Redis standalone, and MongoDB. SSH, cluster, vendor-specific, or Agent/JDBC connections may require additional DBX infrastructure.
+Common native paths include PostgreSQL, MySQL, SQLite, compatible SQL databases, Redis standalone, and MongoDB. SSH, cluster, vendor-specific, or Agent/JDBC connections may require additional NexDB infrastructure.
 
-DuckDB runs through the standalone DBX DuckDB driver. Install it from DBX Driver Manager before using a DuckDB connection through local MCP. The MCP binary includes the sidecar client but does not bundle the DuckDB engine.
+DuckDB runs through the standalone NexDB DuckDB driver. Install it from NexDB Driver Manager before using a DuckDB connection through local MCP. The MCP binary includes the sidecar client but does not bundle the DuckDB engine.
 
-DBX connection storage defaults to:
+NexDB connection storage defaults to:
 
 - macOS: `~/Library/Application Support/org.mutantcat.app/dbx.db`
 - Linux: `~/.local/share/org.mutantcat.app/dbx.db`
@@ -190,13 +190,13 @@ Override the directory with `DBX_DATA_DIR`.
 
 ### Agent/JDBC databases
 
-Databases such as Dameng, KingbaseES, Oracle, DB2, Hive, Trino, Snowflake, SAP HANA, and other DBX Agent profiles use DBX's Java agent infrastructure rather than a Node.js database driver.
+Databases such as Dameng, KingbaseES, Oracle, DB2, Hive, Trino, Snowflake, SAP HANA, and other NexDB Agent profiles use NexDB's Java agent infrastructure rather than a Node.js database driver.
 
-The native npm/GitHub binary does not bundle every proprietary JDBC driver or JRE. Install the database agent through DBX first, or provide a compatible agent installation under the DBX agent directory. Availability depends on the installed driver and license terms of the database vendor.
+The native npm/GitHub binary does not bundle every proprietary JDBC driver or JRE. Install the database agent through NexDB first, or provide a compatible agent installation under the NexDB agent directory. Availability depends on the installed driver and license terms of the database vendor.
 
-### DBX Web / Docker mode
+### NexDB Web / Docker mode
 
-Set `DBX_WEB_URL` to use a deployed DBX Web backend instead of local desktop storage:
+Set `DBX_WEB_URL` to use a deployed NexDB Web backend instead of local desktop storage:
 
 ```json
 {
@@ -204,7 +204,7 @@ Set `DBX_WEB_URL` to use a deployed DBX Web backend instead of local desktop sto
     "dbx": {
       "command": "dbx-mcp-server",
       "env": {
-        "DBX_WEB_URL": "https://dbx.example.com",
+        "DBX_WEB_URL": "https://nexdb.example.com",
         "DBX_WEB_PASSWORD": "your-web-login-password"
       }
     }
@@ -212,11 +212,11 @@ Set `DBX_WEB_URL` to use a deployed DBX Web backend instead of local desktop sto
 }
 ```
 
-`DBX_WEB_PASSWORD` is the password used on the DBX Web login page. Desktop-local mode does not use it. Desktop UI tools are hidden in Web mode.
+`DBX_WEB_PASSWORD` is the password used on the NexDB Web login page. Desktop-local mode does not use it. Desktop UI tools are hidden in Web mode.
 
-DBX Web requests honor the standard system proxy environment variables (`HTTP_PROXY`/`HTTPS_PROXY`/`ALL_PROXY`, bypass via `NO_PROXY`); an empty value means no proxy. Proxies requiring authentication use the `http://user:pass@host:port` URL form. Extra headers can be attached via `DBX_WEB_HEADERS` (a JSON object, e.g. `{"Authorization":"Bearer <token>"}`) — applied to every request, including authentication. For self-signed HTTPS backends, set `DBX_WEB_INSECURE_SKIP_VERIFY=1` to skip certificate verification, or `DBX_WEB_CA_CERT` to trust a private CA (verification is on by default).
+NexDB Web requests honor the standard system proxy environment variables (`HTTP_PROXY`/`HTTPS_PROXY`/`ALL_PROXY`, bypass via `NO_PROXY`); an empty value means no proxy. Proxies requiring authentication use the `http://user:pass@host:port` URL form. Extra headers can be attached via `DBX_WEB_HEADERS` (a JSON object, e.g. `{"Authorization":"Bearer <token>"}`) — applied to every request, including authentication. For self-signed HTTPS backends, set `DBX_WEB_INSECURE_SKIP_VERIFY=1` to skip certificate verification, or `DBX_WEB_CA_CERT` to trust a private CA (verification is on by default).
 
-Docker and DBX Web also require the standalone DuckDB driver. Install it from Driver Manager after the first launch; when `/app/data` is persisted, the driver is stored under `/app/data/agents` and survives container upgrades.
+Docker and NexDB Web also require the standalone DuckDB driver. Install it from Driver Manager after the first launch; when `/app/data` is persisted, the driver is stored under `/app/data/agents` and survives container upgrades.
 
 ### Native Streamable HTTP
 
@@ -240,7 +240,7 @@ It listens on `http://127.0.0.1:5225/mcp` by default. Configure an HTTP-capable 
 
 The default loopback address accepts only clients on the same computer. Binding to a non-loopback address requires all of the following: `DBX_MCP_HTTP_ALLOW_REMOTE=1`, the `--http-allow-remote` flag, and non-empty `DBX_MCP_HTTP_ALLOWED_HOSTS` plus `DBX_MCP_HTTP_ALLOWED_ORIGINS` allowlists. Use exact public Host authorities and browser Origins.
 
-DBX Web can host native Streamable HTTP on its existing listener, rather than opening a second port. Enable it with `DBX_WEB_MCP_TOKEN` (or `DBX_WEB_MCP_TOKEN_FILE`) and configure the public Host allowlist. For a container published as `4225:4224`, the endpoint is `http://localhost:4225/mcp`:
+NexDB Web can host native Streamable HTTP on its existing listener, rather than opening a second port. Enable it with `DBX_WEB_MCP_TOKEN` (or `DBX_WEB_MCP_TOKEN_FILE`) and configure the public Host allowlist. For a container published as `4225:4224`, the endpoint is `http://localhost:4225/mcp`:
 
 ```yaml
 environment:
@@ -250,9 +250,9 @@ ports:
   - "4225:4224"
 ```
 
-Clients send `Authorization: Bearer <DBX_WEB_MCP_TOKEN>`. Browser clients also require an exact `DBX_WEB_MCP_ALLOWED_ORIGINS` entry. When a reverse proxy adds a path prefix, set `DBX_PUBLIC_BASE_PATH`; the endpoint becomes `<base-path>/mcp`. Native HTTP and the `DBX_WEB_URL` stdio adapter can coexist and share the same DBX policy.
+Clients send `Authorization: Bearer <DBX_WEB_MCP_TOKEN>`. Browser clients also require an exact `DBX_WEB_MCP_ALLOWED_ORIGINS` entry. When a reverse proxy adds a path prefix, set `DBX_PUBLIC_BASE_PATH`; the endpoint becomes `<base-path>/mcp`. Native HTTP and the `DBX_WEB_URL` stdio adapter can coexist and share the same NexDB policy.
 
-### Windows portable DBX
+### Windows portable NexDB
 
 Point `DBX_DATA_DIR` at the portable `data` directory containing `dbx.db`:
 
@@ -262,16 +262,16 @@ Point `DBX_DATA_DIR` at the portable `data` directory containing `dbx.db`:
     "dbx": {
       "command": "dbx-mcp-server",
       "env": {
-        "DBX_DATA_DIR": "D:\\DBX_x64-portable\\data"
+        "DBX_DATA_DIR": "D:\\NexDB_x64-portable\\data"
       }
     }
   }
 }
 ```
 
-## DBX-managed MCP Policy
+## NexDB-managed MCP Policy
 
-DBX stores one authoritative policy under **Settings → MCP** and reloads it for every request:
+NexDB stores one authoritative policy under **Settings → MCP** and reloads it for every request:
 
 | Permission mode | Allowed operations |
 | --- | --- |
@@ -283,7 +283,7 @@ DBX stores one authoritative policy under **Settings → MCP** and reloads it fo
 
 Conditions such as `WHERE TRUE`, `WHERE 1 = 1`, `_id: {$exists: true}`, complementary predicates, and opaque MongoDB filters remain high risk. Unknown Redis commands also fail closed.
 
-Legacy connection scope variables can still narrow the DBX allowlist for existing client configurations:
+Legacy connection scope variables can still narrow the NexDB allowlist for existing client configurations:
 
 ```json
 {
@@ -303,7 +303,7 @@ Use `DBX_MCP_SCOPE_CONNECTION_ID`, comma-separated `DBX_MCP_SCOPE_CONNECTION_IDS
 
 ## Safety
 
-Choose **Read only**, **Data read/write**, or **Full access** in DBX instead of placing permission flags in client configuration. Updated servers do not let `DBX_MCP_ALLOW_WRITES` or `DBX_MCP_ALLOW_DANGEROUS_SQL` widen the DBX policy. For upgrade compatibility, `DBX_MCP_ALLOW_WRITES=0` (or `false`) keeps MCP read-only until a central policy is saved for the first time; the legacy permission variables are ignored afterward.
+Choose **Read only**, **Data read/write**, or **Full access** in NexDB instead of placing permission flags in client configuration. Updated servers do not let `DBX_MCP_ALLOW_WRITES` or `DBX_MCP_ALLOW_DANGEROUS_SQL` widen the NexDB policy. For upgrade compatibility, `DBX_MCP_ALLOW_WRITES=0` (or `false`) keeps MCP read-only until a central policy is saved for the first time; the legacy permission variables are ignored afterward.
 
 MongoDB update/delete operations require a verifiably effective filter unless Full access is enabled. Aggregation stages such as `$out` and `$merge` are treated as high-risk writes.
 
@@ -313,18 +313,18 @@ SQL text is not included in normal MCP errors or logged by default. Enable tempo
 
 | Variable | Purpose |
 | --- | --- |
-| `DBX_DATA_DIR` | Override the local DBX data directory |
-| `DBX_WEB_URL` | Use a DBX Web/Docker backend |
-| `DBX_WEB_PASSWORD` | Authenticate to the DBX Web backend |
-| `HTTP_PROXY` / `HTTPS_PROXY` / `ALL_PROXY` | Standard system proxy variables for DBX Web requests; empty value means no proxy. Auth via `http://user:pass@host:port` |
+| `DBX_DATA_DIR` | Override the local NexDB data directory |
+| `DBX_WEB_URL` | Use a NexDB Web/Docker backend |
+| `DBX_WEB_PASSWORD` | Authenticate to the NexDB Web backend |
+| `HTTP_PROXY` / `HTTPS_PROXY` / `ALL_PROXY` | Standard system proxy variables for NexDB Web requests; empty value means no proxy. Auth via `http://user:pass@host:port` |
 | `NO_PROXY` | Standard comma-separated bypass list for the proxy above |
-| `DBX_WEB_HEADERS` | JSON object of extra HTTP headers for DBX Web requests, e.g. `{"Authorization":"Bearer token"}` |
+| `DBX_WEB_HEADERS` | JSON object of extra HTTP headers for NexDB Web requests, e.g. `{"Authorization":"Bearer token"}` |
 | `DBX_WEB_INSECURE_SKIP_VERIFY` | `1`/`true` disables TLS certificate verification for self-signed backends |
-| `DBX_WEB_CA_CERT` | PEM/DER CA file to trust for DBX Web TLS verification |
-| `DBX_WEB_MCP_TOKEN` | Enable native DBX Web Streamable HTTP MCP with this bearer token |
-| `DBX_WEB_MCP_TOKEN_FILE` | Read the native DBX Web MCP token from a file; cannot be combined with `DBX_WEB_MCP_TOKEN` |
-| `DBX_WEB_MCP_ALLOWED_HOSTS` | Required comma-separated public Host authorities for native DBX Web MCP |
-| `DBX_WEB_MCP_ALLOWED_ORIGINS` | Comma-separated browser Origins allowed for native DBX Web MCP |
+| `DBX_WEB_CA_CERT` | PEM/DER CA file to trust for NexDB Web TLS verification |
+| `DBX_WEB_MCP_TOKEN` | Enable native NexDB Web Streamable HTTP MCP with this bearer token |
+| `DBX_WEB_MCP_TOKEN_FILE` | Read the native NexDB Web MCP token from a file; cannot be combined with `DBX_WEB_MCP_TOKEN` |
+| `DBX_WEB_MCP_ALLOWED_HOSTS` | Required comma-separated public Host authorities for native NexDB Web MCP |
+| `DBX_WEB_MCP_ALLOWED_ORIGINS` | Comma-separated browser Origins allowed for native NexDB Web MCP |
 | `DBX_MCP_TRANSPORT` | `stdio` (default) or `streamable-http` for the native server |
 | `DBX_MCP_HTTP_HOST` | Native HTTP bind address (default: `127.0.0.1`) |
 | `DBX_MCP_HTTP_PORT` | Native HTTP bind port (default: `5225`) |
@@ -367,13 +367,13 @@ The published Linux packages target glibc. Alpine Linux uses musl by default and
 
 Set `DBX_DATA_DIR` to the directory containing `dbx.db`, not to the database file itself.
 
-### Desktop action says DBX is not running
+### Desktop action says NexDB is not running
 
-Database queries can run without the desktop application when the connection is supported locally. `dbx_open_table` and `dbx_execute_and_show` intentionally require DBX desktop to be running.
+Database queries can run without the desktop application when the connection is supported locally. `dbx_open_table` and `dbx_execute_and_show` intentionally require NexDB desktop to be running.
 
 ### Agent/JDBC database cannot start
 
-Open DBX Driver Manager and install/update the matching database agent and JRE. The standalone MCP binary does not redistribute every proprietary JDBC driver.
+Open NexDB Driver Manager and install/update the matching database agent and JRE. The standalone MCP binary does not redistribute every proprietary JDBC driver.
 
 ### `better-sqlite3` or Node ABI error
 
@@ -404,7 +404,7 @@ Build a release binary:
 cargo build --release -p dbx-mcp --no-default-features
 ```
 
-## DBX CLI
+## NexDB CLI
 
 `@dbx-app/cli` is a separate terminal-oriented package and currently remains TypeScript/Node.js based:
 
@@ -424,9 +424,9 @@ Apache-2.0
 
 ## 中文说明
 
-DBX MCP Server 是 [DBX](https://github.com/t8y2/dbx) 的 Rust MCP 服务，让 Claude Code、Cursor、Windsurf 等兼容 MCP 的 AI 工具使用 DBX 中已有的连接查询数据库。
+NexDB MCP Server 是 [NexDB](https://github.com/Mutantcat-Working-Group/NexDB) 的 Rust MCP 服务，让 Claude Code、Cursor、Windsurf 等兼容 MCP 的 AI 工具使用 NexDB 中已有的连接查询数据库。
 
-[npm](https://www.npmjs.com/package/@dbx-app/mcp-server) | [原生版本下载](https://github.com/t8y2/dbx/releases?q=packages-v)
+[npm](https://www.npmjs.com/package/@dbx-app/mcp-server) | [原生版本下载](https://github.com/Mutantcat-Working-Group/NexDB/releases?q=packages-v)
 
 ### 架构
 
@@ -441,15 +441,15 @@ MCP 协议、连接读取、SQL 安全检查、Schema、Redis、MongoDB、Web �
 
 ### 主要能力
 
-- 18 个 MCP 工具，涵盖连接和数据库发现、Schema、SQL、Redis、会话、消息队列和 DBX 桌面集成
+- 18 个 MCP 工具，涵盖连接和数据库发现、Schema、SQL、Redis、会话、消息队列和 NexDB 桌面集成
 - 不依赖 `better-sqlite3`，没有 Node 原生模块 ABI 问题
-- 支持本地 DBX、DBX Web 和 Docker
+- 支持本地 NexDB、NexDB Web 和 Docker
 - 可选 Streamable HTTP 传输，使用 Bearer Token 保护；stdio 仍为默认方式
 - 支持预编译原生二进制和离线运行
 - 支持常见 SQL、Redis、MongoDB 直连
 - 支持达梦、金仓、Oracle、DB2、Hive 等 Agent/JDBC 数据库
 - 支持只读、危险操作、连接和数据库作用域限制
-- DBX 桌面端未启动时仍可执行支持本地运行的连接
+- NexDB 桌面端未启动时仍可执行支持本地运行的连接
 
 ### npm 安装
 
@@ -486,7 +486,7 @@ MCP 配置：
 
 ### 原生二进制和离线安装
 
-每个 packages 版本会在 [GitHub Releases](https://github.com/t8y2/dbx/releases?q=packages-v) 发布以下文件：
+每个 packages 版本会在 [GitHub Releases](https://github.com/Mutantcat-Working-Group/NexDB/releases?q=packages-v) 发布以下文件：
 
 | 平台 | 文件 |
 | --- | --- |
@@ -515,9 +515,9 @@ MCP 配置：
 
 - npm 安装需要 Node.js 18.18.0 或更高版本
 - 原生二进制不需要 Node.js、Rust、Cargo、Python 或本地编译环境
-- 连接配置需要存在于 DBX 存储中，或通过 `dbx_add_connection` 添加
+- 连接配置需要存在于 NexDB 存储中，或通过 `dbx_add_connection` 添加
 - Agent/JDBC 数据库需要提前安装对应 Agent、JDBC Driver 和 JRE
-- `dbx_open_table`、`dbx_execute_and_show` 需要 DBX 桌面端正在运行
+- `dbx_open_table`、`dbx_execute_and_show` 需要 NexDB 桌面端正在运行
 
 ### 工具列表
 
@@ -525,9 +525,9 @@ MCP 配置：
 | --- | --- |
 | `dbx_list_connections` | 列出当前 MCP 会话可见的连接 |
 | `dbx_list_databases` | 列出连接中可通过 MCP 访问的数据库，并遵守该连接的数据库范围 |
-| `dbx_add_connection` | 添加 DBX 连接配置 |
+| `dbx_add_connection` | 添加 NexDB 连接配置 |
 | `dbx_duplicate_connection` | 复制一个连接及其完整配置 |
-| `dbx_remove_connection` | 删除 DBX 连接配置 |
+| `dbx_remove_connection` | 删除 NexDB 连接配置 |
 | `dbx_list_tables` | 列出表、视图、集合或消息队列 Topic |
 | `dbx_describe_table` | 获取字段和表结构 |
 | `dbx_get_schema_context` | 获取适合 AI 使用的紧凑 Schema 上下文 |
@@ -538,8 +538,8 @@ MCP 配置：
 | `dbx_execute_redis_command` | 执行 Redis 命令 |
 | `dbx_peek_messages` | 读取 Kafka 消息，不提交消费位点 |
 | `dbx_send_message` | 向支持的消息队列 Topic 发送消息 |
-| `dbx_open_table` | 在 DBX 桌面端打开表 |
-| `dbx_execute_and_show` | 执行查询并在 DBX 桌面端展示结果 |
+| `dbx_open_table` | 在 NexDB 桌面端打开表 |
+| `dbx_execute_and_show` | 执行查询并在 NexDB 桌面端展示结果 |
 
 `dbx_execute_query` 支持可选参数 `max_rows`（取值 1–1000，默认 100；越界值会被夹取到范围内，而不是报错）。该参数仅对 SQL 连接生效：MongoDB shell 命令始终最多返回 100 行，路由到批量执行器的多语句脚本每条语句最多返回 100 行。
 
@@ -553,9 +553,9 @@ MCP 配置：
 - Linux：`~/.local/share/org.mutantcat.app/dbx.db`
 - Windows：`%APPDATA%\org.mutantcat.app\dbx.db`
 
-通过 `DBX_DATA_DIR` 覆盖默认目录。Windows 便携版应指向 `DBX.exe` 同级、包含 `dbx.db` 的 `data` 文件夹。
+通过 `DBX_DATA_DIR` 覆盖默认目录。Windows 便携版应指向 `NexDB.exe` 同级、包含 `dbx.db` 的 `data` 文件夹。
 
-### DBX Web / Docker
+### NexDB Web / Docker
 
 ```json
 {
@@ -563,7 +563,7 @@ MCP 配置：
     "dbx": {
       "command": "dbx-mcp-server",
       "env": {
-        "DBX_WEB_URL": "https://dbx.example.com",
+        "DBX_WEB_URL": "https://nexdb.example.com",
         "DBX_WEB_PASSWORD": "Web 登录密码"
       }
     }
@@ -571,9 +571,9 @@ MCP 配置：
 }
 ```
 
-Web 模式不会读取本机 DBX 桌面存储，也不会暴露桌面 UI 工具。
+Web 模式不会读取本机 NexDB 桌面存储，也不会暴露桌面 UI 工具。
 
-DBX Web 请求遵循标准系统代理环境变量：https 地址读取 `HTTPS_PROXY`/`https_proxy`，http 地址读取 `HTTP_PROXY`/`http_proxy`，`ALL_PROXY`/`all_proxy` 作为兜底，`NO_PROXY`/`no_proxy` 作为绕过列表。代理值为空或未设置时直连（不走代理）。需要认证的代理使用标准 `user:password@host:port` URL 形式，例如 `http://admin:admin123@127.0.0.1:7890`。如需为每次 DBX Web 请求附加自定义请求头（例如网关前的令牌认证），将 `DBX_WEB_HEADERS` 设置为 JSON 对象，键为请求头名称、值为字符串，例如 `{"Authorization":"Bearer <token>"}`，该头会附加到包括认证在内的每个请求。
+NexDB Web 请求遵循标准系统代理环境变量：https 地址读取 `HTTPS_PROXY`/`https_proxy`，http 地址读取 `HTTP_PROXY`/`http_proxy`，`ALL_PROXY`/`all_proxy` 作为兜底，`NO_PROXY`/`no_proxy` 作为绕过列表。代理值为空或未设置时直连（不走代理）。需要认证的代理使用标准 `user:password@host:port` URL 形式，例如 `http://admin:admin123@127.0.0.1:7890`。如需为每次 NexDB Web 请求附加自定义请求头（例如网关前的令牌认证），将 `DBX_WEB_HEADERS` 设置为 JSON 对象，键为请求头名称、值为字符串，例如 `{"Authorization":"Bearer <token>"}`，该头会附加到包括认证在内的每个请求。
 
 ### 原生 Streamable HTTP
 
@@ -597,7 +597,7 @@ DBX_MCP_HTTP_TOKEN=replace-with-a-long-random-secret dbx-mcp-server --http
 
 默认回环地址仅允许同一台电脑上的客户端访问。监听非回环地址时，必须同时设置 `DBX_MCP_HTTP_ALLOW_REMOTE=1`、传入 `--http-allow-remote`，并提供非空的 `DBX_MCP_HTTP_ALLOWED_HOSTS` 和 `DBX_MCP_HTTP_ALLOWED_ORIGINS` 白名单。Host authority 与浏览器 Origin 均应使用精确的公网值。
 
-DBX Web 可以通过现有 Web 监听器提供原生 Streamable HTTP，无需额外开放第二个端口。设置 `DBX_WEB_MCP_TOKEN`（或 `DBX_WEB_MCP_TOKEN_FILE`）并配置公网 Host 白名单即可启用。容器映射为 `4225:4224` 时，端点为 `http://localhost:4225/mcp`：
+NexDB Web 可以通过现有 Web 监听器提供原生 Streamable HTTP，无需额外开放第二个端口。设置 `DBX_WEB_MCP_TOKEN`（或 `DBX_WEB_MCP_TOKEN_FILE`）并配置公网 Host 白名单即可启用。容器映射为 `4225:4224` 时，端点为 `http://localhost:4225/mcp`：
 
 ```yaml
 environment:
@@ -607,17 +607,17 @@ ports:
   - "4225:4224"
 ```
 
-客户端必须携带 `Authorization: Bearer <DBX_WEB_MCP_TOKEN>`。浏览器客户端还需要在 `DBX_WEB_MCP_ALLOWED_ORIGINS` 中填写精确 Origin。反向代理添加路径前缀时，设置 `DBX_PUBLIC_BASE_PATH`，端点会变为 `<base-path>/mcp`。原生 HTTP 与 `DBX_WEB_URL` 的 stdio 适配方式可以并存，并共享同一份 DBX 策略。
+客户端必须携带 `Authorization: Bearer <DBX_WEB_MCP_TOKEN>`。浏览器客户端还需要在 `DBX_WEB_MCP_ALLOWED_ORIGINS` 中填写精确 Origin。反向代理添加路径前缀时，设置 `DBX_PUBLIC_BASE_PATH`，端点会变为 `<base-path>/mcp`。原生 HTTP 与 `DBX_WEB_URL` 的 stdio 适配方式可以并存，并共享同一份 NexDB 策略。
 
 ### Agent/JDBC 数据库
 
-达梦、金仓KingbaseES、Oracle、DB2、Hive、Trino、Snowflake、SAP HANA 等数据库通过 DBX Java Agent/JDBC 基础设施运行，而不是通过 Node.js 数据库驱动运行。
+达梦、金仓KingbaseES、Oracle、DB2、Hive、Trino、Snowflake、SAP HANA 等数据库通过 NexDB Java Agent/JDBC 基础设施运行，而不是通过 Node.js 数据库驱动运行。
 
-npm 和 GitHub Release 中的原生 MCP 文件不会捆绑所有厂商的专有 JDBC Driver。请先通过 DBX Driver Manager 安装对应 Agent 和 JRE，或提供兼容的 DBX Agent 目录。
+npm 和 GitHub Release 中的原生 MCP 文件不会捆绑所有厂商的专有 JDBC Driver。请先通过 NexDB Driver Manager 安装对应 Agent 和 JRE，或提供兼容的 NexDB Agent 目录。
 
-### DBX 管理的 MCP 策略
+### NexDB 管理的 MCP 策略
 
-DBX 在 **设置 → MCP** 中保存一份权威策略，并在每次请求时重新读取：
+NexDB 在 **设置 → MCP** 中保存一份权威策略，并在每次请求时重新读取：
 
 | 权限模式 | 允许的操作 |
 | --- | --- |
@@ -629,7 +629,7 @@ DBX 在 **设置 → MCP** 中保存一份权威策略，并在每次请求时�
 
 `WHERE TRUE`、`WHERE 1 = 1`、`_id: {$exists: true}`、互补条件或不透明 MongoDB 过滤器仍按高风险处理。未知 Redis 命令也会失败关闭。
 
-旧连接 scope 变量可继续兼容读取，但只能进一步收窄 DBX allowlist：
+旧连接 scope 变量可继续兼容读取，但只能进一步收窄 NexDB allowlist：
 
 ```json
 {
@@ -649,7 +649,7 @@ DBX 在 **设置 → MCP** 中保存一份权威策略，并在每次请求时�
 
 ### SQL 和命令安全
 
-请在 DBX 中选择 **只读**、**数据读写** 或 **完全访问**，不要在客户端配置中放置权限开关。新版 Server 不允许 `DBX_MCP_ALLOW_WRITES` 或 `DBX_MCP_ALLOW_DANGEROUS_SQL` 放宽 DBX 中央策略。为兼容升级，在中央策略首次保存前，`DBX_MCP_ALLOW_WRITES=0`（或 `false`）仍会保持 MCP 只读；策略保存后旧权限变量即被忽略。
+请在 NexDB 中选择 **只读**、**数据读写** 或 **完全访问**，不要在客户端配置中放置权限开关。新版 Server 不允许 `DBX_MCP_ALLOW_WRITES` 或 `DBX_MCP_ALLOW_DANGEROUS_SQL` 放宽 NexDB 中央策略。为兼容升级，在中央策略首次保存前，`DBX_MCP_ALLOW_WRITES=0`（或 `false`）仍会保持 MCP 只读；策略保存后旧权限变量即被忽略。
 
 MongoDB 更新和删除在未启用完全访问时必须提供可验证有效的 filter；`$out`、`$merge` 聚合阶段按高风险写操作处理。
 
@@ -657,18 +657,18 @@ MongoDB 更新和删除在未启用完全访问时必须提供可验证有效的
 
 | 变量 | 用途 |
 | --- | --- |
-| `DBX_DATA_DIR` | 覆盖本地 DBX 数据目录 |
-| `DBX_WEB_URL` | 使用 DBX Web/Docker 后端 |
-| `DBX_WEB_PASSWORD` | DBX Web 登录密码 |
-| `HTTP_PROXY` / `HTTPS_PROXY` / `ALL_PROXY` | DBX Web 请求的标准系统代理变量；空值表示不走代理。认证格式 `http://user:pass@host:port` |
+| `DBX_DATA_DIR` | 覆盖本地 NexDB 数据目录 |
+| `DBX_WEB_URL` | 使用 NexDB Web/Docker 后端 |
+| `DBX_WEB_PASSWORD` | NexDB Web 登录密码 |
+| `HTTP_PROXY` / `HTTPS_PROXY` / `ALL_PROXY` | NexDB Web 请求的标准系统代理变量；空值表示不走代理。认证格式 `http://user:pass@host:port` |
 | `NO_PROXY` | 上述代理的标准逗号分隔绕过列表 |
-| `DBX_WEB_HEADERS` | DBX Web 请求附加的请求头 JSON 对象，例如 `{"Authorization":"Bearer token"}` |
+| `DBX_WEB_HEADERS` | NexDB Web 请求附加的请求头 JSON 对象，例如 `{"Authorization":"Bearer token"}` |
 | `DBX_WEB_INSECURE_SKIP_VERIFY` | `1`/`true` 时跳过 TLS 证书验证（用于自签名后端） |
-| `DBX_WEB_CA_CERT` | DBX Web TLS 验证时信任的 PEM/DER CA 文件 |
-| `DBX_WEB_MCP_TOKEN` | 使用该 Bearer Token 启用原生 DBX Web Streamable HTTP MCP |
-| `DBX_WEB_MCP_TOKEN_FILE` | 从文件读取原生 DBX Web MCP Token；不能与 `DBX_WEB_MCP_TOKEN` 同时设置 |
-| `DBX_WEB_MCP_ALLOWED_HOSTS` | 原生 DBX Web MCP 必填：允许的公网 Host authority，逗号分隔 |
-| `DBX_WEB_MCP_ALLOWED_ORIGINS` | 原生 DBX Web MCP 的浏览器 Origin 白名单，逗号分隔 |
+| `DBX_WEB_CA_CERT` | NexDB Web TLS 验证时信任的 PEM/DER CA 文件 |
+| `DBX_WEB_MCP_TOKEN` | 使用该 Bearer Token 启用原生 NexDB Web Streamable HTTP MCP |
+| `DBX_WEB_MCP_TOKEN_FILE` | 从文件读取原生 NexDB Web MCP Token；不能与 `DBX_WEB_MCP_TOKEN` 同时设置 |
+| `DBX_WEB_MCP_ALLOWED_HOSTS` | 原生 NexDB Web MCP 必填：允许的公网 Host authority，逗号分隔 |
+| `DBX_WEB_MCP_ALLOWED_ORIGINS` | 原生 NexDB Web MCP 的浏览器 Origin 白名单，逗号分隔 |
 | `DBX_MCP_TRANSPORT` | 原生 Server 传输方式：`stdio`（默认）或 `streamable-http` |
 | `DBX_MCP_HTTP_HOST` | 原生 HTTP 监听地址（默认：`127.0.0.1`） |
 | `DBX_MCP_HTTP_PORT` | 原生 HTTP 监听端口（默认：`5225`） |
@@ -701,13 +701,13 @@ npm install -g @dbx-app/mcp-server@latest
 
 将 `DBX_DATA_DIR` 设置为包含 `dbx.db` 的目录，而不是数据库文件路径。
 
-**提示 DBX 未运行**
+**提示 NexDB 未运行**
 
-普通数据库查询不一定需要启动 DBX；只有桌面 UI 工具和仍需 bridge 的连接需要 DBX 运行。
+普通数据库查询不一定需要启动 NexDB；只有桌面 UI 工具和仍需 bridge 的连接需要 NexDB 运行。
 
 **Agent 数据库无法启动**
 
-通过 DBX Driver Manager 安装或更新对应数据库 Agent、JDBC Driver 和 JRE。
+通过 NexDB Driver Manager 安装或更新对应数据库 Agent、JDBC Driver 和 JRE。
 
 **出现 `better-sqlite3` 或 Node ABI 错误**
 
@@ -722,7 +722,7 @@ pnpm --filter @dbx-app/mcp-server test
 cargo build --release -p dbx-mcp --no-default-features
 ```
 
-### DBX CLI
+### NexDB CLI
 
 `@dbx-app/cli` 是独立的终端包，目前仍使用 TypeScript/Node.js：
 

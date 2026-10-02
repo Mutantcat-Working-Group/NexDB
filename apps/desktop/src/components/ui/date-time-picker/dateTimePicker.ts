@@ -46,7 +46,7 @@ export function formatLocalDateTime(value: CalendarDateTimeLike): string {
 }
 
 /**
- * Interprets the timezone-free wall-clock value in the DBX device's system time
+ * Interprets the timezone-free wall-clock value in the NexDB device's system time
  * zone before converting it to Unix seconds.
  */
 export function calendarDateTimeToUnixSeconds(value: CalendarDateTimeLike): number {
@@ -65,7 +65,7 @@ export function isValidLocalDateTime(value: CalendarDateTimeLike): boolean {
   }
 }
 
-/** Converts Unix seconds to a timezone-free value in the DBX device's system time zone. */
+/** Converts Unix seconds to a timezone-free value in the NexDB device's system time zone. */
 export function unixSecondsToCalendarDateTime(seconds: number): CalendarDateTime {
   if (!Number.isFinite(seconds)) throw new RangeError("Unix seconds must be a finite number");
 

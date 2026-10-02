@@ -19,11 +19,11 @@ async fn run() -> Result<(), String> {
     let official = results
         .iter()
         .find(|result| result.repository.id == OFFICIAL_PLUGIN_REPOSITORY_ID)
-        .ok_or("Official DBX Marketplace result is missing")?;
+        .ok_or("Official NexDB Marketplace result is missing")?;
     if let Some(error) = &official.error {
         return Err(error.clone());
     }
-    let catalog = official.catalog.as_ref().ok_or("Official DBX Marketplace catalog is missing")?;
+    let catalog = official.catalog.as_ref().ok_or("Official NexDB Marketplace catalog is missing")?;
     let mut arguments = std::env::args().skip(1);
     let Some(plugin_id) = arguments.next() else {
         println!("plugin marketplace smoke passed: fetched {} official catalog entries", catalog.plugins.len());
@@ -34,7 +34,7 @@ async fn run() -> Result<(), String> {
         return Err("Usage: plugin_marketplace_smoke [plugin-id] [version]".to_string());
     }
     if !catalog.plugins.iter().any(|plugin| plugin.id == plugin_id) {
-        return Err(format!("Official DBX Marketplace does not list '{plugin_id}'"));
+        return Err(format!("Official NexDB Marketplace does not list '{plugin_id}'"));
     }
     let installed = marketplace
         .install(PluginMarketplaceInstallRequest {

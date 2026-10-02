@@ -1,6 +1,6 @@
-# DBX CLI
+# NexDB CLI
 
-Command line interface for DBX database connections, schema inspection, safe queries, and prompt-ready schema context.
+Command line interface for NexDB database connections, schema inspection, safe queries, and prompt-ready schema context.
 
 ## Install
 
@@ -41,7 +41,7 @@ chmod +x dbx
 ./dbx connections list --json
 ```
 
-Standalone binaries do not require Node.js. They read the same DBX connection storage as the desktop application; set `DBX_DATA_DIR` when using a custom or portable data directory.
+Standalone binaries do not require Node.js. They read the same NexDB connection storage as the desktop application; set `DBX_DATA_DIR` when using a custom or portable data directory.
 
 ## Usage
 
@@ -64,15 +64,15 @@ dbx open local users
 
 | Command                                     | Description                                           |
 | ------------------------------------------- | ----------------------------------------------------- |
-| `dbx doctor`                                | Show local DBX config and desktop bridge diagnostics  |
+| `dbx doctor`                                | Show local NexDB config and desktop bridge diagnostics  |
 | `dbx capabilities`                          | Show direct-query and desktop-bridge database support |
-| `dbx connections list`                      | List DBX connections without printing secrets         |
+| `dbx connections list`                      | List NexDB connections without printing secrets         |
 | `dbx schema list <connection>`              | List tables and views                                 |
 | `dbx schema describe <connection> <table>`  | Show table columns                                    |
 | `dbx query <connection> <sql>`              | Execute one SQL statement                             |
 | `dbx query <connection> --file ./query.sql` | Execute SQL from a file                               |
 | `dbx context <connection>`                  | Print compact schema context for prompts              |
-| `dbx open <connection> <table>`             | Open a table in DBX Desktop                           |
+| `dbx open <connection> <table>`             | Open a table in NexDB Desktop                           |
 
 ## Output
 
@@ -106,7 +106,7 @@ DBX_CONNECTION=local dbx context --tables users,orders
 
 ## Desktop App Requirements
 
-Some CLI commands can run without DBX Desktop:
+Some CLI commands can run without NexDB Desktop:
 
 - `connections list`
 - `schema list`
@@ -114,9 +114,9 @@ Some CLI commands can run without DBX Desktop:
 - `query`
 - `context`
 
-Direct execution supports PostgreSQL/Redshift, MySQL-compatible databases (MySQL, Doris, StarRocks), and SQLite. Other database types use the DBX Desktop bridge or DBX Agent/JDBC infrastructure.
+Direct execution supports PostgreSQL/Redshift, MySQL-compatible databases (MySQL, Doris, StarRocks), and SQLite. Other database types use the NexDB Desktop bridge or NexDB Agent/JDBC infrastructure.
 
-Use `dbx doctor` to check whether the DBX connection database, connection table, native SQLite loader, and desktop bridge are available. Use `dbx capabilities` to list direct-query and bridge-required database types.
+Use `dbx doctor` to check whether the NexDB connection database, connection table, native SQLite loader, and desktop bridge are available. Use `dbx capabilities` to list direct-query and bridge-required database types.
 
 If the optional platform package was not installed, reinstall without `--no-optional`:
 
@@ -136,10 +136,10 @@ CLI JSON errors use stable codes:
 | `UNKNOWN_OPTION`         | An unsupported flag was provided                    |
 | `INVALID_OPTION`         | A flag is missing a value or has an invalid value   |
 | `INVALID_ARGUMENT`       | Positional arguments are missing or conflicting     |
-| `CONNECTION_STORE_ERROR` | DBX connection storage exists but could not be read |
-| `CONNECTION_NOT_FOUND`   | No DBX connection matched the requested name        |
+| `CONNECTION_STORE_ERROR` | NexDB connection storage exists but could not be read |
+| `CONNECTION_NOT_FOUND`   | No NexDB connection matched the requested name        |
 | `SQL_BLOCKED`            | SQL safety rules blocked execution                  |
-| `DBX_NOT_RUNNING`        | DBX Desktop bridge is unavailable                   |
+| `DBX_NOT_RUNNING`        | NexDB Desktop bridge is unavailable                   |
 | `ERROR`                  | Unexpected runtime failure                          |
 
 ## Codex

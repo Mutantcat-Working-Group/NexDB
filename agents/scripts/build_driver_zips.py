@@ -121,7 +121,7 @@ def remove_raw_driver_artifacts(release_dir: Path) -> list[Path]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build tar.zst packages for individual DBX agents")
+    parser = argparse.ArgumentParser(description="Build tar.zst packages for individual NexDB agents")
     parser.add_argument("release_dir", type=Path)
     parser.add_argument("--cleanup-sources", action="store_true")
     args = parser.parse_args()

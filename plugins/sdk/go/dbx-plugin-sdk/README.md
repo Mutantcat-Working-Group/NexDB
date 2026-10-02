@@ -1,6 +1,6 @@
-# DBX Go plugin SDK
+# NexDB Go plugin SDK
 
-Go SDK for DBX native sidecar plugins using protocol v1 over JSON Lines or framed stdin/stdout.
+Go SDK for NexDB native sidecar plugins using protocol v1 over JSON Lines or framed stdin/stdout.
 
 ```go
 metadata := dbxpluginsdk.Metadata{

@@ -413,7 +413,7 @@ describe("connectionStore timeout recovery", () => {
     expect(settingsStore.editorSettings.queryTimeoutInheritConnectionIds).toEqual([]);
   });
 
-  it("exports effective timeout snapshots for older DBX versions", async () => {
+  it("exports effective timeout snapshots for older NexDB versions", async () => {
     const encryptConfig = vi.fn().mockResolvedValue({ encrypted: true });
     const click = vi.fn();
     const NativeUrl = globalThis.URL;

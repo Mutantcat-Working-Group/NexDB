@@ -138,7 +138,7 @@ pub fn qoder_cli_env(config: &AiConfig) -> Result<Vec<(String, String)>, String>
         }
         if key.to_ascii_uppercase().starts_with("DBX_MCP_") {
             return Err(format!(
-                "[qoderEnvReserved] `{key}` is managed by DBX for the scoped MCP server and cannot be set here."
+                "[qoderEnvReserved] `{key}` is managed by NexDB for the scoped MCP server and cannot be set here."
             ));
         }
         env.insert(key.to_string(), value.clone());
@@ -435,7 +435,7 @@ pub async fn test_qoder_connection(config: &AiConfig) -> Result<AiTestConnection
 
 fn classify_qoder_spawn_error(message: &str) -> String {
     if message.contains("No such file") || message.contains("not found") || message.contains("os error 2") {
-        format!("[qoderNotInstalled] Qoder CLI was not found. Install qodercli or set its executable path in DBX AI settings. {message}")
+        format!("[qoderNotInstalled] Qoder CLI was not found. Install qodercli or set its executable path in NexDB AI settings. {message}")
     } else {
         format!("[qoderRunFailed] Failed to start Qoder CLI: {message}")
     }

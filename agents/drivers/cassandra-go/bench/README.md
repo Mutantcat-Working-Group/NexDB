@@ -1,6 +1,6 @@
 # Cassandra Agent benchmark
 
-This benchmark compares the same DBX JSON-RPC operations through the native
+This benchmark compares the same NexDB JSON-RPC operations through the native
 Apache `cassandra-gocql-driver` Agent and the archived Cassandra JDBC Agent.
 It measures process startup, connection creation, RSS, latency, throughput,
 artifact size, and shutdown behavior.

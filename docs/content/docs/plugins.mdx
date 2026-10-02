@@ -1,25 +1,25 @@
 ---
 title: JDBC Plugin
-description: Install the DBX JDBC plugin, import vendor JDBC driver JARs, and create JDBC connections.
+description: Install the NexDB JDBC plugin, import vendor JDBC driver JARs, and create JDBC connections.
 ---
 
-DBX uses native Rust database drivers by default. JDBC is optional: install the JDBC plugin when you need to connect to a database that DBX does not support natively, or when you specifically need a vendor JDBC driver.
+NexDB uses native Rust database drivers by default. JDBC is optional: install the JDBC plugin when you need to connect to a database that NexDB does not support natively, or when you specifically need a vendor JDBC driver.
 
-<Callout type="info">This page covers the JDBC plugin and vendor driver JARs. To build SSH, SFTP, file-manager, or other DBX extensions and submit them to the official Marketplace, read [Develop and Submit DBX Plugins](/en/docs/plugin-development).</Callout>
+<Callout type="info">This page covers the JDBC plugin and vendor driver JARs. To build SSH, SFTP, file-manager, or other NexDB extensions and submit them to the official Marketplace, read [Develop and Submit NexDB Plugins](/en/docs/plugin-development).</Callout>
 
-<Callout type="info">The JDBC plugin is not bundled with the main DBX app, and it does not include vendor JDBC drivers. Install the DBX JDBC plugin first, then import the database vendor's JDBC driver JAR.</Callout>
+<Callout type="info">The JDBC plugin is not bundled with the main NexDB app, and it does not include vendor JDBC drivers. Install the NexDB JDBC plugin first, then import the database vendor's JDBC driver JAR.</Callout>
 
-<Callout type="warn">A successful JDBC connection does not imply every capability of a native DBX profile. Object trees, source definitions, structure editing, import, transfer, and admin views depend on JDBC metadata, the detected effective database type, and the driver capability manifest. Unknown engines run with generic JDBC capabilities.</Callout>
+<Callout type="warn">A successful JDBC connection does not imply every capability of a native NexDB profile. Object trees, source definitions, structure editing, import, transfer, and admin views depend on JDBC metadata, the detected effective database type, and the driver capability manifest. Unknown engines run with generic JDBC capabilities.</Callout>
 
 Desktop imports JARs from the local machine. Docker/Web installs JARs and the plugin in the server data directory; browser-local paths are not directly readable by the server, and configuration migration does not carry driver files automatically.
 
 ## When to Use JDBC
 
-Prefer built-in DBX database types first, such as MySQL, PostgreSQL, SQLite, Redis, MongoDB, DuckDB, ClickHouse, SQL Server, Oracle, DM, and GaussDB.
+Prefer built-in NexDB database types first, such as MySQL, PostgreSQL, SQLite, Redis, MongoDB, DuckDB, ClickHouse, SQL Server, Oracle, DM, and GaussDB.
 
 Use JDBC when:
 
-- The target database is not built into DBX
+- The target database is not built into NexDB
 - The native driver does not cover a vendor-specific behavior
 - Your organization standardizes on a vendor JDBC driver
 - You want to connect to databases such as Dameng DM, H2, DB2, Snowflake, or SQLite through JDBC
@@ -28,7 +28,7 @@ Use JDBC when:
 
 | Item                   |         Required | Notes                                                                                  |
 | ---------------------- | ---------------: | -------------------------------------------------------------------------------------- |
-| DBX JDBC plugin        |              Yes | Installed from DBX settings; lets DBX call JDBC                                        |
+| NexDB JDBC plugin        |              Yes | Installed from NexDB settings; lets NexDB call JDBC                                        |
 | Java Runtime           |              Yes | The local machine must be able to run `java`; Java 17 or newer is recommended          |
 | Vendor JDBC driver JAR |              Yes | For example PostgreSQL, MySQL, Dameng DM, Oracle, H2, SQLite, or another vendor driver |
 | JDBC URL               |              Yes | The URL usually contains host, port, database name, and parameters                     |
@@ -43,7 +43,7 @@ The JDBC plugin is a Java program, so your machine needs a Java runtime. After i
 java -version
 ```
 
-If the command is missing, install Java first. DBX checks `JAVA_HOME` first, then common system locations and `java` from `PATH`.
+If the command is missing, install Java first. NexDB checks `JAVA_HOME` first, then common system locations and `java` from `PATH`.
 
 <Tabs groupId="java-install" items={['macOS', 'Windows', 'Linux']}>
   <Tab value="macOS">
@@ -57,7 +57,7 @@ If the command is missing, install Java first. DBX checks `JAVA_HOME` first, the
 
   </Tab>
   <Tab value="Windows">
-    Install Temurin, Oracle JDK, or Microsoft Build of OpenJDK. Restart DBX after installation and verify:
+    Install Temurin, Oracle JDK, or Microsoft Build of OpenJDK. Restart NexDB after installation and verify:
 
     ```powershell
     java -version
@@ -80,25 +80,25 @@ If the command is missing, install Java first. DBX checks `JAVA_HOME` first, the
   </Tab>
 </Tabs>
 
-## Step 2: Install the DBX JDBC Plugin
+## Step 2: Install the NexDB JDBC Plugin
 
-In DBX Desktop:
+In NexDB Desktop:
 
 1. Open **Settings**
 2. Go to **JDBC Drivers**
 3. Click **Install JDBC Plugin**
 
-After installation, DBX shows a status like:
+After installation, NexDB shows a status like:
 
 ```text
 Installed: v0.1.0
 ```
 
-The DBX JDBC plugin has its own version. It does not have to match the DBX app version. Updating DBX does not automatically install the JDBC plugin, and if you uninstall it manually, DBX will not reinstall it behind your back.
+The NexDB JDBC plugin has its own version. It does not have to match the NexDB app version. Updating NexDB does not automatically install the JDBC plugin, and if you uninstall it manually, NexDB will not reinstall it behind your back.
 
 ## Step 3: Download the Vendor JDBC Driver
 
-DBX does not download vendor JDBC drivers automatically. Download the `.jar` file from the database vendor website or a Maven repository.
+NexDB does not download vendor JDBC drivers automatically. Download the `.jar` file from the database vendor website or a Maven repository.
 
 Common examples:
 
@@ -118,17 +118,17 @@ Common examples:
 
 <Callout type="warn">JDBC URL parameters vary by database and driver version. Follow the vendor documentation. If a driver depends on multiple JARs, import or list all required JAR paths.</Callout>
 
-<Callout type="info">For Oracle, also import `com.oracle.database.nls:orai18n` with the same version as `ojdbc`. The base ojdbc jar cannot convert multibyte charsets such as `ZHS16GBK`, so table and column comments fail to load without it. Maven installs of `com.oracle.database.jdbc:ojdbc*` fetch the matching `orai18n` jar automatically. DBX's built-in Oracle connection (default driver) supports these charsets without any extra JAR.</Callout>
+<Callout type="info">For Oracle, also import `com.oracle.database.nls:orai18n` with the same version as `ojdbc`. The base ojdbc jar cannot convert multibyte charsets such as `ZHS16GBK`, so table and column comments fail to load without it. Maven installs of `com.oracle.database.jdbc:ojdbc*` fetch the matching `orai18n` jar automatically. NexDB's built-in Oracle connection (default driver) supports these charsets without any extra JAR.</Callout>
 
 ## Step 4: Import JDBC Driver JARs
 
-In DBX:
+In NexDB:
 
 1. Open **Settings**
 2. Go to **JDBC Drivers**
 3. In the **JDBC driver JARs** section, choose the downloaded `.jar`
 
-You can also paste a local JAR path and import it. DBX copies imported JARs into the app data directory, and new JDBC connections can select them from the driver dropdown.
+You can also paste a local JAR path and import it. NexDB copies imported JARs into the app data directory, and new JDBC connections can select them from the driver dropdown.
 
 Importing a driver only copies local files. It does not change your system Java installation, install database clients, or upload the driver anywhere.
 
@@ -151,9 +151,9 @@ Click **Test** after filling the form. If the test succeeds, click **Save** and 
 
 ## Example: Dameng DM
 
-DBX already has a built-in DM ODBC connection type. If you prefer the official Dameng JDBC driver, use the JDBC plugin.
+NexDB already has a built-in DM ODBC connection type. If you prefer the official Dameng JDBC driver, use the JDBC plugin.
 
-1. Install the DBX JDBC plugin
+1. Install the NexDB JDBC plugin
 2. Install Java
 3. Get the Dameng JDBC driver JAR from your DM installation directory or Maven repository, such as `DmJdbcDriver8.jar` or `DmJdbcDriver11.jar`
 4. Import the JAR in **Settings → JDBC Drivers**
@@ -174,7 +174,7 @@ For DM, entering `dm.jdbc.driver.DmDriver` is recommended so the connection does
 
 H2 is a good way to verify the JDBC workflow.
 
-1. Install the DBX JDBC plugin
+1. Install the NexDB JDBC plugin
 2. Download the H2 JDBC driver JAR
 3. Import `h2-*.jar` in settings
 4. Create a new connection and choose **JDBC**
@@ -226,7 +226,7 @@ jdbc:postgresql://localhost:5432/postgres?sslmode=require
 
 ### JDBC plugin installation fails
 
-Check whether your network can access DBX GitHub Releases. DBX tries proxy URLs and the original GitHub URL, but public proxies can still be unavailable. Try another network if GitHub is blocked.
+Check whether your network can access NexDB GitHub Releases. NexDB tries proxy URLs and the original GitHub URL, but public proxies can still be unavailable. Try another network if GitHub is blocked.
 
 ### Java cannot be found
 
@@ -236,7 +236,7 @@ Verify in a terminal:
 java -version
 ```
 
-If the terminal works but DBX does not, restart DBX. On macOS, if Java is only installed under a Homebrew path, configure `JAVA_HOME`.
+If the terminal works but NexDB does not, restart NexDB. On macOS, if Java is only installed under a Homebrew path, configure `JAVA_HOME`.
 
 ### `No JDBC driver was discovered`
 
@@ -272,18 +272,18 @@ Enter one JAR path per line in the **Driver JARs** field, or import each require
 
 ## Uninstalling
 
-Click **Uninstall** in **Settings → JDBC Drivers**. DBX removes the JDBC plugin itself but keeps your imported vendor driver JARs, so you do not have to import them again if you reinstall the plugin later.
+Click **Uninstall** in **Settings → JDBC Drivers**. NexDB removes the JDBC plugin itself but keeps your imported vendor driver JARs, so you do not have to import them again if you reinstall the plugin later.
 
 ## For Developers: Plugin Protocol
 
-DBX starts the plugin executable and exchanges JSON Lines requests and responses over stdin/stdout. After a connection is established, DBX reuses the same plugin process for queries and metadata requests on that connection.
+NexDB starts the plugin executable and exchanges JSON Lines requests and responses over stdin/stdout. After a connection is established, NexDB reuses the same plugin process for queries and metadata requests on that connection.
 
 The plugin directory must include `manifest.json`:
 
 ```json
 {
   "id": "jdbc",
-  "name": "DBX JDBC Plugin",
+  "name": "NexDB JDBC Plugin",
   "version": "0.1.0",
   "protocol_version": 1,
   "description": "Adds JDBC driver support.",
@@ -299,7 +299,7 @@ The plugin directory must include `manifest.json`:
 }
 ```
 
-The current DBX app supports plugin protocol version `1`. DBX rejects a plugin whose manifest declares a different protocol version, and each plugin request has a 30 second timeout so a hung driver process does not block the app indefinitely.
+The current NexDB app supports plugin protocol version `1`. NexDB rejects a plugin whose manifest declares a different protocol version, and each plugin request has a 30 second timeout so a hung driver process does not block the app indefinitely.
 
 The initial protocol supports `testConnection`, `connect`, `executeQuery`, `listDatabases`, `listSchemas`, `listTables`, and `getColumns`.
 

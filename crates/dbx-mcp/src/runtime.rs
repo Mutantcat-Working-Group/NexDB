@@ -38,7 +38,7 @@ impl HttpRuntimeConfig {
 }
 
 impl RuntimeConfig {
-    /// Parses DBX MCP's small runtime surface without adding a command-line dependency.
+    /// Parses NexDB MCP's small runtime surface without adding a command-line dependency.
     /// `stdio` remains the default, preserving all existing npm and native launchers.
     pub fn from_environment_and_args() -> Result<Self, String> {
         let mut transport = env::var("DBX_MCP_TRANSPORT").ok();
@@ -71,7 +71,7 @@ impl RuntimeConfig {
                     } else if let Some(value) = argument.strip_prefix("--http-path=") {
                         path = Some(value.into());
                     } else {
-                        return Err(format!("unknown DBX MCP argument: {argument}"));
+                        return Err(format!("unknown NexDB MCP argument: {argument}"));
                     }
                 }
             }

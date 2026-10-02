@@ -564,7 +564,7 @@ mod tests {
     #[test]
     fn comments_unsupported_warning_is_absent_when_a_table_comment_was_collected() {
         // Regression: IRIS reports `comment: false` on the DDL capability
-        // flag (it supports %DESCRIPTION at CREATE time but DBX cannot ALTER
+        // flag (it supports %DESCRIPTION at CREATE time but NexDB cannot ALTER
         // it), yet IRIS still returns real comments on introspection. The
         // warning must not contradict data actually present in the snapshot.
         let mut table = table_with_columns("public", "orders", vec![]);

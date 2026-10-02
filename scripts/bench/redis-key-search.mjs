@@ -76,17 +76,17 @@ Usage:
   pnpm bench:redis-key-search [options]
 
 Options:
-  --api-base=http://127.0.0.1:4224/api  DBX Web API base URL
+  --api-base=http://127.0.0.1:4224/api  NexDB Web API base URL
   --container=dbx_bench_redis_key_search Redis Docker container name
   --port=16151                              Host port for Redis
   --key-count=1000000                       Number of generated keys
   --pattern=user:*                          SCAN MATCH pattern
-  --scan-count=10000                        DBX SCAN COUNT value
-  --max-iterations=15                       DBX server-side SCAN iterations per API call
-  --typed=false                             Skip DBX includeTypes=true comparison
+  --scan-count=10000                        NexDB SCAN COUNT value
+  --max-iterations=15                       NexDB server-side SCAN iterations per API call
+  --typed=false                             Skip NexDB includeTypes=true comparison
   --json                                    Print JSON only
 
-Before running this benchmark, start DBX Web separately, for example:
+Before running this benchmark, start NexDB Web separately, for example:
   DBX_DATA_DIR=/tmp/dbx-bench DBX_PORT=4224 DBX_DISABLE_PASSWORD=1 cargo run -p dbx-web
 `);
 }
@@ -291,7 +291,7 @@ async function measureDbxScan(options, connectionId, includeTypes) {
   } while (cursor !== 0);
 
   return {
-    label: includeTypes ? "DBX scan-keys-batch includeTypes=true" : "DBX scan-keys-batch includeTypes=false",
+    label: includeTypes ? "NexDB scan-keys-batch includeTypes=true" : "NexDB scan-keys-batch includeTypes=false",
     keys,
     calls,
     payloadBytes,
@@ -322,8 +322,8 @@ function printReport(result) {
   console.log(`- Redis: ${result.config.container} on ${result.config.host}:${result.config.port}`);
   console.log(`- Keys: ${result.config.keyCount}`);
   console.log(`- Pattern: ${result.config.pattern}`);
-  console.log(`- DBX scan count: ${result.config.scanCount}`);
-  console.log(`- DBX max iterations: ${result.config.maxIterations}`);
+  console.log(`- NexDB scan count: ${result.config.scanCount}`);
+  console.log(`- NexDB max iterations: ${result.config.maxIterations}`);
   console.log(`- Seed: ${result.seed.skipped ? "reused existing dataset" : `loaded in ${formatMs(result.seed.elapsedMs)}`}`);
   console.log("");
   console.log("| Case | Keys | Calls | Payload | Time |");
@@ -347,7 +347,7 @@ async function main() {
   const seed = await seedRedis(options);
 
   if (!options.json) {
-    console.log("Connecting DBX Web API...");
+    console.log("Connecting NexDB Web API...");
   }
   const connectionId = await ensureDbxConnection(options);
 

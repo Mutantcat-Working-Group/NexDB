@@ -207,15 +207,15 @@ func (server *server) connectionInfo() (map[string]any, error) {
 	}
 	productName := "Apache Hive"
 	compatibilityMode := "hive"
-	driverName := "DBX Hive Go Agent"
+	driverName := "NexDB Hive Go Agent"
 	if strings.EqualFold(server.params.DatabaseType, "kyuubi") {
 		productName = "Apache Kyuubi"
 		compatibilityMode = "kyuubi"
-		driverName = "DBX Kyuubi Go Agent"
+		driverName = "NexDB Kyuubi Go Agent"
 	} else if strings.EqualFold(server.params.DatabaseType, "impala") || strings.Contains(strings.ToLower(version), "impalad version") {
 		productName = "Apache Impala"
 		compatibilityMode = "impala"
-		driverName = "DBX Impala Go Agent"
+		driverName = "NexDB Impala Go Agent"
 	}
 	return map[string]any{
 		"database":          server.config.Database,

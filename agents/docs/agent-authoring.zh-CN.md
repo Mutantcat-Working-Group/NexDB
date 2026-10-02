@@ -1,6 +1,6 @@
 # Agent 编写指南
 
-本指南定义了 DBX Agent 的预期形态，可作为新增或评审 Agent 时的清单使用。
+本指南定义了 NexDB Agent 的预期形态，可作为新增或评审 Agent 时的清单使用。
 
 ## Agent 契约
 
@@ -10,7 +10,7 @@
 - 标准 JDBC Agent 优先继承 `org.mutantcat.agent.ConfiguredJdbcAgent`。
 - 当数据库需要自定义元数据 SQL 但仍可复用生命周期与执行行为时，继承 `org.mutantcat.agent.AbstractJdbcAgent`。
 - 在 `main` 方法中以 `new JsonRpcServer(new <Agent>()).run()` 启动。
-- 通过 stdin/stdout 与 DBX 通信，遵循 JSON-RPC 2.0 协议。
+- 通过 stdin/stdout 与 NexDB 通信，遵循 JSON-RPC 2.0 协议。
 - 除非模块明确设计为非 JDBC 协议，否则使用 JDBC 访问数据库。
 - 输出一个名为 `dbx-agent-<agent-name>.jar` 的 shadow JAR。
 

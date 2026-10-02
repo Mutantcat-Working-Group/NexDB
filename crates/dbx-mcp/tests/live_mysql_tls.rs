@@ -11,7 +11,7 @@ async fn mysql_preferred_tls_with_self_signed_certificate_keeps_mcp_alive() {
     let connection_name = std::env::var("DBX_LIVE_MCP_CONNECTION").expect("set DBX_LIVE_MCP_CONNECTION");
     let database = std::env::var("DBX_LIVE_MCP_DATABASE").expect("set DBX_LIVE_MCP_DATABASE");
     let backend =
-        Arc::new(LocalBackend::open(&Path::new(&data_dir).join("dbx.db")).await.expect("open copied DBX storage"));
+        Arc::new(LocalBackend::open(&Path::new(&data_dir).join("dbx.db")).await.expect("open copied NexDB storage"));
     let server = DbxMcpServer::with_runtime_options(backend, McpScope::default(), false);
     let (server_transport, client_transport) = tokio::io::duplex(16 * 1024);
     let server_task = tokio::spawn(async move { server.serve(server_transport).await });

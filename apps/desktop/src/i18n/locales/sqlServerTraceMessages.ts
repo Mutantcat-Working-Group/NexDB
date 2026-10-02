@@ -15,7 +15,7 @@ export const sqlServerTraceMessages = {
   highCost: "Higher overhead",
   elapsed: "{seconds}s",
   eventCount: "Showing {visible} / {total} events",
-  cleanedStaleSessions: "Cleaned {count} expired DBX trace session(s).",
+  cleanedStaleSessions: "Cleaned {count} expired NexDB trace session(s).",
   permissionHint: "Requires ALTER ANY EVENT SESSION and server-state viewing permissions",
   filterSql: "Filter procedure or SQL text",
   filterLogin: "Login",

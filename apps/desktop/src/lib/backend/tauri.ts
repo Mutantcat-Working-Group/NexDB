@@ -1607,7 +1607,7 @@ export async function executeMulti(
       ...options,
     });
     if (diagnosticsEnabled) {
-      appendDebugLog("info", "[DBX][query-transport:tauri]", {
+      appendDebugLog("info", "[NexDB][query-transport:tauri]", {
         traceId: executionId?.slice(0, 8),
         totalMs: Math.round(performance.now() - startedAt),
         resultCount: results.length,
@@ -1618,7 +1618,7 @@ export async function executeMulti(
     return results;
   } catch (error) {
     if (diagnosticsEnabled) {
-      appendDebugLog("warn", "[DBX][query-transport:tauri:error]", {
+      appendDebugLog("warn", "[NexDB][query-transport:tauri:error]", {
         traceId: executionId?.slice(0, 8),
         totalMs: Math.round(performance.now() - startedAt),
       });

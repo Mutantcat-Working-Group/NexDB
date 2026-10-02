@@ -123,7 +123,7 @@ describe("HTTP query transport diagnostics", () => {
     await executeMulti("private-connection-marker", "private-database-marker", sql, undefined, "trace-12345678");
 
     const logs = getDebugLogText();
-    expect(logs).toContain("[DBX][query-transport:http]");
+    expect(logs).toContain("[NexDB][query-transport:http]");
     expect(logs).toContain('"backendCoreMs":"41"');
     expect(logs).toContain('"backendSerializeMs":"7"');
     expect(logs).toContain('"requestBytes":');
@@ -148,7 +148,7 @@ describe("HTTP query transport diagnostics", () => {
     expect(error).toBeInstanceOf(BackendErrorException);
     expect(error).toMatchObject({ backendError: expect.objectContaining({ code: envelope.code }) });
     const logs = getDebugLogText();
-    expect(logs).toContain("[DBX][query-transport:http:error]");
+    expect(logs).toContain("[NexDB][query-transport:http:error]");
     expect(logs).toContain('"status":400');
     expect(logs).not.toContain("failed-query-marker");
     expect(logs).not.toContain(envelope.detail);

@@ -28,7 +28,7 @@ async fn selected_schema_keeps_the_configured_postgres_search_path() {
 
     let result = postgres::execute_query_with_schema(&pool, "dbx_7212_dev", "SHOW search_path")
         .await
-        .expect("show search_path through DBX query execution");
+        .expect("show search_path through NexDB query execution");
     assert_eq!(
         result.rows.first().and_then(|row| row.first()).and_then(|value| value.as_str()),
         Some("dbx_7212_dev,dbx_7212_ext,public")

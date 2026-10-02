@@ -48,7 +48,7 @@ const mocks = vi.hoisted(() => {
           ServiceTags: ["demo"],
           ServiceAddress: "127.0.0.1",
           ServicePort: 19080,
-          ServiceMeta: { owner: "DBX" },
+          ServiceMeta: { owner: "NexDB" },
           ServiceTaggedAddresses: {},
           ServiceWeights: { Passing: 1, Warning: 1 },
           CreateIndex: 1,
@@ -80,7 +80,7 @@ vi.mock("@/lib/backend/api", () => ({
           Tags: ["demo", "node"],
           Address: "127.0.0.1",
           TaggedAddresses: { lan: { Address: "127.0.0.1", Port: 19090 } },
-          Meta: { owner: "DBX" },
+          Meta: { owner: "NexDB" },
           Port: 19090,
           Weights: { Passing: 2, Warning: 1 },
         },
@@ -98,7 +98,7 @@ vi.mock("@/lib/backend/api", () => ({
     ID: id,
     Service: "dbx-demo-api",
     Tags: ["demo"],
-    Meta: { owner: "DBX" },
+    Meta: { owner: "NexDB" },
     Port: 19080,
     Address: "127.0.0.1",
     TaggedAddresses: {},
@@ -282,7 +282,7 @@ describe("ConsulServices interactions", () => {
     expect(nodeServiceButton).toBeTruthy();
     nodeServiceButton!.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
     await settle();
-    expect(host.textContent).toContain("owner=DBX");
+    expect(host.textContent).toContain("owner=NexDB");
     expect(host.textContent).toContain("consul.ui.serviceWeights");
     expect(host.textContent).toContain("lan=127.0.0.1:19090");
     expect(nodeServiceButton!.getAttribute("aria-expanded")).toBe("true");

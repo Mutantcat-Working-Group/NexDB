@@ -1,6 +1,6 @@
 # Cassandra native Agent
 
-The Cassandra Agent uses Apache `cassandra-gocql-driver` and implements the DBX
+The Cassandra Agent uses Apache `cassandra-gocql-driver` and implements the NexDB
 multi-session JSON-RPC protocol without a JVM.
 
 ## Compatibility
@@ -20,7 +20,7 @@ multi-session JSON-RPC protocol without a JVM.
 - Metadata: keyspaces, tables, columns, indexes, CQL table DDL, completion search
 - Queries: legacy string result values, paging, cancellation, logged and unlogged batches
 
-The Agent accepts both normal DBX connection fields and Cassandra JDBC-style
+The Agent accepts both normal NexDB connection fields and Cassandra JDBC-style
 connection strings, including the wrapper's `host1--host2:9042` contact-point
 syntax.
 

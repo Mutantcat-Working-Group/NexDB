@@ -1,6 +1,6 @@
 # Agent Protocol v2: Multi-session runtimes
 
-Protocol v2 allows one Agent process to serve multiple isolated database sessions. Pooled JDBC Agents that use the common structured error producer advertise `protocolVersion: 2`, `multi_session`, and `structured_error_v1`. Generic/custom v2 handlers may advertise only `multi_session`. DBX falls back to the v1 one-process-per-pool lifecycle when `multi_session` is absent.
+Protocol v2 allows one Agent process to serve multiple isolated database sessions. Pooled JDBC Agents that use the common structured error producer advertise `protocolVersion: 2`, `multi_session`, and `structured_error_v1`. Generic/custom v2 handlers may advertise only `multi_session`. NexDB falls back to the v1 one-process-per-pool lifecycle when `multi_session` is absent.
 
 ## Session lifecycle
 
@@ -13,7 +13,7 @@ Protocol v2 allows one Agent process to serve multiple isolated database session
 
 ## Manual (interactive) transactions
 
-When a runtime advertises the `transaction` capability and supports sticky sessions, DBX may open a dedicated workload session and call:
+When a runtime advertises the `transaction` capability and supports sticky sessions, NexDB may open a dedicated workload session and call:
 
 - `begin_manual_transaction` `{ schema? }` — pin one physical connection / start an open transaction
 - `execute_query` (and related query methods) — run on the open transaction until commit/rollback
@@ -23,7 +23,7 @@ This is separate from one-shot `execute_transaction`, which begins, runs a state
 
 `agentSessionId` identifies a logical database connection. Existing `sessionId` fields remain pagination cursor identifiers and must not be used as logical connection identifiers.
 
-`sessionRole` is `workload` by default. DBX sends `metadata` for object-tree, completion, and other read-only metadata sessions. New runtimes use this role to preserve metadata checkout capacity; older runtimes may ignore the field.
+`sessionRole` is `workload` by default. NexDB sends `metadata` for object-tree, completion, and other read-only metadata sessions. New runtimes use this role to preserve metadata checkout capacity; older runtimes may ignore the field.
 
 ## Concurrency
 
@@ -31,7 +31,7 @@ Requests for different sessions may execute concurrently. Requests for the same 
 
 All Java JDBC runtimes share HikariCP pools by immutable connection identity through `AbstractJdbcAgent`. Stateless requests borrow and return connections. Paged cursors and explicit session-state SQL pin a connection to the logical session, and stateful connections are evicted when that session closes so state cannot leak across sessions. Custom URL construction, transport fallback, connection initialization, and native-driver access remain behind shared lifecycle hooks.
 
-DBX uses unique short-lived logical sessions for independent Agent metadata tasks so they do not queue behind editor execution. These sessions close after completion, and cancellation-safe cleanup closes them when the caller is dropped.
+NexDB uses unique short-lived logical sessions for independent Agent metadata tasks so they do not queue behind editor execution. These sessions close after completion, and cancellation-safe cleanup closes them when the caller is dropped.
 
 ## Runtime compatibility
 
@@ -62,9 +62,9 @@ JSON-RPC failures may include structured recovery data:
 
 `contractVersion: 1` is guaranteed only when the handshake advertises `structured_error_v1`. Unknown extra fields are allowed, but unknown enum values, missing required fields, invalid types, or an `agentSessionId` that does not match the current request are contract violations. `operationOutcome` describes whether the user operation may have reached the database; `retryable` is an internal hint and never authorizes automatic SQL replay.
 
-`keep` preserves the logical session, `quarantine` removes only that session from routing, and `replace_runtime` requires DBX to atomically remove every pool sharing the runtime before terminating it. Agent code reports the disposition but must not independently terminate a shared runtime because it does not own DBX routing state. Temporary workload checkout backpressure uses `category=resource`, `retryable=true`, and `sessionDisposition=keep`; only unrecoverable runtime or cleanup saturation requests `replace_runtime`.
+`keep` preserves the logical session, `quarantine` removes only that session from routing, and `replace_runtime` requires NexDB to atomically remove every pool sharing the runtime before terminating it. Agent code reports the disposition but must not independently terminate a shared runtime because it does not own NexDB routing state. Temporary workload checkout backpressure uses `category=resource`, `retryable=true`, and `sessionDisposition=keep`; only unrecoverable runtime or cleanup saturation requests `replace_runtime`.
 
-The complete JDBC pool checkout runs under a bounded runtime executor, including HikariCP idle-connection validation, physical connection creation, and driver setup. Workload admission, the runtime-wide physical connection budget, physical creation, and checkout consume one absolute deadline rather than restarting the timeout at each stage. Connection return, eviction, and physical close use separate bounded executors so they cannot deadlock checkout or creation. If a driver call outlives its boundary, or cleanup cannot confirm the physical connection state, the connection identity is poisoned and returns `category=resource` with `sessionDisposition=replace_runtime` on the current or next checkout. A late connection must be evicted and closed instead of published, and DBX must not replay the timed-out user operation automatically.
+The complete JDBC pool checkout runs under a bounded runtime executor, including HikariCP idle-connection validation, physical connection creation, and driver setup. Workload admission, the runtime-wide physical connection budget, physical creation, and checkout consume one absolute deadline rather than restarting the timeout at each stage. Connection return, eviction, and physical close use separate bounded executors so they cannot deadlock checkout or creation. If a driver call outlives its boundary, or cleanup cannot confirm the physical connection state, the connection identity is poisoned and returns `category=resource` with `sessionDisposition=replace_runtime` on the current or next checkout. A late connection must be evicted and closed instead of published, and NexDB must not replay the timed-out user operation automatically.
 
 ## Driver author guidance
 

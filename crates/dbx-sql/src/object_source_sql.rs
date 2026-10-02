@@ -1276,8 +1276,8 @@ mod tests {
 
     #[test]
     fn sqlserver_commented_procedure_source_preserves_comments_and_uses_alter() {
-        let source = "-- =============================================\n-- Author: DBX\n-- Description: issue 2269 reproduction\n-- =============================================\n\nCREATE PROCEDURE [dbo].[usp_demo]\nAS\nBEGIN\n    SELECT 1;\nEND;";
-        let expected = "-- =============================================\n-- Author: DBX\n-- Description: issue 2269 reproduction\n-- =============================================\n\nALTER PROCEDURE [dbo].[usp_demo]\nAS\nBEGIN\n    SELECT 1;\nEND;";
+        let source = "-- =============================================\n-- Author: NexDB\n-- Description: issue 2269 reproduction\n-- =============================================\n\nCREATE PROCEDURE [dbo].[usp_demo]\nAS\nBEGIN\n    SELECT 1;\nEND;";
+        let expected = "-- =============================================\n-- Author: NexDB\n-- Description: issue 2269 reproduction\n-- =============================================\n\nALTER PROCEDURE [dbo].[usp_demo]\nAS\nBEGIN\n    SELECT 1;\nEND;";
 
         assert_sqlserver_editable_and_executable(ObjectSourceKind::Procedure, source, expected);
     }

@@ -59,7 +59,7 @@ function fixture({ issue = baseIssue, latest = issue, result = assessment(), act
 test("excludes reporter priority sections and labels without losing later sections", () => {
   const prepared = prepareIssue(baseIssue);
   assert.doesNotMatch(JSON.stringify(prepared), /P0|Must fix|user-priority|urgency/i);
-  assert.match(prepared.body, /DBX on Linux/);
+  assert.match(prepared.body, /NexDB on Linux/);
   assert.deepEqual(prepared.labels, ["bug", "db/mysql"]);
   const chinese = prepareIssue({
     title: "一个问题",

@@ -1,18 +1,18 @@
-# DBX plugin platform
+# NexDB plugin platform
 
-DBX plugins are optional, versioned `.dbxp` packages. They can add native backend behavior, sandboxed workbench UI, saved connection types, and filesystem providers without increasing the base DBX installation size. Declarative extension metadata consumed at build time lives here as well.
+NexDB plugins are optional, versioned `.dbxp` packages. They can add native backend behavior, sandboxed workbench UI, saved connection types, and filesystem providers without increasing the base NexDB installation size. Declarative extension metadata consumed at build time lives here as well.
 
 New plugin developers can read the official [Chinese documentation](https://dbxio.com/cn/docs/plugin-development) or [English documentation](https://dbxio.com/en/docs/plugin-development). The source files are also available as [Chinese MDX](../docs/content/docs/plugin-development.cn.mdx) and [English MDX](../docs/content/docs/plugin-development.mdx); the lower-level Chinese CLI walkthrough remains available in [`GETTING_STARTED.zh-CN.md`](./GETTING_STARTED.zh-CN.md).
 
-Install the precompiled development CLI without cloning or compiling DBX:
+Install the precompiled development CLI without cloning or compiling NexDB:
 
 ```bash
 npm install --global @dbx-app/plugin-cli
 ```
 
-Marketplace listing pull requests go to `t8y2/dbx-store`. Plugin host, SDK, CLI, schema, documentation, and official-example changes go to `t8y2/dbx`. Ordinary plugin source stays in the plugin author's own repository.
+Marketplace listing pull requests go to `t8y2/dbx-store`. Plugin host, SDK, CLI, schema, documentation, and official-example changes go to `Mutantcat-Working-Group/NexDB`. Ordinary plugin source stays in the plugin author's own repository.
 
-The platform contract is manifest v1 + Host API 1.x + sidecar protocol v1. The source code for a plugin may live in this repository or in a separate repository; DBX installs only the built package.
+The platform contract is manifest v1 + Host API 1.x + sidecar protocol v1. The source code for a plugin may live in this repository or in a separate repository; NexDB installs only the built package.
 
 ## Repository layout
 
@@ -26,7 +26,7 @@ The platform contract is manifest v1 + Host API 1.x + sidecar protocol v1. The s
 - `examples/hello-workbench` — complete connection provider + native sidecar + sandboxed workbench example.
 - `RELEASING.md` — source ownership, release assets, official-store submission, and review workflow.
 - `SIGNING.md` — repository-signing trust model, key rotation, and future author-attestation boundary.
-- `connection-types/` — build-time registry for every DBX connection target, including databases, data services, message queues, and service registries.
+- `connection-types/` — build-time registry for every NexDB connection target, including databases, data services, message queues, and service registries.
 - `dialects/` — SQL dialect descriptors, type catalogs, DDL templates, and metadata rules.
 - `mappings/` — cross-dialect type mapping rules.
 - `jdbc/` — legacy JDBC sidecar retained during migration to manifest v1; connects through vendor JDBC drivers and custom JDBC URLs.
@@ -47,9 +47,9 @@ These are separate artifacts:
 
 1. **Source repository** — plugin authors build and test here or in another repository.
 2. **`.dbxp` artifacts** — plugin CI publishes unsigned review candidates; the repository operator signs approved candidates and publishes the installable assets.
-3. **Installed plugin** — DBX verifies and extracts the package under its plugin store.
+3. **Installed plugin** — NexDB verifies and extracts the package under its plugin store.
 
-Optional plugins are not bundled into the DBX base package. Installing SSH, SFTP, OpenDAL, or another future plugin increases only the local plugin store size.
+Optional plugins are not bundled into the NexDB base package. Installing SSH, SFTP, OpenDAL, or another future plugin increases only the local plugin store size.
 
 ## Marketplace and repository model
 
@@ -59,15 +59,15 @@ The Plugin Center separates three concerns:
 - **Installed** manages the local plugin lifecycle and opens connection providers, workbenches, and filesystem providers.
 - **Settings** manages local `.dbxp` installation, custom repositories, development-only unsigned packages, and advanced repository trust.
 
-Repository configuration is persisted under the plugin store in `.repositories.json`. DBX always exposes one managed `dbx-official` repository backed by the official catalog:
+Repository configuration is persisted under the plugin store in `.repositories.json`. NexDB always exposes one managed `dbx-official` repository backed by the official catalog:
 
 ```text
 https://raw.githubusercontent.com/t8y2/dbx-store/main/catalog/index.json
 ```
 
-The official URL is part of the DBX client contract and cannot be edited in Plugin Center settings. Official repository signing public keys are built into DBX; release builds may append rotation keys with `DBX_PLUGIN_MARKETPLACE_TRUSTED_KEYS_JSON`. Custom repositories use user-managed repository keys. The official repository accepts only DBX-managed keys, so adding a custom key cannot impersonate an official package.
+The official URL is part of the NexDB client contract and cannot be edited in Plugin Center settings. Official repository signing public keys are built into NexDB; release builds may append rotation keys with `DBX_PLUGIN_MARKETPLACE_TRUSTED_KEYS_JSON`. Custom repositories use user-managed repository keys. The official repository accepts only NexDB-managed keys, so adding a custom key cannot impersonate an official package.
 
-Catalog v1 is defined by `marketplace.schema.json` and includes repository metadata, localized plugin metadata, searchable tags, permissions, versions, release notes, and target artifacts. Each artifact declares `signingKeyId`. DBX first selects the exact current target and then falls back to `universal`. Artifact URLs may be relative to the catalog URL. DBX enforces a 4 MiB catalog limit and a 512 MiB package limit, resolves only HTTP(S) URLs, limits redirects, isolates repository failures, verifies the catalog-declared size and SHA-256, then requires the package Manifest ID, version, publisher, permissions, and Ed25519 key ID to match the reviewed catalog before activation.
+Catalog v1 is defined by `marketplace.schema.json` and includes repository metadata, localized plugin metadata, searchable tags, permissions, versions, release notes, and target artifacts. Each artifact declares `signingKeyId`. NexDB first selects the exact current target and then falls back to `universal`. Artifact URLs may be relative to the catalog URL. NexDB enforces a 4 MiB catalog limit and a 512 MiB package limit, resolves only HTTP(S) URLs, limits redirects, isolates repository failures, verifies the catalog-declared size and SHA-256, then requires the package Manifest ID, version, publisher, permissions, and Ed25519 key ID to match the reviewed catalog before activation.
 
 Run the live official-store smoke test with:
 
@@ -89,7 +89,7 @@ Review alone cannot protect an already approved download URL from later replacem
 
 ### Recommended repository ownership
 
-Keep the host, SDK, schemas, packager, and minimal examples in `t8y2/dbx`. The official catalog and review metadata live in the separate [`t8y2/dbx-store`](https://github.com/t8y2/dbx-store) repository:
+Keep the host, SDK, schemas, packager, and minimal examples in `Mutantcat-Working-Group/NexDB`. The official catalog and review metadata live in the separate [`t8y2/dbx-store`](https://github.com/t8y2/dbx-store) repository:
 
 ```text
 t8y2/dbx-store
@@ -177,7 +177,7 @@ Use `stdio-jsonl` for ordinary request/event traffic. Use `stdio-framed` when PT
 
 ### `connection-provider`
 
-A provider owns validation and connect/disconnect lifecycle for a saved non-SQL connection. DBX stores these as:
+A provider owns validation and connect/disconnect lifecycle for a saved non-SQL connection. NexDB stores these as:
 
 ```text
 ConnectionConfig
@@ -191,7 +191,7 @@ ConnectionConfig
 └── transport_layers: SSH jump / SOCKS / HTTP proxy
 ```
 
-The provider-defined type, such as `ssh`, stays in `plugin_connection_type`; it does not extend DBX's exhaustive database enum.
+The provider-defined type, such as `ssh`, stays in `plugin_connection_type`; it does not extend NexDB's exhaustive database enum.
 
 Plugin authors may declare package-relative display metadata:
 
@@ -210,7 +210,7 @@ Plugin authors may declare package-relative display metadata:
 }
 ```
 
-DBX resolves connection display metadata in this order: provider `label` / `icon`, plugin `name` / `icon`, then provider ID and the built-in generic plugin icon. Declared icon files must remain inside the plugin package and use SVG, PNG, JPEG, GIF, WebP, or ICO. SVG is rendered through an image URL rather than injected into the DBX document.
+NexDB resolves connection display metadata in this order: provider `label` / `icon`, plugin `name` / `icon`, then provider ID and the built-in generic plugin icon. Declared icon files must remain inside the plugin package and use SVG, PNG, JPEG, GIF, WebP, or ICO. SVG is rendered through an image URL rather than injected into the NexDB document.
 
 Field bindings:
 
@@ -220,11 +220,11 @@ Field bindings:
 | `config`                                                   | `external_config[field.key]`                                     |
 | `secret`                                                   | `connection_secrets[field.key]`, persisted outside `config_json` |
 
-Password fields default to `secret` when `binding` is omitted. DBX validates required values and value types before calling the plugin. The plugin receives the hydrated connection only in its backend lifecycle request; the workbench UI receives a connection ID and non-secret navigation context.
+Password fields default to `secret` when `binding` is omitted. NexDB validates required values and value types before calling the plugin. The plugin receives the hydrated connection only in its backend lifecycle request; the workbench UI receives a connection ID and non-secret navigation context.
 
-Absent optional fields stay absent: when DBX hands the manifest to its own UI it omits `description`, `placeholder`, `default`, and `binding` for fields that do not declare them, and `"default": null` means "no default" exactly like omitting the key. Treat a missing value as unset — never as an empty string, and never as the literal text `null`, which is not a storable plugin value.
+Absent optional fields stay absent: when NexDB hands the manifest to its own UI it omits `description`, `placeholder`, `default`, and `binding` for fields that do not declare them, and `"default": null` means "no default" exactly like omitting the key. Treat a missing value as unset — never as an empty string, and never as the literal text `null`, which is not a storable plugin value.
 
-Well-known field keys: a `config`-bound field keyed `connect_timeout_secs` declares the plugin's own connect/handshake timeout and is the single source of truth for it. On save, DBX mirrors its resolved value (the declared `default`, or the value a user entered in the connection form) into the typed `ConnectionConfig.connect_timeout_secs` — the dialog's generic global/per-connection timeout radios do not apply to providers declaring this field. The host's `connection/test` and `connection/connect` RPC deadline follows the same resolved value (stored `external_config` first, then the declared `default`), so the deadline never fires before the plugin's own timeout; providers that do not declare the field keep the generic typed-timeout behavior. Declare it when your transport needs more than the generic built-in 10s default (e.g. SSH handshakes on slow links).
+Well-known field keys: a `config`-bound field keyed `connect_timeout_secs` declares the plugin's own connect/handshake timeout and is the single source of truth for it. On save, NexDB mirrors its resolved value (the declared `default`, or the value a user entered in the connection form) into the typed `ConnectionConfig.connect_timeout_secs` — the dialog's generic global/per-connection timeout radios do not apply to providers declaring this field. The host's `connection/test` and `connection/connect` RPC deadline follows the same resolved value (stored `external_config` first, then the declared `default`), so the deadline never fires before the plugin's own timeout; providers that do not declare the field keep the generic typed-timeout behavior. Declare it when your transport needs more than the generic built-in 10s default (e.g. SSH handshakes on slow links).
 
 #### Local file fields
 
@@ -241,7 +241,7 @@ A `text`, `password`, or `textarea` field may declare `picker` when the user sho
 ```
 
 - **Desktop hosts** open a native picker and store the chosen **absolute path** in the declaring field. The plugin backend runs on the same machine, so it can read the file itself.
-- **Browser hosts** cannot resolve a path on the user's machine, so the same action becomes an **upload**: DBX reads the selected file and stores its **content** in `content_field` (which must be a declared `text` / `password` / `textarea` sibling), and clears the declaring field. A picker without `content_field` is therefore desktop-only and stays hidden in the browser.
+- **Browser hosts** cannot resolve a path on the user's machine, so the same action becomes an **upload**: NexDB reads the selected file and stores its **content** in `content_field` (which must be a declared `text` / `password` / `textarea` sibling), and clears the declaring field. A picker without `content_field` is therefore desktop-only and stays hidden in the browser.
 - Switching source clears the other one: choosing a path removes the uploaded content and vice versa. This matters for fields that are alternatives — a plugin that prefers `private_key` content over `private_key_path` must not keep serving a stale upload after the user re-picked a path.
 - `kind` is `file` (default use case) or `directory` (desktop-only: a browser cannot hand a folder to the plugin). `accept` lists up to 16 filters as extensions (`.pem`) or MIME types (`text/plain`) and is passed to the native dialog and the browser file input unchanged. Uploads are capped at 1 MiB.
 
@@ -273,8 +273,8 @@ A field may declare `visible_when` and `required_when`. A leaf clause matches wh
 
 - `all_of` / `any_of` must contain at least one nested condition, nesting is limited to 8 levels and 64 nodes, and every referenced field must be a sibling declared by the same provider.
 - Conditions cascade: while the field a clause reads is itself hidden, the clause does not count. A hidden container's stored default therefore cannot surface a grandchild field, and a hidden operand of `not` keeps the field dormant instead of lighting it up.
-- DBX evaluates the same conditions for the dialog and for save/test/connect validation, so a manifest can never produce a form DBX itself rejects.
-- Composite conditions were added after the single-clause contract; keep `engines.dbx` at or above the DBX release that ships them if the form relies on them.
+- NexDB evaluates the same conditions for the dialog and for save/test/connect validation, so a manifest can never produce a form NexDB itself rejects.
+- Composite conditions were added after the single-clause contract; keep `engines.dbx` at or above the NexDB release that ships them if the form relies on them.
 
 Lifecycle methods receive:
 
@@ -286,7 +286,7 @@ Lifecycle methods receive:
 }
 ```
 
-`runtime.host` and `runtime.port` are the final endpoint after DBX transport layers. A protocol plugin must connect to this endpoint instead of rebuilding DBX tunnels itself.
+`runtime.host` and `runtime.port` are the final endpoint after NexDB transport layers. A protocol plugin must connect to this endpoint instead of rebuilding NexDB tunnels itself.
 
 ##### Transport proxy route for multi-endpoint targets
 
@@ -301,7 +301,7 @@ A static tunnel forwards exactly one remote endpoint. Protocols whose server adv
 }
 ```
 
-When transport layers are configured, DBX then delivers a SOCKS5 route instead of a static forward:
+When transport layers are configured, NexDB then delivers a SOCKS5 route instead of a static forward:
 
 ```json
 {
@@ -317,11 +317,11 @@ When transport layers are configured, DBX then delivers a SOCKS5 route instead o
 
 - With SSH as the final transport layer the route is the hop's dynamic SOCKS5 endpoint (`ssh -D`); with a SOCKS5 proxy layer the route is that proxy, tunneled through any preceding layers. `username`/`password` are omitted when empty.
 - `runtime.host`/`runtime.port` stay at the connection's logical endpoint, which the plugin should keep using as its seed/metadata source while dialing every endpoint through the SOCKS5 route. Credentials ride the same encrypted lifecycle channel as connection secrets and must never be logged by the plugin.
-- Without the flag, transport layers keep the static-tunnel behavior, which requires the connection to resolve a single remote endpoint (providers should declare `host`/`port` bindings, as the SSH and LDAP plugins do); DBX rejects plugin connections that would tunnel to an empty endpoint instead of timing out silently.
+- Without the flag, transport layers keep the static-tunnel behavior, which requires the connection to resolve a single remote endpoint (providers should declare `host`/`port` bindings, as the SSH and LDAP plugins do); NexDB rejects plugin connections that would tunnel to an empty endpoint instead of timing out silently.
 
 #### Connection dialog actions
 
-Connection providers may add ordered custom actions before DBX-owned lifecycle buttons:
+Connection providers may add ordered custom actions before NexDB-owned lifecycle buttons:
 
 ```json
 {
@@ -336,9 +336,9 @@ Connection providers may add ordered custom actions before DBX-owned lifecycle b
 }
 ```
 
-- `actions` declares only custom button metadata. DBX invokes `connection/action` with the action ID; plugins cannot choose arbitrary RPC method names.
-- `test`, `save`, and `save-and-connect` are host-owned actions. DBX adds them from provider capabilities and dialog mode, validates the form, persists secrets through its secret store, and invokes the fixed lifecycle methods.
-- A custom action may run with an incomplete form only when `requires_valid_form` is `false`; DBX still validates declared field types, secret keys, and transport configuration.
+- `actions` declares only custom button metadata. NexDB invokes `connection/action` with the action ID; plugins cannot choose arbitrary RPC method names.
+- `test`, `save`, and `save-and-connect` are host-owned actions. NexDB adds them from provider capabilities and dialog mode, validates the form, persists secrets through its secret store, and invokes the fixed lifecycle methods.
+- A custom action may run with an incomplete form only when `requires_valid_form` is `false`; NexDB still validates declared field types, secret keys, and transport configuration.
 - `when` accepts `always`, `create`, or `edit`. `variant` accepts `default`, `outline`, `secondary`, `destructive`, or `ghost`. `timeout_ms` is limited to 1-120000 ms.
 - `close_on_success` controls whether the connection dialog closes after a successful custom action.
 
@@ -355,14 +355,14 @@ Connection providers may add ordered custom actions before DBX-owned lifecycle b
 }
 ```
 
-`fieldValues` may contain only fields declared by that provider and must match their declared types. `null` clears a field. The plugin cannot write arbitrary `ConnectionConfig` keys or bypass DBX-owned save, secret persistence, transport, and connection lifecycle logic.
+`fieldValues` may contain only fields declared by that provider and must match their declared types. `null` clears a field. The plugin cannot write arbitrary `ConnectionConfig` keys or bypass NexDB-owned save, secret persistence, transport, and connection lifecycle logic.
 
 ### `workbench`
 
-A workbench opens in a normal persistent DBX tab. The iframe is loaded with `sandbox="allow-scripts"`, a restrictive CSP, no Tauri object, no parent DOM access, and no direct network access. The host injects `window.dbxPlugin`:
+A workbench opens in a normal persistent NexDB tab. The iframe is loaded with `sandbox="allow-scripts"`, a restrictive CSP, no Tauri object, no parent DOM access, and no direct network access. The host injects `window.dbxPlugin`:
 
-- `ready` / `context` / `locale` — `locale` is the current DBX locale such as `en` or `zh-CN`
-- `theme` — `{ appearance: "light" | "dark", tokens }` with the resolved DBX design tokens; theme changes are pushed live through env updates, and the SDK applies them to the plugin document root
+- `ready` / `context` / `locale` — `locale` is the current NexDB locale such as `en` or `zh-CN`
+- `theme` — `{ appearance: "light" | "dark", tokens }` with the resolved NexDB design tokens; theme changes are pushed live through env updates, and the SDK applies them to the plugin document root
 - `onContext(listener)` — context changes are pushed live; the iframe is not reloaded, so plugin UI state survives navigation
 - `invoke(method, params, options)`
 - `notify(method, params)`
@@ -379,7 +379,7 @@ All backend calls are rebound to the owning plugin ID by the host. A plugin UI c
 
 ### Official UI kit and theming
 
-Every sandbox document ships with a small official component kit built on the DBX design tokens, so plugin UI follows light/dark mode and custom palettes automatically:
+Every sandbox document ships with a small official component kit built on the NexDB design tokens, so plugin UI follows light/dark mode and custom palettes automatically:
 
 ```html
 <button class="dbx-btn dbx-btn--primary">Connect</button>
@@ -389,7 +389,7 @@ Every sandbox document ships with a small official component kit built on the DB
 
 Available classes: `dbx-card`, `dbx-section-title`, `dbx-btn` (`--primary` / `--danger` / `--ghost`), `dbx-label`, `dbx-input`, `dbx-select`, `dbx-textarea`, `dbx-hint`, `dbx-row` (label + field grid), `dbx-table`, `dbx-badge`, `dbx-link`. Custom plugin CSS can use the same `var(--color-*)` tokens; `document.documentElement.dataset.dbxTheme` reflects the current appearance.
 
-Plugin-authored names, descriptions, contribution labels, form-field text, and select-option labels can be localized through `manifest.json > localizations`. DBX selects the exact current locale first, then its base language, and finally falls back to the manifest's default text:
+Plugin-authored names, descriptions, contribution labels, form-field text, and select-option labels can be localized through `manifest.json > localizations`. NexDB selects the exact current locale first, then its base language, and finally falls back to the manifest's default text:
 
 ```json
 {
@@ -412,7 +412,7 @@ Plugin-authored names, descriptions, contribution labels, form-field text, and s
 
 ### `result-view`
 
-A result view contributes a plugin-rendered visualization for query results. DBX shows one toolbar button per installed view next to the result grid; clicking it opens a plugin tab that renders the plugin's UI entrypoint with the current result as context:
+A result view contributes a plugin-rendered visualization for query results. NexDB shows one toolbar button per installed view next to the result grid; clicking it opens a plugin tab that renders the plugin's UI entrypoint with the current result as context:
 
 ```json
 {
@@ -428,7 +428,7 @@ The `context.result` snapshot is bounded — `{ columns, rows (<= 500), truncate
 
 ### `context-menu`
 
-A context-menu entry is rendered **natively** by DBX (no sandbox iframe, native theme and keyboard behavior) in the declared menu surface. v1 supports the saved-connection sidebar menu:
+A context-menu entry is rendered **natively** by NexDB (no sandbox iframe, native theme and keyboard behavior) in the declared menu surface. v1 supports the saved-connection sidebar menu:
 
 ```json
 {
@@ -443,9 +443,9 @@ Clicking the item dispatches a `contextMenu/<id>` backend request with a non-sec
 
 ### `filesystem-provider`
 
-A filesystem provider declares URI schemes, an optional icon, `root_uri`, and capabilities (`read`, `write`, `delete`, `rename`, `mkdir`). It is the reusable boundary for OpenDAL-like storage integrations: DBX owns the generic file-browser tab, while the plugin owns authentication, remote API calls, and provider-specific state. The provider icon is used for the saved connection in the sidebar and for its DBX tab; it falls back to the plugin-level icon when omitted.
+A filesystem provider declares URI schemes, an optional icon, `root_uri`, and capabilities (`read`, `write`, `delete`, `rename`, `mkdir`). It is the reusable boundary for OpenDAL-like storage integrations: NexDB owns the generic file-browser tab, while the plugin owns authentication, remote API calls, and provider-specific state. The provider icon is used for the saved connection in the sidebar and for its NexDB tab; it falls back to the plugin-level icon when omitted.
 
-A connection provider can set `filesystem_provider` instead of `workbench`. Opening that saved connection connects the plugin lifecycle and opens the DBX host file manager. A provider may declare both: DBX opens the custom workbench by default, and the sandboxed UI can call `openFilesystem(providerId, context)` with `host.filesystem` permission.
+A connection provider can set `filesystem_provider` instead of `workbench`. Opening that saved connection connects the plugin lifecycle and opens the NexDB host file manager. A provider may declare both: NexDB opens the custom workbench by default, and the sandboxed UI can call `openFilesystem(providerId, context)` with `host.filesystem` permission.
 
 ```json
 {
@@ -468,15 +468,15 @@ Host API 1.x defines these backend methods:
 - `filesystem/delete` receives `providerId`, optional `connectionId`, `uri`, and `recursive`.
 - `filesystem/rename` receives `providerId`, optional `connectionId`, `sourceUri`, `targetUri`, and `overwrite`.
 
-Every entry has `name`, canonical `uri`, `kind` (`file`, `directory`, `symlink`, or `other`), and optional `size`, `modifiedAt`, and `contentType`. DBX validates schemes, response sizes, base64, cursors, and entry metadata before the frontend sees a result.
+Every entry has `name`, canonical `uri`, `kind` (`file`, `directory`, `symlink`, or `other`), and optional `size`, `modifiedAt`, and `contentType`. NexDB validates schemes, response sizes, base64, cursors, and entry metadata before the frontend sees a result.
 
 Mutation methods return `{ success, message?, entry? }` and are rejected unless the provider declares the matching capability. Inline read/write payloads are capped at 4 MiB. The built-in file manager currently owns directory navigation, pagination, and bounded file preview. Large upload/download and PTY/SFTP streams use `stdio-framed` binary channels with plugin-defined transfer methods, chunk acknowledgements, cancellation, and progress events; they must not be encoded as one large JSON value.
 
 ### Host API methods a plugin may call
 
-Plugins normally answer requests, but Host API 1.1 adds one method a plugin backend may call back into DBX. Plugin-initiated requests use **string** ids (`"prompt-1"`), while DBX-owned requests and their responses keep numeric ids, so one stream carries both directions and older hosts that only understand numeric ids ignore the new frames instead of failing.
+Plugins normally answer requests, but Host API 1.1 adds one method a plugin backend may call back into NexDB. Plugin-initiated requests use **string** ids (`"prompt-1"`), while NexDB-owned requests and their responses keep numeric ids, so one stream carries both directions and older hosts that only understand numeric ids ignore the new frames instead of failing.
 
-- `host/requestUserInput` asks the user a question through the DBX UI and returns the answer. It is the channel for anything the host cannot answer on the user's behalf: a bastion's keyboard-interactive MFA code, a one-time approval, a host-key confirmation, or a choice between accounts.
+- `host/requestUserInput` asks the user a question through the NexDB UI and returns the answer. It is the channel for anything the host cannot answer on the user's behalf: a bastion's keyboard-interactive MFA code, a one-time approval, a host-key confirmation, or a choice between accounts.
 
 ```json
 {
@@ -496,19 +496,19 @@ Plugins normally answer requests, but Host API 1.1 adds one method a plugin back
 
 - `prompt` is required (≤2000 characters). `title` (≤200), `default` (≤1000), and `options` (≤8 entries, unique values, ≤200 characters each) are optional; `echo` defaults to `false`, so the dialog masks input unless the plugin says otherwise. `timeoutSecs` is clamped to 5-600 and defaults to 300.
 - The result is `{ "action": "submit", "value": "123456" }`, `{ "action": "cancel" }`, or `{ "action": "timeout" }`. Only `submit` carries a value; treat `cancel` and `timeout` as "no answer" and fail closed — never fall back to a guess.
-- The prompt is delivered through the same blocking dialog the host uses for its own host-key and keyboard-interactive prompts, so it also appears for `connection/test` and `connection/connect`. While a prompt is open DBX pauses the request deadline of the call that is waiting on it, so a user typing a code is never mistaken for a connect timeout.
+- The prompt is delivered through the same blocking dialog the host uses for its own host-key and keyboard-interactive prompts, so it also appears for `connection/test` and `connection/connect`. While a prompt is open NexDB pauses the request deadline of the call that is waiting on it, so a user typing a code is never mistaken for a connect timeout.
 - Errors come back as JSON-RPC errors: `-32001` means no user interface is attached (headless/MCP runs, or the desktop dialog is not mounted), `-32602` means the params are invalid, `-32601` means the host does not implement the method. A plugin must degrade gracefully on all three instead of blocking forever.
-- DBX answers only with what the user typed. It never auto-fills, caches, or logs the value, and it allows at most four open prompts per plugin session.
+- NexDB answers only with what the user typed. It never auto-fills, caches, or logs the value, and it allows at most four open prompts per plugin session.
 - Capability gating: `plugin/initialize` advertises `host.hostApiVersion` (`1.1.0` or later) and `host.features` (containing `host.requestUserInput` when available). Only call the method when it is advertised; an older host reports `1.0.0` and drops the frame.
 - The Rust SDK (`dbx-plugin-sdk`) wraps this: `dbx_plugin_sdk::host_client()`, `HostClient::supports("host/requestUserInput")`, and `HostClient::request_user_input(&UserInputPrompt::secret("Verification code"))`.
 
 ## Backend protocol
 
-The backend is a persistent child process with stdin/stdout reserved for the DBX protocol. Diagnostics must go to stderr.
+The backend is a persistent child process with stdin/stdout reserved for the NexDB protocol. Diagnostics must go to stderr.
 
 ### Initialization
 
-DBX starts every sidecar with `plugin/initialize`:
+NexDB starts every sidecar with `plugin/initialize`:
 
 ```json
 {
@@ -563,7 +563,7 @@ Binary payloads are limited to 64 MiB per frame. Channel names are validated. Us
 
 ```mermaid
 sequenceDiagram
-  participant UI as DBX UI
+  participant UI as NexDB UI
   participant Host as PluginHost
   participant Sidecar as Plugin sidecar
   UI->>Host: invoke / test / connect / open workbench
@@ -576,21 +576,21 @@ sequenceDiagram
   Host-->>UI: typed result + plugin-scoped events
 ```
 
-Sidecars are shared per plugin process, not spawned per tab. Plugins own their internal session registries. DBX tears down plugin-owned connection pools before replace, rollback, or uninstall. Uninstall is blocked while saved connections still reference the plugin.
+Sidecars are shared per plugin process, not spawned per tab. Plugins own their internal session registries. NexDB tears down plugin-owned connection pools before replace, rollback, or uninstall. Uninstall is blocked while saved connections still reference the plugin.
 
 ## Security model
 
 - **Package authenticity:** checksums + trusted Ed25519 repository keys.
 - **UI isolation:** sandboxed iframe, restrictive CSP, bounded bridge payloads, safe asset paths, plugin identity binding.
-- **Secret persistence:** plugin secrets are removed from connection JSON and stored through DBX's secret-store path. Ordinary cloud-sync snapshots always contain redacted placeholders. Secrets enter sync data only inside the encrypted payload when the user has configured a sync passphrase; without one, plugin secrets remain local and are not synchronized.
+- **Secret persistence:** plugin secrets are removed from connection JSON and stored through NexDB's secret-store path. Ordinary cloud-sync snapshots always contain redacted placeholders. Secrets enter sync data only inside the encrypted payload when the user has configured a sync passphrase; without one, plugin secrets remain local and are not synchronized.
 - **Native backend trust:** a native sidecar runs with the current OS user's privileges. A signature identifies the repository that approved and published the package; it is not an OS sandbox or proof that the author is harmless. Install only plugins whose backend code you trust.
-- **Permission declarations:** privileged host bridge operations require declared permissions. Plugin UI network egress is fully blocked except for explicitly declared `host.network:` origins. Native process filesystem/network access cannot currently be completely mediated by DBX.
+- **Permission declarations:** privileged host bridge operations require declared permissions. Plugin UI network egress is fully blocked except for explicitly declared `host.network:` origins. Native process filesystem/network access cannot currently be completely mediated by NexDB.
 
 Custom repository public keys can be added or removed in Plugin Center. Obtain them through a channel independent from the downloaded package.
 
 ## Build and release
 
-The complete author and official-store flow is documented in [`RELEASING.md`](RELEASING.md). Plugin authors keep source code in their own repository and publish unsigned candidates. DBX Store reviews and signs approved candidates, publishes installable artifacts, and records only catalog metadata in Git.
+The complete author and official-store flow is documented in [`RELEASING.md`](RELEASING.md). Plugin authors keep source code in their own repository and publish unsigned candidates. NexDB Store reviews and signs approved candidates, publishes installable artifacts, and records only catalog metadata in Git.
 
 For a Rust backend:
 
@@ -622,11 +622,11 @@ cargo run --release \
 
 Plugin authors do not receive the official repository private key. Never commit a repository signing seed. Publish the corresponding 32-byte public key separately and rotate it with a new `signingKeyId`.
 
-For native plugins, copy `sdk/templates/github/plugin-release.yml` into the plugin repository and pin the reusable workflow to a released DBX plugin SDK tag or commit. Frontend-only plugins may replace the build matrix with one `universal` build.
+For native plugins, copy `sdk/templates/github/plugin-release.yml` into the plugin repository and pin the reusable workflow to a released NexDB plugin SDK tag or commit. Frontend-only plugins may replace the build matrix with one `universal` build.
 
 ## Compatibility policy
 
-- Increment `manifest_version` only for manifest shape changes that an older DBX cannot interpret.
+- Increment `manifest_version` only for manifest shape changes that an older NexDB cannot interpret.
 - Increment the sidecar protocol version only for wire-level incompatibilities.
 - Use `engines.host_api` for host API compatibility and `engines.dbx` for product-version constraints.
 - Additive contribution fields should remain optional within the same host API major version.

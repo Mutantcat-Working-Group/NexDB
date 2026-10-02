@@ -1,10 +1,10 @@
-# DBX Agents
+# NexDB Agents
 
 English | [简体中文](README.zh-CN.md)
 
-Agent drivers for [DBX](https://github.com/t8y2/dbx) — database support via JDBC and native database drivers.
+Agent drivers for [NexDB](https://github.com/Mutantcat-Working-Group/NexDB) — database support via JDBC and native database drivers.
 
-Each agent runs as a standalone process and communicates with DBX via stdin/stdout JSON-RPC 2.0.
+Each agent runs as a standalone process and communicates with NexDB via stdin/stdout JSON-RPC 2.0.
 
 ## Supported Databases
 
@@ -56,7 +56,7 @@ Each agent runs as a standalone process and communicates with DBX via stdin/stdo
 
 ## Multi-JRE Support
 
-Most Java agents target JRE 21. Native agents, such as `cassandra`, `duckdb`, `hive`, `iotdb`, `oracle`, `kingbase`, `tdengine`, `xugu`, `rabbitmq`, `rocketmq`, `zookeeper`, `etcd`, and `etcd2`, do not require a JRE. DBX downloads and manages the JRE 21 installation automatically for Java agents.
+Most Java agents target JRE 21. Native agents, such as `cassandra`, `duckdb`, `hive`, `iotdb`, `oracle`, `kingbase`, `tdengine`, `xugu`, `rabbitmq`, `rocketmq`, `zookeeper`, `etcd`, and `etcd2`, do not require a JRE. NexDB downloads and manages the JRE 21 installation automatically for Java agents.
 
 ## JDBC Connection Pooling
 
@@ -108,9 +108,9 @@ Requires JDK 21 (Gradle toolchain auto-downloads if needed).
 
 Output JARs are in `drivers/{module}/build/libs/`. Native agents build from `drivers/cassandra-go`, `drivers/duckdb`, `drivers/hive-go`, `drivers/iotdb`, `drivers/oracle-go`, `drivers/kingbase-go`, `drivers/vastbase-go`, `drivers/tdengine`, `drivers/xugu`, `drivers/rabbitmq`, `drivers/rocketmq`, `drivers/zookeeper`, `drivers/etcd-go`, and `drivers/etcd2-go`.
 
-### Local DBX Runtime Test
+### Local NexDB Runtime Test
 
-When changing a Java agent under `agents/drivers/<db_type>/` or shared Java agent protocol code, rebuild the target agent and replace the runtime JAR used by the local DBX app:
+When changing a Java agent under `agents/drivers/<db_type>/` or shared Java agent protocol code, rebuild the target agent and replace the runtime JAR used by the local NexDB app:
 
 ```bash
 ./gradlew :<db_type>:shadowJar
@@ -118,7 +118,7 @@ cp ~/.dbx/agents/drivers/<db_type>/agent.jar ~/.dbx/agents/drivers/<db_type>/age
 cp agents/drivers/<db_type>/build/libs/*-all.jar ~/.dbx/agents/drivers/<db_type>/agent.jar
 ```
 
-Restart DBX or disconnect and reconnect the database so the new agent process loads the replacement JAR.
+Restart NexDB or disconnect and reconnect the database so the new agent process loads the replacement JAR.
 
 Native agents such as `cassandra`, `hive`, `iotdb`, `oracle`, `kingbase`, `tdengine`, `xugu`, `rabbitmq`, `rocketmq`, `zookeeper`, `etcd`, and `etcd2` use an `agent` executable instead of `agent.jar`. TDengine builds `target/release/dbx-tdengine-driver` from `drivers/tdengine/Cargo.toml`.
 
@@ -138,7 +138,7 @@ Agent module versions are tracked in [`versions.json`](versions.json).
 ## Architecture
 
 ```
-DBX Main Process (Rust/Tauri)
+NexDB Main Process (Rust/Tauri)
     │ stdin/stdout (JSON-RPC 2.0)
     ▼
 agent / java -jar dbx-agent-{type}.jar
@@ -149,4 +149,4 @@ Native driver / JDBC → Database
 
 ## License
 
-[AGPL-3.0](https://github.com/t8y2/dbx/blob/main/LICENSE)
+[AGPL-3.0](https://github.com/Mutantcat-Working-Group/NexDB/blob/main/LICENSE)

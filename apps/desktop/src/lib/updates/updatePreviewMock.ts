@@ -16,13 +16,13 @@ export function previewAppUpdateInfo(currentVersion: string): UpdateInfo {
     update_available: showAppUpdate,
     portable_mode: false,
     manual_update_only: false,
-    release_name: showAppUpdate ? "DBX v0.6.16 Preview" : `DBX v${current}`,
-    release_url: "https://github.com/t8y2/dbx/releases",
+    release_name: showAppUpdate ? "NexDB v0.6.16 Preview" : `NexDB v${current}`,
+    release_url: "https://github.com/Mutantcat-Working-Group/NexDB/releases",
     release_notes: showAppUpdate
       ? `## 更新预览
 
 ### 新功能
-- 更新中心集中展示 DBX、驱动、JDBC、MCP 与插件更新
+- 更新中心集中展示 NexDB、驱动、JDBC、MCP 与插件更新
 - 支持按更新类别查看版本信息和更新内容
 
 ### 修复
@@ -102,12 +102,12 @@ export function previewPluginUpdates(): MarketplacePluginListing[] {
   return [
     {
       key: "official:org.mutantcat.ssh",
-      repository: { id: "official", name: "DBX Official", kind: "official", enabled: true, managed: true },
+      repository: { id: "official", name: "NexDB Official", kind: "official", enabled: true, managed: true },
       plugin: {
         id: "org.mutantcat.ssh",
         name: "SSH Tunnel",
         description: "通过 SSH 隧道安全访问数据库。",
-        publisher: "DBX",
+        publisher: "NexDB",
         verified: true,
         tags: ["ssh", "tunnel"],
         permissions: ["network"],
@@ -124,12 +124,12 @@ export function previewPluginUpdates(): MarketplacePluginListing[] {
     },
     {
       key: "official:org.mutantcat.data-tools",
-      repository: { id: "official", name: "DBX Official", kind: "official", enabled: true, managed: true },
+      repository: { id: "official", name: "NexDB Official", kind: "official", enabled: true, managed: true },
       plugin: {
         id: "org.mutantcat.data-tools",
         name: "Data Tools",
         description: "数据生成、转换和校验工具集。",
-        publisher: "DBX",
+        publisher: "NexDB",
         verified: true,
         tags: ["data", "tools"],
         permissions: ["database"],

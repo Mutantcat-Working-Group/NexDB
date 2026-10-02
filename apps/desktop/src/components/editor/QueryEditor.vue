@@ -2812,7 +2812,7 @@ function vimModeExtension(enabled = settingsStore.editorSettings.vimModeEnabled)
   const vimExtension = codeMirrorVim({ status: true });
   if (!codeMirrorPrec || !editorViewModule || !codeMirrorGetVimCm || !codeMirrorVimApi) return vimExtension;
 
-  // Beekeeper treats Vim as a first-class editor keymap. Keep it above DBX's
+  // Beekeeper treats Vim as a first-class editor keymap. Keep it above NexDB's
   // normal shortcuts so regular normal-mode keys are not stolen by other maps.
   return codeMirrorPrec.highest([
     editorViewModule.keymap.of([
@@ -3222,7 +3222,7 @@ async function ensureForeignKeysForTable(table: { name: string; database?: strin
     const foreignKeys = await connectionStore.listCompletionForeignKeys(props.connectionId, target.database, table.name, target.schema);
     cachedForeignKeysByTable.set(cacheKey, foreignKeys);
   } catch (e) {
-    console.warn(`[DBX] Failed to load foreign keys for ${cacheKey}:`, e);
+    console.warn(`[NexDB] Failed to load foreign keys for ${cacheKey}:`, e);
     cachedForeignKeysByTable.set(cacheKey, []);
   }
 }
@@ -3419,7 +3419,7 @@ async function resolveSqlHoverTooltip(currentView: EditorViewType, pos: number) 
       semanticModel = getEditorSemanticModel(sql, pos, currentView.state);
     } catch (error) {
       semanticModel = null;
-      console.warn(`[DBX] Failed to build semantic model for hover tooltip:`, error);
+      console.warn(`[NexDB] Failed to build semantic model for hover tooltip:`, error);
     }
   }
   const semanticTarget = semanticModel ? resolveSqlSemanticNavigationTarget(semanticModel, parts) : null;
@@ -3562,7 +3562,7 @@ async function resolveSqlHoverTooltip(currentView: EditorViewType, pos: number) 
           sqlContent = settingsStore.editorSettings.generateSqlQuoteIdentifiers ? unqualified : omitDdlIdentifierQuotes(unqualified, formatDialect);
         }
       } catch (error) {
-        console.warn(`[DBX] Failed to load table DDL for ${hoverDatabase}.${hoverSchema}.${table.name}:`, error);
+        console.warn(`[NexDB] Failed to load table DDL for ${hoverDatabase}.${hoverSchema}.${table.name}:`, error);
       }
 
       // Fallback path: rebuild the DDL from cached table metadata when the
@@ -3580,14 +3580,14 @@ async function resolveSqlHoverTooltip(currentView: EditorViewType, pos: number) 
           fullIndexes = indexesResult.value;
         } catch (error) {
           metadataLoadFailed = true;
-          console.warn(`[DBX] Failed to load table metadata for ${hoverDatabase}.${hoverSchema}.${table.name}:`, error);
+          console.warn(`[NexDB] Failed to load table metadata for ${hoverDatabase}.${hoverSchema}.${table.name}:`, error);
         }
         if (!metadataLoadFailed) {
           try {
             const commentResult = await loadObjectMetadataFacet(objectMetadataRequest, "comment", () => api.getTableComment(props.connectionId!, hoverDatabase, hoverSchema, table.name, hoverScope.catalog));
             if (commentResult.value) tableComment = commentResult.value;
           } catch (error) {
-            console.warn(`[DBX] Failed to load table comment for ${hoverDatabase}.${hoverSchema}.${table.name}:`, error);
+            console.warn(`[NexDB] Failed to load table comment for ${hoverDatabase}.${hoverSchema}.${table.name}:`, error);
           }
         }
         if (fullColumns.length > 0) {
@@ -3604,7 +3604,7 @@ async function resolveSqlHoverTooltip(currentView: EditorViewType, pos: number) 
       return {
         pos: range.from,
         end: range.to,
-        create: () => createHoverDom(table.name, sqlObjectHoverDetail(table), sqlContent, metadataLoadFailed ? ["[DBX] Failed to load table structure — check connection"] : undefined),
+        create: () => createHoverDom(table.name, sqlObjectHoverDetail(table), sqlContent, metadataLoadFailed ? ["[NexDB] Failed to load table structure — check connection"] : undefined),
       };
     }
 
@@ -6112,7 +6112,7 @@ async function performAsyncCompletionWithResult(epoch: number, completionContext
           if (prefixCacheKey) cachedPrefixColumnsByTable.set(prefixCacheKey, columns);
           else cachedColumnsByTable.set(cacheKey, columns);
         } catch (e) {
-          console.error(`[DBX] Failed to load columns for ${cacheKey}:`, e);
+          console.error(`[NexDB] Failed to load columns for ${cacheKey}:`, e);
         }
       }),
     );
@@ -7026,7 +7026,7 @@ onMounted(async () => {
       syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
       crosshairCursor(),
       activeLineHighlighter,
-      // Vim must be mounted before DBX/default keymaps so normal-mode keys are handled first.
+      // Vim must be mounted before NexDB/default keymaps so normal-mode keys are handled first.
       vimModeComp.of(vimModeExtension(initialSettings.vimModeEnabled)),
       defaultKeymapComp.of(defaultKeymapExtension()),
       keymap.of([...searchKeymapWithoutModD(searchKeymap), ...historyKeymap, ...foldKeymap, ...completionKeymap]),
@@ -7316,7 +7316,7 @@ onMounted(async () => {
                     }
                   }
                 } catch (error) {
-                  console.warn("[DBX] CTE ctrl+click resolution failed:", error);
+                  console.warn("[NexDB] CTE ctrl+click resolution failed:", error);
                 }
               }
 
@@ -7515,7 +7515,7 @@ onMounted(async () => {
                 emit("clickColumn", matchedCols);
               }
             } catch (e) {
-              console.error("[DBX] Ctrl+click error:", e);
+              console.error("[NexDB] Ctrl+click error:", e);
             }
           }, 0);
           return true;

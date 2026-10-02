@@ -13,7 +13,7 @@ import { resolveLang } from "@/lib/i18n";
 const i18n = {
   en: {
     title: "Supported Databases",
-    desc: "DBX connects to 90+ database engines. Native Rust drivers, MySQL/PostgreSQL-compatible profiles, and JDBC for everything else.",
+    desc: "NexDB connects to 90+ database engines. Native Rust drivers, MySQL/PostgreSQL-compatible profiles, and JDBC for everything else.",
     ctaTitle: "Don't see your database?",
     ctaDesc: "Open a GitHub Discussion to request support for a new database engine.",
     ctaLink: "Request on GitHub",
@@ -22,7 +22,7 @@ const i18n = {
   },
   cn: {
     title: "支持的数据库",
-    desc: "DBX 支持 90+ 种数据库引擎。涵盖 Rust 原生驱动、MySQL/PostgreSQL 兼容类型和 JDBC 扩展。",
+    desc: "NexDB 支持 90+ 种数据库引擎。涵盖 Rust 原生驱动、MySQL/PostgreSQL 兼容类型和 JDBC 扩展。",
     ctaTitle: "没看到你用的数据库？",
     ctaDesc: "在 GitHub Discussions 中发起讨论，申请支持新的数据库引擎。厂商和社区用户都可以参与。",
     ctaLink: "在 GitHub 上申请",
@@ -100,7 +100,7 @@ export default async function DatabasesPage({ params }: { params: Promise<{ lang
         <div className="landing-glass-card rounded-[10px] p-8 text-center max-w-[640px] mx-auto">
           <h2 className="text-[21px] font-[720]">{t.ctaTitle}</h2>
           <p className="mt-2 text-landing-muted text-sm leading-[1.65]">{t.ctaDesc}</p>
-          <Link href="https://github.com/t8y2/dbx/discussions" target="_blank" className="landing-final-link inline-flex items-center justify-center min-h-[42px] rounded-[7px] px-5 mt-5 text-sm font-[650]">
+          <Link href="https://github.com/Mutantcat-Working-Group/NexDB/discussions" target="_blank" className="landing-final-link inline-flex items-center justify-center min-h-[42px] rounded-[7px] px-5 mt-5 text-sm font-[650]">
             {t.ctaLink}
           </Link>
         </div>

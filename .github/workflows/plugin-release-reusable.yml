@@ -1,4 +1,4 @@
-name: Reusable DBX plugin release
+name: Reusable NexDB plugin release
 
 on:
   workflow_call:
@@ -41,7 +41,7 @@ on:
         required: false
         type: string
       sdk-ref:
-        description: DBX tag or commit used only when installing the plugin CLI from source
+        description: NexDB tag or commit used only when installing the plugin CLI from source
         default: plugin-sdk-v1
         required: false
         type: string
@@ -61,7 +61,7 @@ on:
         required: false
         type: boolean
       build-matrix:
-        description: JSON matrix with runner and DBX target pairs; use one universal entry for platform-independent plugins
+        description: JSON matrix with runner and NexDB target pairs; use one universal entry for platform-independent plugins
         default: >-
           {"include":[{"runner":"ubuntu-24.04","target":"linux-x64"},{"runner":"ubuntu-24.04-arm","target":"linux-arm64"},{"runner":"windows-2022","target":"windows-x64"},{"runner":"macos-15-intel","target":"darwin-x64"},{"runner":"macos-15","target":"darwin-arm64"}]}
         required: false
@@ -135,7 +135,7 @@ jobs:
         with:
           toolchain: ${{ inputs.rust-toolchain || 'stable' }}
 
-      - name: Checkout DBX plugin SDK
+      - name: Checkout NexDB plugin SDK
         if: inputs.install-plugin-cli && inputs.install-plugin-cli-from-source
         uses: actions/checkout@v4
         with:
@@ -143,12 +143,12 @@ jobs:
           ref: ${{ inputs.sdk-ref }}
           path: .dbx-plugin-sdk
 
-      - name: Install precompiled DBX plugin CLI
+      - name: Install precompiled NexDB plugin CLI
         if: inputs.install-plugin-cli && !inputs.install-plugin-cli-from-source
         shell: bash
         run: npm install --global "@dbx-app/plugin-cli@${{ inputs.plugin-cli-version }}"
 
-      - name: Install DBX plugin CLI from source
+      - name: Install NexDB plugin CLI from source
         if: inputs.install-plugin-cli && inputs.install-plugin-cli-from-source
         shell: bash
         run: cargo install --locked --path .dbx-plugin-sdk/plugins/sdk/cli
@@ -209,7 +209,7 @@ jobs:
             if (packages.has(name)) throw new Error(`Duplicate package filename ${name}`);
             packages.set(name, file);
           }
-          if (metadataFiles.length === 0 || packages.size === 0) throw new Error("Release produced no DBX plugin artifacts");
+          if (metadataFiles.length === 0 || packages.size === 0) throw new Error("Release produced no NexDB plugin artifacts");
 
           const targets = new Set();
           let pluginIdentity;

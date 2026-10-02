@@ -1907,7 +1907,7 @@ pub fn parse_command_argv(command_text: &str) -> Result<Vec<String>, String> {
 
 pub fn classify_command(command: &str) -> RedisCommandSafety {
     // Read access is an explicit allowlist. Commands added by a newer Redis
-    // version, module, or proxy remain high-risk until DBX reviews them.
+    // version, module, or proxy remain high-risk until NexDB reviews them.
     match command.to_ascii_uppercase().as_str() {
         "BITCOUNT"
         | "BITFIELD_RO"

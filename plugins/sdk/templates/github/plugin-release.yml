@@ -1,4 +1,4 @@
-name: Release DBX plugin
+name: Release NexDB plugin
 
 on:
   release:
@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   release:
-    uses: t8y2/dbx/.github/workflows/plugin-release-reusable.yml@plugin-sdk-v1
+    uses: Mutantcat-Working-Group/NexDB/.github/workflows/plugin-release-reusable.yml@plugin-sdk-v1
     with:
       release-tag: ${{ github.event.release.tag_name }}
       package-command: dbx-plugin package .

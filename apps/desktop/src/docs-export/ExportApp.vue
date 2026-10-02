@@ -24,7 +24,7 @@ const translate = computed(() => createExportTranslate(lang.value));
 const languages = LOCALE_OPTIONS.filter((option) => option.value in EXPORT_LOCALES);
 
 /**
- * Nothing applies `.dark` in a standalone file: DBX's theme system is not
+ * Nothing applies `.dark` in a standalone file: NexDB's theme system is not
  * here. `prefers-color-scheme` is the only signal the document has on load,
  * and the select overrides it from then on.
  */

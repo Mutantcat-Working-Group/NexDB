@@ -3,15 +3,15 @@
   "catalogVersion": 1,
   "repository": {
     "id": "example-marketplace",
-    "name": "DBX Example Marketplace",
+    "name": "NexDB Example Marketplace",
     "homepage": "https://plugins.example.com"
   },
   "generatedAt": "2026-07-28T00:00:00Z",
   "plugins": [
     {
       "id": "dbx.example.hello",
-      "name": "DBX Hello Workbench",
-      "description": "Complete DBX plugin example with a native sidecar, saved connection provider, workbench UI, and virtual filesystem provider.",
+      "name": "NexDB Hello Workbench",
+      "description": "Complete NexDB plugin example with a native sidecar, saved connection provider, workbench UI, and virtual filesystem provider.",
       "publisher": "dbx",
       "verified": false,
       "icon": "../hello-workbench/assets/plugin.svg",
@@ -24,8 +24,8 @@
         "host.events",
         "host.filesystem"
       ],
-      "source": "https://github.com/t8y2/dbx",
-      "homepage": "https://github.com/t8y2/dbx/tree/main/plugins/examples/hello-workbench",
+      "source": "https://github.com/Mutantcat-Working-Group/NexDB",
+      "homepage": "https://github.com/Mutantcat-Working-Group/NexDB/tree/main/plugins/examples/hello-workbench",
       "license": "Apache-2.0",
       "latestVersion": "1.0.0",
       "versions": [
@@ -46,27 +46,27 @@
       ],
       "localizations": {
         "zh-CN": {
-          "name": "DBX Hello 工作台",
-          "description": "包含原生 Sidecar、可保存连接、工作台 UI 和虚拟文件系统的完整 DBX 插件示例。"
+          "name": "NexDB Hello 工作台",
+          "description": "包含原生 Sidecar、可保存连接、工作台 UI 和虚拟文件系统的完整 NexDB 插件示例。"
         },
         "zh-TW": {
-          "name": "DBX Hello 工作台",
-          "description": "包含原生 Sidecar、可儲存連線、工作台 UI 與虛擬檔案系統的完整 DBX 外掛範例。"
+          "name": "NexDB Hello 工作台",
+          "description": "包含原生 Sidecar、可儲存連線、工作台 UI 與虛擬檔案系統的完整 NexDB 外掛範例。"
         },
         "ja": {
-          "name": "DBX Hello ワークベンチ",
-          "description": "ネイティブ Sidecar、保存可能な接続、ワークベンチ UI、仮想ファイルシステムを含む完全な DBX プラグイン例です。"
+          "name": "NexDB Hello ワークベンチ",
+          "description": "ネイティブ Sidecar、保存可能な接続、ワークベンチ UI、仮想ファイルシステムを含む完全な NexDB プラグイン例です。"
         },
         "es": {
-          "name": "Área de trabajo Hello de DBX",
+          "name": "Área de trabajo Hello de NexDB",
           "description": "Ejemplo completo con sidecar nativo, conexión guardada, interfaz de trabajo y sistema de archivos virtual."
         },
         "it": {
-          "name": "Area di lavoro Hello di DBX",
+          "name": "Area di lavoro Hello di NexDB",
           "description": "Esempio completo con sidecar nativo, connessione salvata, UI di lavoro e file system virtuale."
         },
         "pt-BR": {
-          "name": "Área de trabalho Hello do DBX",
+          "name": "Área de trabalho Hello do NexDB",
           "description": "Exemplo completo com sidecar nativo, conexão salva, interface de trabalho e sistema de arquivos virtual."
         }
       }

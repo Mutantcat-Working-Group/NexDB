@@ -48,7 +48,7 @@ let loadGeneration = 0;
 
 const title = computed(() => `${props.plugin.manifest.name} · ${props.contribution.label}`);
 
-/** Collect resolved DBX design tokens so the sandbox can theme itself with the same values. */
+/** Collect resolved NexDB design tokens so the sandbox can theme itself with the same values. */
 function currentBridgeTheme(): PluginBridgeTheme {
   const tokens: Record<string, string> = {};
   if (typeof document !== "undefined") {

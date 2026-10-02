@@ -9,12 +9,12 @@ import { i18n, resolveLang } from "@/lib/i18n";
 const LOCALE_MAP: Record<string, { locale: string; title: string; description: string }> = {
   en: {
     locale: "en_US",
-    title: "DBX - 25 MB to manage 90+ databases",
+    title: "NexDB - 25 MB to manage 90+ databases",
     description: DEFAULT_DESCRIPTION,
   },
   cn: {
     locale: "zh_CN",
-    title: "DBX - 25MB，管理90+种数据库",
+    title: "NexDB - 25MB，管理90+种数据库",
     description: "90+ 种数据库，仅 25 MB。支持桌面与 Docker 自托管，内置 AI 助手。",
   },
 };

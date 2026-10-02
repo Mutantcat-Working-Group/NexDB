@@ -1,6 +1,6 @@
 # Agent Authoring Guide
 
-This guide defines the expected shape of a DBX agent. Treat it as the checklist for adding or reviewing an agent.
+This guide defines the expected shape of a NexDB agent. Treat it as the checklist for adding or reviewing an agent.
 
 ## Agent Contract
 
@@ -10,7 +10,7 @@ Every agent is a standalone JVM process that:
 - Prefer extending `org.mutantcat.agent.ConfiguredJdbcAgent` for standard JDBC agents.
 - Extend `org.mutantcat.agent.AbstractJdbcAgent` when the database needs custom metadata SQL but can still share lifecycle and execution behavior.
 - Starts with `new JsonRpcServer(new <Agent>()).run()` in its `main` method.
-- Talks to DBX over stdin/stdout JSON-RPC 2.0.
+- Talks to NexDB over stdin/stdout JSON-RPC 2.0.
 - Uses JDBC for database access unless the module is explicitly designed around a non-JDBC protocol.
 - Produces one shadow JAR named `dbx-agent-<agent-name>.jar`.
 

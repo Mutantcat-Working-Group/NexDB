@@ -467,7 +467,7 @@ pub fn codex_cli_env(config: &AiConfig) -> Result<Vec<(String, String)>, String>
         }
         if is_reserved_dbx_mcp_env_name(key) {
             return Err(format!(
-                "[codexEnvReserved] `{key}` is managed by DBX for the scoped MCP server and cannot be set here."
+                "[codexEnvReserved] `{key}` is managed by NexDB for the scoped MCP server and cannot be set here."
             ));
         }
         env.insert(key.to_string(), value.clone());
@@ -757,8 +757,8 @@ async fn list_codex_models_via_app_server_inner(
             "id": 1,
             "params": {
                 "clientInfo": {
-                    "name": "dbx",
-                    "title": "DBX",
+                    "name": "nexdb",
+                    "title": "NexDB",
                     "version": env!("CARGO_PKG_VERSION")
                 }
             }
@@ -1000,10 +1000,10 @@ pub async fn test_codex_connection(config: &AiConfig) -> Result<AiTestConnection
 
 fn classify_codex_spawn_error(message: &str) -> String {
     if message.contains("No such file") || message.contains("not found") {
-        "[codexNotInstalled] Codex CLI was not found. Install Codex CLI or set the Codex CLI path in DBX AI settings."
+        "[codexNotInstalled] Codex CLI was not found. Install Codex CLI or set the Codex CLI path in NexDB AI settings."
             .to_string()
     } else if is_command_line_too_long_error(message) {
-        "[codexCommandLineTooLong] Codex CLI command line is too long. Update DBX so Codex prompts are sent through stdin instead of process arguments."
+        "[codexCommandLineTooLong] Codex CLI command line is too long. Update NexDB so Codex prompts are sent through stdin instead of process arguments."
             .to_string()
     } else {
         format!("[codexRunFailed] Failed to start Codex CLI: {message}")
@@ -1023,9 +1023,9 @@ fn classify_codex_run_error(stderr: &str) -> String {
     if lower.contains("not authenticated") || lower.contains("login") || lower.contains("auth") {
         format!("[codexNotAuthenticated] Codex CLI is not authenticated. Run `codex login` and try again. {stderr}")
     } else if lower.contains("dbx-mcp-server") || lower.contains("enoent") {
-        format!("[dbxMcpMissing] DBX MCP server was not found. Install @dbx-app/mcp-server and try again. {stderr}")
+        format!("[dbxMcpMissing] NexDB MCP server was not found. Install @dbx-app/mcp-server and try again. {stderr}")
     } else if lower.contains("mcp") && (lower.contains("dbx") || lower.contains("server")) {
-        format!("[codexMcpStartupFailed] Codex could not start the DBX MCP server. {stderr}")
+        format!("[codexMcpStartupFailed] Codex could not start the NexDB MCP server. {stderr}")
     } else {
         format!("[codexRunFailed] Codex CLI failed. {stderr}")
     }
@@ -1460,9 +1460,9 @@ mod tests {
     #[test]
     #[cfg(not(windows))]
     fn native_codex_binary_command_remains_direct() {
-        let command = codex_command_for_program("/Applications/DBX.app/Contents/MacOS/codex".to_string());
+        let command = codex_command_for_program("/Applications/NexDB.app/Contents/MacOS/codex".to_string());
 
-        assert_eq!(command.program, "/Applications/DBX.app/Contents/MacOS/codex");
+        assert_eq!(command.program, "/Applications/NexDB.app/Contents/MacOS/codex");
         assert!(command.args.is_empty());
     }
 

@@ -29,7 +29,7 @@ export interface SqlLayoutRequest {
    * The dialect options to parse with, when the caller has already resolved
    * them. Parsing with anything but the caller's own dialect would make this
    * layout disagree with the statements the public formatter produces for the
-   * same input — DBX's ClickHouse tweak, which keeps date-part abbreviations
+   * same input — NexDB's ClickHouse tweak, which keeps date-part abbreviations
    * out of the reserved list, is exactly such a case.
    */
   dialectOptions?: DialectOptions;

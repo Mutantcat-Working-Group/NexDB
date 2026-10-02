@@ -81,9 +81,9 @@ test("rollback dispatches each distribution workflow after validation", () => {
   assert.equal(result.status, 0, result.stderr);
   const commands = readFileSync(logPath, "utf8").trim().split("\n");
   assert.deepEqual(commands, [
-    "workflow run publish-packages.yml --repo t8y2/dbx -f tag=v0.5.63 -f notify=false",
-    "workflow run sync-cnb-release-assets.yml --repo t8y2/dbx -f tag=v0.5.63",
-    "workflow run rollback-docker-latest.yml --repo t8y2/dbx -f tag=v0.5.63",
+    "workflow run publish-packages.yml --repo Mutantcat-Working-Group/NexDB -f tag=v0.5.63 -f notify=false",
+    "workflow run sync-cnb-release-assets.yml --repo Mutantcat-Working-Group/NexDB -f tag=v0.5.63",
+    "workflow run rollback-docker-latest.yml --repo Mutantcat-Working-Group/NexDB -f tag=v0.5.63",
   ]);
 });
 

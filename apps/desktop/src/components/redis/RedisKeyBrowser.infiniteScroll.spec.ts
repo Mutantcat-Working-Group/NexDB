@@ -1127,7 +1127,7 @@ describe("RedisKeyBrowser loadMore failure handling (PR #6313 review)", () => {
 // A group's `loadedLeafCount` only reflects keys the SCAN happened to return
 // before auto-load stopped (see `redisKeyTree.ts`); when the cursor hasn't
 // reached 0 yet, that count is not the folder's real total. Issue #6392: a
-// user compared DBX's tree against `redis-cli --scan` and saw folder counts
+// user compared NexDB's tree against `redis-cli --scan` and saw folder counts
 // far below the real per-prefix cardinality, with nothing in the UI hinting
 // the numbers were partial.
 describe("RedisKeyBrowser group key counts reflect incomplete loading (issue #6392)", () => {

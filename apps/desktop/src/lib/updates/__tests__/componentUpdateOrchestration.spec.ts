@@ -23,7 +23,7 @@ describe("component update orchestration", () => {
     expect(takePendingComponentUpdatesAfterAppRestart("0.6.17")).toBeNull();
   });
 
-  it("does not run components on startup when no DBX update was requested", () => {
+  it("does not run components on startup when no NexDB update was requested", () => {
     expect(takePendingComponentUpdatesAfterAppRestart("0.6.16")).toBeNull();
   });
 
@@ -74,12 +74,12 @@ describe("component update orchestration", () => {
     expect(takePendingComponentUpdatesAfterAppRestart("0.6.17")?.plan).toEqual({ kind: "auto" });
   });
 
-  it("downloads DBX before deferring component updates", () => {
+  it("downloads NexDB before deferring component updates", () => {
     expect(resolveUpdateAllAction({ hasAppUpdate: true, appUpdateCanInstall: true, appUpdatePrepared: false, hasComponentUpdates: true })).toBe("download-app");
     expect(resolveUpdateAllAction({ hasAppUpdate: true, appUpdateCanInstall: true, appUpdatePrepared: true, hasComponentUpdates: true })).toBe("defer-components");
   });
 
-  it("updates components immediately when no DBX update exists or the package cannot be installed", () => {
+  it("updates components immediately when no NexDB update exists or the package cannot be installed", () => {
     expect(resolveUpdateAllAction({ hasAppUpdate: false, appUpdateCanInstall: true, appUpdatePrepared: false, hasComponentUpdates: true })).toBe("update-components");
     expect(resolveUpdateAllAction({ hasAppUpdate: true, appUpdateCanInstall: false, appUpdatePrepared: false, hasComponentUpdates: true })).toBe("update-components");
   });

@@ -1099,7 +1099,7 @@ export interface QueryResult {
   server_message?: true;
   /** Manual-transaction UX marker for sticky proven-read-only dialects (Oracle,
    *  OceanBase-Oracle, MySQL, PostgreSQL): set on a manual-transaction result
-   *  whose statement DBX proved to be an ordinary read by that dialect's strict
+   *  whose statement NexDB proved to be an ordinary read by that dialect's strict
    *  heuristic. Absent for unproven statements and non-participating dialects. */
   manual_transaction_proven_read_only?: true;
   /** Manual-transaction UX marker for the same dialects: set on the synthetic
@@ -1928,7 +1928,7 @@ export interface QueryTab {
   txnAutoRolledBack?: boolean;
   /** Sticky proven-read-only dialects (Oracle/OceanBase-Oracle/MySQL/PostgreSQL),
    *  not persisted: whether the current manual session has executed at least one
-   *  statement DBX cannot prove read-only. Commit/Rollback actions are hidden
+   *  statement NexDB cannot prove read-only. Commit/Rollback actions are hidden
    *  while a session is clean. Never cleared by a later read. */
   txnPossiblyDirty?: boolean;
 }

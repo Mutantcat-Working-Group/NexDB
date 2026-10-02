@@ -5,7 +5,7 @@ description: Export database connections with AES-256-GCM encrypted passwords. M
 
 <Callout type="info">Export your database connections with encrypted passwords (AES-256-GCM). Securely migrate between machines. Encrypted export remains the default.</Callout>
 
-<Callout type="warn">This exports DBX connection configuration, not business database schema or data, and it is not a database backup. Use [Database Export](/en/docs/database-export) or [Database Backup](/en/docs/database-backup) for database contents.</Callout>
+<Callout type="warn">This exports NexDB connection configuration, not business database schema or data, and it is not a database backup. Use [Database Export](/en/docs/database-export) or [Database Backup](/en/docs/database-backup) for database contents.</Callout>
 
 ## Export
 
@@ -43,7 +43,7 @@ description: Export database connections with AES-256-GCM encrypted passwords. M
 <Step>
     ### Select File and Decrypt
 
-    Select the exported file. DBX automatically detects encrypted and plain configuration files. Encrypted files ask for the passphrase first so DBX can decrypt and preview them without writing anything yet.
+    Select the exported file. NexDB automatically detects encrypted and plain configuration files. Encrypted files ask for the passphrase first so NexDB can decrypt and preview them without writing anything yet.
   </Step>
 <Step>
     ### Select Connections
@@ -63,7 +63,7 @@ description: Export database connections with AES-256-GCM encrypted passwords. M
 - Without the passphrase, an encrypted file cannot be decrypted
 - Plaintext export is not encrypted and may expose database passwords, SSH Tunnel credentials, and other secrets; use it only for temporary migration in a trusted environment
 - The export file is standard JSON, transferable via USB drive, cloud storage, etc.
-- DBX stores ordinary connection fields separately from secrets such as database passwords, SSH passwords, SSH key passphrases, and full connection strings. Encrypted export protects the combined data; plaintext export writes those secrets as readable JSON.
+- NexDB stores ordinary connection fields separately from secrets such as database passwords, SSH passwords, SSH key passphrases, and full connection strings. Encrypted export protects the combined data; plaintext export writes those secrets as readable JSON.
 - Treat the passphrase like a secret. Anyone with both the export file and passphrase can restore the saved connections.
 
 ## Backward Compatibility

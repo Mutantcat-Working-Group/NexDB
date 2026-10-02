@@ -120,7 +120,7 @@ export function useSidebarConnectionMutationRuntime(options: SidebarConnectionMu
         // 避免再套用「断开连接」策略把刚保留的 SQL 页签关掉。
         connectionStore.disconnect(connectionId, { skipTabHandling: true }).catch((error) => {
           // Removal has already succeeded; disconnect cleanup must not turn it into a failed delete.
-          console.warn("[DBX][connection:delete:disconnect-failed]", { connectionId, error });
+          console.warn("[NexDB][connection:delete:disconnect-failed]", { connectionId, error });
         });
       }
       toast(targets.length > 1 ? t("connection.deletedSelected", { count: targets.length }) : t("connection.deleted"), 2000);
@@ -416,7 +416,7 @@ export function useSidebarConnectionMutationRuntime(options: SidebarConnectionMu
       for (const connectionId of connectionIds) {
         // 页签已由 deleteConnectionGroups 按「删除连接」策略处理，这里只清会话。
         connectionStore.disconnect(connectionId, { skipTabHandling: true }).catch((error) => {
-          console.warn("[DBX][connection-group:delete:disconnect-failed]", { connectionId, error });
+          console.warn("[NexDB][connection-group:delete:disconnect-failed]", { connectionId, error });
         });
       }
       showDeleteGroupConfirm.value = false;

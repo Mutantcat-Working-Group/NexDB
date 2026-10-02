@@ -875,7 +875,7 @@ const AGENT_EXIT_DIAGNOSTIC_POLL_MS: u64 = 10;
 const SHARED_RUNTIME_IDLE_GRACE_SECS: u64 = 30;
 const AGENT_JAVA_OPTS_ENV: &str = "DBX_AGENT_JAVA_OPTS";
 const AGENT_JAVA_TOO_OLD_MESSAGE: &str =
-    "Agent requires Java 21, but DBX started it with an older Java runtime. Use DBX managed JRE 21 or select a Java 21 executable in Driver Manager.";
+    "Agent requires Java 21, but NexDB started it with an older Java runtime. Use NexDB managed JRE 21 or select a Java 21 executable in Driver Manager.";
 
 pub struct AgentDriverClient {
     child: Option<Child>,
@@ -1604,7 +1604,7 @@ impl AgentDriverClient {
     /// Spawn an agent process and wait for it to signal readiness.
     ///
     /// Agents can be Java JARs, native executables, or script runtimes as long as
-    /// they speak the DBX stdin/stdout JSON-RPC protocol.
+    /// they speak the NexDB stdin/stdout JSON-RPC protocol.
     /// Blocks (async) until the agent writes `{"ready":true}` to stdout.
     pub async fn spawn(launch: AgentLaunchSpec) -> Result<Self, String> {
         let mut child = spawn_agent_process(&launch)?;

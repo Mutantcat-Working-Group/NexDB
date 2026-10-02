@@ -32,7 +32,7 @@ try {
 }
 
 if (!existsSync(binary)) {
-  console.error(`DBX CLI binary was not found at ${binary}`);
+  console.error(`NexDB CLI binary was not found at ${binary}`);
   process.exit(1);
 }
 

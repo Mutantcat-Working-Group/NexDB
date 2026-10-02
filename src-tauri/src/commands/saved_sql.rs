@@ -281,7 +281,7 @@ fn verify_previous_sync_files<'a>(
         let contents = std::fs::read(&file_path)
             .map_err(|error| sync_conflict(&file.path, &format!("managed file cannot be read: {error}")))?;
         if !sha256_hex(&contents).eq_ignore_ascii_case(&file.sha256) {
-            return Err(sync_conflict(&file.path, "managed file was edited outside DBX"));
+            return Err(sync_conflict(&file.path, "managed file was edited outside NexDB"));
         }
     }
     Ok(())
@@ -610,11 +610,11 @@ mod tests {
         sync_saved_sql_directory_blocking(&target.0, &[entry("SELECT 1;")]).unwrap();
 
         let managed_file = target.0.join("dbx-sql-library/reports/daily.sql");
-        std::fs::write(&managed_file, "SELECT 'edited outside DBX';").unwrap();
+        std::fs::write(&managed_file, "SELECT 'edited outside NexDB';").unwrap();
 
         let error = sync_saved_sql_directory_blocking(&target.0, &[entry("SELECT 2;")]).unwrap_err();
         assert!(error.contains("reports/daily.sql"), "unexpected error: {error}");
-        assert_eq!(std::fs::read_to_string(managed_file).unwrap(), "SELECT 'edited outside DBX';");
+        assert_eq!(std::fs::read_to_string(managed_file).unwrap(), "SELECT 'edited outside NexDB';");
     }
 
     #[test]
@@ -623,14 +623,14 @@ mod tests {
         sync_saved_sql_directory_blocking(&target.0, &[entry("SELECT 1;")]).unwrap();
 
         let managed_file = target.0.join("dbx-sql-library/reports/daily.sql");
-        std::fs::write(&managed_file, "SELECT 'edited outside DBX';").unwrap();
+        std::fs::write(&managed_file, "SELECT 'edited outside NexDB';").unwrap();
 
         sync_saved_sql_directory_blocking(&target.0, &[entry("SELECT 1;")]).unwrap();
-        assert_eq!(std::fs::read_to_string(&managed_file).unwrap(), "SELECT 'edited outside DBX';");
+        assert_eq!(std::fs::read_to_string(&managed_file).unwrap(), "SELECT 'edited outside NexDB';");
 
         let error = sync_saved_sql_directory_blocking(&target.0, &[entry("SELECT 2;")]).unwrap_err();
-        assert!(error.contains("managed file was edited outside DBX"), "unexpected error: {error}");
-        assert_eq!(std::fs::read_to_string(managed_file).unwrap(), "SELECT 'edited outside DBX';");
+        assert!(error.contains("managed file was edited outside NexDB"), "unexpected error: {error}");
+        assert_eq!(std::fs::read_to_string(managed_file).unwrap(), "SELECT 'edited outside NexDB';");
     }
 
     #[test]

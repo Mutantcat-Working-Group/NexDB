@@ -45,7 +45,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           if [ -z "${NODE_AUTH_TOKEN}" ]; then
-            echo "::error::NPM_TOKEN secret is required to publish DBX Node packages."
+            echo "::error::NPM_TOKEN secret is required to publish NexDB Node packages."
             exit 1
           fi
 
@@ -820,7 +820,7 @@ jobs:
           VERSION: ${{ needs.prepare.outputs.version }}
         run: |
           cat > release-notes.md <<EOF
-          DBX MCP and CLI ${VERSION} provide precompiled native binaries for macOS, Linux, and Windows.
+          NexDB MCP and CLI ${VERSION} provide precompiled native binaries for macOS, Linux, and Windows.
 
           Recommended npm installation:
 
@@ -832,16 +832,16 @@ jobs:
 
           The CLI archives use the \`dbx-cli-*\` prefix. Verify them with \`CLI-SHA256SUMS\`, extract \`dbx\` (or \`dbx.exe\`), and run it directly without Node.js.
 
-          This package release is separate from the DBX desktop application release and is intentionally not marked as the repository's latest release.
+          This package release is separate from the NexDB desktop application release and is intentionally not marked as the repository's latest release.
           EOF
 
           if gh release view "${TAG}" >/dev/null 2>&1; then
             gh release upload "${TAG}" release-assets/* --clobber
-            gh release edit "${TAG}" --title "DBX Packages ${VERSION}" --notes-file release-notes.md --latest=false
+            gh release edit "${TAG}" --title "NexDB Packages ${VERSION}" --notes-file release-notes.md --latest=false
           else
             gh release create "${TAG}" release-assets/* \
               --verify-tag \
-              --title "DBX Packages ${VERSION}" \
+              --title "NexDB Packages ${VERSION}" \
               --notes-file release-notes.md \
               --latest=false
           fi
@@ -1030,7 +1030,7 @@ jobs:
           # and brew ships a non-working CLI (t8y2/homebrew-tap#2).
           cat > Formula/dbx-cli.rb <<'RUBY_EOF'
           class DbxCli < Formula
-            desc "Command-line interface for DBX database connections, schema, and safe queries"
+            desc "Command-line interface for NexDB database connections, schema, and safe queries"
             homepage "https://github.com/t8y2/dbx"
             version "__CLI_VERSION__"
             license "Apache-2.0"

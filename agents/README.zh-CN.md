@@ -1,10 +1,10 @@
-# DBX Agents
+# NexDB Agents
 
 [English](README.md) | 简体中文
 
-DBX 的 Agent 驱动 —— 通过 JDBC 和原生数据库驱动支持各种数据库。
+NexDB 的 Agent 驱动 —— 通过 JDBC 和原生数据库驱动支持各种数据库。
 
-每个 agent 作为独立进程运行，通过 stdin/stdout 与 DBX 进行 JSON-RPC 2.0 通信。
+每个 agent 作为独立进程运行，通过 stdin/stdout 与 NexDB 进行 JSON-RPC 2.0 通信。
 
 ## 支持的数据库
 
@@ -55,7 +55,7 @@ DBX 的 Agent 驱动 —— 通过 JDBC 和原生数据库驱动支持各种数�
 
 ## 多 JRE 支持
 
-多数 Java agent 以 JRE 21 为目标。原生 agent（如 `cassandra`、`duckdb`、`hive`、`iotdb`、`oracle`、`kingbase`、`tdengine`、`xugu`、`rabbitmq`、`rocketmq` 和 `zookeeper`）不需要 JRE。对 Java agent，DBX 会自动下载并管理 JRE 21 安装。
+多数 Java agent 以 JRE 21 为目标。原生 agent（如 `cassandra`、`duckdb`、`hive`、`iotdb`、`oracle`、`kingbase`、`tdengine`、`xugu`、`rabbitmq`、`rocketmq` 和 `zookeeper`）不需要 JRE。对 Java agent，NexDB 会自动下载并管理 JRE 21 安装。
 
 ## JDBC 连接池
 
@@ -74,7 +74,7 @@ DBX 的 Agent 驱动 —— 通过 JDBC 和原生数据库驱动支持各种数�
 | `dbx.agent.jdbc.pool.maxLifetimeMillis` | `DBX_AGENT_JDBC_POOL_MAX_LIFETIME_MILLIS` | `1800000` |
 | `dbx.agent.jdbc.pool.retireMillis` | `DBX_AGENT_JDBC_POOL_RETIRE_MILLIS` | `300000` |
 
-HikariCP 会直接打进启用连接池的 Agent JAR。已经使用 DBX 托管 JRE 21 的安装无需重新安装或替换 JRE。
+HikariCP 会直接打进启用连接池的 Agent JAR。已经使用 NexDB 托管 JRE 21 的安装无需重新安装或替换 JRE。
 如遇特定老驱动兼容问题，可设置 `DBX_AGENT_JDBC_POOL_ENABLED=false`，让该运行时回退到原来的“每个逻辑会话一个连接”行为。
 
 ## 选择驱动实现语言
@@ -107,9 +107,9 @@ HikariCP 会直接打进启用连接池的 Agent JAR。已经使用 DBX 托管 J
 
 产物 JAR 在 `drivers/{module}/build/libs/`。原生 agent 从 `drivers/cassandra-go`、`drivers/duckdb`、`drivers/hive-go`、`drivers/iotdb`、`drivers/oracle-go`、`drivers/kingbase-go`、`drivers/vastbase-go`、`drivers/tdengine`、`drivers/xugu`、`drivers/rabbitmq`、`drivers/rocketmq` 和 `drivers/zookeeper` 构建。
 
-### 本地 DBX 运行时测试
+### 本地 NexDB 运行时测试
 
-修改 `agents/drivers/<db_type>/` 下的 Java agent 或共享 Java agent 协议代码后，需重新构建目标 agent 并替换本地 DBX 应用使用的运行时 JAR：
+修改 `agents/drivers/<db_type>/` 下的 Java agent 或共享 Java agent 协议代码后，需重新构建目标 agent 并替换本地 NexDB 应用使用的运行时 JAR：
 
 ```bash
 ./gradlew :<db_type>:shadowJar
@@ -117,7 +117,7 @@ cp ~/.dbx/agents/drivers/<db_type>/agent.jar ~/.dbx/agents/drivers/<db_type>/age
 cp agents/drivers/<db_type>/build/libs/*-all.jar ~/.dbx/agents/drivers/<db_type>/agent.jar
 ```
 
-重启 DBX 或断开重连数据库，使新 agent 进程加载替换后的 JAR。
+重启 NexDB 或断开重连数据库，使新 agent 进程加载替换后的 JAR。
 
 `cassandra`、`hive`、`iotdb`、`oracle`、`kingbase`、`tdengine`、`xugu`、`rabbitmq`、`rocketmq` 和 `zookeeper` 等原生 agent 使用可执行文件而非 `agent.jar`。TDengine 从 `drivers/tdengine/Cargo.toml` 构建 `target/release/dbx-tdengine-driver`。
 
@@ -137,7 +137,7 @@ Agent 模块的版本记录在 [`versions.json`](versions.json) 中，遵循以�
 ## 架构
 
 ```
-DBX 主进程 (Rust/Tauri)
+NexDB 主进程 (Rust/Tauri)
     │ stdin/stdout (JSON-RPC 2.0)
     ▼
 agent / java -jar dbx-agent-{type}.jar
@@ -148,4 +148,4 @@ agent / java -jar dbx-agent-{type}.jar
 
 ## 许可证
 
-[AGPL-3.0](https://github.com/t8y2/dbx/blob/main/LICENSE)
+[AGPL-3.0](https://github.com/Mutantcat-Working-Group/NexDB/blob/main/LICENSE)

@@ -62,7 +62,7 @@ pub fn resolve_ssh_tunnel_config(ssh: &SshTunnelConfig) -> SshTunnelConfig {
 /// element. A chain of length 1 means there is no `ProxyJump` to honor, and
 /// behaves exactly like [`resolve_ssh_tunnel_config`].
 ///
-/// Jump hosts have no dedicated credentials field in DBX's connection form,
+/// Jump hosts have no dedicated credentials field in NexDB's connection form,
 /// so each one inherits `ssh`'s password/key/agent settings; only the
 /// host/port/user/identity file come from its own `~/.ssh/config` entry.
 pub fn resolve_ssh_tunnel_chain(ssh: &SshTunnelConfig) -> Vec<SshTunnelConfig> {

@@ -297,7 +297,7 @@ pub async fn connect_sqlite_worker(
     transport_layers: &[TransportLayerConfig],
 ) -> Result<Arc<SqliteWorkerClient>, String> {
     if !sqlite_ssh_runtime_enabled() {
-        return Err("Remote SQLite over SSH is only available in the DBX Desktop app".to_string());
+        return Err("Remote SQLite over SSH is only available in the NexDB Desktop app".to_string());
     }
     if !config.password.is_empty() {
         return Err("Remote SQLite over SSH does not support SQLCipher in v1".to_string());
@@ -750,7 +750,7 @@ fn validate_remote_path(path: &str) -> Result<(), String> {
 }
 
 fn is_remote_linux_path_absolute_or_home_relative(path: &str) -> bool {
-    // The remote host is Linux even when the DBX Desktop client runs on Windows.
+    // The remote host is Linux even when the NexDB Desktop client runs on Windows.
     path.starts_with('/') || path.starts_with("~/")
 }
 

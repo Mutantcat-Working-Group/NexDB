@@ -490,7 +490,7 @@ type indexInfo struct {
 	IndexType       *string  `json:"index_type"`
 	IncludedColumns []string `json:"included_columns"`
 	Comment         *string  `json:"comment"`
-	// Partition fields are intentionally internal. The generic DBX index
+	// Partition fields are intentionally internal. The generic NexDB index
 	// protocol does not yet model Xugu-specific index partition clauses, but
 	// the DDL exporter must retain them to avoid changing index semantics.
 	IsLocal             bool                `json:"-"`
@@ -2944,7 +2944,7 @@ func (s *server) listIndexes(schema, table string) ([]indexInfo, error) {
 }
 
 // loadIndexPartitionMetadata enriches the stable index list with Xugu's
-// partition scope and partition definitions. The generic DBX index payload
+// partition scope and partition definitions. The generic NexDB index payload
 // does not expose these Xugu-specific fields, so they remain internal and are
 // consumed by table DDL reconstruction only.
 func (s *server) loadIndexPartitionMetadata(schema, table string, indexes []indexInfo) {

@@ -1,13 +1,13 @@
 ---
 title: Getting Started
-description: Install DBX, create your first connection, and understand the desktop, Docker, and source workflows.
+description: Install NexDB, create your first connection, and understand the desktop, Docker, and source workflows.
 ---
 
 This guide gets you through three things:
 
-1. Install DBX or start the Docker version
+1. Install NexDB or start the Docker version
 2. Create and test your first database connection
-3. Run DBX from source when you want to contribute or debug locally
+3. Run NexDB from source when you want to contribute or debug locally
 
 ## Choose An Install Method
 
@@ -25,7 +25,7 @@ This guide gets you through three things:
     brew upgrade --cask dbx
     ```
 
-    You can also download a `.dmg` installer from [GitHub Releases](https://github.com/t8y2/dbx/releases).
+    You can also download a `.dmg` installer from [GitHub Releases](https://github.com/Mutantcat-Working-Group/NexDB/releases).
 
   </Tab>
   <Tab value="Windows">
@@ -42,7 +42,7 @@ This guide gets you through three things:
     scoop update dbx
     ```
 
-    You can also download a `.msi` installer from [GitHub Releases](https://github.com/t8y2/dbx/releases).
+    You can also download a `.msi` installer from [GitHub Releases](https://github.com/Mutantcat-Working-Group/NexDB/releases).
 
   </Tab>
   <Tab value="Linux">
@@ -59,7 +59,7 @@ This guide gets you through three things:
     flatpak update org.mutantcat.nexdb
     ```
 
-    You can also download a package from [GitHub Releases](https://github.com/t8y2/dbx/releases):
+    You can also download a package from [GitHub Releases](https://github.com/Mutantcat-Working-Group/NexDB/releases):
 
     | Format | Use Case |
     |---|---|
@@ -70,12 +70,12 @@ This guide gets you through three things:
     For `.AppImage`, make the file executable before first run:
 
     ```bash
-    chmod +x DBX*.AppImage
+    chmod +x NexDB*.AppImage
     ```
 
   </Tab>
   <Tab value="Docker">
-    Docker is for self-hosting DBX on a server and opening it from a browser:
+    Docker is for self-hosting NexDB on a server and opening it from a browser:
 
     ```bash
     docker run -d \
@@ -137,7 +137,7 @@ This guide gets you through three things:
 
 Desktop and Web share most database workflows and the Rust core, but their local integrations are not identical. For SQLite, DuckDB, Access, external SQL files, or local directories, verify which machine owns the file; Docker normally requires mounting the directory into the container.
 
-<Callout type="info">MCP tools that open a table or display results in the desktop UI require DBX Desktop to be running. Query-only MCP tools can read the local DBX data directory directly or connect to a DBX Web/Docker backend.</Callout>
+<Callout type="info">MCP tools that open a table or display results in the desktop UI require NexDB Desktop to be running. Query-only MCP tools can read the local NexDB data directory directly or connect to a NexDB Web/Docker backend.</Callout>
 
 ## Create Your First Connection
 
@@ -163,7 +163,7 @@ Desktop and Web share most database workflows and the Rust core, but their local
   <Step>
     ### Paste A URL When Available
 
-    DBX can parse common connection URLs for engines such as MySQL, PostgreSQL, Redis, MongoDB, ClickHouse, SQL Server, Oracle, Elasticsearch, Easysearch, Meilisearch, DM, GaussDB, openGauss, TDengine, and Access. Review the parsed fields before saving.
+    NexDB can parse common connection URLs for engines such as MySQL, PostgreSQL, Redis, MongoDB, ClickHouse, SQL Server, Oracle, Elasticsearch, Easysearch, Meilisearch, DM, GaussDB, openGauss, TDengine, and Access. Review the parsed fields before saving.
 
   </Step>
   <Step>
@@ -180,13 +180,13 @@ Desktop and Web share most database workflows and the Rust core, but their local
   </Step>
 </Steps>
 
-<Callout type="info">Connection passwords, SSH passwords, SSH key passphrases, and connection strings are stored separately from the regular connection JSON in DBX's local storage. Use [Config Export/Import](/en/docs/config-export) when you need to migrate encrypted connection settings.</Callout>
+<Callout type="info">Connection passwords, SSH passwords, SSH key passphrases, and connection strings are stored separately from the regular connection JSON in NexDB's local storage. Use [Config Export/Import](/en/docs/config-export) when you need to migrate encrypted connection settings.</Callout>
 
 ## Reduce Production Mistakes
 
 - Give production connections a distinct name such as `prod-orders`, and use colors, groups, and notes to describe their purpose.
-- For query-only access, combine a database read-only account with DBX **Read-only connection**.
-- Enable **Production protection** for the whole connection or selected databases; DBX requires a fresh explicit confirmation for writes.
+- For query-only access, combine a database read-only account with NexDB **Read-only connection**.
+- Enable **Production protection** for the whole connection or selected databases; NexDB requires a fresh explicit confirmation for writes.
 - When one server contains many databases or schemas, show only the objects you currently need.
 - Review generated SQL before applying edits, imports, transfers, SQL files, or schema sync operations.
 - Put MCP connections behind an allowlist and prefer Read only or Data read/write instead of enabling Full access by default.
@@ -219,7 +219,7 @@ See [Production and Write Safety](/en/docs/production-safety) for complete behav
 
 ## Run From Source
 
-Use source mode when contributing or debugging DBX locally.
+Use source mode when contributing or debugging NexDB locally.
 
 <Callout type="info">
   First-time contributors should follow the contribution guide in the [NexDB repository](https://github.com/Mutantcat-Working-Group/NexDB) for complete platform setup, forking, issue claiming, testing, and pull request steps.
@@ -244,7 +244,7 @@ Use source mode when contributing or debugging DBX locally.
     winget install StrawberryPerl.StrawberryPerl
     ```
 
-    DBX enables the `sqlite-sqlcipher` feature by default, which compiles SQLCipher and OpenSSL from source. Windows needs Perl to run the OpenSSL `Configure` script. Reopen your terminal after installing so `perl` is available on `PATH`.
+    NexDB enables the `sqlite-sqlcipher` feature by default, which compiles SQLCipher and OpenSSL from source. Windows needs Perl to run the OpenSSL `Configure` script. Reopen your terminal after installing so `perl` is available on `PATH`.
 
   </Tab>
 </Tabs>
@@ -252,7 +252,7 @@ Use source mode when contributing or debugging DBX locally.
 ### Start Development
 
 ```bash
-git clone https://github.com/t8y2/dbx.git
+git clone https://github.com/Mutantcat-Working-Group/NexDB.git
 cd dbx
 make
 ```

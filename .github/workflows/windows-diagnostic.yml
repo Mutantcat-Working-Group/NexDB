@@ -45,7 +45,7 @@ jobs:
         run: |
           $portableDir = "diagnostic-portable\NexDB-diagnostic-x64"
           New-Item -ItemType Directory -Force -Path $portableDir | Out-Null
-          Copy-Item "target\x86_64-pc-windows-msvc\release\dbx.exe" (Join-Path $portableDir "DBX.exe") -Force
+          Copy-Item "target\x86_64-pc-windows-msvc\release\nexdb.exe" (Join-Path $portableDir "NexDB.exe") -Force
           Copy-Item "LICENSE" (Join-Path $portableDir "LICENSE") -Force
           Copy-Item "README.md" (Join-Path $portableDir "README.md") -Force
           Set-Content -Path (Join-Path $portableDir "portable.dbx") -Value "" -NoNewline

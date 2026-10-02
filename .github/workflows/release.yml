@@ -214,7 +214,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           if (-not $env:PFX_PATH -or -not $env:SIGNTOOL_PATH) { throw 'code-signing setup did not run' }
-          $app = "target/${{ matrix.target }}/release/dbx.exe"
+          $app = "target/${{ matrix.target }}/release/nexdb.exe"
           $signature = Get-AuthenticodeSignature $app
           if (-not $signature.SignerCertificate -or $signature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
             throw "$app lost its signature during bundling ($($signature.Status))"

@@ -5,7 +5,7 @@ import type { AppSupportInfoLabels } from "../../apps/desktop/src/lib/app/suppor
 import type { AppSupportInfo } from "../../apps/desktop/src/lib/backend/tauri.ts";
 
 const labels: AppSupportInfoLabels = {
-  appVersion: "DBX Version",
+  appVersion: "NexDB Version",
   runtime: "Runtime",
   runtimeDesktop: "Desktop",
   runtimeWeb: "Web",
@@ -46,6 +46,6 @@ test("formats support info clipboard text in stable issue-friendly order", () =>
 
   assert.equal(
     formatAppSupportInfoForClipboard(info, labels),
-    ["DBX Version: v0.5.50", "Runtime: Desktop", "Operating System: macOS 15.5", "Architecture: aarch64"].join("\n"),
+    ["NexDB Version: v0.5.50", "Runtime: Desktop", "Operating System: macOS 15.5", "Architecture: aarch64"].join("\n"),
   );
 });

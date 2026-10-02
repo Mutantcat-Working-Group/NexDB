@@ -224,7 +224,7 @@ func parseConnectionConfig(params connectParams) (connectionConfig, error) {
 		// ZooKeeper discovery needs the complete endpoint list from the JDBC URL.
 		config.Endpoints = parsed.endpoints
 	} else if host := strings.TrimSpace(params.Host); host != "" {
-		// DBX resolves edits and transport layers before invoking the Agent. For
+		// NexDB resolves edits and transport layers before invoking the Agent. For
 		// direct connections that resolved endpoint must win over the persisted URL.
 		port := params.Port
 		if port <= 0 {

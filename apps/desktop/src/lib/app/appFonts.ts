@@ -8,7 +8,7 @@ export const DEFAULT_UI_FONT_FAMILY = `"Geist Variable", "PingFang SC", "Hiragin
 export const DEFAULT_MONO_FONT_FAMILY = `'Fira Code', 'Cascadia Code', 'Cascadia Mono', 'JetBrains Mono', monospace`;
 export const DEFAULT_DATA_GRID_FONT_FAMILY = `"Geist Variable Tabular", "Geist Variable", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif`;
 
-// Native-feeling UI option without DBX's bundled/brand font at the front of the stack.
+// Native-feeling UI option without NexDB's bundled/brand font at the front of the stack.
 export const SYSTEM_UI_FONT_FAMILY = `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
 
 export const FONT_FAMILIES: { value: string; label: string }[] = [

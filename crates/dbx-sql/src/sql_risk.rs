@@ -902,7 +902,7 @@ fn sql_contains_locking_clause(sql: &str, dialect: &dyn sqlparser::dialect::Dial
 /// Strict manual-transaction UX proof outcome. UI-only.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ReadProof {
-    /// DBX's strict heuristic is satisfied for this statement.
+    /// NexDB's strict heuristic is satisfied for this statement.
     ProvenReadOnly,
     /// Anything unprovable. Buttons stay visible; execution is unaffected.
     Unproven,
@@ -1102,7 +1102,7 @@ const POSTGRES_PROOF_SAFE_FUNCTIONS: &[&str] = &[
     "version",
 ];
 
-/// Prove that a single SQL statement is, by DBX's strict heuristic, an
+/// Prove that a single SQL statement is, by NexDB's strict heuristic, an
 /// ordinary read. Only MySQL/PostgreSQL take part in this proof; every other
 /// database type is Unproven so its manual-transaction toolbar keeps the
 /// legacy behavior. Oracle keeps its own lexical classifier

@@ -310,7 +310,7 @@ export async function parseDbeaverImport(content: string): Promise<DbeaverImport
 
   // DBeaver stores declared folders separately and connections reference full
   // slash-delimited paths. Missing ancestors are created during DBeaver load,
-  // so mirror that behavior when producing DBX's nested sidebar layout.
+  // so mirror that behavior when producing NexDB's nested sidebar layout.
   const layout = buildSidebarLayoutFromFolderPaths(
     configs.map((config) => config.id),
     extractFolderPaths(dataSources),

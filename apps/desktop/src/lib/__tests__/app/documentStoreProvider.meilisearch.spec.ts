@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { documentFilterModeOptionsFor, documentStoreProviderFor } from "@/lib/app/documentStoreProvider";
 
 describe("Meilisearch document store provider", () => {
-  it("uses a dedicated provider and describes the DBX fetch operation", () => {
+  it("uses a dedicated provider and describes the NexDB fetch operation", () => {
     const provider = documentStoreProviderFor("meilisearch");
 
     expect(provider.kind).toBe("meilisearch");
@@ -14,7 +14,7 @@ describe("Meilisearch document store provider", () => {
         skip: 20,
         limit: 10,
       }),
-    ).toBe('DBX MEILISEARCH FETCH DOCUMENTS\nindex: "movies"\noffset: 20\nlimit: 10\nfilter:\n{\n  "status": "published"\n}\nsort:\n{\n  "rating": -1\n}');
+    ).toBe('NexDB MEILISEARCH FETCH DOCUMENTS\nindex: "movies"\noffset: 20\nlimit: 10\nfilter:\n{\n  "status": "published"\n}\nsort:\n{\n  "rating": -1\n}');
   });
 
   it("does not offer structured contains modes by default", () => {

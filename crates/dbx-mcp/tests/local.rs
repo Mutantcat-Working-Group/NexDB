@@ -279,7 +279,7 @@ async fn duplicate_connection_preserves_secrets_ssh_and_sidebar_group() {
 
 #[tokio::test]
 async fn local_backend_picks_up_connections_added_after_startup_without_reload() {
-    // Regression for issue #5428: after an agent connects to MCP, a connection created in the DBX
+    // Regression for issue #5428: after an agent connects to MCP, a connection created in the NexDB
     // desktop UI is not reflected in the MCP server's AppState.configs in-memory cache, so the
     // agent can list the new connection but executing an operation fails with
     // "Connection config not found". After the fix the new connection is usable without reload.
@@ -306,7 +306,7 @@ async fn local_backend_picks_up_connections_added_after_startup_without_reload()
     let server_task = tokio::spawn(async move { server.serve(server_transport).await });
     let client = ().serve(client_transport).await.expect("initialize client");
 
-    // Simulate a connection created in the DBX desktop UI: write directly to the shared storage,
+    // Simulate a connection created in the NexDB desktop UI: write directly to the shared storage,
     // bypassing the MCP server's in-process cache.
     let added: ConnectionConfig = serde_json::from_value(json!({
         "id": "added-sqlite",

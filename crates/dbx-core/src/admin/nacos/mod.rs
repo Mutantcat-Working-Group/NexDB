@@ -40,7 +40,7 @@ type NacosAdminEntry = (NacosAdminConfig, Arc<dyn NacosAdmin>);
 /// exclude unrelated Nacos settings such as namespace and page size, so those
 /// edits do not force users through another CAPTCHA challenge.
 ///
-/// This is also the cache key rather than the DBX connection ID: one r-nacos
+/// This is also the cache key rather than the NexDB connection ID: one r-nacos
 /// console session authorizes every configuration in the same instance, even
 /// when the UI reaches it through a different connection context.
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -133,7 +133,7 @@ impl NacosAdminRegistry {
             return entry.session.clone();
         }
         let session = new_rnacos_console_session();
-        // Bound cache retention even when a user removes every matching DBX
+        // Bound cache retention even when a user removes every matching NexDB
         // connection. Tokens expire independently inside the session; this
         // entry is retained for one additional token lifetime to allow reuse.
         sessions.insert(

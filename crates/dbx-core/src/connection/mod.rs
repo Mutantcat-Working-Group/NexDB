@@ -428,7 +428,7 @@ pub(crate) fn uses_metadata_gate(db_type: DatabaseType) -> bool {
 /// (10-connection) pool for each export session, so an allowance of 1 would
 /// serialize the database-export metadata prefetch (4 concurrent DDL/column
 /// lookups) and make three of them time out after METADATA_POOL_ACQUIRE_TIMEOUT
-/// with "DBX metadata pool is busy". Returning the pool's real capacity here
+/// with "NexDB metadata pool is busy". Returning the pool's real capacity here
 /// flows into metadata_concurrency_limit, which caps the effective gate at
 /// METADATA_POOL_DEFAULT_LIMIT (6) -- still enough for the 4-wide prefetch and
 /// still isolated from the UI/base pool.
@@ -2084,7 +2084,7 @@ impl AppState {
             );
         };
         if tokio::time::timeout(deadline, shutdown).await.is_err() {
-            log::warn!("Timed out shutting down DBX runtime resources after {}ms", deadline.as_millis());
+            log::warn!("Timed out shutting down NexDB runtime resources after {}ms", deadline.as_millis());
         }
     }
 

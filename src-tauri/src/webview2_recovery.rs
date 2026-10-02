@@ -14,14 +14,14 @@
 //! ## Kind policy (mirrors Microsoft's process-related-event guidance)
 //!
 //! - **Browser process exited**: fatal. Every control is closed and the
-//!   environment is gone; a plain reload is ineffective. DBX restarts the
+//!   environment is gone; a plain reload is ineffective. NexDB restarts the
 //!   application through the normal close flow so persisted state (open tabs,
 //!   window geometry, saved SQL) survives and running queries are cancelled
 //!   by `AppState::shutdown` (see `commands::connection`).
 //! - **Main renderer exited**: confirmed renderer death — reload, bounded by
 //!   the rolling budget below.
 //! - **Renderer unresponsive**: the event can be raised repeatedly and the
-//!   renderer may recover on its own, so DBX does **not** reload on the first
+//!   renderer may recover on its own, so NexDB does **not** reload on the first
 //!   event. Only once the event fires `unresponsive_threshold` times inside
 //!   `unresponsive_window` does recovery trigger (still bounded by the same
 //!   rolling budget).
@@ -53,12 +53,12 @@
 //!   retried, so the first failures are logged and retried on the next
 //!   `ProcessFailed` event; only after
 //!   [`RELOAD_EXECUTION_ESCALATION_THRESHOLD`] consecutive reload errors does
-//!   DBX escalate to a controlled restart rather than looping forever.
+//!   NexDB escalate to a controlled restart rather than looping forever.
 //! - A successful reload resets the consecutive-failure counter.
 //!
 //! ## Session-task cancellation on reload
 //!
-//! Before reloading, DBX cancels the tasks whose frontend consumer lives in
+//! Before reloading, NexDB cancels the tasks whose frontend consumer lives in
 //! the (now-dying) renderer session via
 //! `AppState::cancel_webview_reload_session_tasks` — currently every task
 //! registered in `RunningQueries` (SQL execution, counts/explains and exports).
@@ -81,7 +81,7 @@ use std::time::{Duration, Instant};
 
 use wry::{WebView2ProcessFailedInfo, WebView2ProcessFailedKind};
 
-/// Consecutive `window.reload()` execution errors tolerated before DBX
+/// Consecutive `window.reload()` execution errors tolerated before NexDB
 /// escalates a wedged renderer to a controlled application restart.
 const RELOAD_EXECUTION_ESCALATION_THRESHOLD: u32 = 3;
 

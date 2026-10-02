@@ -33,13 +33,13 @@ export function useWebDavAutoUpload() {
     uploading = true;
     try {
       const summary = await webdavSyncUpload(config.webDavConfig, settingsStore.editorSettings);
-      appendDebugLog("info", "[DBX][webdav:auto-upload:success]", {
+      appendDebugLog("info", "[NexDB][webdav:auto-upload:success]", {
         bytes: summary.bytes,
         remotePath: summary.remotePath,
         exportedAt: summary.exportedAt,
       });
     } catch (error) {
-      appendDebugLog("error", "[DBX][webdav:auto-upload:error]", error);
+      appendDebugLog("error", "[NexDB][webdav:auto-upload:error]", error);
     } finally {
       uploading = false;
     }

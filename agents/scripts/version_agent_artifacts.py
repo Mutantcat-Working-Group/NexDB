@@ -50,7 +50,7 @@ def version_agent_artifacts(release_dir: Path, versions: dict[str, str]) -> list
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Add module versions to DBX agent release filenames")
+    parser = argparse.ArgumentParser(description="Add module versions to NexDB agent release filenames")
     parser.add_argument("release_dir", type=Path)
     parser.add_argument("versions_json")
     args = parser.parse_args()

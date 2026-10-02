@@ -5,7 +5,7 @@ NexDB is a lightweight, self-hosted database client for the browser. It supports
 - Official website: https://dbxio.com
 - Documentation: https://dbxio.com/en/docs/getting-started
 - 中文文档: https://dbxio.com/cn/docs/getting-started
-- Source code: https://github.com/t8y2/dbx
+- Source code: https://github.com/Mutantcat-Working-Group/NexDB
 
 ## Quick Start
 
@@ -55,9 +55,9 @@ docker compose up -d --pull always
 
 | Variable | Default | Description |
 | --- | --- | --- |
-| `DBX_PASSWORD` | Not set | Access password for the DBX Web login page. Set a strong value for server deployments. |
+| `DBX_PASSWORD` | Not set | Access password for the NexDB Web login page. Set a strong value for server deployments. |
 | `DBX_DISABLE_PASSWORD` | `false` | Disables login protection when set to `true`. Do not use this on an untrusted network. |
-| `DBX_DATA_DIR` | `/app/data` | Directory containing the DBX database, plugins, drivers, and other persistent data. |
+| `DBX_DATA_DIR` | `/app/data` | Directory containing the NexDB database, plugins, drivers, and other persistent data. |
 | `DBX_PORT` | `4224` | HTTP port inside the container. |
 | `DBX_PUBLIC_BASE_PATH` | `/` | URL prefix for reverse-proxy deployments, for example `/dbx`. |
 | `DBX_WEB_MCP_TOKEN` | Not set | Enables native Streamable HTTP MCP with this bearer token. Keep it secret. |

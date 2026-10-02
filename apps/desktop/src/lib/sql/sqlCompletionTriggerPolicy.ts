@@ -25,7 +25,7 @@ export function normalizeCompletionTriggerMode(value: unknown): SqlCompletionTri
 }
 
 export interface SqlCompletionTriggerFacts {
-  /** typing (DBX programmatic start / implicit) vs explicit (manual completion shortcut) */
+  /** typing (NexDB programmatic start / implicit) vs explicit (manual completion shortcut) */
   origin: SqlCompletionTriggerOrigin;
   /** completion context context.prefix.length > 0 (not trailing '.') */
   hasIdentifierPrefix: boolean;

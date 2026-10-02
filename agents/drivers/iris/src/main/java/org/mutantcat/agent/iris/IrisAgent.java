@@ -42,7 +42,7 @@ public final class IrisAgent extends ConfiguredJdbcAgent {
     // larger fetch blocks finish several times faster. Statement.setFetchSize
     // does not help here: intersystems-jdbc stores that value but never sends
     // it to the server. The connection-level query prefetch size is the only
-    // effective knob, so raise it for every DBX IRIS connection. This is
+    // effective knob, so raise it for every NexDB IRIS connection. This is
     // advisory: servers that reject the value keep the driver default, and the
     // driver only round-trips when the value actually changes.
     static final int IRIS_QUERY_PREFETCH_SIZE = 262144;

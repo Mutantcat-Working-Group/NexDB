@@ -3946,7 +3946,7 @@ async function runSnippetAction(kind: "test" | "upload" | "download" | "migrate"
     snippetMessage.value = await action();
   } catch (e: any) {
     snippetMessage.value = e?.message || String(e);
-    if (kind === "upload" && snippetMessage.value.includes("legacy unencrypted DBX snapshot")) {
+    if (kind === "upload" && snippetMessage.value.includes("legacy unencrypted NexDB snapshot")) {
       legacySnippetId.value = snippetId.value.trim();
     }
     snippetError.value = true;
@@ -4568,7 +4568,7 @@ function globalInstructionsTooLong(): boolean {
   return promptTemplateCharacterCount(editGlobalInstructions.value) > GLOBAL_INSTRUCTIONS_MAX;
 }
 
-// Agent turn limit for DBX's API-backed agent loop. CLI providers enforce their own limits.
+// Agent turn limit for NexDB's API-backed agent loop. CLI providers enforce their own limits.
 // Mirrors DEFAULT/MIN/MAX_MAX_AGENT_TURNS in crates/dbx-core/src/ai/agent_loop.rs —
 // keep in sync; the backend clamp on save/load is the actual source of truth.
 const editMaxAgentTurns = ref<number | undefined>(undefined);
@@ -6800,7 +6800,7 @@ onUnmounted(() => {
                 <div class="settings-appearance-choice-grid settings-icon-theme-grid">
                   <Button type="button" variant="outline" class="settings-choice-card h-auto min-w-0 justify-start overflow-hidden whitespace-normal border p-3" :class="editIconTheme === 'default' ? 'dbx-choice-selected' : ''" @click="setIconTheme('default')">
                     <div class="flex w-full min-w-0 items-center gap-3 text-left">
-                      <img :src="webPath('/icon-preview-default.png')" alt="DBX" class="h-12 w-12 shrink-0" />
+                      <img :src="webPath('/icon-preview-default.png')" alt="NexDB" class="h-12 w-12 shrink-0" />
                       <div class="min-w-0 text-left">
                         <div class="text-sm font-medium">
                           {{ t("settings.iconThemeDefault") }}
@@ -6813,7 +6813,7 @@ onUnmounted(() => {
                   </Button>
                   <Button type="button" variant="outline" class="settings-choice-card h-auto min-w-0 justify-start overflow-hidden whitespace-normal border p-3" :class="editIconTheme === 'black' ? 'dbx-choice-selected' : ''" @click="setIconTheme('black')">
                     <div class="flex w-full min-w-0 items-center gap-3 text-left">
-                      <img :src="webPath('/icon-preview-black.png')" alt="DBX" class="h-12 w-12 shrink-0" />
+                      <img :src="webPath('/icon-preview-black.png')" alt="NexDB" class="h-12 w-12 shrink-0" />
                       <div class="min-w-0 text-left">
                         <div class="text-sm font-medium">
                           {{ t("settings.iconThemeBlack") }}
@@ -10322,13 +10322,13 @@ LIMIT 100;</pre
                     {{ t("settings.publisherOrg") }}
                   </div>
                 </button>
-                <button type="button" class="rounded-lg border p-4 text-left transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" @click="openExternalUrl('https://github.com/t8y2/dbx')">
+                <button type="button" class="rounded-lg border p-4 text-left transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" @click="openExternalUrl('https://github.com/Mutantcat-Working-Group/NexDB')">
                   <div class="flex items-center gap-2 text-sm font-medium">
                     <img src="https://cdn.simpleicons.org/github/181717" alt="GitHub" class="h-7 w-7 rounded-md bg-white p-1" />
                     {{ t("settings.openSource") }}
                     <ExternalLink class="ml-auto h-3.5 w-3.5 text-muted-foreground" />
                   </div>
-                  <div class="mt-1 text-sm text-primary">github.com/t8y2/dbx</div>
+                  <div class="mt-1 text-sm text-primary">github.com/Mutantcat-Working-Group/NexDB</div>
                 </button>
                 <button type="button" class="rounded-lg border p-4 text-left transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" @click="openExternalUrl('https://dbxio.com')">
                   <div class="flex items-center gap-2 text-sm font-medium">

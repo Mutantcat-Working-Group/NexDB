@@ -121,7 +121,7 @@ const ORACLE_DEFERRED_LOB_TYPES = new Set<string>(["CLOB", "NCLOB", "BLOB", "BFI
 const GROUPED_DISPLAY_METADATA_CONCURRENCY = 2;
 const GROUPED_DISPLAY_LIMITER_SCOPE_PREFIX = "query-column-comments:";
 const groupedDisplayMetadataLimiter = new MetadataTaskLimiter(GROUPED_DISPLAY_METADATA_CONCURRENCY, (event) => {
-  console.debug("[DBX][metadata-load:grouped-display-limiter]", event);
+  console.debug("[NexDB][metadata-load:grouped-display-limiter]", event);
 });
 const UPPERCASE_FOLDED_METADATA_TYPES = new Set<string>([...ORACLE_LIKE_METADATA_TYPES, "saphana"]);
 const HIDDEN_QUERY_KEY_DATABASE_TYPES = new Set<DatabaseType>(["mysql", "postgres", "sqlserver", "oracle", "xugu"]);
@@ -1356,7 +1356,7 @@ export const useQueryStore = defineStore("query", () => {
   const MAX_CACHED_RESULT_BYTES = 128 * 1024 * 1024;
 
   function queryExecutionLog(level: "debug" | "info" | "warn" | "error", event: string, details: Record<string, unknown>) {
-    appendDebugLog(level, `[DBX][executeTabSql:${event}]`, details);
+    appendDebugLog(level, `[NexDB][executeTabSql:${event}]`, details);
   }
 
   function findExecutionTab(id: string): QueryTab | undefined {
@@ -1485,7 +1485,7 @@ export const useQueryStore = defineStore("query", () => {
       if (location.catalog) await api.closeQuerySession(location.connectionId, executionDatabase, sessionId, clientSessionId, location.catalog);
       else await api.closeQuerySession(location.connectionId, executionDatabase, sessionId, clientSessionId);
     } catch (error) {
-      console.warn("[DBX][query-session:close:error]", { tabId: tab.id, sessionId, error });
+      console.warn("[NexDB][query-session:close:error]", { tabId: tab.id, sessionId, error });
       if (throwOnError) throw error;
     } finally {
       if (tab.resultSessionId === sessionId) tab.resultSessionId = undefined;
@@ -1506,7 +1506,7 @@ export const useQueryStore = defineStore("query", () => {
       if (catalog) await api.closeClientConnectionSession(connectionId, database, clientSessionId, catalog);
       else await api.closeClientConnectionSession(connectionId, database, clientSessionId);
     } catch (error) {
-      console.warn("[DBX][client-session:close:error]", { ...logContext, clientSessionId, error });
+      console.warn("[NexDB][client-session:close:error]", { ...logContext, clientSessionId, error });
       if (throwOnError) throw error;
     }
   }
@@ -2334,7 +2334,7 @@ export const useQueryStore = defineStore("query", () => {
         await adoptDetachedTab(handoff);
         await api.deleteDetachedTabHandoff(handoff.tabId);
       } catch (error) {
-        console.warn("[DBX][detached-tab:restore:error]", error);
+        console.warn("[NexDB][detached-tab:restore:error]", error);
       }
     }
   }
@@ -2342,7 +2342,7 @@ export const useQueryStore = defineStore("query", () => {
   function scheduleResultCacheMaintenance() {
     const maintain = () => {
       const liveKeys = tabs.value.flatMap((tab) => [tab.resultCacheKey, ...(tab.resultRuns?.map((run) => run.resultCacheKey) ?? [])]).filter((key): key is string => !!key);
-      void pruneTabResultSnapshots(liveKeys).catch((error) => console.warn("[DBX][result-cache:maintenance:error]", error));
+      void pruneTabResultSnapshots(liveKeys).catch((error) => console.warn("[NexDB][result-cache:maintenance:error]", error));
     };
     if (typeof requestIdleCallback !== "undefined") requestIdleCallback(maintain, { timeout: 5000 });
     else if (typeof window !== "undefined") window.setTimeout(maintain, 0);
@@ -3650,7 +3650,7 @@ export const useQueryStore = defineStore("query", () => {
         // active connection already chosen by restoreActiveConnectionContext().
         await connectionStore.ensureConnected(connectionId, { activate: false });
       } catch (error) {
-        console.warn("[DBX][plugin-tab-restore:reconnect]", connectionId, error);
+        console.warn("[NexDB][plugin-tab-restore:reconnect]", connectionId, error);
       }
     }
   }
@@ -3982,7 +3982,7 @@ export const useQueryStore = defineStore("query", () => {
           if (connectionStore.hasDisconnectInFlight(connectionId)) return;
           await connectionStore.disconnect(connectionId);
         } catch (error) {
-          console.warn("[DBX][plugin-tab-close:disconnect]", connectionId, error);
+          console.warn("[NexDB][plugin-tab-close:disconnect]", connectionId, error);
         } finally {
           pluginReleaseInFlight.delete(connectionId);
         }
@@ -4944,7 +4944,7 @@ export const useQueryStore = defineStore("query", () => {
       const existing = savedSqlStore.getFile(tab.savedSqlId);
       if (existing && existing.name !== normalizedTitle) {
         void savedSqlStore.renameFile(tab.savedSqlId, normalizedTitle).catch((error) => {
-          console.warn("[DBX][saved-sql:rename:error]", error);
+          console.warn("[NexDB][saved-sql:rename:error]", error);
           tab.title = previousTitle;
         });
       }
@@ -5124,7 +5124,7 @@ export const useQueryStore = defineStore("query", () => {
         schema: tab.schema,
       })
       .catch((error) => {
-        console.warn("[DBX][saved-sql:target:error]", error);
+        console.warn("[NexDB][saved-sql:target:error]", error);
         // A failed older request must not undo a newer target selection.
         if (!savedSqlTargetPersistenceActive || savedSqlTargetRequests.get(tab) !== revision || tab.savedSqlId !== savedSqlId || !tabs.value.includes(tab)) return;
         const saved = savedSqlStore.getFile(savedSqlId);
@@ -5299,7 +5299,7 @@ export const useQueryStore = defineStore("query", () => {
   }
 
   function toErrorResult(e: any): NonNullable<QueryTab["result"]> {
-    // Single funnel for every query execution failure, so backend messages DBX
+    // Single funnel for every query execution failure, so backend messages NexDB
     // knows about are shown in the active locale rather than as raw English.
     const error = normalizeBackendError(e) ?? undefined;
     const message = translateBackendError(i18n.global.t, e, e instanceof Error ? e.message : undefined);
@@ -5901,7 +5901,7 @@ export const useQueryStore = defineStore("query", () => {
         queryDisplaySourceColumns: displayInfo.mapping,
       };
     } catch (err) {
-      console.error("[DBX] ERROR fetching columns for grouped query metadata:", err);
+      console.error("[NexDB] ERROR fetching columns for grouped query metadata:", err);
       return undefined;
     }
   }
@@ -6092,7 +6092,7 @@ export const useQueryStore = defineStore("query", () => {
         queryDisplaySourceColumns: multiSourceInfo?.mapping,
       };
     } catch (err) {
-      console.error("[DBX] ERROR fetching columns for query metadata:", err);
+      console.error("[NexDB] ERROR fetching columns for query metadata:", err);
       return {
         queryAnalysis: undefined,
         querySourceColumns: undefined,
@@ -7063,7 +7063,7 @@ export const useQueryStore = defineStore("query", () => {
 
       const elasticsearchRequests = elasticsearchRestRequestRanges(sqlToExecute, effectiveDbType);
       if (elasticsearchRequests.length > 0) {
-        console.info("[DBX][executeTabSql:elasticsearch-rest-batch:start]", {
+        console.info("[NexDB][executeTabSql:elasticsearch-rest-batch:start]", {
           traceId,
           requestCount: elasticsearchRequests.length,
           sql,
@@ -7088,7 +7088,7 @@ export const useQueryStore = defineStore("query", () => {
           }
         }
 
-        console.info("[DBX][executeTabSql:elasticsearch-rest-batch:done]", {
+        console.info("[NexDB][executeTabSql:elasticsearch-rest-batch:done]", {
           traceId,
           requestCount: elasticsearchRequests.length,
           resultCount: allResults.length,
@@ -7426,7 +7426,7 @@ export const useQueryStore = defineStore("query", () => {
           });
           resolvedSapHanaSchema = sapHanaCurrentSchemaFromResult(schemaResult);
         } catch (error) {
-          console.warn("[DBX] Failed to resolve SAP HANA CURRENT_SCHEMA", error);
+          console.warn("[NexDB] Failed to resolve SAP HANA CURRENT_SCHEMA", error);
         }
       }
       const current = findExecutionTab(id);
@@ -8040,7 +8040,7 @@ export const useQueryStore = defineStore("query", () => {
               executionMode: "simple",
             });
           } catch (error) {
-            console.warn("[DBX][sqlserver-explain:cleanup:error]", { tabId: tab.id, error });
+            console.warn("[NexDB][sqlserver-explain:cleanup:error]", { tabId: tab.id, error });
           }
         }
         const current = tabs.value.find((t) => t.id === id);

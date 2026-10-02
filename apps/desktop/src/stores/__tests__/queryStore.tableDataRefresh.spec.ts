@@ -622,7 +622,7 @@ describe("queryStore table data refresh", () => {
       primaryKeys: ["id"],
     });
     const tab = store.tabs.find((candidate) => candidate.id === tabId)!;
-    // 外部 ALTER TABLE ... ADD age：DBX 断开→重连。disconnect 会 bump 连接代次
+    // 外部 ALTER TABLE ... ADD age：NexDB 断开→重连。disconnect 会 bump 连接代次
     // 并清 freshness 戳（staleConnectionDataTabMetadata），此处等价模拟：
     // 旧代次(0)的 tableMeta 已与新代次(1)失配，reload 必须重建结构
     mocks.metadataGeneration = 1;

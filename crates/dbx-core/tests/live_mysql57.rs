@@ -88,7 +88,7 @@ fn json_cell_text(value: &serde_json::Value) -> String {
 }
 
 #[tokio::test]
-#[ignore = "requires the remote DBX MySQL 5.7 smoke-test container"]
+#[ignore = "requires the remote NexDB MySQL 5.7 smoke-test container"]
 async fn live_mysql57_text_protocol_select_succeeds() {
     let url = std::env::var("DBX_LIVE_MYSQL57_URL").expect("DBX_LIVE_MYSQL57_URL");
 
@@ -108,7 +108,7 @@ async fn live_mysql57_text_protocol_select_succeeds() {
 }
 
 #[tokio::test]
-#[ignore = "requires the remote DBX MySQL 5.7 smoke-test container"]
+#[ignore = "requires the remote NexDB MySQL 5.7 smoke-test container"]
 async fn live_mysql57_checksum_table_returns_native_result_set() {
     let url = std::env::var("DBX_LIVE_MYSQL57_URL").expect("DBX_LIVE_MYSQL57_URL");
     let pool = dbx_core::db::mysql::connect(&url, std::time::Duration::from_secs(5)).await.unwrap();
@@ -583,7 +583,7 @@ async fn live_mysql_csv_temporal_export_round_trip_preserves_dbx_force_text_valu
     export_query_result_core(&state, &request, None, |_| {}).await.expect("export fixture");
 
     let csv = std::fs::read(&file_path).unwrap();
-    let parsed = parse_csv_bytes(&csv, 10).expect("DBX should parse its own CSV");
+    let parsed = parse_csv_bytes(&csv, 10).expect("NexDB should parse its own CSV");
     let mappings = parsed
         .columns
         .iter()

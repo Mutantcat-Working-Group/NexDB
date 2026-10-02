@@ -12,7 +12,7 @@ Then add this custom repository in Plugin Center → Settings:
 
 ```text
 ID: example-marketplace
-Name: DBX Example Marketplace
+Name: NexDB Example Marketplace
 Catalog URL: http://127.0.0.1:8765/marketplace/catalog.example.json
 ```
 

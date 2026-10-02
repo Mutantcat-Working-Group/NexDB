@@ -206,7 +206,7 @@ test("reuses installed Direct bundles, removes stale managed PQS paths, and pres
   assert.equal(result?.runtimeSelectionId, "phoenix:direct");
 });
 
-test("does not treat a deleted DBX-managed bundle path as a custom runtime", async () => {
+test("does not treat a deleted NexDB-managed bundle path as a custom runtime", async () => {
   const config = phoenixConfig();
   config.jdbc_driver_paths = ["/plugins/jdbc/drivers/maven/org.apache.phoenix_phoenix-client-embedded-hbase-2.5_5.2.1/jars/phoenix-client-embedded-hbase-2.5-5.2.1.jar"];
   const runtime = runtimeApi();

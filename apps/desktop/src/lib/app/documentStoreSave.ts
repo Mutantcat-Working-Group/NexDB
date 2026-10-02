@@ -8,7 +8,7 @@ export type DocumentStoreWriteApis = {
 };
 
 export function formatMeilisearchDocumentOperationPreview(options: { action: "insert" | "upsert" | "update" | "delete"; index: string; id?: unknown; document?: Record<string, unknown> }): string {
-  const lines = [`DBX MEILISEARCH ${options.action.toUpperCase()} DOCUMENT`, `index: ${JSON.stringify(options.index)}`];
+  const lines = [`NexDB MEILISEARCH ${options.action.toUpperCase()} DOCUMENT`, `index: ${JSON.stringify(options.index)}`];
   if (options.id !== undefined) lines.push(`id: ${stringifyDocumentStoreValue(options.id, "meilisearch")}`);
   if (options.document) lines.push("document:", stringifyDocumentStoreValue(options.document, "meilisearch", 2));
   return lines.join("\n");

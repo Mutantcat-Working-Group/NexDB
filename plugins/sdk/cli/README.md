@@ -1,8 +1,8 @@
 # dbx-plugin CLI
 
-Creates and packages DBX plugins as frontend-only universal bundles or full-stack projects with Rust or Go sidecars. The CLI also includes a Svelte + Vite workbench starter.
+Creates and packages NexDB plugins as frontend-only universal bundles or full-stack projects with Rust or Go sidecars. The CLI also includes a Svelte + Vite workbench starter.
 
-For the complete [English plugin development guide](https://dbxio.com/en/docs/plugin-development), see the [Chinese quickstart](../../GETTING_STARTED.zh-CN.md) for a step-by-step walkthrough covering installation, templates, local DBX testing, signing, and publishing.
+For the complete [English plugin development guide](https://dbxio.com/en/docs/plugin-development), see the [Chinese quickstart](../../GETTING_STARTED.zh-CN.md) for a step-by-step walkthrough covering installation, templates, local NexDB testing, signing, and publishing.
 
 ```bash
 npm install --global @dbx-app/plugin-cli
@@ -19,11 +19,11 @@ Or run the precompiled CLI without a global installation:
 npx @dbx-app/plugin-cli create my-plugin
 ```
 
-The npm launcher selects the matching macOS, Linux, or Windows binary and bundles the matching Rust and Go plugin SDK sources. Building the CLI from a DBX checkout is only necessary while developing the CLI itself.
+The npm launcher selects the matching macOS, Linux, or Windows binary and bundles the matching Rust and Go plugin SDK sources. Building the CLI from a NexDB checkout is only necessary while developing the CLI itself.
 
 ## Browser development
 
-`dbx-plugin dev --path /path/to/plugin --port 5190` runs a local browser development host without starting DBX. The npm package includes the prebuilt runtime; only `dev` requires Node.js 22+. Frontend-only plugins need no sidecar; Rust/Go projects are built from `[backend]` configuration. JSONL and framed v1 are supported.
+`dbx-plugin dev --path /path/to/plugin --port 5190` runs a local browser development host without starting NexDB. The npm package includes the prebuilt runtime; only `dev` requires Node.js 22+. Frontend-only plugins need no sidecar; Rust/Go projects are built from `[backend]` configuration. JSONL and framed v1 are supported.
 
 Optional `[dev]` `ui_build` and `ui_watch` argument arrays configure UI builds. Without them, existing UI assets are loaded and watched. The command does not install project dependencies. Development data, including plaintext credentials, defaults to `.dbx-dev/`; use `--data-dir` to override it. See [runtime documentation](../dev-host/README.md) for supported APIs, source builds and limitations.
 
@@ -46,7 +46,7 @@ dbx-plugin create my-plugin \
   --id com.example.my-plugin \
   --name "My Plugin" \
   --publisher example \
-  --description "My DBX plugin." \
+  --description "My NexDB plugin." \
   --version 0.1.0 \
   --yes
 ```
@@ -75,9 +75,9 @@ Rust and Go templates add a `backend/` directory containing the native sidecar p
 
 Frontend-only projects default to target `universal`. Native projects must be built on the matching target platform. Temporary stage and backend build directories are removed after both successful and failed package attempts.
 
-Artifact metadata always includes target, URL, SHA-256, and size. The generated Release workflow publishes these files as unsigned review candidates. After approval, DBX Store signs official candidates and emits final metadata containing `signingKeyId`.
+Artifact metadata always includes target, URL, SHA-256, and size. The generated Release workflow publishes these files as unsigned review candidates. After approval, NexDB Store signs official candidates and emits final metadata containing `signingKeyId`.
 
-Use `--sdk-root /path/to/dbx` only with Rust or Go templates while developing unpublished SDK changes from a DBX checkout. Normal npm installations use the SDK sources bundled with `@dbx-app/plugin-cli`. Generated release workflows pin the precompiled CLI version so local and CI packaging use the same SDK contract.
+Use `--sdk-root /path/to/dbx` only with Rust or Go templates while developing unpublished SDK changes from a NexDB checkout. Normal npm installations use the SDK sources bundled with `@dbx-app/plugin-cli`. Generated release workflows pin the precompiled CLI version so local and CI packaging use the same SDK contract.
 
 Generated workflows pin the reusable workflow to the same `plugin-cli-v<version>` tag as the CLI. Go projects skip Rust setup, Rust projects skip Go setup, and frontend-only projects skip both. Source-built CLIs still install Rust even when the plugin does not need it.
 
@@ -87,7 +87,7 @@ Existing plugins pinned to an older workflow tag do not inherit these changes. U
 
 ## Signing
 
-Official plugin authors do not create or manage signing keys. They publish unsigned candidates; DBX Store signs approved packages with the official repository key.
+Official plugin authors do not create or manage signing keys. They publish unsigned candidates; NexDB Store signs approved packages with the official repository key.
 
 `keygen` is an advanced tool for private or custom repository operators. Packaging and signing are intentionally separate:
 

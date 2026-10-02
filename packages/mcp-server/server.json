@@ -1,9 +1,9 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "org.mutantcat.nexdb",
-  "description": "Query and manage databases from AI agents using connections configured in DBX.",
+  "description": "Query and manage databases from AI agents using connections configured in NexDB.",
   "repository": {
-    "url": "https://github.com/t8y2/dbx",
+    "url": "https://github.com/Mutantcat-Working-Group/NexDB",
     "source": "github"
   },
   "version": "0.4.91",

@@ -62,12 +62,13 @@
     flatpak remote-add --if-not-exists flatpark https://dl.flatpark.org/flatpark.flatpakrepo
     flatpak install flatpark org.mutantcat.nexdb
     ```
+    注：Homebrew、winget 等第三方发行渠道目前沿用旧包名 `dbx`，安装后即为 NexDB。
     Linux 用户也可通过[星火应用商店](https://spk-resolv.spark-app.store/?spk=spk://store/development/dbx)一键安装。
 2. Docker 自托管（Web 版）：浏览器访问 `http://localhost:4224`。
     ```
     docker run -d --pull=always --name nexdb -p 4224:4224 -v nexdb-data:/app/data t8y2/dbx:latest
     ```
-    中国大陆可改用 `docker.cnb.cool/dbxio.com/dbx:latest` 加速拉取；Compose 部署见 `deploy/docker-compose.release.yml`。
+    镜像名 `t8y2/dbx` 是 NexDB 的 Docker 发行渠道，可改用 `docker.cnb.cool/dbxio.com/dbx:latest` 加速拉取；Compose 部署见 `deploy/docker-compose.release.yml`。
 3. CLI：
     ```
     npm install -g @dbx-app/cli

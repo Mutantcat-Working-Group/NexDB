@@ -90,7 +90,7 @@ export function normalizeNacosConsoleUrl(input: string): string {
 }
 
 /**
- * Resolves the web-console address independently from DBX's API connection.
+ * Resolves the web-console address independently from NexDB's API connection.
  * Nacos 3 must be configured explicitly because its Console port can differ
  * from its Admin API port. Nacos 2 keeps the historical same-endpoint fallback.
  */

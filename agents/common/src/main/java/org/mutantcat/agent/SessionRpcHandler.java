@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 /**
  * Per-session handler for protocol v2 agents that do not implement the JDBC
  * {@link DatabaseAgent} contract. Implementations own every resource created
- * for a logical DBX connection and must release it from {@link #close()}.
+ * for a logical NexDB connection and must release it from {@link #close()}.
  */
 public interface SessionRpcHandler {
     default Object handshake() {

@@ -303,7 +303,7 @@ test("keeps versions.json publish-relevant when it changes after the sync commit
 function createRepository(versions) {
   const repository = mkdtempSync(join(tmpdir(), "dbx-agent-release-"));
   git(repository, ["init", "--initial-branch=main"]);
-  git(repository, ["config", "user.name", "DBX Test"]);
+  git(repository, ["config", "user.name", "NexDB Test"]);
   git(repository, ["config", "user.email", "dbx-test@example.com"]);
   mkdirSync(join(repository, "agents/drivers/kingbase-go"), { recursive: true });
   mkdirSync(join(repository, "agents/drivers/duckdb"), { recursive: true });

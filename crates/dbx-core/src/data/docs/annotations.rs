@@ -150,7 +150,7 @@ fn temp_save_path(path: &Path) -> PathBuf {
 /// errors loudly on malformed JSON — so a torn write becomes "your notes file
 /// is corrupt" the next time the viewer opens. Write a sibling temp file,
 /// flush it to disk, then rename: rename within a directory is atomic on
-/// every platform DBX targets.
+/// every platform NexDB targets.
 pub fn save_annotations(path: &Path, annotations: &AnnotationFile) -> Result<(), String> {
     let json =
         serde_json::to_string_pretty(annotations).map_err(|error| format!("Failed to serialize notes: {error}"))?;

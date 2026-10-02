@@ -73,7 +73,7 @@ fn expected_position(sql: &str, offending: &str) -> SqlErrorPosition {
 async fn live_pg_error_positions_resolve_against_the_executed_statement() {
     let pool = postgres::connect(&postgres_url(), Duration::from_secs(10)).await.expect("connect");
 
-    // (sql, offending token). The first case is the exact shape DBX sends for the
+    // (sql, offending token). The first case is the exact shape NexDB sends for the
     // user's `select  * from no_such_table` after pagination appends LIMIT.
     let cases = [
         ("select  * from no_such_table LIMIT 100", "no_such_table"),

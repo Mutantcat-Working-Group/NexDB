@@ -1,4 +1,4 @@
-//! Verifies a real DBX app store: plugin discovery + MCP tool bridge.
+//! Verifies a real NexDB app store: plugin discovery + MCP tool bridge.
 //!   cargo run -p dbx-mcp --example verify_plugin_store -- <data-dir> [app-version]
 use dbx_mcp::LocalBackend;
 

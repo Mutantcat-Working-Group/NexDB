@@ -209,7 +209,7 @@ pub fn start(app_handle: AppHandle, state: Arc<AppState>, data_dir: PathBuf) {
         log::info!("MCP bridge listening on {BIND_ADDR}");
         let actual_port = listener.local_addr().map(|a| a.port()).unwrap_or(0);
         log::info!("MCP bridge assigned port {actual_port}");
-        // Publish into DBX's resolved data dir so DBX_DATA_DIR and portable mode share the same discovery file.
+        // Publish into NexDB's resolved data dir so DBX_DATA_DIR and portable mode share the same discovery file.
         if let Err(err) = write_port_file(&data_dir, actual_port) {
             log::warn!("MCP bridge failed to write port file in {}: {err}", data_dir.display());
         }

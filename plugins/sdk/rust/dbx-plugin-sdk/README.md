@@ -1,6 +1,6 @@
 # dbx-plugin-sdk
 
-Rust SDK for DBX sidecar protocol v1.
+Rust SDK for NexDB sidecar protocol v1.
 
 It provides:
 
@@ -50,7 +50,7 @@ fn main() -> std::io::Result<()> {
 }
 ```
 
-The metadata ID and version must exactly match `manifest.json`; DBX rejects a mismatched backend during initialization.
+The metadata ID and version must exactly match `manifest.json`; NexDB rejects a mismatched backend during initialization.
 
 ## Framed transport
 

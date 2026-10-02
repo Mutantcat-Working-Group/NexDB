@@ -121,7 +121,7 @@ fn default_agent_mode() -> String {
 
 fn reject_web_unsupported_ai_provider(config: &AiConfig) -> Result<(), AppError> {
     if dbx_core::ai::is_cli_provider(&config.provider) {
-        return Err(AppError::bad_request("CLI providers are only supported in DBX Desktop."));
+        return Err(AppError::bad_request("CLI providers are only supported in NexDB Desktop."));
     }
     Ok(())
 }

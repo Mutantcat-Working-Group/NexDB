@@ -1,10 +1,10 @@
 <script>
   let context = $state({});
-  let message = $state("Waiting for DBX plugin host…");
+  let message = $state("Waiting for NexDB plugin host…");
 
   const copy = {
-    en: { eyebrow: "DBX Svelte plugin", description: "A Svelte-powered sandboxed workbench.", action: "Show host context", ready: "Ready" },
-    zh: { eyebrow: "DBX Svelte 插件", description: "由 Svelte 驱动的沙箱工作台。", action: "查看宿主上下文", ready: "已就绪" },
+    en: { eyebrow: "NexDB Svelte plugin", description: "A Svelte-powered sandboxed workbench.", action: "Show host context", ready: "Ready" },
+    zh: { eyebrow: "NexDB Svelte 插件", description: "由 Svelte 驱动的沙箱工作台。", action: "查看宿主上下文", ready: "已就绪" },
   };
   let text = $state(copy.en);
 

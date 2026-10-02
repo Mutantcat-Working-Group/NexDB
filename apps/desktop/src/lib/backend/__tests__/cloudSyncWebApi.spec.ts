@@ -24,7 +24,7 @@ describe("WebDAV sync HTTP API", () => {
     endpoint: "https://dav.example.com/remote.php/dav/files/alice/",
     username: "alice",
     password: "app-password",
-    remotePath: "DBX/sync/snapshot.json",
+    remotePath: "NexDB/sync/snapshot.json",
   };
 
   it("routes WebDAV connectivity and saved-password operations through the Web backend", async () => {

@@ -15,7 +15,7 @@ import (
 // certification matrix. The fixture contains only synthetic names and values
 // and is removed on every exit path.
 //
-// Coverage is deliberately limited to the common DBX contract:
+// Coverage is deliberately limited to the common NexDB contract:
 //   - connection and session reuse;
 //   - table, view, index, key and column metadata;
 //   - comments, source and reconstructed table DDL;

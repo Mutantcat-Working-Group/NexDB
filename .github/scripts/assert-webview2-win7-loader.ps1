@@ -13,7 +13,7 @@ $ErrorActionPreference = "Stop"
 # ERROR_NOT_SUPPORTED (0x80070032, MicrosoftEdge/WebView2Feedback#2025) and make
 # the app show "Could not find the WebView2 Runtime". Those loaders carry error
 # strings that 1.0.902.49 does not, so any of the markers below appearing in
-# dbx.exe proves the pinned loader was not the one linked. The PE import audit
+# nexdb.exe proves the pinned loader was not the one linked. The PE import audit
 # cannot catch this: 1.0.1054.31 imports nothing newer than 1.0.902.49.
 $loaderMarkers = @(
   "WebView2: Failed to find the app exe path.",
@@ -41,7 +41,7 @@ foreach ($marker in $loaderMarkers) {
 if ($violations.Count -gt 0) {
   $summary = $violations -join "`n"
   throw @"
-dbx.exe contains WebView2 loader strings newer than the pinned 1.0.902.49:
+nexdb.exe contains WebView2 loader strings newer than the pinned 1.0.902.49:
 $summary
 
 A loader >= 1.0.1054.31 was linked instead of the prepared one and will fail on

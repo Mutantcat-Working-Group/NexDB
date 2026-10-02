@@ -64,7 +64,7 @@ async function withStore<T>(mode: IDBTransactionMode, run: (store: IDBObjectStor
     // localStorage fallback while loads keep preferring the stale IndexedDB
     // snapshot — exactly the workspace-freeze regression this module guards
     // against elsewhere.
-    console.warn("[DBX][browserAppStateStorage] IndexedDB operation failed; falling back to localStorage", error);
+    console.warn("[NexDB][browserAppStateStorage] IndexedDB operation failed; falling back to localStorage", error);
     return null;
   }
 }

@@ -24,7 +24,7 @@ if %errorlevel% equ 0 (
     )
 )
 
-echo Java runtime not found. Install Java or the optional DBX JDBC runtime. >&2
+echo Java runtime not found. Install Java or the optional NexDB JDBC runtime. >&2
 exit /b 127
 
 :run

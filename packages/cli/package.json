@@ -1,7 +1,7 @@
 {
   "name": "@dbx-app/cli",
   "version": "0.4.91",
-  "description": "Command line interface for DBX database connections, schema, and safe queries",
+  "description": "Command line interface for NexDB database connections, schema, and safe queries",
   "keywords": [
     "ai-agent",
     "automation",
@@ -13,11 +13,11 @@
     "postgresql",
     "terminal"
   ],
-  "homepage": "https://github.com/t8y2/dbx/tree/main/packages/cli",
+  "homepage": "https://github.com/Mutantcat-Working-Group/NexDB/tree/main/packages/cli",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/t8y2/dbx",
+    "url": "https://github.com/Mutantcat-Working-Group/NexDB",
     "directory": "packages/cli"
   },
   "bin": {

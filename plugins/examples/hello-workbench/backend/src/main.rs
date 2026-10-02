@@ -85,7 +85,7 @@ impl PluginHandler for HelloPlugin {
                     .get(connection_id)
                     .cloned()
                     .ok_or_else(|| PluginError::new(-32010, "Open a saved Hello connection first"))?;
-                let name = params.get("name").and_then(Value::as_str).unwrap_or("DBX");
+                let name = params.get("name").and_then(Value::as_str).unwrap_or("NexDB");
                 emitter.event(
                     "hello/progress",
                     json!({ "stage": "started", "name": name, "connectionId": connection_id }),
@@ -140,8 +140,8 @@ impl PluginHandler for HelloPlugin {
                 require_filesystem_provider(&params)?;
                 let uri = params.get("uri").and_then(Value::as_str).unwrap_or_default();
                 let content = match uri {
-                    "hello:/README.txt" => "This virtual file is rendered by DBX's host-owned plugin file manager.\n",
-                    "hello:/examples/hello.json" => "{\n  \"hello\": \"DBX\",\n  \"provider\": \"filesystem\"\n}\n",
+                    "hello:/README.txt" => "This virtual file is rendered by NexDB's host-owned plugin file manager.\n",
+                    "hello:/examples/hello.json" => "{\n  \"hello\": \"NexDB\",\n  \"provider\": \"filesystem\"\n}\n",
                     _ => return Err(PluginError::new(-32044, format!("File not found: {uri}"))),
                 };
                 let max_bytes = params.get("maxBytes").and_then(Value::as_u64).unwrap_or(content.len() as u64);

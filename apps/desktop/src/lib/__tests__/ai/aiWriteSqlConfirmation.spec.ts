@@ -7,7 +7,7 @@ import { extractFirstSqlCodeBlock, extractSingleSqlCodeBlock, countSqlCodeBlocks
 
 describe("looksLikeWriteSqlProposal", () => {
   it("detects the backend-generated write confirmation proposal", () => {
-    const proposal = ["This database change requires your explicit confirmation before DBX can execute it.", "", "```sql", "CREATE TABLE users (id INT);", "```", "", "Should I execute this SQL statement?"].join("\n");
+    const proposal = ["This database change requires your explicit confirmation before NexDB can execute it.", "", "```sql", "CREATE TABLE users (id INT);", "```", "", "Should I execute this SQL statement?"].join("\n");
     expect(looksLikeActionProposal(proposal)).toBe(true);
     expect(looksLikeWriteSqlProposal(proposal)).toBe(true);
     expect(extractSingleSqlCodeBlock(proposal)).toBe("CREATE TABLE users (id INT);");
@@ -169,7 +169,7 @@ describe("shouldGrantWriteSqlOnShortAffirmative (manual-typing confirmation)", (
   });
 
   it("grants for a backend-generated localized confirmation via its structural kind", () => {
-    // The exact wording DBX renders from i18n (en): it does NOT contain an
+    // The exact wording NexDB renders from i18n (en): it does NOT contain an
     // English/Chinese ask phrase, so the text detectors reject it.
     const localizedEn = "This SQL changes data or schema. Review it carefully before execution.\n\n```sql\nCREATE TABLE users (id INT);\n```\n\nExecute this SQL once?";
     expect(looksLikeActionProposal(localizedEn)).toBe(false);

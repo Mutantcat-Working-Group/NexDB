@@ -505,7 +505,7 @@ test("suggests only helpers the shell parser accepts", () => {
   assert.ok(methodLabels.includes("replaceOne"));
   assert.ok(methodLabels.includes("bulkWrite"));
   assert.ok(methodLabels.includes("renameCollection"));
-  // Suggesting a helper DBX cannot run just hands the user a command that fails.
+  // Suggesting a helper NexDB cannot run just hands the user a command that fails.
   for (const unsupported of ["mapReduce", "watch", "validate"]) {
     assert.equal(methodLabels.includes(unsupported), false, `${unsupported} is not executable`);
   }

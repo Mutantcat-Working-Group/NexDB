@@ -1662,7 +1662,7 @@ fn transfer_column_names_match(
 /// Write SQL quotes column names, which makes the identifier case-sensitive on
 /// targets that fold unquoted identifiers (Oracle and OceanBase Oracle fold to
 /// uppercase, PostgreSQL to lowercase). A target table that already exists —
-/// typically created outside DBX with unquoted DDL — therefore rejects the
+/// typically created outside NexDB with unquoted DDL — therefore rejects the
 /// source-cased name (`ORA-00904: invalid identifier`, #9320) even though the
 /// column exists. Reusing the catalog's declared name keeps the statement on a
 /// column that really exists; an exact match still wins so case-sensitive
@@ -1757,7 +1757,7 @@ fn required_unmapped_transfer_target_columns(
 }
 
 /// Fails fast when a preexisting target table's structure can't accept the
-/// source columns. DBX never alters an existing target table's columns, so
+/// source columns. NexDB never alters an existing target table's columns, so
 /// skipping this check (structure-only transfers used to silently skip it,
 /// #7660) leaves the transfer reporting success while the target quietly stays
 /// out of sync with the source.
@@ -1772,7 +1772,7 @@ fn validate_preexisting_target_columns(
     if !missing.is_empty() {
         return Err(format!(
             "Target table '{target_table}' already exists with a different structure and is missing column(s) \
-             {} present in the source table. DBX does not alter an existing target table's columns during \
+             {} present in the source table. NexDB does not alter an existing target table's columns during \
              transfer — drop the target table or adjust its structure to match the source first.",
             missing.join(", ")
         ));
@@ -1783,7 +1783,7 @@ fn validate_preexisting_target_columns(
     if !required.is_empty() {
         return Err(format!(
             "Target table '{target_table}' already exists with a different structure and has required column(s) \
-             {} that are not present in the source table and have no default or generated value. DBX does not \
+             {} that are not present in the source table and have no default or generated value. NexDB does not \
              alter an existing target table's columns during transfer — drop the target table or adjust its \
              structure to match the source first.",
             required.join(", ")
@@ -9218,7 +9218,7 @@ where
         Vec::new()
     };
 
-    // The user asked DBX to sync structure (create_table), but the target
+    // The user asked NexDB to sync structure (create_table), but the target
     // table already existed so the create-table DDL above was skipped (see
     // "skipping create-table DDL" above). If the untouched target structure
     // can't accept the planned insert, fail fast here instead of truncating
@@ -12474,7 +12474,7 @@ CREATE TABLE "Other"."prefix""Source"."NAME" ("ID" INT);"#;
     #[test]
     fn write_column_names_prefer_exact_target_match() {
         // A case-sensitive target can declare both `id` and `ID`; the exact match
-        // wins so DBX keeps addressing the column the source name refers to.
+        // wins so NexDB keeps addressing the column the source name refers to.
         let target_columns = vec![test_column("ID", "NUMBER"), test_column("id", "NUMBER")];
         let col_names = vec!["id".to_string(), "ID".to_string()];
 

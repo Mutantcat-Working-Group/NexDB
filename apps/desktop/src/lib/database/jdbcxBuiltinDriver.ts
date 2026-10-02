@@ -43,7 +43,7 @@ export function jdbcxHighPrivilegeExtensionsEnabled(config: Pick<ConnectionConfi
 }
 
 export function setJdbcxHighPrivilegeExtensionsEnabled(config: Pick<ConnectionConfig, "agent_java_options">, enabled: boolean): void {
-  // Canonicalize this DBX-owned option so legacy whitespace cannot diverge from backend parsing.
+  // Canonicalize this NexDB-owned option so legacy whitespace cannot diverge from backend parsing.
   const options = (config.agent_java_options ?? []).filter((option) => !option.trim().startsWith(JDBCX_HIGH_PRIVILEGE_EXTENSIONS_JAVA_OPTION_PREFIX));
   config.agent_java_options = enabled ? [...options, JDBCX_HIGH_PRIVILEGE_EXTENSIONS_JAVA_OPTION] : options;
 }

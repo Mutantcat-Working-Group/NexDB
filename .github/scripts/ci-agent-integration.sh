@@ -117,7 +117,7 @@ EOF
     name="dbx-cassandra-${version//./-}"
     docker rm -fv "$name" >/dev/null 2>&1 || true
     docker run -d --name "$name" \
-      -e CASSANDRA_CLUSTER_NAME="DBX Cassandra CI $version" \
+      -e CASSANDRA_CLUSTER_NAME="NexDB Cassandra CI $version" \
       -e CASSANDRA_DC=dc1 \
       -e CASSANDRA_RACK=rack1 \
       -e CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch \

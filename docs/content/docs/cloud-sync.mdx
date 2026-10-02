@@ -1,13 +1,13 @@
 ---
-title: DBX Configuration Cloud Sync
-description: Sync DBX connections, settings, and saved SQL with WebDAV, GitHub Gist, or Gitee snippets.
+title: NexDB Configuration Cloud Sync
+description: Sync NexDB connections, settings, and saved SQL with WebDAV, GitHub Gist, or Gitee snippets.
 ---
 
 <Callout type="info">
-DBX can package connections, application settings, and saved SQL into a snapshot. Desktop can sync through WebDAV or private snippets, while Web/Docker can sync through WebDAV and restore the snapshot in another DBX instance.
+NexDB can package connections, application settings, and saved SQL into a snapshot. Desktop can sync through WebDAV or private snippets, while Web/Docker can sync through WebDAV and restore the snapshot in another NexDB instance.
 </Callout>
 
-<Callout type="warn">Cloud Sync backs up DBX configuration. It does not read or back up the business databases behind your connections. Use [Database Export](/en/docs/database-export) for schema and data, or [Database Backup](/en/docs/database-backup) for scheduled Desktop MySQL/PostgreSQL backups.</Callout>
+<Callout type="warn">Cloud Sync backs up NexDB configuration. It does not read or back up the business databases behind your connections. Use [Database Export](/en/docs/database-export) for schema and data, or [Database Backup](/en/docs/database-backup) for scheduled Desktop MySQL/PostgreSQL backups.</Callout>
 
 Choose a provider under **Settings → Sync**:
 
@@ -78,14 +78,14 @@ A classic token also works, but grant only the `gist` scope.
 <Step>
     ### Create the Gist
 
-    Leave **Snippet ID** empty and select **Upload**. DBX creates a private Gist and stores the returned ID.
+    Leave **Snippet ID** empty and select **Upload**. NexDB creates a private Gist and stores the returned ID.
   </Step>
 </Steps>
 
-DBX stores an encrypted `dbx-sync.json` file in the Gist. The snippet encryption password protects the complete snapshot, so the URL does not expose connection details, SQL, or settings. Existing plain-text snippets can still be downloaded once for migration.
+NexDB stores an encrypted `dbx-sync.json` file in the Gist. The snippet encryption password protects the complete snapshot, so the URL does not expose connection details, SQL, or settings. Existing plain-text snippets can still be downloaded once for migration.
 
 <Callout type="warn">
-Plain-text snippets created by older versions cannot be safely migrated in place: updating the same Gist does not remove its revision history. Use **Migrate legacy snippet** instead. DBX encrypts the existing remote snapshot into a new snippet first, stores the new ID locally, and then rereads the old snippet before deleting it. If another device changed the old content, DBX stops automatic cleanup and tells you which old snippet must be deleted manually. If the old snapshot contains encrypted credentials, enter its original credentials password so DBX can verify them before cleanup. Rotate any credentials the old snippet may have exposed.
+Plain-text snippets created by older versions cannot be safely migrated in place: updating the same Gist does not remove its revision history. Use **Migrate legacy snippet** instead. NexDB encrypts the existing remote snapshot into a new snippet first, stores the new ID locally, and then rereads the old snippet before deleting it. If another device changed the old content, NexDB stops automatic cleanup and tells you which old snippet must be deleted manually. If the old snapshot contains encrypted credentials, enter its original credentials password so NexDB can verify them before cleanup. Rotate any credentials the old snippet may have exposed.
 </Callout>
 
 ### Restore on Another Device
@@ -127,7 +127,7 @@ Plain-text snippets created by older versions cannot be safely migrated in place
 ### Upload and Restore
 
 1. Select **Gitee Snippet** under **Settings → Sync → GitHub / Gitee**.
-2. Enter the personal access token. Leave the snippet ID empty on the first upload; DBX creates a private snippet and stores its ID.
+2. Enter the personal access token. Leave the snippet ID empty on the first upload; NexDB creates a private snippet and stores its ID.
 3. To restore elsewhere, enter the same snippet ID and select **Download**.
 
 Gitee snippets also use a `dbx-sync.json` file.
@@ -143,7 +143,7 @@ Snapshots exclude credentials by default. To restore passwords on another device
 3. Upload the snapshot.
 4. On another device, enable **Restore encrypted credentials when downloading** and enter the same credentials password. Leave it off to keep local passwords unchanged.
 
-DBX derives the encryption key with **Argon2id** and uses **AES-256-GCM** encryption. Provider access tokens are encrypted with a device-local key and are never written to `dbx-sync.json`.
+NexDB derives the encryption key with **Argon2id** and uses **AES-256-GCM** encryption. Provider access tokens are encrypted with a device-local key and are never written to `dbx-sync.json`.
 
 <Callout type="warn">
 Neither password can be recovered. An encrypted GitHub/Gitee snippet cannot be restored without its snippet encryption password. For WebDAV, a snapshot without encrypted secrets can still be restored without a passphrase.
@@ -151,11 +151,11 @@ Neither password can be recovered. An encrypted GitHub/Gitee snippet cannot be r
 
 ## WebDAV
 
-Enter the WebDAV endpoint, username, application password, and remote snapshot path. The default path is `DBX/sync/snapshot.json`.
+Enter the WebDAV endpoint, username, application password, and remote snapshot path. The default path is `NexDB/sync/snapshot.json`.
 
-In Web/Docker mode, the DBX server sends WebDAV requests, so browser CORS restrictions do not apply. WebDAV application passwords are encrypted in the current DBX instance and are never included in sync snapshots.
+In Web/Docker mode, the NexDB server sends WebDAV requests, so browser CORS restrictions do not apply. WebDAV application passwords are encrypted in the current NexDB instance and are never included in sync snapshots.
 
-WebDAV supports scheduled uploads while the corresponding DBX client remains open. Keep at least one DBX page open when using Web/Docker. Downloads always require confirmation to prevent accidental replacement of data in the current instance.
+WebDAV supports scheduled uploads while the corresponding NexDB client remains open. Keep at least one NexDB page open when using Web/Docker. Downloads always require confirmation to prevent accidental replacement of data in the current instance.
 
 ## Troubleshooting
 
@@ -169,7 +169,7 @@ The snippet ID is incorrect, or the current token cannot access the private snip
 
 ### Where is the ID after the first upload?
 
-DBX stores it automatically. You can also find it in the URL of the GitHub Gist or Gitee snippet page.
+NexDB stores it automatically. You can also find it in the URL of the GitHub Gist or Gitee snippet page.
 
 ### Can multiple devices synchronize automatically?
 

@@ -1,9 +1,9 @@
 ---
 title: Query Editor
-description: Write, understand, parameterize, execute, analyze, and reuse SQL in DBX.
+description: Write, understand, parameterize, execute, analyze, and reuse SQL in NexDB.
 ---
 
-The query editor is the SQL workspace in DBX. It combines dialect-aware highlighting and completion, semantic diagnostics, parameter input, execution progress, multiple results, execution plans, query history, the SQL library, and AI assistance in one tab.
+The query editor is the SQL workspace in NexDB. It combines dialect-aware highlighting and completion, semantic diagnostics, parameter input, execution progress, multiple results, execution plans, query history, the SQL library, and AI assistance in one tab.
 
 ## Basic Workflow
 
@@ -48,7 +48,7 @@ The query editor is the SQL workspace in DBX. It combines dialect-aware highligh
 | Execute in a new result | `Cmd+\` | `Ctrl+\` |
 | Stop execution | Click the execution button after it changes to Stop | Click the execution button after it changes to Stop |
 
-When text is selected, DBX prioritizes the selection. Otherwise, the current-statement and execution-target settings determine the scope. Shortcuts can be changed under [Keyboard Shortcuts](/en/docs/keyboard-shortcuts).
+When text is selected, NexDB prioritizes the selection. Otherwise, the current-statement and execution-target settings determine the scope. Shortcuts can be changed under [Keyboard Shortcuts](/en/docs/keyboard-shortcuts).
 
 Normal execution updates the active result. **Execute in a new result** preserves older results for comparison. Results can use horizontal tabs or a list view, and repeated executions can retain run history or pin important results.
 
@@ -58,13 +58,13 @@ For multi-statement execution, the result area shows the current statement, tota
 
 ### Preview DML changes before executing
 
-For an `UPDATE`, `INSERT`, or `DELETE` statement, the toolbar shows a **Preview changes** button (also available in the editor context menu). DBX rewrites the statement into an equivalent read-only `SELECT` and opens it in a new result tab. The preview re-evaluates the expressions being written, so expressions with side effects (advancing a sequence, volatile functions) still take effect during the preview, and values shown for non-deterministic functions (`uuid()`, `rand()`, `now()`) may differ from the actual execution:
+For an `UPDATE`, `INSERT`, or `DELETE` statement, the toolbar shows a **Preview changes** button (also available in the editor context menu). NexDB rewrites the statement into an equivalent read-only `SELECT` and opens it in a new result tab. The preview re-evaluates the expressions being written, so expressions with side effects (advancing a sequence, volatile functions) still take effect during the preview, and values shown for non-deterministic functions (`uuid()`, `rand()`, `now()`) may differ from the actual execution:
 
 - `UPDATE` — the grid shows the affected rows plus one **`column (new)`** column per assigned column (expressions are evaluated, so `SET a = a + 1` shows the actual new value);
 - `INSERT` — the grid shows the rows that would be inserted (column names from the target columns, `VALUES` expanded);
 - `DELETE` — the grid shows the rows that would be removed.
 
-Statements DBX cannot rewrite safely (for example some dialect-specific forms, or `UPDATE ... FROM`) are reported as **Preview is not supported** and can still be executed normally.
+Statements NexDB cannot rewrite safely (for example some dialect-specific forms, or `UPDATE ... FROM`) are reported as **Preview is not supported** and can still be executed normally.
 
 ## Execution Scope and Target Picker
 
@@ -91,7 +91,7 @@ Completion uses the active database dialect and metadata to suggest:
 
 Semantic diagnostics flag selected unresolved tables, columns, aliases, and SQL structures. They help catch mistakes early but do not guarantee that vendor extensions will be accepted or rejected; the server result remains authoritative.
 
-<Callout type="info">Refresh connection metadata after creating or changing objects. DBX caches and lazy-loads table structure to reduce repeated requests in large schemas.</Callout>
+<Callout type="info">Refresh connection metadata after creating or changing objects. NexDB caches and lazy-loads table structure to reduce repeated requests in large schemas.</Callout>
 
 ## Table and Object Navigation
 
@@ -104,7 +104,7 @@ Navigation depends on SQL parsing and current metadata. Dynamic SQL, ambiguous n
 
 ## SQL Parameters and Variables
 
-Before execution, DBX can recognize common placeholders and open a parameter-input dialog:
+Before execution, NexDB can recognize common placeholders and open a parameter-input dialog:
 
 | Syntax | Example |
 | --- | --- |
@@ -155,7 +155,7 @@ Query history stores executed SQL per connection with time and context. You can:
 
 | Method | Best for | Platform boundary |
 | --- | --- | --- |
-| SQL Library | Saving and searching reusable queries in folders inside DBX | Full local SQL Library management is available on Desktop; cloud-sync scope depends on settings |
+| SQL Library | Saving and searching reusable queries in folders inside NexDB | Full local SQL Library management is available on Desktop; cloud-sync scope depends on settings |
 | External SQL Files | Sharing `.sql` files with a repository, script directory, or editor | Local file open/save and the file tree are Desktop capabilities |
 | Query tabs | Temporary analysis and unfinished drafts | Settings can restore all tabs, pinned tabs only, or none |
 

@@ -1,9 +1,9 @@
 ---
 title: Database Test Lab
-description: Start reproducible, local database instances for DBX development and verification.
+description: Start reproducible, local database instances for NexDB development and verification.
 ---
 
-The Database Test Lab provides small, pinned Docker Compose environments for testing DBX against real database versions. Every recipe uses a named data volume, a health check, initialization data or smoke data created during verification, and listens on `127.0.0.1` by default.
+The Database Test Lab provides small, pinned Docker Compose environments for testing NexDB against real database versions. Every recipe uses a named data volume, a health check, initialization data or smoke data created during verification, and listens on `127.0.0.1` by default.
 
 <Callout type="warning">The default password is `123456`, but ports are accessible only from the local host by default. To allow remote access, explicitly set `DB_BIND_ADDRESS=0.0.0.0`, change `DB_PASSWORD`, and apply your normal firewall controls. These environments are for development, not production deployment.</Callout>
 
@@ -41,7 +41,7 @@ Nacos uses the `nacos` administrator, password `123456`, and its default `public
 DB_PORT=11030 NACOS_CONSOLE_PORT=11031 NACOS_GRPC_PORT=11032 NACOS_RAFT_PORT=11033 make db DB=nacos@3.2
 ```
 
-r-nacos uses the `admin` administrator and password `123456`. The DBX recipe defaults its HTTP, gRPC, and web-console host ports to `11100`, `11101`, and `11102`; the upstream standalone Compose file publishes `8848:8848`, `9848:9848`, and `10848:10848`.
+r-nacos uses the `admin` administrator and password `123456`. The NexDB recipe defaults its HTTP, gRPC, and web-console host ports to `11100`, `11101`, and `11102`; the upstream standalone Compose file publishes `8848:8848`, `9848:9848`, and `10848:10848`.
 
 ```bash
 DB_PORT=11130 RNACOS_GRPC_PORT=11131 RNACOS_CONSOLE_PORT=11132 make db DB=rnacos@0.8
@@ -53,7 +53,7 @@ etcd creates the `root` user with password `123456`, grants the root role, then 
 DB_PORT=2379 ETCD_PEER_PORT=2380 make db DB=etcd@3.7
 ```
 
-Qdrant uses `123456` as its administrator API key. In DBX, leave the username empty and enter the key as the password so the driver sends it in the `api-key` HTTP header. Its HTTP and gRPC ports default to `11200` and `11201`. To use the ports in the upstream Docker command, run:
+Qdrant uses `123456` as its administrator API key. In NexDB, leave the username empty and enter the key as the password so the driver sends it in the `api-key` HTTP header. Its HTTP and gRPC ports default to `11200` and `11201`. To use the ports in the upstream Docker command, run:
 
 ```bash
 DB_PORT=6333 QDRANT_GRPC_PORT=6334 make db DB=qdrant@1.8
@@ -98,7 +98,7 @@ make db DB=consul@2.0.2
 make db DB=elasticsearch@6.8
 ```
 
-`make db` without parameters prints every currently supported copy-and-paste start command, plus optional parameters. With `DB=product@version`, it waits for the Compose health check and prints the DBX connection fields. For database types supported by DBX, it also prints a prefilled `dbx://connection/new` deep link. This includes etcd, Consul, Nacos 2, Nacos 3, and r-nacos; the Nacos recipes select the correct connection profile automatically, and Nacos 3 uses its API port rather than its separate console port. Copy the link into a browser or run `open '<link>'` to open the new-connection dialog in DBX Desktop. Install and open DBX Desktop once before use so the operating system registers the `dbx://` protocol. The link can contain a database password or Consul ACL token, so do not save it in shared terminal history, logs, or tickets. Recipes without a compatible DBX connection type, such as Kafka and Pulsar, explicitly report that no deep link is available. `db-verify` also runs the recipe's smoke command inside the database container and checks its expected output. It is the preferred command before reporting a database-specific fix.
+`make db` without parameters prints every currently supported copy-and-paste start command, plus optional parameters. With `DB=product@version`, it waits for the Compose health check and prints the NexDB connection fields. For database types supported by NexDB, it also prints a prefilled `dbx://connection/new` deep link. This includes etcd, Consul, Nacos 2, Nacos 3, and r-nacos; the Nacos recipes select the correct connection profile automatically, and Nacos 3 uses its API port rather than its separate console port. Copy the link into a browser or run `open '<link>'` to open the new-connection dialog in NexDB Desktop. Install and open NexDB Desktop once before use so the operating system registers the `dbx://` protocol. The link can contain a database password or Consul ACL token, so do not save it in shared terminal history, logs, or tickets. Recipes without a compatible NexDB connection type, such as Kafka and Pulsar, explicitly report that no deep link is available. `db-verify` also runs the recipe's smoke command inside the database container and checks its expected output. It is the preferred command before reporting a database-specific fix.
 
 ## Commands and variables
 
@@ -153,7 +153,7 @@ compose.yaml
 init/
 ```
 
-`recipe.json` supplies the DBX connection fields and smoke command array. Do not use a shell string for smoke checks: commands execute as argument arrays. Compose files must pin an image, use a named volume and health check, default port bindings to `${DB_BIND_ADDRESS:-127.0.0.1}`, and set `container_name` to `dbx-<product>-<version>`.
+`recipe.json` supplies the NexDB connection fields and smoke command array. Do not use a shell string for smoke checks: commands execute as argument arrays. Compose files must pin an image, use a named volume and health check, default port bindings to `${DB_BIND_ADDRESS:-127.0.0.1}`, and set `container_name` to `dbx-<product>-<version>`.
 
 Finish by running:
 

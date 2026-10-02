@@ -51,7 +51,7 @@ export async function createMockHost(options) {
   };
   refreshSecretKeys();
   if (manifest.manifest_version !== undefined && manifest.manifest_version !== 1) throw new Error("Unsupported manifest version");
-  // DBX uses Rust semver requirements, whose comparator separators include commas.
+  // NexDB uses Rust semver requirements, whose comparator separators include commas.
   if (manifest.engines?.host_api && !semver.satisfies("1.0.0", manifest.engines.host_api.replaceAll(",", " "))) throw new Error("Plugin does not support Host API 1.0.0");
   const backendEntry = manifest.entrypoints?.backend;
   const transport = backendEntry?.transport || "stdio-jsonl";

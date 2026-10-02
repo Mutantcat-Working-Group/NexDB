@@ -1,6 +1,6 @@
 # Crates
 
-Rust crates for DBX live here.
+Rust crates for NexDB live here.
 
 ## Directories
 

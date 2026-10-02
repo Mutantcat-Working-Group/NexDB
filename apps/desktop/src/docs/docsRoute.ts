@@ -5,7 +5,7 @@ import type { SchemaSnapshot } from "./types";
  * Where the viewer is pointing.
  *
  * This exists so the standalone export can drive navigation from
- * `location.hash` without DocsApp itself touching the URL: DBX has no
+ * `location.hash` without DocsApp itself touching the URL: NexDB has no
  * router, and a viewer that wrote to the address bar would hijack the host
  * application's.
  */

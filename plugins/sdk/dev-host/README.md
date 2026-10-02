@@ -1,6 +1,6 @@
 # Plugin development runtime
 
-Generic browser development host for `dbx-plugin dev`. It loads declared workbenches and runs optional Rust/Go sidecars without starting the DBX desktop application.
+Generic browser development host for `dbx-plugin dev`. It loads declared workbenches and runs optional Rust/Go sidecars without starting the NexDB desktop application.
 
 ```bash
 dbx-plugin dev --path /path/to/plugin --port 5190
@@ -10,7 +10,7 @@ Requires Node.js 22+. Pure frontend projects do not need Rust or Go. Native proj
 
 ## Build from source
 
-From the DBX repository:
+From the NexDB repository:
 
 ```bash
 npm ci --prefix plugins/sdk/dev-host
@@ -68,7 +68,7 @@ Field names come from the plugin manifest, not the runtime. Imported records get
 
 - Host API 1.0 subset: `ready`, `context`, `locale`, `theme`, `request`, `invoke`, `notify`, `onInit`, `onContext`, `onEvent`, `onBinary`, `sendBinary`, resource reads and `openWorkbench`.
 - Backend transports: default `stdio-jsonl` and explicit `stdio-framed`, protocol version 1. Initialization verifies plugin identity and version. Binary channels require framed transport.
-- Permissions: event, binary and workbench navigation permissions are enforced. Unimplemented methods, such as `host.openFilesystem`, return errors. Native connection actions, query-result contributions and the DBX component kit are not emulated.
+- Permissions: event, binary and workbench navigation permissions are enforced. Unimplemented methods, such as `host.openFilesystem`, return errors. Native connection actions, query-result contributions and the NexDB component kit are not emulated.
 - JSON bridge parameters: 2 MiB. UI binary messages: 8 MiB. Sidecar JSON: 8 MiB. Sidecar binary: 64 MiB. Explicit bridge timeouts are clamped to 1–120000 ms, matching the host baseline.
 - UI resources must be inline or loaded through `readAssetUrl`; relative module URLs are not a replacement for the declared asset bridge. The iframe uses `sandbox="allow-scripts"`, restrictive CSP and pure-data context snapshots. Direct networking is not enabled by the development runtime.
 
@@ -86,7 +86,7 @@ The server listens only on `127.0.0.1`. Host, Origin, browser session, CSRF, res
 
 Development configurations, including credentials, are stored as plaintext in `.dbx-dev/connections.json`. Directory/file permissions are 0700/0600 where supported. Credentials are excluded from list summaries and iframe context; diagnostics redact recognized sensitive fields as described above. Explicit editing returns form values to the local development shell. Sidecar stderr is consumed without forwarding it to logs because arbitrary plugins may log credentials.
 
-This is not an OS sandbox: sidecars run with the current user's privileges. It does not read the DBX profile or emulate Keychain, signing, installation, production lifecycle guarantees or desktop tab restoration. Validate those in the real host.
+This is not an OS sandbox: sidecars run with the current user's privileges. It does not read the NexDB profile or emulate Keychain, signing, installation, production lifecycle guarantees or desktop tab restoration. Validate those in the real host.
 
 ## Architecture and tests
 

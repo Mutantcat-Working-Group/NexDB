@@ -40,7 +40,7 @@ describe("isConnectionTimeoutErrorMessage", () => {
 });
 
 describe("isQueryTimeoutErrorMessage", () => {
-  it("detects DBX query timeout messages", () => {
+  it("detects NexDB query timeout messages", () => {
     expect(isQueryTimeoutErrorMessage("Query timed out after 30 seconds")).toBe(true);
     expect(isQueryTimeoutErrorMessage("查询超时 (60s)，请检查数据库连接是否正常")).toBe(true);
     expect(isQueryTimeoutErrorMessage("查詢逾時 (60s)，請檢查資料庫連線是否正常")).toBe(true);

@@ -132,7 +132,7 @@ async fn start_transport_layers_internal(
         // earlier transport layer.
         if chain.as_ref().is_some_and(|chain| chain.len() > 1) && index != 0 {
             return Err(format!(
-                "SSH layer {} uses a multi-hop `~/.ssh/config` ProxyJump chain, which DBX only supports as the first transport layer. Add the jump host as its own tunnel layer instead.",
+                "SSH layer {} uses a multi-hop `~/.ssh/config` ProxyJump chain, which NexDB only supports as the first transport layer. Add the jump host as its own tunnel layer instead.",
                 index + 1
             ));
         }

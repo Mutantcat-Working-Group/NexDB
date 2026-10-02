@@ -563,7 +563,7 @@ pub async fn update_document(client: &MeilisearchClient, index: &str, id: &str, 
     }
     document.insert(primary_key, decoded_identity(id));
     // Meilisearch uses POST for full replacement and PUT for partial updates.
-    // DBX sends the complete edited document so removed fields must disappear.
+    // NexDB sends the complete edited document so removed fields must disappear.
     submit_documents(client, index, Method::POST, vec![Value::Object(document)]).await?;
     Ok(1)
 }

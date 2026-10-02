@@ -79,7 +79,7 @@ async function ready() {
   await vi.waitFor(() => expect(button("databaseLinks.create").disabled).toBe(false));
 }
 
-describe("DBX Oracle DBLink dialog reused for OceanBase", () => {
+describe("NexDB Oracle DBLink dialog reused for OceanBase", () => {
   it.each(["oracle", "oceanbase-oracle"] as const)("preserves supported controls for %s", async (dbType) => {
     await mount({ dbType, name: "REMOTE", owner: "A_USER" });
     await ready();

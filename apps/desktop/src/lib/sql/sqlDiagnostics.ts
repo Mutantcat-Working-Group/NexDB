@@ -20,7 +20,7 @@ function removeDbxPagination(sql: string): string {
  * Pagination is appended to the SQL sent to the database, so an execution
  * error can refer to a SQL string that differs from the editor by only that
  * generated suffix. Keep error highlighting disabled for unrelated stale
- * errors while allowing this known DBX rewrite.
+ * errors while allowing this known NexDB rewrite.
  */
 export function sqlErrorSqlMatchesEditor(editorSql: string, executedSql: string): boolean {
   if (editorSql === executedSql) return true;

@@ -46,7 +46,7 @@ export function buildSiteStructuredData() {
       description: DEFAULT_DESCRIPTION,
       logo: `${SITE_URL}/logo.png`,
       sameAs: [
-        "https://github.com/t8y2/dbx",
+        "https://github.com/Mutantcat-Working-Group/NexDB",
         "https://www.npmjs.com/package/@dbx-app/mcp-server",
         "https://cnb.cool/dbxio.com/dbx",
         "https://atomgit.com/t8y2/dbx",
@@ -71,10 +71,10 @@ export function buildSoftwareApplicationStructuredData(lang: DocsLang, version: 
     softwareVersion: version,
     isAccessibleForFree: true,
     inLanguage: language,
-    codeRepository: "https://github.com/t8y2/dbx",
-    downloadUrl: "https://github.com/t8y2/dbx/releases/latest",
+    codeRepository: "https://github.com/Mutantcat-Working-Group/NexDB",
+    downloadUrl: "https://github.com/Mutantcat-Working-Group/NexDB/releases/latest",
     releaseNotes: `${SITE_URL}/${lang}/changelog`,
-    license: "https://github.com/t8y2/dbx/blob/main/LICENSE",
+    license: "https://github.com/Mutantcat-Working-Group/NexDB/blob/main/LICENSE",
     screenshot: [
       `${SITE_URL}/screenshot-dark.png`,
       `${SITE_URL}/screenshot-er.png`,
@@ -90,7 +90,7 @@ export function buildSoftwareApplicationStructuredData(lang: DocsLang, version: 
     author: { "@id": `${SITE_URL}/#organization` },
     publisher: { "@id": `${SITE_URL}/#organization` },
     sameAs: [
-      "https://github.com/t8y2/dbx",
+      "https://github.com/Mutantcat-Working-Group/NexDB",
       "https://www.npmjs.com/package/@dbx-app/mcp-server",
     ],
   } as const;

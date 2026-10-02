@@ -22,7 +22,7 @@ public final class DbxInsecureTrustManagerFactory {
         if (Security.getProvider(PROVIDER_NAME) != null) return;
         synchronized (DbxInsecureTrustManagerFactory.class) {
             if (Security.getProvider(PROVIDER_NAME) != null) return;
-            Provider provider = new Provider(PROVIDER_NAME, "1.0", "DBX Kafka trust-all provider") {};
+            Provider provider = new Provider(PROVIDER_NAME, "1.0", "NexDB Kafka trust-all provider") {};
             provider.put("TrustManagerFactory." + ALGORITHM, Spi.class.getName());
             Security.addProvider(provider);
         }

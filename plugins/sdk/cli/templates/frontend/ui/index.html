@@ -19,18 +19,18 @@
   </head>
   <body>
     <main>
-      <div class="eyebrow" id="eyebrow">DBX frontend plugin</div>
+      <div class="eyebrow" id="eyebrow">NexDB frontend plugin</div>
       <h1>{{PLUGIN_NAME_HTML}}</h1>
       <p id="description">This universal sandboxed workbench runs without a native sidecar.</p>
       <button id="context" type="button">Show host context</button>
-      <pre id="result">Waiting for DBX plugin host…</pre>
+      <pre id="result">Waiting for NexDB plugin host…</pre>
     </main>
     <script>
       const result = document.querySelector("#result");
       const button = document.querySelector("#context");
       const copy = {
-        en: { eyebrow: "DBX frontend plugin", description: "This universal sandboxed workbench runs without a native sidecar.", button: "Show host context", ready: "Ready", error: "Error" },
-        zh: { eyebrow: "DBX 前端插件", description: "这个通用沙箱工作台不需要原生 Sidecar。", button: "查看宿主上下文", ready: "已就绪", error: "错误" }
+        en: { eyebrow: "NexDB frontend plugin", description: "This universal sandboxed workbench runs without a native sidecar.", button: "Show host context", ready: "Ready", error: "Error" },
+        zh: { eyebrow: "NexDB 前端插件", description: "这个通用沙箱工作台不需要原生 Sidecar。", button: "查看宿主上下文", ready: "已就绪", error: "错误" }
       };
       let text = copy.en;
       window.dbxPlugin.ready.then((context) => {

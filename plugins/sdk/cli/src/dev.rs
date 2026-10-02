@@ -164,7 +164,7 @@ fn build_config(options: &Options, sdk_root: Option<&Path>) -> Result<Value, Str
 
 pub(super) fn run(arguments: Vec<String>) -> Result<(), String> {
     if arguments.iter().any(|a| a == "--help" || a == "-h") {
-        println!("Run a plugin without starting DBX (Node.js 22+)\n\nUsage: dbx-plugin dev [--path DIR] [--port PORT] [--data-dir DIR]\n\n  --path DIR      Plugin project (default: current directory)\n  --port PORT     Loopback port (default: 5190; occupied ports fall back to a free port)\n  --data-dir DIR  Development data (default: <project>/.dbx-dev)\n\nOptional [dev] ui_build and ui_watch arrays configure UI commands.\nDevelopment credentials are stored locally as plaintext.\nDBX_PLUGIN_DEV_RUNTIME overrides the runtime entrypoint; DBX_PLUGIN_NODE selects Node.");
+        println!("Run a plugin without starting NexDB (Node.js 22+)\n\nUsage: dbx-plugin dev [--path DIR] [--port PORT] [--data-dir DIR]\n\n  --path DIR      Plugin project (default: current directory)\n  --port PORT     Loopback port (default: 5190; occupied ports fall back to a free port)\n  --data-dir DIR  Development data (default: <project>/.dbx-dev)\n\nOptional [dev] ui_build and ui_watch arrays configure UI commands.\nDevelopment credentials are stored locally as plaintext.\nDBX_PLUGIN_DEV_RUNTIME overrides the runtime entrypoint; DBX_PLUGIN_NODE selects Node.");
         return Ok(());
     }
     let options = parse(&arguments)?;
@@ -174,7 +174,7 @@ pub(super) fn run(arguments: Vec<String>) -> Result<(), String> {
         .map(PathBuf::from)
         .unwrap_or_else(|| Path::new(env!("CARGO_MANIFEST_DIR")).join("../dev-host/dist/runtime.mjs"));
     if !runtime.is_file() {
-        return Err("Development runtime is missing. Install @dbx-app/plugin-cli, or run 'npm ci --prefix plugins/sdk/dev-host && npm run build --prefix plugins/sdk/dev-host' in a DBX checkout and set DBX_PLUGIN_DEV_RUNTIME to dist/runtime.mjs.".into());
+        return Err("Development runtime is missing. Install @dbx-app/plugin-cli, or run 'npm ci --prefix plugins/sdk/dev-host && npm run build --prefix plugins/sdk/dev-host' in a NexDB checkout and set DBX_PLUGIN_DEV_RUNTIME to dist/runtime.mjs.".into());
     }
     let node = std::env::var_os("DBX_PLUGIN_NODE").unwrap_or_else(|| "node".into());
     let version = Command::new(&node)

@@ -547,7 +547,7 @@ export const useConnectionStore = defineStore("connection", () => {
   const completionInFlight = new Map<string, Promise<unknown>>();
   const completionCacheRevisions = ref<Record<string, number>>({});
   const completionMetadataLimiter = new MetadataTaskLimiter(COMPLETION_METADATA_CONCURRENCY, (event) => {
-    console.debug("[DBX][completion-metadata:limit]", event);
+    console.debug("[NexDB][completion-metadata:limit]", event);
   });
   const transferSource = ref<{
     connectionId: string;
@@ -641,14 +641,14 @@ export const useConnectionStore = defineStore("connection", () => {
   const activeTreeRefreshGenerations = new Map<string, number>();
   let nextTreeRefreshGeneration = 0;
   const metadataLoadCoordinator = new MetadataLoadCoordinator((event) => {
-    console.debug("[DBX][metadata-load:coordinator]", event);
+    console.debug("[NexDB][metadata-load:coordinator]", event);
   });
   const metadataListPageCache = new MetadataResultCache<MetadataListPageResult>({
     ttlMs: METADATA_LIST_PAGE_CACHE_TTL_MS,
     maxEntries: METADATA_LIST_PAGE_CACHE_MAX_ENTRIES,
   });
   const metadataTraceLogger: MetadataLoadTraceLogger = (event) => {
-    console.debug("[DBX][metadata-load:trace]", event);
+    console.debug("[NexDB][metadata-load:trace]", event);
   };
   const connectInFlight = new Map<string, Promise<void>>();
   const disconnectInFlight = new Map<string, Promise<void>>();
@@ -1071,7 +1071,7 @@ export const useConnectionStore = defineStore("connection", () => {
     const bounded = withDisconnectRequestTimeout(connectionId, request);
     const tracked = bounded
       .catch((error) => {
-        console.warn("[DBX][connection:disconnect-error]", { connectionId, error });
+        console.warn("[NexDB][connection:disconnect-error]", { connectionId, error });
       })
       .finally(() => {
         if (disconnectInFlight.get(connectionId) === tracked) {
@@ -1174,7 +1174,7 @@ export const useConnectionStore = defineStore("connection", () => {
     }
     const tracked = withDisconnectRequestTimeout(connectionId, request)
       .catch((error) => {
-        console.warn("[DBX][connection:cancel-disconnect-error]", { connectionId, attempt, error });
+        console.warn("[NexDB][connection:cancel-disconnect-error]", { connectionId, attempt, error });
         throw error;
       })
       .finally(() => {
@@ -1192,7 +1192,7 @@ export const useConnectionStore = defineStore("connection", () => {
       // attempt, so clean again if that cancelled connect later returns a pool.
       await withDisconnectRequestTimeout(connectionId, api.disconnectDb(connectionId, attempt));
     } catch (error) {
-      console.warn("[DBX][connection:cancel-result-cleanup-error]", { connectionId, attempt, error });
+      console.warn("[NexDB][connection:cancel-result-cleanup-error]", { connectionId, attempt, error });
     }
   }
 
@@ -1368,7 +1368,7 @@ export const useConnectionStore = defineStore("connection", () => {
     let timedOut = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
     void promise.catch((error) => {
-      if (timedOut) console.warn("[DBX][connection:disconnect-late-error]", { connectionId, error });
+      if (timedOut) console.warn("[NexDB][connection:disconnect-late-error]", { connectionId, error });
     });
     try {
       await Promise.race([
@@ -1376,7 +1376,7 @@ export const useConnectionStore = defineStore("connection", () => {
         new Promise<void>((resolve) => {
           timer = setTimeout(() => {
             timedOut = true;
-            console.warn("[DBX][connection:disconnect-timeout]", { connectionId, timeoutMs: DISCONNECT_REQUEST_TIMEOUT_MS });
+            console.warn("[NexDB][connection:disconnect-timeout]", { connectionId, timeoutMs: DISCONNECT_REQUEST_TIMEOUT_MS });
             resolve();
           }, DISCONNECT_REQUEST_TIMEOUT_MS);
         }),
@@ -1454,7 +1454,7 @@ export const useConnectionStore = defineStore("connection", () => {
         const cleanupConnectionId = typeof connectionId === "string" && connectionId ? connectionId : config.id;
         if (connectedIds.value.has(cleanupConnectionId)) return;
         void api.disconnectDb(cleanupConnectionId).catch((error) => {
-          console.warn("[DBX][connection:timeout-cleanup-failed]", { connectionId: cleanupConnectionId, error });
+          console.warn("[NexDB][connection:timeout-cleanup-failed]", { connectionId: cleanupConnectionId, error });
         });
       },
       (error) => {
@@ -2706,7 +2706,7 @@ export const useConnectionStore = defineStore("connection", () => {
       await savePersistedTreeChildren(options.cacheKey, nextChildren);
     } catch (error) {
       // Some drivers only expose table metadata; keep the already-rendered table tree usable.
-      console.debug("[DBX][metadata:simple-supplemental:error]", {
+      console.debug("[NexDB][metadata:simple-supplemental:error]", {
         connectionId: options.connectionId,
         database: options.database,
         schema: options.effectiveSchema,
@@ -3633,7 +3633,7 @@ export const useConnectionStore = defineStore("connection", () => {
     try {
       await applyDeletedConnectionTabHandling(removedConfigs);
     } catch (error) {
-      console.warn("[DBX][connection:delete:tab-handling-failed]", { connectionIds: [...removedIds], error });
+      console.warn("[NexDB][connection:delete:tab-handling-failed]", { connectionIds: [...removedIds], error });
     }
     await cleanupRemovedOneTimeConnections(oneTimeIds);
   }
@@ -3777,7 +3777,7 @@ export const useConnectionStore = defineStore("connection", () => {
       const connectionNode = findConnectionNode(connectionId);
       if (connectionNode?.isExpanded && connectedIds.value.has(connectionId)) {
         void refreshTreeNode(connectionNode).catch((error) => {
-          console.debug("[DBX][connection-info:table-metadata-refresh-failed]", { connectionId, error });
+          console.debug("[NexDB][connection-info:table-metadata-refresh-failed]", { connectionId, error });
         });
       } else {
         clearLoadedChildrenCache(connectionId);
@@ -4654,7 +4654,7 @@ export const useConnectionStore = defineStore("connection", () => {
         applySidebarDatabaseStorage(currentNode?.children, storage);
       }
     } catch (error) {
-      console.debug("[DBX][sidebar-database-storage:unavailable]", { connectionId, error });
+      console.debug("[NexDB][sidebar-database-storage:unavailable]", { connectionId, error });
     } finally {
       if (sidebarDatabaseStorageInFlight.get(requestKey) === request) {
         sidebarDatabaseStorageInFlight.delete(requestKey);
@@ -4688,7 +4688,7 @@ export const useConnectionStore = defineStore("connection", () => {
       sidebarTableStorageCache.set(cacheScope, statistics);
       applySidebarTableStorage(treeNodes.value, scope, statistics);
     } catch (error) {
-      console.debug("[DBX][sidebar-table-storage:unavailable]", { ...scope, error });
+      console.debug("[NexDB][sidebar-table-storage:unavailable]", { ...scope, error });
     } finally {
       if (sidebarTableStorageInFlight.get(requestKey) === request) {
         sidebarTableStorageInFlight.delete(requestKey);
@@ -4745,7 +4745,7 @@ export const useConnectionStore = defineStore("connection", () => {
           // Storage metadata is an optional, read-only enhancement. A user
           // without SYS_* view access should see an empty group rather than a
           // connection-level RPC error that blocks the rest of the tree.
-          console.debug("[DBX][xugu-tablespaces:unavailable]", { connectionId, error });
+          console.debug("[NexDB][xugu-tablespaces:unavailable]", { connectionId, error });
           const targetNode = treeNodeLoadTarget(load);
           if (targetNode) {
             setChildren(targetNode, []);
@@ -9008,7 +9008,7 @@ export const useConnectionStore = defineStore("connection", () => {
       try {
         await applyDeletedConnectionTabHandling(removedConnectionConfigs);
       } catch (error) {
-        console.warn("[DBX][connection:delete:tab-handling-failed]", { connectionIds: [...removedConnectionIds], error });
+        console.warn("[NexDB][connection:delete:tab-handling-failed]", { connectionIds: [...removedConnectionIds], error });
       }
     } else {
       sidebarLayout.value = nextLayout;
@@ -9107,7 +9107,7 @@ export const useConnectionStore = defineStore("connection", () => {
 
     const tunnelProfileStore = useTunnelProfileStore();
     await tunnelProfileStore.init();
-    // Older DBX versions ignore inheritance flags, so always include the
+    // Older NexDB versions ignore inheritance flags, so always include the
     // effective numeric values as a backward-compatible snapshot.
     const exportedConnections = snapshotConnectionsForExport(connections.value, {
       connectTimeoutSecs: () => settingsStore.editorSettings.globalConnectTimeoutSecs,
@@ -9293,7 +9293,7 @@ export const useConnectionStore = defineStore("connection", () => {
       const { open } = await import("@tauri-apps/plugin-dialog");
       const { readTextFile } = await import("@tauri-apps/plugin-fs");
       const path = await open({
-        filters: source === "navicat" ? [{ name: "Navicat Connection Export", extensions: ["ncx", "xml"] }] : [{ name: "DBX JSON", extensions: ["json"] }],
+        filters: source === "navicat" ? [{ name: "Navicat Connection Export", extensions: ["ncx", "xml"] }] : [{ name: "NexDB JSON", extensions: ["json"] }],
         multiple: false,
       });
       if (!path) return null;

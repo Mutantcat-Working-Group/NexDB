@@ -91,10 +91,10 @@ pub async fn connect_with_oidc(
                 .is_some_and(|mechanism| matches!(mechanism, mongodb::options::AuthMechanism::MongoDbOidc))
         }) {
             // ENVIRONMENT selects the driver's built-in machine flow. Only
-            // install DBX's browser callback for interactive human OIDC.
+            // install NexDB's browser callback for interactive human OIDC.
             if !mongo_oidc_uses_machine_environment(credential.mechanism_properties.as_ref()) {
                 let opener = oidc_browser_opener.ok_or_else(|| {
-                    "MongoDB OIDC browser authentication is only available in the DBX desktop app".to_string()
+                    "MongoDB OIDC browser authentication is only available in the NexDB desktop app".to_string()
                 })?;
                 credential.oidc_callback = crate::mongo_oidc::human_callback(opener);
             }

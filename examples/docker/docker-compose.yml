@@ -4,9 +4,9 @@ services:
     ports:
       - "4224:4224"
     environment:
-      # Change this before exposing DBX to a network.
+      # Change this before exposing NexDB to a network.
       - DBX_PASSWORD=changeme
-      # Uncomment when serving DBX behind a reverse-proxy subpath.
+      # Uncomment when serving NexDB behind a reverse-proxy subpath.
       # - DBX_PUBLIC_BASE_PATH=/dbx
     volumes:
       - dbx-data:/app/data

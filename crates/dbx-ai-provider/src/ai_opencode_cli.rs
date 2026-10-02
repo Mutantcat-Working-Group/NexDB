@@ -155,7 +155,7 @@ pub fn opencode_cli_env(config: &AiConfig) -> Result<Vec<(String, String)>, Stri
         }
         if is_reserved_env_name(key) {
             return Err(format!(
-                "[openCodeEnvReserved] `{key}` is managed by DBX for the isolated OpenCode session and cannot be set here."
+                "[openCodeEnvReserved] `{key}` is managed by NexDB for the isolated OpenCode session and cannot be set here."
             ));
         }
         env.insert(key.to_string(), value.clone());
@@ -644,11 +644,11 @@ mod tests {
     }
 
     #[tokio::test]
-    #[ignore = "requires OpenCode, a running DBX MCP bridge, and DBX_LIVE_MCP_CONNECTION_NAME/DATABASE"]
+    #[ignore = "requires OpenCode, a running NexDB MCP bridge, and DBX_LIVE_MCP_CONNECTION_NAME/DATABASE"]
     async fn live_scoped_dbx_mcp_agent_run() {
         let config = live_config();
         let connection_name = std::env::var("DBX_LIVE_MCP_CONNECTION_NAME")
-            .expect("set DBX_LIVE_MCP_CONNECTION_NAME to a saved DBX connection");
+            .expect("set DBX_LIVE_MCP_CONNECTION_NAME to a saved NexDB connection");
         let database = std::env::var("DBX_LIVE_MCP_DATABASE").expect("set DBX_LIVE_MCP_DATABASE to a visible database");
         let mcp_command = std::env::var("DBX_LIVE_MCP_COMMAND").unwrap_or_else(|_| "dbx-mcp-server".to_string());
         let options = OpenCodeRunOptions {
@@ -670,7 +670,7 @@ mod tests {
             Duration::from_secs(90),
             run_opencode_agent(
                 &config,
-                "You must use the DBX MCP list-connections tool. Reply with the visible connection name only.",
+                "You must use the NexDB MCP list-connections tool. Reply with the visible connection name only.",
                 options,
                 &Notify::new(),
                 move |event| captured.lock().unwrap().push(event),

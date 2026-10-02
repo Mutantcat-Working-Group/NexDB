@@ -6370,13 +6370,13 @@ test("mongo runCommand execution follows use and preserves document results", as
 
   try {
     const tabId = store.createTab("mongo-1", "accounting", "Query", "query", "");
-    await store.executeTabSql(tabId, 'use admin\n\ndb.runCommand({ hello: 1, comment: "DBX #3050" })');
+    await store.executeTabSql(tabId, 'use admin\n\ndb.runCommand({ hello: 1, comment: "NexDB #3050" })');
     const tab = store.tabs.find((item) => item.id === tabId);
 
     assert.deepEqual(runCommandBody, {
       connectionId: "mongo-1",
       database: "admin",
-      commandJson: '{"hello":1,"comment":"DBX #3050"}',
+      commandJson: '{"hello":1,"comment":"NexDB #3050"}',
       executionId: runCommandBody.executionId,
     });
     assert.equal(typeof runCommandBody.executionId, "string");

@@ -1,16 +1,16 @@
-# DBX Web 运行内存功能排查报告
+# NexDB Web 运行内存功能排查报告
 
 日期：2026-06-11
 
 ## 结论
 
-已将网页版 DBX 的访问密码设置为 `test`，并通过接口验证登录成功。当前可访问地址：
+已将网页版 NexDB 的访问密码设置为 `test`，并通过接口验证登录成功。当前可访问地址：
 
 ```text
 http://127.0.0.1:5173/login
 ```
 
-本次用独立 Chrome profile 打开 DBX Web，创建 5 万行 SQLite 测试库，逐项触发主要功能并采集运行内存。当前测到最占运行内存的功能是：
+本次用独立 Chrome profile 打开 NexDB Web，创建 5 万行 SQLite 测试库，逐项触发主要功能并采集运行内存。当前测到最占运行内存的功能是：
 
 1. 数据对比 Data Compare：优化前后端 `dbx-web` RSS 从约 213 MiB 峰值升到约 496 MiB，是原始基线中最高。
 2. 查询图表 QueryChart：在 5 万行结果上打开图表后，前端 JS heap 升到约 109 MiB，Chrome renderer 峰值约 567 MiB。
@@ -47,14 +47,14 @@ GET /api/auth/check with cookie -> {"authenticated":true,"required":true,"setup_
 | --- | --- | --- |
 | Web 前端 | `http://127.0.0.1:5173` | 已存在的 Vite dev server |
 | Web 后端 | `target/debug/dbx-web`，端口 `4224` | 本次启动，用于 API 和认证 |
-| 测量浏览器 | Chrome 独立 profile：`/tmp/dbx-runtime-chrome-profile` | 只打开 DBX 页面，避免混入日常 Chrome tab |
+| 测量浏览器 | Chrome 独立 profile：`/tmp/dbx-runtime-chrome-profile` | 只打开 NexDB 页面，避免混入日常 Chrome tab |
 
 测试数据：
 
 | 对象 | 规模 |
 | --- | ---: |
 | SQLite 文件 | `/tmp/dbx-runtime-memory-probe.sqlite` |
-| DBX 连接名 | `Runtime Memory SQLite` |
+| NexDB 连接名 | `Runtime Memory SQLite` |
 | `runtime_probe` | 50,000 行，12 列 |
 | `runtime_probe_target` | 49,649 行，12 列 |
 | DataGrid page size | 50,000 |

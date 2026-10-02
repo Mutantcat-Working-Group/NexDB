@@ -51,7 +51,7 @@ export default async function registerDbxMcpBridge(pi) {
   const enabledTools = new Set(parseJsonEnv(ENABLED_TOOLS_ENV, []));
 
   if (!program || !readyFile || !Array.isArray(args) || enabledTools.size === 0) {
-    throw new Error("DBX Pi MCP bridge configuration is incomplete");
+    throw new Error("NexDB Pi MCP bridge configuration is incomplete");
   }
 
   const child = spawn(program, args, {
@@ -77,12 +77,12 @@ export default async function registerDbxMcpBridge(pi) {
     pending.clear();
   };
 
-  child.on("error", (error) => rejectPending(`DBX MCP process error: ${error.message}`));
+  child.on("error", (error) => rejectPending(`NexDB MCP process error: ${error.message}`));
   child.on("exit", (code, signal) => {
     closed = true;
     const detail = stderr.trim();
     rejectPending(
-      `DBX MCP process exited (${signal ?? code ?? "unknown"})${detail ? `: ${detail}` : ""}`,
+      `NexDB MCP process exited (${signal ?? code ?? "unknown"})${detail ? `: ${detail}` : ""}`,
     );
   });
 
@@ -108,7 +108,7 @@ export default async function registerDbxMcpBridge(pi) {
 
   const send = (message) => {
     if (closed || !child.stdin.writable) {
-      throw new Error("DBX MCP process is not available");
+      throw new Error("NexDB MCP process is not available");
     }
     child.stdin.write(`${JSON.stringify(message)}\n`);
   };
@@ -131,7 +131,7 @@ export default async function registerDbxMcpBridge(pi) {
       };
       const timer = setTimeout(() => {
         pending.delete(id);
-        rejectRequest(new Error(`DBX MCP request timed out: ${method}`));
+        rejectRequest(new Error(`NexDB MCP request timed out: ${method}`));
       }, REQUEST_TIMEOUT_MS);
       pending.set(id, { resolve: resolveRequest, reject: rejectRequest, timer });
       try {
@@ -146,7 +146,7 @@ export default async function registerDbxMcpBridge(pi) {
           const active = pending.get(id);
           if (!active) return;
           pending.delete(id);
-          rejectRequest(new Error(`DBX MCP request aborted: ${method}`));
+          rejectRequest(new Error(`NexDB MCP request aborted: ${method}`));
         };
         if (signal.aborted) {
           onAbort();
@@ -167,7 +167,7 @@ export default async function registerDbxMcpBridge(pi) {
   const tools = (toolList?.tools ?? []).filter((tool) => enabledTools.has(tool.name));
   const missing = [...enabledTools].filter((name) => !tools.some((tool) => tool.name === name));
   if (missing.length > 0) {
-    throw new Error(`DBX MCP did not expose required tools: ${missing.join(", ")}`);
+    throw new Error(`NexDB MCP did not expose required tools: ${missing.join(", ")}`);
   }
 
   for (const tool of tools) {
@@ -179,7 +179,7 @@ export default async function registerDbxMcpBridge(pi) {
       async execute(_toolCallId, params, signal) {
         const result = await request("tools/call", { name: tool.name, arguments: params ?? {} }, signal);
         if (result?.isError) {
-          throw new Error(textFromContent(result.content) || `DBX MCP tool failed: ${tool.name}`);
+          throw new Error(textFromContent(result.content) || `NexDB MCP tool failed: ${tool.name}`);
         }
         return {
           content: piContent(result?.content),

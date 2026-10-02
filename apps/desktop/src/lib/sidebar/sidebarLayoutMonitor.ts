@@ -23,7 +23,7 @@
 import { isDebugLoggingEnabled } from "@/lib/backend/debugLog";
 
 export const SIDEBAR_LAYOUT_MONITOR_STORAGE_KEY = "dbx-sidebar-layout-monitor";
-export const SIDEBAR_LAYOUT_MONITOR_LABEL = "[DBX][sidebar-layout-monitor]";
+export const SIDEBAR_LAYOUT_MONITOR_LABEL = "[NexDB][sidebar-layout-monitor]";
 
 export const SIDEBAR_LAYOUT_MONITOR_MAX_SAMPLES = 240;
 export const SIDEBAR_LAYOUT_MONITOR_MAX_EVENTS = 200;

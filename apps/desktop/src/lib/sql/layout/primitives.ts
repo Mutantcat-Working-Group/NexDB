@@ -22,7 +22,7 @@ export interface SqlLayoutOptions {
   /** Keyword casing, matching sql-formatter's `keywordCase`. */
   keywordCase: "preserve" | "upper" | "lower";
   /**
-   * Where a wrapped condition puts its `AND`/`OR`, matching DBX's own
+   * Where a wrapped condition puts its `AND`/`OR`, matching NexDB's own
    * "logical operator newline" setting.
    *
    * `before` starts the continuation line with the operator, `after` ends the
@@ -37,7 +37,7 @@ export interface SqlLayoutOptions {
   /**
    * Whether a `FROM` clause's first source stays on the keyword's line.
    *
-   * The default keeps it there; DBX exposes the alternative as its
+   * The default keeps it there; NexDB exposes the alternative as its
    * "FROM clause" setting.
    */
   fromClauseSourceOnSameLine: boolean;

@@ -185,7 +185,7 @@ function ReleaseCard({ release, lang, isLoading, errorMessage }: { release: Chan
               {text.publishedOn} {formatDate(release.date, lang)}
             </span>
           </div>
-          <a href={`https://github.com/t8y2/dbx/releases/tag/${release.tag}`} target="_blank" rel="noopener noreferrer" className="flex min-h-9 items-center px-4 rounded-full border border-[rgba(173,176,182,0.25)] text-sm text-[#e4e7ea] hover:border-[rgba(173,176,182,0.4)] transition-colors">
+          <a href={`https://github.com/Mutantcat-Working-Group/NexDB/releases/tag/${release.tag}`} target="_blank" rel="noopener noreferrer" className="flex min-h-9 items-center px-4 rounded-full border border-[rgba(173,176,182,0.25)] text-sm text-[#e4e7ea] hover:border-[rgba(173,176,182,0.4)] transition-colors">
             {text.download}
           </a>
         </div>

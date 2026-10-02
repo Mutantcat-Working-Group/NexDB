@@ -1,6 +1,6 @@
 # Hive Agent benchmark
 
-This benchmark compares the same DBX JSON-RPC operations through the native
+This benchmark compares the same NexDB JSON-RPC operations through the native
 Go Hive Agent and the archived JDBC Hive Agent. Both candidates run on the same
 host and connect to the same HiveServer2 instance.
 
@@ -14,7 +14,7 @@ The runner measures:
 - artifact size, idle RSS, and peak RSS;
 - `SELECT 1`-shape lookup and 100/1,000/10,000-row decoding;
 - `list_databases`, `list_tables`, and complete paged reads;
-- 1, 8, and 32 concurrent DBX Agent sessions;
+- 1, 8, and 32 concurrent NexDB Agent sessions;
 - mean, p50, p95, p99, throughput, and clean shutdown behavior.
 
 Candidate order rotates between rounds to reduce warm-cache and server-order

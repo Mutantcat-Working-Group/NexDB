@@ -319,8 +319,8 @@ public final class DbxJdbcPlugin {
             return message;
         }
         String hint = message.contains("不支持的字符集")
-            ? "。请在 设置 → JDBC 驱动 中为该 Oracle 驱动一并导入同版本的 orai18n.jar，或改用 DBX 内置 Oracle 连接（默认驱动已支持中文多字节字符集）"
-            : ". Import orai18n.jar (same version as the ojdbc driver) next to the Oracle driver under Settings -> JDBC Drivers, or use DBX's built-in Oracle connection instead, whose default driver supports multibyte Chinese charsets";
+            ? "。请在 设置 → JDBC 驱动 中为该 Oracle 驱动一并导入同版本的 orai18n.jar，或改用 NexDB 内置 Oracle 连接（默认驱动已支持中文多字节字符集）"
+            : ". Import orai18n.jar (same version as the ojdbc driver) next to the Oracle driver under Settings -> JDBC Drivers, or use NexDB's built-in Oracle connection instead, whose default driver supports multibyte Chinese charsets";
         return message.endsWith(hint) ? message : message + hint;
     }
 

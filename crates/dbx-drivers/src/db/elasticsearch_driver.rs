@@ -2743,7 +2743,7 @@ async fn execute_translated_select_star(
 }
 
 /// Split a trailing `LIMIT n OFFSET m` from an ES SQL statement. The OFFSET
-/// form is produced by the DBX pagination plan; it must be removed before
+/// form is produced by the NexDB pagination plan; it must be removed before
 /// sending the query to `_sql` so ES SQL cursor pagination can drive paging.
 /// A bare user `LIMIT n` (no OFFSET) is preserved as an explicit row cap.
 fn es_sql_pagination(query: &str) -> (String, Option<usize>) {

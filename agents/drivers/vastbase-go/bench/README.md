@@ -1,8 +1,8 @@
 # Vastbase Agent benchmark
 
-This benchmark compares the same DBX JSON-RPC workload through:
+This benchmark compares the same NexDB JSON-RPC workload through:
 
-- Vastbase JDBC `2.11v` (current DBX baseline)
+- Vastbase JDBC `2.11v` (current NexDB baseline)
 - Vastbase JDBC `2.15v`
 - openGauss Go connector `v1.0.8`
 

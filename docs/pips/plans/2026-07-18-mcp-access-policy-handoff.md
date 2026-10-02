@@ -12,7 +12,7 @@
 
 MCP 权限集中在“设置 → MCP”管理，不再给每个连接增加 `disabled`、`read_only`、`read_write` 三态选项。
 
-DBX 持久化一份中央策略：
+NexDB 持久化一份中央策略：
 
 ```ts
 interface McpGlobalPolicy {
@@ -33,10 +33,10 @@ UI 使用单一的“权限模式”选择器，内部仍以两个布尔字段�
 - `allowedConnectionIds=null`：允许全部连接。
 - `allowedConnectionIds=[]`：不允许任何连接。
 - 非空数组：只允许其中的稳定连接 ID。
-- `readOnly=true`：仅允许 DBX 静态分类为读取的请求，阻止已识别的 MCP 数据库写入及连接新增、删除，`allowDangerousSql` 此时不生效。
+- `readOnly=true`：仅允许 NexDB 静态分类为读取的请求，阻止已识别的 MCP 数据库写入及连接新增、删除，`allowDangerousSql` 此时不生效。
 - `readOnly=false && allowDangerousSql=false`：数据读写，允许普通 `INSERT`、带有效过滤条件的 `UPDATE`/`DELETE`、MongoDB 带可验证有效过滤条件的更新/删除，以及 Redis 普通写入和明确键删除。
 - `readOnly=false && allowDangerousSql=true`：完全访问，在数据读写基础上允许全表 `UPDATE`/`DELETE`、DDL、`TRUNCATE`、MongoDB 清空/结构变更、Redis `FLUSH*` 及等价破坏性操作。
-- 通用连接 `read_only=true` 继续作为单连接写保护，并同时约束 DBX 与 MCP。
+- 通用连接 `read_only=true` 继续作为单连接写保护，并同时约束 NexDB 与 MCP。
 - 生产库保护始终是权限上限，不能被高风险操作开关覆盖。
 - 新版 MCP Server 忽略客户端读写和高风险操作环境变量；当前生成配置不再包含权限或连接范围环境变量。旧客户端 scope 仅作为兼容层继续读取，并且只能收紧连接范围。
 
@@ -100,12 +100,12 @@ effective_write_allowed =
 - MCP 设置页同时支持桌面和 Web 模式。
 - 两个底层布尔权限字段在 UI 中收敛为互斥的“只读 / 数据读写 / 完全访问”三级选择，内部模式值保持 `read_only / safe_write / high_risk_write` 兼容。
 - 权限选择器下方展示读取、范围可控的数据变更、全量/清空、结构与高风险管理、连接管理五类能力对照，并明确所有模式仍受连接 allowlist、连接只读、生产库保护和数据库账号权限约束。
-- 连接多选已升级为 DBX 权威 allowlist，并提供“所有连接”和“不允许任何连接”。
+- 连接多选已升级为 NexDB 权威 allowlist，并提供“所有连接”和“不允许任何连接”。
 - 策略保存期间禁用控件；保存失败回滚并提示；加载失败时禁用策略控件，避免显示可写假象。
 - 旧 `dbx-mcp-config-readonly=true` 只在后端策略尚未初始化时迁移为全局只读，保存成功后清理旧键。
 - 旧客户端 scope localStorage 不迁移为全局 allowlist，避免把单客户端偏好意外升级为全局限制。
-- 生成配置只包含启动 MCP Server 并连接当前 DBX 实例所需的运行参数；Web 模式包含 `DBX_WEB_URL` 和 `DBX_WEB_PASSWORD` 占位值，但不再生成读写、高风险操作或连接 scope 环境变量。
-- 旧 scope 环境变量仍由新版 Server 兼容读取，但 DBX 不再展示、生成或推荐；升级后可从客户端配置中删除。
+- 生成配置只包含启动 MCP Server 并连接当前 NexDB 实例所需的运行参数；Web 模式包含 `DBX_WEB_URL` 和 `DBX_WEB_PASSWORD` 占位值，但不再生成读写、高风险操作或连接 scope 环境变量。
+- 旧 scope 环境变量仍由新版 Server 兼容读取，但 NexDB 不再展示、生成或推荐；升级后可从客户端配置中删除。
 
 ### 连接模型简化
 
@@ -145,7 +145,7 @@ git diff --check
   PASS
 ```
 
-Rust MCP 回归测试覆盖中央 allowlist、只读模式、旧 scope 交集、数据库 scope 硬约束、稳定策略错误码和 MongoDB 跨库生产目标。MCP npm 启动器测试使用隔离的临时 `DBX_DATA_DIR` 启动真实 Rust 二进制，不读取或修改用户的 DBX 数据库。
+Rust MCP 回归测试覆盖中央 allowlist、只读模式、旧 scope 交集、数据库 scope 硬约束、稳定策略错误码和 MongoDB 跨库生产目标。MCP npm 启动器测试使用隔离的临时 `DBX_DATA_DIR` 启动真实 Rust 二进制，不读取或修改用户的 NexDB 数据库。
 
 ## 发布前人工验证
 
@@ -157,7 +157,7 @@ Rust MCP 回归测试覆盖中央 allowlist、只读模式、旧 scope 交集、
 6. 不重启 MCP 会话，切换任一策略后下一次请求立即应用新权限。
 7. allowlist 分别设置为全部、单个、多个、空集，确认列表与按 ID/名称解析符合交集语义。
 8. 对 Desktop 直连、需要 bridge 的连接和 Web 模式各执行一次三级权限验证。
-9. 直接向 bridge 传入 `allow_writes=true`、`allow_dangerous=true` 或 `skip_safety_check=true`，确认仍不能覆盖 DBX 中央策略。
+9. 直接向 bridge 传入 `allow_writes=true`、`allow_dangerous=true` 或 `skip_safety_check=true`，确认仍不能覆盖 NexDB 中央策略。
 
 ## 已知边界
 
@@ -166,6 +166,6 @@ Rust MCP 回归测试覆盖中央 allowlist、只读模式、旧 scope 交集、
 - 数据读写不能阻止 Agent 先读取并枚举主键、再通过多次带条件语句逐条修改或删除全部数据。
 - 数据库账号最小权限仍是最终硬边界；MCP 策略不能替代数据库自身的授权、审计和凭据隔离。
 - `dbx_execute_and_show` 仅支持 SQL 连接；MongoDB 和 Redis 必须使用各自的执行工具。
-- 旧 MCP Server 不会读取中央策略，必须同时升级 DBX 应用与 MCP Server；当前生成配置不再为旧 Server 输出权限兼容环境变量。
-- MCP 策略不是数据库凭据吊销，不能阻止持有凭据的进程绕过 DBX 直接连接数据库。
-- Web 的 MCP 来源 header 用于区分 DBX Web UI 与 MCP 执行路径；真正的外部访问控制仍由现有 Web 认证负责。
+- 旧 MCP Server 不会读取中央策略，必须同时升级 NexDB 应用与 MCP Server；当前生成配置不再为旧 Server 输出权限兼容环境变量。
+- MCP 策略不是数据库凭据吊销，不能阻止持有凭据的进程绕过 NexDB 直接连接数据库。
+- Web 的 MCP 来源 header 用于区分 NexDB Web UI 与 MCP 执行路径；真正的外部访问控制仍由现有 Web 认证负责。

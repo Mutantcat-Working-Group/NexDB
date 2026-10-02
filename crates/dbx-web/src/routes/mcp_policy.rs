@@ -257,7 +257,7 @@ fn ensure_allowed(
 ) -> Result<(), AppError> {
     if !dbx_core::mcp_policy::policy_allows_connection(policy, group_path, connection_id) {
         return Err(AppError::from(format!(
-            "CONNECTION_OUT_OF_SCOPE: connection '{connection_id}' is not allowed by DBX MCP settings"
+            "CONNECTION_OUT_OF_SCOPE: connection '{connection_id}' is not allowed by NexDB MCP settings"
         )));
     }
     Ok(())
@@ -270,11 +270,11 @@ fn ensure_database_in_scope(policy: &McpGlobalPolicy, connection_id: &str, datab
     match rule.database_scope {
         McpDatabaseScope::All => Ok(()),
         McpDatabaseScope::None => Err(AppError::from(format!(
-            "DATABASE_OUT_OF_SCOPE: database '{database}' is not allowed by DBX MCP settings for connection '{connection_id}'"
+            "DATABASE_OUT_OF_SCOPE: database '{database}' is not allowed by NexDB MCP settings for connection '{connection_id}'"
         ))),
         McpDatabaseScope::Selected if rule.allowed_databases.iter().any(|allowed| allowed == database) => Ok(()),
         McpDatabaseScope::Selected => Err(AppError::from(format!(
-            "DATABASE_OUT_OF_SCOPE: database '{database}' is not allowed by DBX MCP settings for connection '{connection_id}'"
+            "DATABASE_OUT_OF_SCOPE: database '{database}' is not allowed by NexDB MCP settings for connection '{connection_id}'"
         ))),
     }
 }
@@ -433,7 +433,7 @@ async fn ensure_write_with_risk(
     }
     if dangerous && !allow_dangerous_sql {
         return Err(AppError::from(format!(
-            "SQL_BLOCKED: High-risk operation '{action}' is disabled in DBX MCP settings."
+            "SQL_BLOCKED: High-risk operation '{action}' is disabled in NexDB MCP settings."
         )));
     }
     if config.read_only {
@@ -483,7 +483,7 @@ pub async fn ensure_sql(
         )));
     }
     if !allow_dangerous_sql && dbx_core::sql_risk::is_dangerous_sql_for_database(sql, config.db_type) {
-        return Err(AppError::from("SQL_BLOCKED: High-risk SQL is disabled in DBX MCP settings.".to_string()));
+        return Err(AppError::from("SQL_BLOCKED: High-risk SQL is disabled in NexDB MCP settings.".to_string()));
     }
     if config.read_only {
         dbx_core::query_execution_sql::check_read_only(sql, &config.name, config.db_type)

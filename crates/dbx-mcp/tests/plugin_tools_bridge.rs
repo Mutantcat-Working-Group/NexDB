@@ -20,7 +20,7 @@ async fn ssh_sftp_package_installs_and_serves_mcp_tools() {
     let data_dir = tempfile::tempdir().unwrap();
     let plugins_root = data_dir.path().join("plugins");
 
-    // 1. Install the .dbxp exactly like the DBX desktop app would.
+    // 1. Install the .dbxp exactly like the NexDB desktop app would.
     let installer = PluginPackageInstaller::new(plugins_root.clone(), "0.6.0").expect("installer");
     let result = installer.install_file(&package, PluginInstallPolicy::LocalDevelopment).expect("install .dbxp");
     let response = result.response();

@@ -8,11 +8,11 @@ import { resolveLang } from "@/lib/i18n";
 const metadata = {
   en: {
     title: "Submit an Issue",
-    description: "Describe a DBX problem or suggestion without a GitHub account. Review the AI-polished draft before publishing.",
+    description: "Describe a NexDB problem or suggestion without a GitHub account. Review the AI-polished draft before publishing.",
   },
   cn: {
     title: "匿名提交 Issue",
-    description: "无需 GitHub 账号，简短描述 DBX 问题或建议，由 AI 整理并在你确认后公开提交。",
+    description: "无需 GitHub 账号，简短描述 NexDB 问题或建议，由 AI 整理并在你确认后公开提交。",
   },
 };
 

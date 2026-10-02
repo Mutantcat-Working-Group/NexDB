@@ -76,7 +76,7 @@ pub fn build_table_structure_change_sql(mut options: TableStructureSqlOptions) -
 /// introspection one. The documentation collector uses it as a heuristic for
 /// "can this engine report comments at all", but the two questions can
 /// diverge: IRIS supports `%DESCRIPTION` while *defining* a table or column,
-/// but DBX's editor cannot ALTER an existing one, so this returns `false`
+/// but NexDB's editor cannot ALTER an existing one, so this returns `false`
 /// for IRIS even though IRIS still reports descriptions on introspection.
 /// Callers using this as an introspection signal must corroborate it against
 /// what was actually collected rather than trust the flag alone.

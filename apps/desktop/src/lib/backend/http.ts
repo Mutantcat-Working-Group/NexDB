@@ -327,7 +327,7 @@ async function postQueryWithDiagnostics<T>(url: string, body: unknown, traceId?:
   const responseText = await response.text();
   const bodyAt = performance.now();
   if (!response.ok) {
-    appendDebugLog("warn", "[DBX][query-transport:http:error]", {
+    appendDebugLog("warn", "[NexDB][query-transport:http:error]", {
       traceId: traceId?.slice(0, 8),
       status: response.status,
       requestBytes: new TextEncoder().encode(serializedBody).byteLength,
@@ -348,7 +348,7 @@ async function postQueryWithDiagnostics<T>(url: string, body: unknown, traceId?:
   }
   const result = JSON.parse(responseText) as T;
   const parsedAt = performance.now();
-  appendDebugLog("info", "[DBX][query-transport:http]", {
+  appendDebugLog("info", "[NexDB][query-transport:http]", {
     traceId: traceId?.slice(0, 8),
     requestBytes: new TextEncoder().encode(serializedBody).byteLength,
     responseBytes: new TextEncoder().encode(responseText).byteLength,
@@ -2039,7 +2039,7 @@ export async function loadMcpHttpServerSettings(): Promise<import("@/lib/backend
 }
 
 export async function saveMcpHttpServerSettings(_settings: import("@/lib/backend/tauri").McpHttpServerSettings): Promise<import("@/lib/backend/tauri").McpHttpServerStatus> {
-  throw new Error("The MCP HTTP server is available only in DBX Desktop");
+  throw new Error("The MCP HTTP server is available only in NexDB Desktop");
 }
 
 export async function mcpHttpServerStatus(): Promise<import("@/lib/backend/tauri").McpHttpServerStatus> {
@@ -2047,7 +2047,7 @@ export async function mcpHttpServerStatus(): Promise<import("@/lib/backend/tauri
 }
 
 export async function rotateMcpHttpServerToken(): Promise<import("@/lib/backend/tauri").McpHttpServerStatus> {
-  throw new Error("The MCP HTTP server is available only in DBX Desktop");
+  throw new Error("The MCP HTTP server is available only in NexDB Desktop");
 }
 
 export async function loadWebMcpHttpStatus(): Promise<import("@/lib/backend/tauri").WebMcpHttpStatus> {
@@ -2402,11 +2402,11 @@ export async function deleteAiConversation(id: string): Promise<void> {
 // symbols for backend-module parity without changing Web's request-bound SSE
 // lifecycle or adding a partially functional persistence API.
 export async function saveAiRun(_run: AiRun): Promise<void> {
-  throw new Error("Background AI runs are only available in DBX Desktop");
+  throw new Error("Background AI runs are only available in NexDB Desktop");
 }
 
 export async function saveAiRunState(_conversation: AiConversation, _run: AiRun): Promise<void> {
-  throw new Error("Background AI runs are only available in DBX Desktop");
+  throw new Error("Background AI runs are only available in NexDB Desktop");
 }
 
 export async function loadAiRuns(): Promise<AiRun[]> {

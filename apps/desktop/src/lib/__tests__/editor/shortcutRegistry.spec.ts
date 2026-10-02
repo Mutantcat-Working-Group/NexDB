@@ -379,7 +379,7 @@ describe("shortcutRegistry editor actions", () => {
     expect(isReservedShortcut("Mod+Alt+H", "MacIntel")).toBe(true);
     expect(isReservedShortcut("Meta+Alt+H", "MacIntel")).toBe(true);
     // 反例：Ctrl+H / Control+H 是同一物理组合（CodeMirror 的 deleteCharBackward），
-    // 不是 DBX 应用菜单的 accelerator，绝不能误判为保留键。
+    // 不是 NexDB 应用菜单的 accelerator，绝不能误判为保留键。
     expect(isReservedShortcut("Ctrl+H", "MacIntel")).toBe(false);
     expect(isReservedShortcut("Control+H", "MacIntel")).toBe(false);
     expect(isReservedShortcut("Shift+Mod+H", "MacIntel")).toBe(false);

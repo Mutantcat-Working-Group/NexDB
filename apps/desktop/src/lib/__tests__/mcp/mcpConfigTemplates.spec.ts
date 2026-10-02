@@ -18,7 +18,7 @@ describe("MCP config templates", () => {
     const launch = {
       command: "node",
       args: ["C:\\dbx\\mcp\\dist\\index.js"],
-      env: { DBX_DATA_DIR: "D:\\DBX Data" },
+      env: { DBX_DATA_DIR: "D:\\NexDB Data" },
     };
     const config = JSON.parse(buildMcpJsonConfig(launch));
 
@@ -38,7 +38,7 @@ describe("MCP config templates", () => {
   });
 
   it("builds the standard mcpServers JSON used by WorkBuddy", () => {
-    const launch = { command: "dbx-mcp-server", env: { DBX_DATA_DIR: "D:\\DBX Data" } };
+    const launch = { command: "dbx-mcp-server", env: { DBX_DATA_DIR: "D:\\NexDB Data" } };
 
     expect(JSON.parse(buildMcpWorkBuddyConfig(launch))).toEqual({
       mcpServers: {
@@ -80,7 +80,7 @@ describe("MCP config templates", () => {
     const launch = {
       command: "C:\\Program Files\\nodejs\\node.exe",
       args: ["C:\\dbx\\mcp\\dist\\index.js"],
-      env: { DBX_DATA_DIR: "D:\\DBX Data" },
+      env: { DBX_DATA_DIR: "D:\\NexDB Data" },
     };
     const nativeBinPath = "C:\\Users\\supervisor\\AppData\\Roaming\\npm\\node_modules\\@dbx-app\\mcp-win32-x64\\bin\\dbx-mcp.exe";
 
@@ -106,7 +106,7 @@ describe("MCP config templates", () => {
     expect(buildMcpJsonConfig(launch)).not.toContain("DBX_MCP_ALLOW_WRITES");
   });
 
-  it("includes the portable DBX data directory in JSON and Codex configs", () => {
+  it("includes the portable NexDB data directory in JSON and Codex configs", () => {
     const launch = {
       command: "dbx-mcp-server",
       env: { DBX_DATA_DIR: "D:\\GreenSoft\\DBX\\data" },
@@ -189,9 +189,9 @@ describe("MCP config templates", () => {
       buildMcpDeepSeekHarnessConfig({
         command: "C:\\Program Files\\nodejs\\node.exe",
         args: ["C:\\Users\\zhiyo\\AppData\\Roaming\\npm\\node_modules\\@dbx-app\\mcp-server\\dist\\index.js"],
-        env: { DBX_DATA_DIR: "D:\\DBX Data" },
+        env: { DBX_DATA_DIR: "D:\\NexDB Data" },
       }),
-    ).toContain(['        command: "C:\\\\Program Files\\\\nodejs\\\\node.exe"', '        args: ["C:\\\\Users\\\\zhiyo\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\@dbx-app\\\\mcp-server\\\\dist\\\\index.js"]', "        env:", '          "DBX_DATA_DIR": "D:\\\\DBX Data"'].join("\n"));
+    ).toContain(['        command: "C:\\\\Program Files\\\\nodejs\\\\node.exe"', '        args: ["C:\\\\Users\\\\zhiyo\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\@dbx-app\\\\mcp-server\\\\dist\\\\index.js"]', "        env:", '          "DBX_DATA_DIR": "D:\\\\NexDB Data"'].join("\n"));
   });
 
   it("builds OpenCode config without policy environment", () => {

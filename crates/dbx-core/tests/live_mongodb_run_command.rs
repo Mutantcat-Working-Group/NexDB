@@ -17,7 +17,7 @@ async fn run_command_returns_browser_and_extended_json_documents() {
     let client = mongo_driver::connect(&url, Duration::from_secs(10), Duration::from_secs(60)).await.unwrap();
     let database = std::env::var("DBX_LIVE_MONGODB_DATABASE").unwrap_or_else(|_| "admin".to_string());
 
-    let result = mongo_driver::run_command(&client, &database, r#"{"ping":1,"comment":"DBX #3050"}"#).await.unwrap();
+    let result = mongo_driver::run_command(&client, &database, r#"{"ping":1,"comment":"NexDB #3050"}"#).await.unwrap();
 
     assert_eq!(result.total, 1);
     assert!(result.total_is_exact);

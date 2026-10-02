@@ -43,7 +43,7 @@ export function buildPluginEditorAppearance(editor: { fontFamily?: string; fontS
   return { fontFamily, fontSize, theme };
 }
 
-// camelCase 字段 → DBX globals.css 的 CSS 令牌名。
+// camelCase 字段 → NexDB globals.css 的 CSS 令牌名。
 const APPEARANCE_TOKENS = [
   ["background", "--background"],
   ["foreground", "--foreground"],
@@ -55,7 +55,7 @@ const APPEARANCE_TOKENS = [
   ["destructive", "--destructive"],
 ] as const;
 
-// 读取失败时的兜底：与 DBX globals.css 的 :root（pearl）/.dark 规范块一致。
+// 读取失败时的兜底：与 NexDB globals.css 的 :root（pearl）/.dark 规范块一致。
 export const FALLBACK_APPEARANCE_COLORS: Record<"light" | "dark", PluginAppearanceColors> = {
   light: {
     background: "rgb(255 255 255)",

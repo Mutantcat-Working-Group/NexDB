@@ -87,7 +87,7 @@ jobs:
       - name: Build frontend
         run: pnpm build
 
-      - name: Build DBX for Windows 7
+      - name: Build NexDB for Windows 7
         shell: pwsh
         run: |
           $env:TAURI_CONFIG = Get-Content src-tauri/tauri.webview2-win7-fixed.conf.json -Raw
@@ -95,11 +95,11 @@ jobs:
 
       - name: Audit Windows 7 PE imports
         shell: pwsh
-        run: ./.github/scripts/assert-win7-pe-compat.ps1 -BinaryPath target/x86_64-win7-windows-msvc/release/dbx.exe
+        run: ./.github/scripts/assert-win7-pe-compat.ps1 -BinaryPath target/x86_64-win7-windows-msvc/release/nexdb.exe
 
       - name: Audit Win7 WebView2 loader markers
         shell: pwsh
-        run: ./.github/scripts/assert-webview2-win7-loader.ps1 -BinaryPath target/x86_64-win7-windows-msvc/release/dbx.exe
+        run: ./.github/scripts/assert-webview2-win7-loader.ps1 -BinaryPath target/x86_64-win7-windows-msvc/release/nexdb.exe
 
       - name: Bundle Windows 7 fixed-runtime installer
         shell: pwsh
@@ -126,7 +126,7 @@ jobs:
       - name: Upload installer
         uses: actions/upload-artifact@v7
         with:
-          name: DBX-SQLServer2000-Windows-7-x64
+          name: NexDB-SQLServer2000-Windows-7-x64
           path: |
             target/x86_64-win7-windows-msvc/release/bundle/nsis/*.exe
             sqlserver-legacy-agent.jar

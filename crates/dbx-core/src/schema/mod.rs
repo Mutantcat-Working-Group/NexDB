@@ -1708,7 +1708,7 @@ fn oracle_object_statistics_owner_segments_sql(schema: &str, segment_view: &str)
 }
 
 fn oracle_object_statistics_user_segments_sql(schema: &str) -> String {
-    // USER_SEGMENTS exposes objects owned by the login/current user, while DBX
+    // USER_SEGMENTS exposes objects owned by the login/current user, while NexDB
     // may switch CURRENT_SCHEMA before metadata queries for cross-schema browsing.
     format!(
         "SELECT t.TABLE_NAME, t.OWNER, t.NUM_ROWS, NVL(s.BYTES, 0) AS TOTAL_BYTES \
@@ -12335,7 +12335,7 @@ fn mysql_block_comment_end(bytes: &[u8], from: usize) -> Option<usize> {
 
 fn ensure_display_ddl_terminated(sql: String) -> String {
     let trimmed = sql.trim_end();
-    // SHOW CREATE TABLE returns a table definition, not a runnable script; DBX
+    // SHOW CREATE TABLE returns a table definition, not a runnable script; NexDB
     // displays/copies it as SQL, so include the default statement terminator.
     if trimmed.ends_with(';') {
         sql

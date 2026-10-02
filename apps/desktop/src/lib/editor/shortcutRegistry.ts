@@ -748,7 +748,7 @@ export function formatShortcut(shortcut: string, platform = globalThis.navigator
     .join("+");
 }
 
-// macOS 上由系统/应用菜单占用的快捷键（DBX 自己的应用子菜单，
+// macOS 上由系统/应用菜单占用的快捷键（NexDB 自己的应用子菜单，
 // src-tauri/src/lib.rs）：
 //   Mod+H      Hide，⌘H
 //   Alt+Mod+H  Hide Others，⌥⌘H

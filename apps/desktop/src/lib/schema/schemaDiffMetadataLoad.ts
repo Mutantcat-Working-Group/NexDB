@@ -15,7 +15,7 @@ const DEFAULT_SCHEMA_DIFF_METADATA_CONCURRENCY = 6;
  * backend metadata gate admits `METADATA_POOL_SQLSERVER_LIMIT = 1` in-flight
  * request per (connection, database) and turns anything that still has to wait
  * after `METADATA_POOL_ACQUIRE_TIMEOUT` (5s) into
- * `DBX metadata pool is busy; please retry`
+ * `NexDB metadata pool is busy; please retry`
  * (crates/dbx-core/src/connection/mod.rs). Fanning out further cannot add
  * throughput because the backend serializes those same requests anyway; it
  * only builds a queue that is guaranteed to time out.
@@ -151,7 +151,7 @@ export function createConcurrencyLimiter(limit: number, onIdle?: () => void) {
  * resource instead of to one compare session. Two compares can hammer the same
  * resource at once (closing a compare dialog keeps the compare running in the
  * background) and adding their fan-out together would occupy the backend gate
- * and fail whoever loses the race with `DBX metadata pool is busy; please
+ * and fail whoever loses the race with `NexDB metadata pool is busy; please
  * retry`. Waiting here instead keeps the queue off the backend gate, where
  * `METADATA_POOL_ACQUIRE_TIMEOUT` (5s) would turn it into that error.
  *

@@ -29,7 +29,7 @@ WHERE idx.object_id = @dbx_object_id
 IF @dbx_unsupported_index IS NOT NULL
 BEGIN
     DECLARE @dbx_unsupported_index_message nvarchar(2048) =
-        N'DBX cannot safely preserve affected SQL Server index ' + QUOTENAME(@dbx_unsupported_index) +
+        N'NexDB cannot safely preserve affected SQL Server index ' + QUOTENAME(@dbx_unsupported_index) +
         N' because its index type is not a supported rowstore type.';
     ;THROW 50001, @dbx_unsupported_index_message, 1;
 END;
@@ -58,7 +58,7 @@ IF EXISTS (
       )
 )
 BEGIN
-    ;THROW 50002, 'DBX could not resolve the partition column for an affected SQL Server index.', 1;
+    ;THROW 50002, 'NexDB could not resolve the partition column for an affected SQL Server index.', 1;
 END;
 
 DECLARE @dbx_started_transaction bit = 0;
@@ -434,7 +434,7 @@ pub(super) fn build_dependency_aware_alter_column_batch(table: &str, column_name
     batch.push_str("');\nDECLARE @dbx_column_id int = COLUMNPROPERTY(@dbx_object_id, N'");
     batch.push_str(&column_literal);
     batch.push_str("', 'ColumnId');\nIF @dbx_object_id IS NULL OR @dbx_column_id IS NULL\n");
-    batch.push_str("    THROW 50000, 'DBX could not resolve the SQL Server column before ALTER COLUMN.', 1;\n");
+    batch.push_str("    THROW 50000, 'NexDB could not resolve the SQL Server column before ALTER COLUMN.', 1;\n");
     batch.push_str(DEPENDENCY_CAPTURE_AND_DROP_SQL);
     batch.push('\n');
     batch.push_str("    ");

@@ -1261,7 +1261,7 @@ jobs:
     if: ${{ always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
     runs-on: ubuntu-latest
     steps:
-      - name: Create DBX bot release token
+      - name: Create NexDB bot release token
         id: release-token
         uses: actions/create-github-app-token@v3
         with:
@@ -1697,13 +1697,13 @@ jobs:
             gh release edit agents-latest \
               --repo "$GITHUB_REPOSITORY" \
               --title "Agents latest" \
-              --notes "Moving entry point for the latest DBX agent registry. Artifacts are stored on the referenced versioned agents release." \
+              --notes "Moving entry point for the latest NexDB agent registry. Artifacts are stored on the referenced versioned agents release." \
               --latest=false
           else
             gh release create agents-latest release/agent-registry.json \
               --repo "$GITHUB_REPOSITORY" \
               --title "Agents latest" \
-              --notes "Moving entry point for the latest DBX agent registry. Artifacts are stored on the referenced versioned agents release." \
+              --notes "Moving entry point for the latest NexDB agent registry. Artifacts are stored on the referenced versioned agents release." \
               --latest=false
           fi
 

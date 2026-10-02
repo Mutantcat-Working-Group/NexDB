@@ -78,7 +78,7 @@ function mountSurface(initialTab: QueryTab | (() => QueryTab)) {
 }
 
 function loadStarts(): number {
-  return vi.mocked(appendDebugLog).mock.calls.filter((call) => call[1] === "[DBX][DataGrid:load:start]").length;
+  return vi.mocked(appendDebugLog).mock.calls.filter((call) => call[1] === "[NexDB][DataGrid:load:start]").length;
 }
 
 describe("ContentArea grid preload behavior", () => {

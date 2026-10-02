@@ -1,4 +1,4 @@
-const LOSSLESS_JSON_NUMBER = Symbol("DBX lossless JSON number");
+const LOSSLESS_JSON_NUMBER = Symbol("NexDB lossless JSON number");
 
 export interface LosslessJsonNumber {
   readonly [LOSSLESS_JSON_NUMBER]: true;

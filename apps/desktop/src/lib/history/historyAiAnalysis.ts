@@ -22,7 +22,7 @@ export function canRollbackHistoryEntry(entry: Pick<HistoryAiAnalysisEntry, "con
 
 export function buildHistoryAiAnalysisPrompt(entry: HistoryAiAnalysisEntry): string {
   const details = [
-    "Analyse this DBX history entry and focus on:",
+    "Analyse this NexDB history entry and focus on:",
     "1. What this operation did, and which data or structures it may have affected.",
     "2. Whether it carries risk, e.g. an UPDATE without WHERE, deletes, DDL, table locks, performance or permission problems.",
     "3. If rollback SQL is present, judge whether it is safe enough and what should be confirmed before running it.",

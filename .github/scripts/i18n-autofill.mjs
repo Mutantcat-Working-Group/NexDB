@@ -147,7 +147,7 @@ async function translateMissing(locale, keys, sourceLeaves) {
         {
           role: "system",
           content: [
-            `Translate DBX UI i18n strings from Simplified Chinese to ${TARGET_LABELS[locale]}.`,
+            `Translate NexDB UI i18n strings from Simplified Chinese to ${TARGET_LABELS[locale]}.`,
             'Return strict JSON only in this exact shape: {"translations":{"path.to.key":"translated text"}}.',
             "Keep i18n placeholders such as {count}, {message}, and {name} exactly unchanged.",
             "Keep product names, database names, SQL keywords, file extensions, shortcuts, and code-like terms unchanged unless the target language convention clearly translates them.",

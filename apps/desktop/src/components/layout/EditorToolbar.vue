@@ -43,7 +43,7 @@ const props = defineProps<{
   txnSessionId?: string;
   txnAutoRolledBack?: boolean;
   /** Oracle-only: whether the current manual Oracle session executed a statement
-   *  DBX cannot prove read-only. Commit/Rollback are hidden while false. */
+   *  NexDB cannot prove read-only. Commit/Rollback are hidden while false. */
   txnPossiblyDirty?: boolean;
   /** Oracle manual mode derived from the resolved database type (not raw
    *  db_type, which can be the agent transport). */

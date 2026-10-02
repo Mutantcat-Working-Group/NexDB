@@ -222,7 +222,7 @@ describe("DBeaver folder import", () => {
     expect(connection?.database).toBeUndefined();
   });
 
-  it("maps DB2 connections to DBX's native db2 type instead of falling back to generic JDBC", async () => {
+  it("maps DB2 connections to NexDB's native db2 type instead of falling back to generic JDBC", async () => {
     const [connection] = await parseDbeaverConnections(
       payload({
         connections: {

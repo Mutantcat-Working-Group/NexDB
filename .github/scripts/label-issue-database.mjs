@@ -180,7 +180,7 @@ function cleanTitleSummaryLine(line) {
 
 function isSkippableTitleSummaryLine(line) {
   return (
-    /^DBX debug log$/i.test(line) ||
+    /^NexDB debug log$/i.test(line) ||
     /^(Exported|User agent|Platform|Timezone):/i.test(line) ||
     /^(Native|Tauri) log dir:/i.test(line) ||
     /^=+.*logs?.*=+$/i.test(line) ||

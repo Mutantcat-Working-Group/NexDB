@@ -45,5 +45,5 @@ for (const [sourceRelative, destinationRelative] of sources) {
 
 writeFileSync(
   join(destinationRoot, "README.md"),
-  "# Bundled DBX Plugin SDK\n\nThis directory is bundled for `dbx-plugin package` and is managed by `@dbx-app/plugin-cli`.\n",
+  "# Bundled NexDB Plugin SDK\n\nThis directory is bundled for `dbx-plugin package` and is managed by `@dbx-app/plugin-cli`.\n",
 );

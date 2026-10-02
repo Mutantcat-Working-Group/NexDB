@@ -1,6 +1,6 @@
 # Release Checklist
 
-Use this checklist before pushing release tags or publishing DBX agent jars.
+Use this checklist before pushing release tags or publishing NexDB agent jars.
 
 ## 1. Confirm Scope
 
@@ -119,7 +119,7 @@ Java agents are built for the default JRE key `21`, backed by JDK 21 in the rele
 
 If another agent needs a different runtime, update the release workflow JRE detection logic.
 - Document why in the module or release notes.
-- Verify DBX can download the matching runtime artifact.
+- Verify NexDB can download the matching runtime artifact.
 
 ## 7. CI Expectations
 

@@ -5,4 +5,4 @@ CREATE TABLE IF NOT EXISTS dbx_smoke (
   created_at DateTime DEFAULT now()
 ) ENGINE = MergeTree
 ORDER BY id;
-INSERT INTO dbx_smoke (id, note, nullable_value) VALUES (1, 'DBX smoke 中文 🚀', NULL);
+INSERT INTO dbx_smoke (id, note, nullable_value) VALUES (1, 'NexDB smoke 中文 🚀', NULL);

@@ -26,7 +26,7 @@ test("Windows downloads include standard, offline, and Windows 7 installers", ()
         driverLinkLabel: undefined,
         descriptionSuffix: undefined,
         badge: "推荐",
-        href: "https://dl.dbxio.com/releases/v0.5.82/DBX_0.5.82_x64-setup.exe?v=0.5.82",
+        href: "https://dl.dbxio.com/releases/v0.5.82/NexDB_0.5.82_x64-setup.exe?v=0.5.82",
       },
       {
         id: "windows-offline",
@@ -36,7 +36,7 @@ test("Windows downloads include standard, offline, and Windows 7 installers", ()
         driverLinkLabel: "数据库离线驱动",
         descriptionSuffix: undefined,
         badge: "内网",
-        href: "https://dl.dbxio.com/releases/v0.5.82/DBX_0.5.82_x64-offline-setup.exe?v=0.5.82",
+        href: "https://dl.dbxio.com/releases/v0.5.82/NexDB_0.5.82_x64-offline-setup.exe?v=0.5.82",
       },
       {
         id: "windows-7-offline",
@@ -46,7 +46,7 @@ test("Windows downloads include standard, offline, and Windows 7 installers", ()
         driverLinkLabel: "数据库离线驱动",
         descriptionSuffix: undefined,
         badge: "旧系统",
-        href: "https://dl.dbxio.com/releases/v0.5.82/DBX_0.5.82_x64-win7-server2012r2-offline-setup.exe?v=0.5.82",
+        href: "https://dl.dbxio.com/releases/v0.5.82/NexDB_0.5.82_x64-win7-server2012r2-offline-setup.exe?v=0.5.82",
       },
     ],
   );
@@ -56,7 +56,7 @@ test("all downloads use immutable versioned release paths", () => {
   const options = createInstallOptions("en", "0.5.82");
 
   assert.equal(options.length, 8);
-  assert.ok(options.every((option) => option.href.startsWith("https://dl.dbxio.com/releases/v0.5.82/DBX_0.5.82_")));
+  assert.ok(options.every((option) => option.href.startsWith("https://dl.dbxio.com/releases/v0.5.82/NexDB_0.5.82_")));
   assert.ok(options.every((option) => !option.href.includes("/releases/latest/")));
 });
 
@@ -70,15 +70,15 @@ test("browser static package opens one guide with both architecture downloads", 
         id: "linux-browser",
         iconId: "linux",
         label: "Linux 浏览器版",
-        href: "https://dl.dbxio.com/releases/v0.6.0/DBX_0.6.0_x64-browser-static.tar.gz?v=0.6.0",
+        href: "https://dl.dbxio.com/releases/v0.6.0/NexDB_0.6.0_x64-browser-static.tar.gz?v=0.6.0",
         browserStaticDownloads: [
           {
             arch: "x64",
-            href: "https://dl.dbxio.com/releases/v0.6.0/DBX_0.6.0_x64-browser-static.tar.gz?v=0.6.0",
+            href: "https://dl.dbxio.com/releases/v0.6.0/NexDB_0.6.0_x64-browser-static.tar.gz?v=0.6.0",
           },
           {
             arch: "arm64",
-            href: "https://dl.dbxio.com/releases/v0.6.0/DBX_0.6.0_arm64-browser-static.tar.gz?v=0.6.0",
+            href: "https://dl.dbxio.com/releases/v0.6.0/NexDB_0.6.0_arm64-browser-static.tar.gz?v=0.6.0",
           },
         ],
       },

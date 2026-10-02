@@ -105,7 +105,7 @@ jobs:
           # heals a stale or partial R2 manifest.
           jq --arg tag "$TAG" '
             (.platforms[]?.url?) |= (
-              sub("https://github\\.com/t8y2/dbx/releases/download/" + $tag + "/"; "https://dl.dbxio.com/releases/latest/")
+              sub("https://github\\.com/Mutantcat-Working-Group/NexDB/releases/download/" + $tag + "/"; "https://dl.dbxio.com/releases/latest/")
               + "?v=" + $tag
             )
           ' updater-assets/latest.json > r2-latest.json

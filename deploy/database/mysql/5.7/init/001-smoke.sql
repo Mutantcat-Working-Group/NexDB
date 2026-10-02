@@ -5,4 +5,4 @@ CREATE TABLE IF NOT EXISTS dbx_smoke (
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   INDEX idx_dbx_smoke_note (note)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-INSERT INTO dbx_smoke (note, nullable_value) VALUES ('DBX smoke 中文 🚀', NULL);
+INSERT INTO dbx_smoke (note, nullable_value) VALUES ('NexDB smoke 中文 🚀', NULL);

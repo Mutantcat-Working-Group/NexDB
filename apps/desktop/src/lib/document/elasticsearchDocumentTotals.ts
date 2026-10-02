@@ -42,6 +42,6 @@ export function clampDocumentPage(page: number, pageSize: number, paginationTota
 }
 
 // Elasticsearch rejects any from+size combination above this by default (index.max_result_window).
-// DBX can't know a target index's actual configured value up front, so it clamps requests to the
+// NexDB can't know a target index's actual configured value up front, so it clamps requests to the
 // out-of-the-box default rather than letting an oversized "rows per page" preference reach the cluster as-is.
 export const ELASTICSEARCH_DEFAULT_MAX_RESULT_WINDOW = 10_000;

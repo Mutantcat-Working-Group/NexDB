@@ -46,7 +46,7 @@ func TestKyuubiConnectionInfoReportsNativeIdentity(t *testing.T) {
 		t.Fatalf("unexpected Kyuubi connection info: %#v", info)
 	}
 	databaseInfo, ok := info["databaseInfo"].(map[string]string)
-	if !ok || databaseInfo["productName"] != "Apache Kyuubi" || databaseInfo["driverName"] != "DBX Kyuubi Go Agent" {
+	if !ok || databaseInfo["productName"] != "Apache Kyuubi" || databaseInfo["driverName"] != "NexDB Kyuubi Go Agent" {
 		t.Fatalf("unexpected Kyuubi database identity: %#v", info["databaseInfo"])
 	}
 }

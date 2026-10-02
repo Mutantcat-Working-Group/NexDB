@@ -56,7 +56,7 @@ describe("SQL Server activity trace", () => {
     expect(sqlServerTraceSessionExpiresAt(buildSqlServerTraceSessionName(123456789, 0.25))).toBe(123456789);
   });
 
-  it("identifies only expired DBX sessions for cleanup", () => {
+  it("identifies only expired NexDB sessions for cleanup", () => {
     const now = Date.UTC(2026, 7, 12, 12);
     const oldName = buildSqlServerTraceSessionName(now - 1, 0.1);
     const activeName = buildSqlServerTraceSessionName(now + 10 * 60_000, 0.2);

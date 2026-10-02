@@ -1,10 +1,10 @@
 # Connection type descriptors
 
-`plugins/connection-types/*.yaml` is the source of truth for DBX connection type registration. It covers SQL databases, document and vector stores, key-value and configuration services, message queues, MQTT brokers, and generic JDBC targets. `profiles/catalog.yaml` contains the frontend connection-picker profiles that bind product names and defaults to those stable connection types.
+`plugins/connection-types/*.yaml` is the source of truth for NexDB connection type registration. It covers SQL databases, document and vector stores, key-value and configuration services, message queues, MQTT brokers, and generic JDBC targets. `profiles/catalog.yaml` contains the frontend connection-picker profiles that bind product names and defaults to those stable connection types.
 
 Each descriptor defines the stable `dbType` ID, generated Rust variant, display label, runtime and MCP modes, Agent driver mapping, connection defaults, optional SQL dialect binding, connection form kind, and product capabilities. `dbType` and `DatabaseType` retain their historical names for serialized API compatibility even though some targets are not databases. SQL syntax, DDL templates, type catalogs, and metadata-query details remain in `plugins/dialects/*.yaml`.
 
-Connection types may contain multiple runtime profiles when they share the same DBX connection model and management surface. For example, Kafka, RocketMQ, and RabbitMQ are profiles of `mq.yaml`; MQTT remains a separate connection type because it has a different protocol, configuration model, and UI workflow.
+Connection types may contain multiple runtime profiles when they share the same NexDB connection model and management surface. For example, Kafka, RocketMQ, and RabbitMQ are profiles of `mq.yaml`; MQTT remains a separate connection type because it has a different protocol, configuration model, and UI workflow.
 
 Set `specializedSurface: true` only when the product uses a dedicated management surface that is not represented by the shared capability matrix. Otherwise at least one product capability must be enabled.
 

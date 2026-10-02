@@ -244,7 +244,7 @@ async function loadRabbitMqVhosts() {
     const namespaces = await mqListNamespaces(props.connectionId, RABBITMQ_MQ_TENANT);
     rabbitMqVhosts.value = namespaces.map((ns) => ns.namespace);
   } catch (e: unknown) {
-    console.warn("[DBX] Failed to load RabbitMQ vhosts:", e);
+    console.warn("[NexDB] Failed to load RabbitMQ vhosts:", e);
   }
 }
 
@@ -426,7 +426,7 @@ onMounted(async () => {
   try {
     await connectionStore.ensureConnected(props.connectionId);
   } catch (e) {
-    console.warn("[DBX] ensureConnected failed for", props.connectionId, e);
+    console.warn("[NexDB] ensureConnected failed for", props.connectionId, e);
   }
   loadClusterInfo();
 });

@@ -4,7 +4,7 @@ use crate::db::document_result::DocumentQueryResult;
 use crate::models::connection::ConnectionConfig;
 use crate::types::QueryResult;
 
-const FEATURE_DISABLED: &str = "DynamoDB support is not included in this DBX build";
+const FEATURE_DISABLED: &str = "DynamoDB support is not included in this NexDB build";
 
 #[derive(Clone)]
 pub struct DynamoDbClient {

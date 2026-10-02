@@ -210,7 +210,7 @@ pub fn claude_code_cli_env(config: &AiConfig) -> Result<Vec<(String, String)>, S
         }
         if is_reserved_dbx_mcp_env_name(key) {
             return Err(format!(
-                "[claudeCodeEnvReserved] `{key}` is managed by DBX for the scoped MCP server and cannot be set here."
+                "[claudeCodeEnvReserved] `{key}` is managed by NexDB for the scoped MCP server and cannot be set here."
             ));
         }
         env.insert(key.to_string(), value.clone());

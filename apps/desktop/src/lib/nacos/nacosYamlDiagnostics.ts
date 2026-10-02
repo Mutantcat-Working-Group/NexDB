@@ -4,7 +4,7 @@
  * The editor's YAML mode (`@codemirror/lang-yaml`, Lezer based) is an
  * error-tolerant grammar: it parses tab indentation and duplicate mapping keys
  * as valid structure, so it can never report the two problems this feature
- * exists for. DBX already depends on the `yaml` package for Nacos validation,
+ * exists for. NexDB already depends on the `yaml` package for Nacos validation,
  * and that parser tracks mapping scope itself and reports both with exact
  * offsets, so the diagnostics are derived from it and are only *rendered* by
  * CodeMirror's native lint extension.
@@ -65,7 +65,7 @@ export function translateNacosYamlDiagnostic(diagnostic: Pick<NacosYamlDiagnosti
  *
  * Duplicate keys are `error`: the project's own parser rejects them
  * (`DUPLICATE_KEY`), Spring Boot's `OriginTrackedYamlLoader` fails startup on
- * them, and DBX already blocked publishing on them before this feature. Parser
+ * them, and NexDB already blocked publishing on them before this feature. Parser
  * *warnings* stay `warning` and never block publishing.
  */
 export function analyzeNacosYaml(text: string): NacosYamlDiagnostic[] {

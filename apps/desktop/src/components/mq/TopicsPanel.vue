@@ -295,7 +295,7 @@ async function loadClusterInfo() {
   try {
     clusterInfo.value = await mqGetClusterInfo(props.connectionId);
   } catch (e: unknown) {
-    console.warn("[DBX] Failed to load RocketMQ cluster info:", e);
+    console.warn("[NexDB] Failed to load RocketMQ cluster info:", e);
   }
 }
 

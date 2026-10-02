@@ -19,18 +19,18 @@
   </head>
   <body>
     <main>
-      <div class="eyebrow" id="eyebrow">DBX plugin workbench</div>
+      <div class="eyebrow" id="eyebrow">NexDB plugin workbench</div>
       <h1>{{PLUGIN_NAME_HTML}}</h1>
-      <p id="description">This sandboxed page talks to the {{LANGUAGE_LABEL}} sidecar only through the DBX Host Bridge.</p>
+      <p id="description">This sandboxed page talks to the {{LANGUAGE_LABEL}} sidecar only through the NexDB Host Bridge.</p>
       <button id="ping" type="button">Invoke sidecar</button>
-      <pre id="result">Waiting for DBX plugin host…</pre>
+      <pre id="result">Waiting for NexDB plugin host…</pre>
     </main>
     <script>
       const result = document.querySelector("#result");
       const button = document.querySelector("#ping");
       const copy = {
-        en: { eyebrow: "DBX plugin workbench", description: "This sandboxed page talks to the {{LANGUAGE_LABEL}} sidecar only through the DBX Host Bridge.", button: "Invoke sidecar", ready: "Ready", calling: "Calling sidecar…", error: "Error" },
-        zh: { eyebrow: "DBX 插件工作台", description: "此沙箱页面仅通过 DBX Host Bridge 与 {{LANGUAGE_LABEL}} Sidecar 通信。", button: "调用 Sidecar", ready: "已就绪", calling: "正在调用 Sidecar…", error: "错误" }
+        en: { eyebrow: "NexDB plugin workbench", description: "This sandboxed page talks to the {{LANGUAGE_LABEL}} sidecar only through the NexDB Host Bridge.", button: "Invoke sidecar", ready: "Ready", calling: "Calling sidecar…", error: "Error" },
+        zh: { eyebrow: "NexDB 插件工作台", description: "此沙箱页面仅通过 NexDB Host Bridge 与 {{LANGUAGE_LABEL}} Sidecar 通信。", button: "调用 Sidecar", ready: "已就绪", calling: "正在调用 Sidecar…", error: "错误" }
       };
       let text = copy.en;
       window.dbxPlugin.ready.then(() => {

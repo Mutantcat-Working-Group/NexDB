@@ -1,5 +1,5 @@
 {
-  description = "DBX - Open-source database management tool (Tauri 2 + Vue 3 + Rust)";
+  description = "NexDB - Open-source database management tool (Tauri 2 + Vue 3 + Rust)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -145,7 +145,7 @@
 
           shellHook = ''
             echo "╔══════════════════════════════════════════════════════════════╗"
-            echo "║  DBX development environment                                 ║"
+            echo "║  NexDB development environment                              ║"
             echo "║                                                              ║"
             echo "║  Desktop (Tauri):   pnpm install && pnpm dev:tauri           ║"
             echo "║  Web frontend:      pnpm dev:web                             ║"
@@ -184,7 +184,7 @@
         # ------------------------------------------------------------------ #
         packages.dbx-desktop = pkgs.stdenv.mkDerivation (finalAttrs: {
           pname = "dbx-desktop";
-          version = "1.0.20260921";
+          version = "1.0.20261002";
 
           src = pkgs.lib.cleanSource ./.;
 
@@ -243,14 +243,14 @@
 
           # ── Desktop entry (freedesktop .desktop file) ────────────────────── #
           # Built with `makeDesktopItem` so it is validated against the spec
-          # at build time. Icon name "dbx" resolves via the hicolor theme
+          # at build time. Icon name "nexdb" resolves via the hicolor theme
           # (the installPhase copies PNGs into share/icons/hicolor/<size>/apps).
           desktopItem = pkgs.makeDesktopItem {
-            name = "dbx";
+            name = "nexdb";
             type = "Application";
-            exec = "dbx %u";
-            icon = "dbx";
-            desktopName = "DBX";
+            exec = "nexdb %u";
+            icon = "nexdb";
+            desktopName = "NexDB";
             genericName = "Database Management Tool";
             comment = "Open-source database management tool for 90+ databases";
             categories = [ "Development" "Database" ];
@@ -263,7 +263,7 @@
               "mongodb"
               "redis"
             ];
-            startupWMClass = "DBX";
+            startupWMClass = "nexdb";
             terminal = false;
             mimeTypes = [ "application/sql" "x-scheme-handler/dbx" ];
           };
@@ -352,8 +352,8 @@
             runHook preInstall
 
             mkdir -p $out/bin
-            # tauri build --no-bundle puts the binary at target/release/dbx
-            cp target/release/dbx $out/bin/dbx
+            # tauri build --no-bundle puts the binary at target/release/nexdb
+            cp target/release/nexdb $out/bin/nexdb
 
             # Install icon files into the hicolor theme tree so that all
             # desktop environments (GNOME Shell, KDE Plasma, XFCE, etc.) can
@@ -364,7 +364,7 @@
                 if [ -f "src-tauri/icons/''${size}x''${size}.png" ]; then
                   mkdir -p "$out/share/icons/hicolor/''${size}x''${size}/apps"
                   cp "src-tauri/icons/''${size}x''${size}.png" \
-                    "$out/share/icons/hicolor/''${size}x''${size}/apps/dbx.png"
+                    "$out/share/icons/hicolor/''${size}x''${size}/apps/nexdb.png"
                 fi
               done
 
@@ -372,7 +372,7 @@
               if [ -f "src-tauri/icons/128x128@2x.png" ]; then
                 mkdir -p "$out/share/icons/hicolor/256x256/apps"
                 cp "src-tauri/icons/128x128@2x.png" \
-                  "$out/share/icons/hicolor/256x256/apps/dbx.png"
+                  "$out/share/icons/hicolor/256x256/apps/nexdb.png"
               fi
 
               # Generate missing common sizes so hicolor directory metadata
@@ -387,7 +387,7 @@
                   continue
                 fi
                 magick "$src" -resize "''${size}x''${size}" \
-                  "$out/share/icons/hicolor/''${size}x''${size}/apps/dbx.png"
+                  "$out/share/icons/hicolor/''${size}x''${size}/apps/nexdb.png"
               done
 
               # Install the full-size icon.png as the scalable fallback so that
@@ -395,38 +395,38 @@
               if [ -f "src-tauri/icons/icon.png" ]; then
                 mkdir -p "$out/share/icons/hicolor/512x512/apps"
                 cp "src-tauri/icons/icon.png" \
-                  "$out/share/icons/hicolor/512x512/apps/dbx.png"
+                  "$out/share/icons/hicolor/512x512/apps/nexdb.png"
               fi
             fi
 
             # Register the freedesktop .desktop file so app launchers (GNOME
             # Shell, KDE Plasma, etc.) can discover the application.
             mkdir -p $out/share/applications
-            cp ${finalAttrs.desktopItem}/share/applications/dbx.desktop \
-              $out/share/applications/dbx.desktop
+            cp ${finalAttrs.desktopItem}/share/applications/nexdb.desktop \
+              $out/share/applications/nexdb.desktop
             ${pkgs.desktop-file-utils}/bin/desktop-file-validate \
-              $out/share/applications/dbx.desktop
+              $out/share/applications/nexdb.desktop
 
             runHook postInstall
           '';
 
           # ── Metadata ────────────────────────────────────────────────────── #
           meta = with pkgs.lib; {
-            description = "DBX desktop — open-source database management tool (Tauri 2)";
+            description = "NexDB desktop — open-source database management tool (Tauri 2)";
             longDescription = ''
-              DBX is a lightweight (~15 MB) database management tool supporting 90+
+              NexDB is a lightweight (~15 MB) database management tool supporting 90+
               databases. Built with Tauri 2, Vue 3, and Rust. No Java, no Chromium.
             '';
             license = licenses.asl20;
-            homepage = "https://github.com/t8y2/dbx";
+            homepage = "https://github.com/Mutantcat-Working-Group/NexDB";
             maintainers = [ ];
             platforms = platforms.linux; # macOS/Windows need platform-specific adjustments
-            mainProgram = "dbx";
+            mainProgram = "nexdb";
           } // {
             # Non-lib meta: absolute path to the installed .desktop file so
             # `nix profile install`/home-manager can register it with the
             # user's desktop environment.
-            desktopFile = "${placeholder "out"}/share/applications/dbx.desktop";
+            desktopFile = "${placeholder "out"}/share/applications/nexdb.desktop";
           };
         });
       }

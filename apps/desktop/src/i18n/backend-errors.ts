@@ -94,7 +94,7 @@ const patterns: [RegExp, string][] = [
   [/^JRE (.+?) runtime is not installed\. Please install it from the Driver Manager\.$/, "connection.jreNotInstalled"],
   [/^System Java runtime was not found:/, "connection.systemJavaNotFound"],
   [/^Custom Java runtime path is empty\. Please choose a Java executable\.$/, "connection.customJavaPathEmpty"],
-  [/^Agent requires Java 21, but DBX started it with an older Java runtime\. Use DBX managed JRE 21 or select a Java 21 executable in Driver Manager\./, "connection.agentJavaTooOld"],
+  [/^Agent requires Java 21, but NexDB started it with an older Java runtime\. Use NexDB managed JRE 21 or select a Java 21 executable in Driver Manager\./, "connection.agentJavaTooOld"],
   [/^JDBC plugin is not installed\. Install the optional JDBC plugin to use this connection\.$/, "connection.jdbcPluginNotInstalled"],
   [/GBASEDBTSERVER[\s\S]*DBSERVERNAME[\s\S]*DBSERVERALIASES/, "connection.gbaseServerMismatch"],
   [/^ai\.configNameExists:(.+)$/, "ai.configNameExists"],
@@ -252,7 +252,7 @@ function translateStructuredBackendError(t: BackendErrorTranslate, error: Backen
     detail = detail.slice(summary.length + 2).trim() || undefined;
   }
   // An unclassified message still goes through the same catalog the raw transports use, so a
-  // message DBX knows reads the same whether it arrived wrapped or bare.
+  // message NexDB knows reads the same whether it arrived wrapped or bare.
   if (error.code === LEGACY_BACKEND_ERROR_CODE && detail) {
     const known = translateKnownMessage(t, detail);
     if (known) return known;

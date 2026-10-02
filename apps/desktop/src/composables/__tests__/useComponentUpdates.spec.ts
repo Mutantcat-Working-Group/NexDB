@@ -151,7 +151,7 @@ describe("useComponentUpdates", () => {
     expect(result).toEqual({ drivers: 0, jdbc: false, mcp: false, plugins: 0, skippedDrivers: 0, failed: [] });
   });
 
-  it("installs every manually selected category when no DBX update exists and automatic updates are disabled", async () => {
+  it("installs every manually selected category when no NexDB update exists and automatic updates are disabled", async () => {
     Object.assign(settings.editorSettings, {
       autoUpdateDrivers: false,
       autoUpdateJdbc: false,

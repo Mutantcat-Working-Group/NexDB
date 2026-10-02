@@ -2729,7 +2729,7 @@ function enqueueAttachmentTask(task: (expectedEpoch: number) => Promise<void>, e
     })
     .catch((error) => {
       if (expectedEpoch !== attachmentDraftEpoch) return;
-      console.error("[DBX][ai-attachment] Attachment task failed", error);
+      console.error("[NexDB][ai-attachment] Attachment task failed", error);
       toast(t("ai.attachmentReadFailed"), 4000);
     })
     .finally(() => {
@@ -2845,7 +2845,7 @@ function addDroppedAttachmentPaths(paths: string[]) {
         await addTextAttachmentBytes(name, data, metadata.size, expectedEpoch);
       } catch (error) {
         if (expectedEpoch !== attachmentDraftEpoch) return;
-        console.error("[DBX][ai-attachment] Failed to add dropped attachment", { name, error });
+        console.error("[NexDB][ai-attachment] Failed to add dropped attachment", { name, error });
         toast(t("ai.attachmentReadFailed"), 4000);
       }
     }

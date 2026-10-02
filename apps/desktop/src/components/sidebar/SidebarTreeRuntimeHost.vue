@@ -1951,7 +1951,7 @@ async function loadTemplateContext(allowView = false, node: TreeNode = activeNod
     const querySchema = connectionObjectTreeQuerySchema(config, node.database, tableSchema);
     columns = await api.getColumns(node.connectionId, node.database, querySchema, node.label, node.catalog);
   } catch (e) {
-    console.warn("[DBX][tableSqlTemplate:getColumns:error]", e);
+    console.warn("[NexDB][tableSqlTemplate:getColumns:error]", e);
   }
 
   let tableType = node.tableType;
@@ -1962,7 +1962,7 @@ async function loadTemplateContext(allowView = false, node: TreeNode = activeNod
       const matched = tables.find((table) => table.name.toLowerCase() === node.label.toLowerCase());
       if (matched?.table_type) tableType = matched.table_type;
     } catch (e) {
-      console.warn("[DBX][tableSqlTemplate:listTables:error]", e);
+      console.warn("[NexDB][tableSqlTemplate:listTables:error]", e);
     }
   }
 
@@ -2771,7 +2771,7 @@ async function refreshMutatedTableDataTabsForNode(node: TreeNode) {
   try {
     await queryStore.refreshDataTabsForTable(target);
   } catch (error) {
-    console.warn("[DBX][table-data-refresh-after-mutation:error]", { target, error });
+    console.warn("[NexDB][table-data-refresh-after-mutation:error]", { target, error });
   }
 }
 

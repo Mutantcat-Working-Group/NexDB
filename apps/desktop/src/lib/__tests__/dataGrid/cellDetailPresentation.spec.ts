@@ -8,7 +8,7 @@ describe("cellDetailPresentation", () => {
   it("offers compact JSON beside format JSON for editable JSON values", () => {
     expect(valueEditorActions({ canSetNull: true, canFormatJson: true })).toEqual(["formatJson", "compactJson", "setNull", "restoreOriginal"]);
     expect(valueEditorActions({ canSetNull: false, canFormatJson: false })).toEqual(["restoreOriginal"]);
-    expect(compactJsonText('{\n  "name": "DBX",\n  "enabled": true\n}')).toBe('{"name":"DBX","enabled":true}');
+    expect(compactJsonText('{\n  "name": "NexDB",\n  "enabled": true\n}')).toBe('{"name":"NexDB","enabled":true}');
   });
 
   it("wires the value editor compact action to the existing compact handler", () => {

@@ -311,7 +311,7 @@ async function onMessage(event) {
   if (m.type !== "request") return;
   const channel = f.channel;
   // The sandboxed plugin iframe cannot write the clipboard; the debug page is
-  // a normal top-level document, so it performs the copy like the DBX host.
+  // a normal top-level document, so it performs the copy like the NexDB host.
   if (m.method === "host.copy") {
     const text = m.params?.text;
     if (typeof text !== "string" || !text) {

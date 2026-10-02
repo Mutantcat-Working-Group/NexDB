@@ -1874,7 +1874,7 @@ onMounted(() => {
     try {
       await connectionStore.ensureConnected(props.connectionId);
     } catch (e) {
-      console.warn("[DBX] ensureConnected failed for", props.connectionId, e);
+      console.warn("[NexDB] ensureConnected failed for", props.connectionId, e);
     }
     try {
       await loadKeys(true, { preserveSelection: Boolean(restoredUiState.selectedKey) });

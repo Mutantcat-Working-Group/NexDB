@@ -297,7 +297,7 @@ class SqlServerLegacyAgentTest {
         Assertions.assertEquals(1234, error.getErrorCode());
         Assertions.assertSame(original, error.getCause());
         Assertions.assertTrue(error.getMessage().contains("TLS handshake failed"));
-        Assertions.assertTrue(error.getMessage().contains("DBX SQL Server legacy TLS diagnostics:"));
+        Assertions.assertTrue(error.getMessage().contains("NexDB SQL Server legacy TLS diagnostics:"));
     }
 
     @Test

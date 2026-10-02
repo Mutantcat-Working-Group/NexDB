@@ -1,6 +1,6 @@
 # etcd v2 native agent (`etcd2`)
 
-Native Go agent speaking the etcd **v2 HTTP/JSON API** with the standard DBX
+Native Go agent speaking the etcd **v2 HTTP/JSON API** with the standard NexDB
 agent protocol (NDJSON JSON-RPC over stdio). Registered as agentKey `etcd2`,
 selected through the `etcd-v2` driver profile of the `etcd` connection type.
 

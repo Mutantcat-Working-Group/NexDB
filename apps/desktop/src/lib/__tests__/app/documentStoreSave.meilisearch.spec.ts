@@ -10,7 +10,7 @@ describe("Meilisearch document saves", () => {
     expect(serializeDocumentStoreId(parseJsonPreservingLargeNumbers("9007199254740993"), "meilisearch")).toBe("9007199254740993");
   });
 
-  it("describes DBX write semantics without inventing a native primary-key field", () => {
+  it("describes NexDB write semantics without inventing a native primary-key field", () => {
     const preview = formatMeilisearchDocumentOperationPreview({
       action: "update",
       index: "movies",
@@ -18,7 +18,7 @@ describe("Meilisearch document saves", () => {
       document: { title: "Arrival", rating: 9 },
     });
 
-    expect(preview).toContain("DBX MEILISEARCH UPDATE DOCUMENT");
+    expect(preview).toContain("NexDB MEILISEARCH UPDATE DOCUMENT");
     expect(preview).toContain('index: "movies"');
     expect(preview).toContain('id: "001"');
     expect(preview).toContain('"title": "Arrival"');

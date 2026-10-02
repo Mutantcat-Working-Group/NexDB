@@ -7,11 +7,11 @@ import { resolveLang } from "@/lib/i18n";
 const pageMeta = {
   en: {
     title: "Offline Driver Downloads",
-    description: "Download DBX offline driver bundles, database drivers, and JRE packages for air-gapped environments across macOS, Linux, and Windows.",
+    description: "Download NexDB offline driver bundles, database drivers, and JRE packages for air-gapped environments across macOS, Linux, and Windows.",
   },
   cn: {
     title: "离线驱动下载",
-    description: "下载 DBX 离线驱动整包、数据库驱动和 JRE 离线包，覆盖 macOS、Linux、Windows 平台。",
+    description: "下载 NexDB 离线驱动整包、数据库驱动和 JRE 离线包，覆盖 macOS、Linux、Windows 平台。",
   },
 };
 

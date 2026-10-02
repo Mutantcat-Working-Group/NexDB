@@ -3,7 +3,7 @@ import { formatSqlText } from "@/lib/sql/sqlFormatter";
 import { DEFAULT_SQL_FORMATTER_SETTINGS, type SqlFormatterSettings } from "@/lib/sql/sqlFormatterConfig";
 
 /**
- * Golden tests for the layout engine behind DBX's default formatting style.
+ * Golden tests for the layout engine behind NexDB's default formatting style.
  * The expectations for the queries in issues #827, #4850 and #5170 pin the
  * real-world shapes those reports asked for; the rest pin the rules those
  * examples exercise — the collapse of short statements, the wrap of long ones,

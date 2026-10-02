@@ -65,5 +65,5 @@ test("image drafts allow more time than text-only drafts", () => {
 test("published bodies append public attachments and an anonymous-source marker", () => {
   const body = buildGitHubIssueBody("## Description\n\nLoading never finishes.", ["https://dl.dbxio.com/issue/image.png"], "en");
   assert.match(body, /## Attachments/);
-  assert.match(body, /anonymous DBX website form/);
+  assert.match(body, /anonymous NexDB website form/);
 });

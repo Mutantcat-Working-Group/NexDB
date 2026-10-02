@@ -26,7 +26,7 @@ const platformPackages = {
 const platformKey = `${process.platform}-${process.arch}`;
 const platformPackage = platformPackages[platformKey];
 if (!platformPackage) {
-  throw new Error(`No DBX Plugin CLI package smoke test is defined for ${platformKey}.`);
+  throw new Error(`No NexDB Plugin CLI package smoke test is defined for ${platformKey}.`);
 }
 
 const temporaryRoot = mkdtempSync(join(tmpdir(), "dbx-plugin-cli-package-"));

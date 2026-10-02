@@ -49,7 +49,7 @@ test("keeps existing line-column and PostgreSQL caret parsing", () => {
   assert.deepEqual(sqlErrorDecorationRange("SELECT 1\nFROM bad", "syntax error at line 2, column 2"), { from: 10, to: 11 });
 });
 
-test("matches DBX pagination rewrites without accepting unrelated stale SQL", () => {
+test("matches NexDB pagination rewrites without accepting unrelated stale SQL", () => {
   const editorSql = "SELECT *\nFROM projects\nWHERE ;";
   const executedSql = "SELECT *\nFROM projects\nWHERE LIMIT 100;";
 

@@ -3476,24 +3476,24 @@ mod tests {
         config.driver_profile = Some("sqlserver".to_string());
         config.driver_label = Some("SQL Server".to_string());
         config.url_params =
-            Some("applicationName={DBX; Client};password=50%;sqlserverEncryption=disabled;encrypt=false".to_string());
+            Some("applicationName={NexDB; Client};password=50%;sqlserverEncryption=disabled;encrypt=false".to_string());
 
         let canonical = config.canonicalized();
 
         assert_eq!(canonical.driver_profile.as_deref(), Some("sqlserver-legacy"));
         assert_eq!(canonical.driver_label.as_deref(), Some("SQL Server legacy compatibility component"));
-        assert_eq!(canonical.url_params.as_deref(), Some("applicationName={DBX; Client};password=50%;encrypt=false"));
+        assert_eq!(canonical.url_params.as_deref(), Some("applicationName={NexDB; Client};password=50%;encrypt=false"));
         assert_eq!(without_sqlserver_legacy_compatibility_param(Some("sqlserverEncryption=disabled")), None);
     }
 
     #[test]
     fn sqlserver_legacy_migration_respects_escaped_braces() {
-        let params = "applicationName={DBX}}; Client};sqlserverEncryption=disabled;encrypt=false";
+        let params = "applicationName={NexDB}}; Client};sqlserverEncryption=disabled;encrypt=false";
 
         assert!(sqlserver_legacy_compatibility_param(Some(params)));
         assert_eq!(
             without_sqlserver_legacy_compatibility_param(Some(params)).as_deref(),
-            Some("applicationName={DBX}}; Client};encrypt=false")
+            Some("applicationName={NexDB}}; Client};encrypt=false")
         );
     }
 

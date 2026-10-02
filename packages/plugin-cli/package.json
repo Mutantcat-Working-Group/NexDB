@@ -1,7 +1,7 @@
 {
   "name": "@dbx-app/plugin-cli",
   "version": "0.1.9",
-  "description": "Create and package DBX plugins without compiling the DBX plugin CLI",
+  "description": "Create and package NexDB plugins without compiling the NexDB plugin CLI",
   "keywords": [
     "cli",
     "database",
@@ -9,11 +9,11 @@
     "plugin",
     "plugin-development"
   ],
-  "homepage": "https://github.com/t8y2/dbx/tree/main/plugins",
+  "homepage": "https://github.com/Mutantcat-Working-Group/NexDB/tree/main/plugins",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/t8y2/dbx",
+    "url": "https://github.com/Mutantcat-Working-Group/NexDB",
     "directory": "packages/plugin-cli"
   },
   "bin": {

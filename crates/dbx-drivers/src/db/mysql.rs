@@ -1703,7 +1703,7 @@ fn mysql_connection_session_variable_assignments(url: &str) -> Vec<String> {
 }
 
 /// Detects an explicit `group_concat_max_len` assignment in the connection URL.
-/// DBX raises the variable during connection setup, but a value the user (or the
+/// NexDB raises the variable during connection setup, but a value the user (or the
 /// server) asks for must always win, independent of statement execution order.
 fn mysql_session_variables_override_group_concat_max_len(url: &str) -> bool {
     mysql_connection_session_variable_assignments(url).into_iter().any(|assignment| {
@@ -1712,7 +1712,7 @@ fn mysql_session_variables_override_group_concat_max_len(url: &str) -> bool {
         };
         let name = name.trim();
         // `@@global.name=...` only changes the global value and `@name=...`
-        // declares a session user variable; neither replaces DBX's session SET.
+        // declares a session user variable; neither replaces NexDB's session SET.
         if name.starts_with("@@global.") {
             return false;
         }
@@ -4668,7 +4668,7 @@ async fn execute_result_sets_with_text_protocol_on_conn(
     // state, and a following column-less statement's OK packet would be
     // misattributed to the wrong set. mysql_async does not expose the
     // negotiated capability publicly, so gate on the client-side
-    // `deprecate_eof` option requested when the pool was built (DBX disables
+    // `deprecate_eof` option requested when the pool was built (NexDB disables
     // it automatically when a proxy only speaks legacy EOF). When disabled,
     // per-set messages stay empty and only the final SHOW WARNINGS attachment
     // on the last result set reports warnings.
@@ -5589,7 +5589,7 @@ pub async fn execute_non_result_batch_on_conn(
 }
 
 fn prefers_text_protocol_query(sql: &str, dialect: MySqlQueryDialect) -> bool {
-    // User-entered result-set queries are not parameterized in DBX. Text protocol
+    // User-entered result-set queries are not parameterized in NexDB. Text protocol
     // avoids binary result decoding bugs in MySQL-compatible servers and proxies.
     is_result_set_query(sql, dialect) || requires_text_protocol_query(sql, dialect)
 }
@@ -8413,7 +8413,7 @@ mod tests {
 
     #[test]
     fn mysql_setup_queries_follow_server_group_concat_max_len() {
-        // `@@global.group_concat_max_len` keeps DBX aligned with the server value.
+        // `@@global.group_concat_max_len` keeps NexDB aligned with the server value.
         assert_eq!(
             mysql_setup_queries(
                 "mysql://host:3306/db?sessionVariables=group_concat_max_len%3D%40%40global.group_concat_max_len",

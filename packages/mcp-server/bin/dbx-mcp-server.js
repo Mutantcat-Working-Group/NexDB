@@ -22,7 +22,7 @@ function resolveBinary() {
   const platform = `${process.platform}-${process.arch}`;
   const target = platformPackages[platform];
   if (!target) {
-    throw new Error(`DBX MCP does not provide a Rust binary for ${platform}.`);
+    throw new Error(`NexDB MCP does not provide a Rust binary for ${platform}.`);
   }
   const [packageName, binaryName] = target;
   let manifest;
@@ -35,7 +35,7 @@ function resolveBinary() {
   }
   const binary = join(dirname(manifest), "bin", binaryName);
   if (!existsSync(binary)) {
-    throw new Error(`The DBX MCP binary is missing from ${packageName}.`);
+    throw new Error(`The NexDB MCP binary is missing from ${packageName}.`);
   }
   return binary;
 }
@@ -44,7 +44,7 @@ try {
   if (process.argv[2] === "--verify-platform") {
     const platform = `${process.platform}-${process.arch}`;
     if (!platformPackages[platform]) {
-      throw new Error(`DBX MCP does not provide a Rust binary for ${platform}.`);
+      throw new Error(`NexDB MCP does not provide a Rust binary for ${platform}.`);
     }
     process.exit(0);
   }
@@ -58,7 +58,7 @@ try {
     process.on(signal, () => child.kill(signal));
   }
   child.on("error", (error) => {
-    console.error(`Failed to start DBX MCP: ${error.message}`);
+    console.error(`Failed to start NexDB MCP: ${error.message}`);
     process.exit(1);
   });
   child.on("exit", (code, signal) => {

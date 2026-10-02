@@ -87,7 +87,7 @@ export interface AgentDownloadCatalog {
 }
 
 const JDBC_PLUGIN_DOWNLOAD_URL = "https://dl.dbxio.com/releases/latest/dbx-jdbc-plugin-latest.zip";
-const GITHUB_RELEASE_DOWNLOAD_PREFIX = "https://github.com/t8y2/dbx/releases/download/";
+const GITHUB_RELEASE_DOWNLOAD_PREFIX = "https://github.com/Mutantcat-Working-Group/NexDB/releases/download/";
 const CNB_RELEASE_DOWNLOAD_PREFIX = "https://cnb.cool/dbxio.com/dbx/-/releases/download/";
 const MIN_APP_VERSION = "0.6.0";
 const driverVersionMap = driverVersions as Record<string, string>;
@@ -259,7 +259,7 @@ export function buildAgentDownloadCatalog(assets: GitHubReleaseAsset[]): AgentDo
 
 export function buildJdbcPluginDownloadEntry(): JdbcPluginDownloadEntry {
   return {
-    label: "DBX JDBC Plugin",
+    label: "NexDB JDBC Plugin",
     filename: "dbx-jdbc-plugin-latest.zip",
     url: JDBC_PLUGIN_DOWNLOAD_URL,
   };

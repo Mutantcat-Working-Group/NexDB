@@ -479,7 +479,7 @@ pub async fn run_agent_loop(
         }
 
         // Some models call execute_query for a write despite the prompt requiring
-        // a proposal first. Stop before dispatch so DBX can return an exact SQL
+        // a proposal first. Stop before dispatch so NexDB can return an exact SQL
         // proposal for non-production targets, or a non-confirmable production
         // block rather than an impossible confirmation loop.
         if let Some(sql) = unconfirmed_write_sql(&collected_tool_calls, agent_ctx.db_type, &sql_permissions) {
@@ -1947,7 +1947,7 @@ mod tests {
             mode: Some("ask".to_string()),
             user_request: Some("你好".to_string()),
         };
-        let answer = "你好！我是 DBX 的数据库助手。有什么可以帮你的吗？";
+        let answer = "你好！我是 NexDB 的数据库助手。有什么可以帮你的吗？";
         assert_eq!(validate_final_answer(Some(&contract), answer), FinalAnswerCheck::Satisfied);
     }
 }

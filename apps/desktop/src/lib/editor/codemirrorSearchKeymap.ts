@@ -2,9 +2,9 @@ import type { KeyBinding } from "@codemirror/view";
 
 /**
  * `@codemirror/search` 的 `searchKeymap` 内置硬编码了 `Mod-d` = `selectNextOccurrence`
- * （多光标选择下一个匹配词），与 DBX 的可配置快捷键体系冲突：
+ * （多光标选择下一个匹配词），与 NexDB 的可配置快捷键体系冲突：
  *
- * - DBX 中 `Mod+D` 默认绑定「复制行 / 复制当前行」等用户可配置动作（见 shortcutRegistry.ts）；
+ * - NexDB 中 `Mod+D` 默认绑定「复制行 / 复制当前行」等用户可配置动作（见 shortcutRegistry.ts）；
  *   一旦用户把 `Mod+D` 配置给其他动作（例如把「新建查询」改为 Ctrl+D），searchKeymap 的
  *   `Mod-d` 会在编辑器中抢先匹配并 `preventDefault`，事件冒泡到 window 时
  *   `defaultPrevented=true`，App.vue 的全局 handleKeydown 直接返回，用户配置的快捷键永不触发。

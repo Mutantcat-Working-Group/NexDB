@@ -71,7 +71,7 @@ const tableMetadataCache = new MetadataResultCache<TableMetadata>({
 });
 
 const tableMetadataCoordinator = new MetadataLoadCoordinator((event) => {
-  console.debug("[DBX][metadata-load:table-coordinator]", event);
+  console.debug("[NexDB][metadata-load:table-coordinator]", event);
 });
 const tableIndexesLoads = new Map<string, { parts: ReturnType<typeof metadataScopeParts>; promise: Promise<IndexInfo[]>; expiresAt: number }>();
 
@@ -87,7 +87,7 @@ const tableColumnsCache = new MetadataResultCache<TableColumnsMetadata>({
 });
 
 const tableColumnsCoordinator = new MetadataLoadCoordinator((event) => {
-  console.debug("[DBX][metadata-load:columns-coordinator]", event);
+  console.debug("[NexDB][metadata-load:columns-coordinator]", event);
 });
 
 interface InFlightTableColumnsScope {

@@ -89,7 +89,7 @@ export function DocsSidebarFooter({ lang }: { lang: DocsLang }) {
       </nav>
       <div className="dbx-docs-sidebar-tools">
         <div className="flex items-center gap-1">
-          <a className={iconButton} href="https://github.com/t8y2/dbx" target="_blank" rel="noreferrer" aria-label="GitHub">
+          <a className={iconButton} href="https://github.com/Mutantcat-Working-Group/NexDB" target="_blank" rel="noreferrer" aria-label="GitHub">
             <GithubIcon />
           </a>
           <a className={iconButton} href="https://discord.gg/W7NyVDRt6a" target="_blank" rel="noreferrer" aria-label="Discord">

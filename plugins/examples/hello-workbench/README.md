@@ -1,4 +1,4 @@
-# DBX Hello Workbench plugin
+# NexDB Hello Workbench plugin
 
 This example exercises the complete manifest v1 path instead of mocking a contribution preview:
 
@@ -9,7 +9,7 @@ This example exercises the complete manifest v1 path instead of mocking a contri
 - per-connection backend registry;
 - asynchronous connection/progress events;
 - sandboxed workbench UI using `window.dbxPlugin`;
-- workbench-to-sidecar RPC plus a read-only filesystem contribution rendered by DBX's host-owned file manager;
+- workbench-to-sidecar RPC plus a read-only filesystem contribution rendered by NexDB's host-owned file manager;
 - unsigned `.dbxp` candidate packaging plus separate repository signing;
 - automated install-to-uninstall smoke runner.
 
@@ -27,11 +27,11 @@ hello-workbench/
 └── smoke.mjs              # package + lifecycle smoke test
 ```
 
-The reusable smoke executable lives at `crates/dbx-core/examples/plugin_package_smoke.rs` so it shares DBX's workspace lockfile and dependency patches.
+The reusable smoke executable lives at `crates/dbx-core/examples/plugin_package_smoke.rs` so it shares NexDB's workspace lockfile and dependency patches.
 
 ## Build an unsigned development package
 
-From the DBX repository root:
+From the NexDB repository root:
 
 ```bash
 node plugins/examples/hello-workbench/package.mjs
@@ -47,11 +47,11 @@ plugins/examples/hello-workbench/dist/
 
 The `.artifact.json` file contains the target, candidate URL, package SHA-256, and size used by review and multi-platform release aggregation. It intentionally contains no `signingKeyId`.
 
-In DBX, open **Plugin Center**, enable **Allow unsigned development package**, and install the `.dbxp`.
+In NexDB, open **Plugin Center**, enable **Allow unsigned development package**, and install the `.dbxp`.
 
 ## Use the example
 
-1. Select **DBX Hello Workbench** in the plugin center.
+1. Select **NexDB Hello Workbench** in the plugin center.
 2. Create a **Hello connection**.
 3. Fill the host, port, greeting, and optional example token.
 4. Click **Test**.
@@ -102,7 +102,7 @@ node plugins/examples/hello-workbench/smoke.mjs \
 
 ## Sign as a custom repository operator
 
-Official plugin authors skip this section because DBX Store signs approved candidates. To exercise the custom-repository flow, generate or load a repository key and sign the already-built candidate:
+Official plugin authors skip this section because NexDB Store signs approved candidates. To exercise the custom-repository flow, generate or load a repository key and sign the already-built candidate:
 
 ```bash
 dbx-plugin keygen example-repository
@@ -126,7 +126,7 @@ Set `DBX_PLUGIN_OUTPUT_DIR` when automation should place candidate outputs outsi
 
 ## Connection request shape
 
-The backend lifecycle receives the hydrated connection and the final DBX transport endpoint:
+The backend lifecycle receives the hydrated connection and the final NexDB transport endpoint:
 
 ```json
 {
@@ -167,5 +167,5 @@ The workbench context is intentionally smaller:
 ## Adapt it for a real plugin
 
 - SSH/SFTP: switch to `stdio-framed`, keep PTY/SFTP sessions in a backend registry, and use binary channels for terminal/transfer data.
-- OpenDAL: keep credentials in the connection provider, implement filesystem methods in the backend, and let DBX own generic file-manager UI.
-- Other tools: add contributions rather than adding a new DBX database enum variant or importing plugin Vue code into the main window.
+- OpenDAL: keep credentials in the connection provider, implement filesystem methods in the backend, and let NexDB own generic file-manager UI.
+- Other tools: add contributions rather than adding a new NexDB database enum variant or importing plugin Vue code into the main window.

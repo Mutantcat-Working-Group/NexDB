@@ -425,7 +425,7 @@ describe("queryStore Oracle/OceanBase manual-transaction sticky state (behavior 
     expect(tab.isExecuting).toBe(false);
   });
 
-  it("clears the sticky state together with the session on DBX rollback", async () => {
+  it("clears the sticky state together with the session on NexDB rollback", async () => {
     mocks.executeInManualTransaction.mockResolvedValue(dirtyUpdate());
 
     const { useQueryStore } = await import("@/stores/queryStore");

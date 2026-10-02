@@ -182,7 +182,7 @@ const SIMPLE_QUERY_MODULE_KEYWORDS: &[&str] = &["FUNCTION", "PROC", "PROCEDURE",
 const SQLSERVER_INTERNAL_HEALTH_CHECK_SQL: &str = "/* DBX_INTERNAL_TRACE */ SELECT 1";
 // Match JDBC/tiberius `encrypt=false`: encrypt only login, then drop back to raw TDS.
 const SQLSERVER_LEGACY_ENCRYPTION_LEVEL: tiberius::EncryptionLevel = tiberius::EncryptionLevel::Off;
-// Some very old SQL Server setups only accepted DBX <= 0.5.48 because the fallback
+// Some very old SQL Server setups only accepted NexDB <= 0.5.48 because the fallback
 // advertised no encryption support at all. Keep it as the last-resort compatibility path.
 const SQLSERVER_UNSUPPORTED_ENCRYPTION_LEVEL: tiberius::EncryptionLevel = tiberius::EncryptionLevel::NotSupported;
 const SQLSERVER_LEGACY_ENCRYPTION_FALLBACKS: [(&str, tiberius::EncryptionLevel); 2] = [
@@ -316,7 +316,7 @@ pub async fn connect_with_port_explicit(
                         "{encrypted_error}\n\nThis may be caused by an old SQL Server TLS/encryption configuration. \
                          If you are connecting to SQL Server 2008/2008 R2/2012 or another legacy instance, \
                          try SQL Server legacy compatibility mode. It first behaves like encrypt=false and, \
-                         when explicitly enabled, DBX can also fall back to the SQL Server legacy compatibility \
+                         when explicitly enabled, NexDB can also fall back to the SQL Server legacy compatibility \
                          driver for TLS 1.0 encrypted transport. Only use this mode on trusted networks, VPNs, \
                          or SSH tunnels.\n\n\
                          Automatic native legacy fallback also failed: {plain_error}"

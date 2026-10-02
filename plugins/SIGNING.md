@@ -1,22 +1,22 @@
-# DBX plugin signing model
+# NexDB plugin signing model
 
-DBX plugin signing v1 uses one signature owned by the repository that distributes the package. It does not require every plugin author to maintain a private signing key.
+NexDB plugin signing v1 uses one signature owned by the repository that distributes the package. It does not require every plugin author to maintain a private signing key.
 
 ## Trust boundary
 
 The official flow is:
 
 1. The plugin author publishes source and unsigned `.dbxp` candidates.
-2. DBX Store reviews the source, Manifest, permissions, candidate hashes, and release metadata.
-3. A protected store workflow signs the approved candidate with the DBX Store repository key.
+2. NexDB Store reviews the source, Manifest, permissions, candidate hashes, and release metadata.
+3. A protected store workflow signs the approved candidate with the NexDB Store repository key.
 4. The catalog references the final signed artifact, SHA-256, size, and `signingKeyId`.
-5. DBX verifies the catalog metadata, package checksums, repository signature, Manifest identity, version, publisher, and permissions before activation.
+5. NexDB verifies the catalog metadata, package checksums, repository signature, Manifest identity, version, publisher, and permissions before activation.
 
 The `publisher` field records authorship and catalog ownership. It is not a signing-key owner. The repository signature proves that the repository approved and published the exact installed bytes; it does not replace code review or sandbox native code.
 
 ## Official and custom repositories
 
-- The official repository key is controlled by DBX Store and its public key is shipped with DBX.
+- The official repository key is controlled by NexDB Store and its public key is shipped with NexDB.
 - A custom or private repository controls one or more repository keys and distributes the public keys to its users through an independent trusted channel.
 - Plugin authors do not need `dbx-plugin keygen` for official submissions.
 - `dbx-plugin keygen` exists only for operators of custom or private repositories.
