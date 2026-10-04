@@ -175,6 +175,12 @@ jobs:
       - name: App version rule tests
         run: node --test scripts/bump-app-version.test.mjs
 
+      # macOS renders whatever shape icon.icns provides, so a full-bleed square
+      # artwork silently regresses the Dock icon. These tests read the committed
+      # container and fail when the squircle mask is missing.
+      - name: App icon mask tests
+        run: node --test scripts/app-icons.test.mjs
+
       - name: Check app version consistency
         run: node scripts/bump-app-version.mjs --check
 
@@ -909,6 +915,8 @@ jobs:
               - 'Cargo.lock'
               - 'scripts/bump-app-version.mjs'
               - 'scripts/bump-app-version.test.mjs'
+              - 'scripts/app-icons.mjs'
+              - 'scripts/app-icons.test.mjs'
               - '.github/workflows/ci.yml'
               - '.github/workflows/release.yml'
       - name: Setup Rust
