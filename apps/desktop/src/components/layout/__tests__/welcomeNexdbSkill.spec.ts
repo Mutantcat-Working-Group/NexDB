@@ -8,14 +8,15 @@ function read(relativePath: string): string {
 const locales = ["zh-CN", "en", "ja", "ko", "az", "tr", "es", "it", "pt-BR", "zh-TW"];
 
 describe("NexDB-Skill welcome banner", () => {
-  it("promotes the skill and links to the MCP package on GitHub", () => {
+  it("promotes the skill and links to the NexDB-Skill repository on GitHub", () => {
     const welcome = read("../WelcomeScreen.vue");
     const app = read("../../../App.vue");
 
     expect(welcome).toContain("NexDB-Skill");
     expect(welcome).not.toContain("npx @dbx-app/mcp-server");
     expect(welcome).toContain("emit('open-mcp-guide')");
-    expect(app).toContain('openUrl("https://github.com/Mutantcat-Working-Group/NexDB/tree/main/packages/mcp-server");');
+    expect(app).toContain('openUrl("https://github.com/Mutantcat-Working-Group/NexDB-Skill");');
+    expect(app).not.toContain('openUrl("https://github.com/Mutantcat-Working-Group/NexDB/tree/main/packages/mcp-server");');
     expect(app).not.toContain('openUrl("https://dbxio.com/cn/docs/mcp");');
   });
 
