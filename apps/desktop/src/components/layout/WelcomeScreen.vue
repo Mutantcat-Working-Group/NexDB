@@ -147,7 +147,7 @@ function welcomeConnectionSubtitle(connection: ConnectionConfig): string {
               {{ t("welcome.mcpDescription") }}
             </p>
             <div class="mt-2 flex flex-wrap items-center gap-2">
-              <code class="max-w-full break-all rounded bg-muted px-2 py-0.5 text-[11px] select-all">NexDB-Skill</code>
+              <span class="max-w-full break-all rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-medium text-primary select-all">NexDB-Skill</span>
               <a href="#" class="text-xs text-primary hover:underline" @click.prevent="emit('open-mcp-guide')">{{ t("welcome.mcpLearnMore") }}</a>
             </div>
           </div>
