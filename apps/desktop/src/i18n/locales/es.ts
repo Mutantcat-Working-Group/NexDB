@@ -2511,7 +2511,7 @@ export default withEnglishFallback({
     fileOpened: "Abierto {name}",
     fileOpenFailed: "No se pudo abrir {name}: {message}",
     mcpTitle: "Integración con agentes de IA",
-    mcpDescription: "Además del asistente de IA integrado, puedes usar Claude Code, Cursor y otros agentes de programación para consultar tus bases de datos mediante MCP.",
+    mcpDescription: "Además del asistente de IA integrado, NexDB-Skill permite que Claude Code, Cursor y otros agentes de programación se conecten a tus bases de datos mediante MCP.",
     mcpLearnMore: "Más información",
   },
   backendErrors: {

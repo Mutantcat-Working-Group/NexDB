@@ -2613,7 +2613,7 @@ export default {
     fileOpened: "Opened {name}",
     fileOpenFailed: "Failed to open {name}: {message}",
     mcpTitle: "AI Agent Integration",
-    mcpDescription: "Beyond the built-in AI assistant, you can also use Claude Code, Cursor, and other coding agents to query your databases via MCP.",
+    mcpDescription: "Beyond the built-in AI assistant, NexDB-Skill lets Claude Code, Cursor, and other coding agents query your databases through MCP.",
     mcpLearnMore: "Learn more",
   },
   backendErrors: {

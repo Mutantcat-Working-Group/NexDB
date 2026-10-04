@@ -2453,7 +2453,7 @@ export default withEnglishFallback({
     fileOpened: "{name} açıldı",
     fileOpenFailed: "{name} açılmadı: {message}",
     mcpTitle: "AI agenti inteqrasiyası",
-    mcpDescription: "Daxili AI köməkçisindən əlavə, verilənlər bazalarınıza MCP vasitəsilə sorğu göndərmək üçün Claude Code, Cursor və digər proqramlaşdırma agentlərindən də istifadə edə bilərsiniz.",
+    mcpDescription: "Daxili AI köməkçisindən əlavə, NexDB-Skill Claude Code, Cursor və digər proqramlaşdırma agentlərinə MCP vasitəsilə verilənlər bazalarınıza qoşulmağa imkan verir.",
     mcpLearnMore: "Ətraflı öyrən",
   },
   backendErrors: {

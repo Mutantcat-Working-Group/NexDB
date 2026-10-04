@@ -2979,7 +2979,7 @@ function openGitHub() {
   openUrl("https://github.com/Mutantcat-Working-Group/NexDB");
 }
 function openMcpGuide() {
-  openUrl("https://dbxio.com/cn/docs/mcp");
+  openUrl("https://github.com/Mutantcat-Working-Group/NexDB/tree/main/packages/mcp-server");
 }
 
 function setSidebarOpen(open: boolean) {

@@ -2536,7 +2536,7 @@ export default withEnglishFallback({
     fileOpened: "{name} を開きました",
     fileOpenFailed: "{name} を開けませんでした：{message}",
     mcpTitle: "AIエージェント連携",
-    mcpDescription: "内蔵AIアシスタントに加えて、Claude Code、Cursor、その他のコーディングエージェントをMCP経由でデータベースクエリに使用できます。",
+    mcpDescription: "内蔵AIアシスタントに加えて、NexDB-Skill を使えば Claude Code、Cursor、その他のコーディングエージェントから MCP 経由でデータベースを利用できます。",
     mcpLearnMore: "詳細を見る",
   },
   backendErrors: {

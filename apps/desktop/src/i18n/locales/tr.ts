@@ -2431,7 +2431,7 @@ export default withEnglishFallback({
     fileOpened: "{name} açıldı",
     fileOpenFailed: "{name} açılamadı: {message}",
     mcpTitle: "Yapay Zekâ Agent Tümleştirmesi",
-    mcpDescription: "Yerleşik yapay zekâ asistanının yanı sıra Claude Code, Cursor ve diğer kodlama agent'larını da MCP üzerinden veritabanlarınızı sorgulamak için kullanabilirsiniz.",
+    mcpDescription: "Yerleşik yapay zekâ asistanının yanı sıra NexDB-Skill ile Claude Code, Cursor ve diğer kodlama agent'ları MCP üzerinden veritabanlarınıza bağlanabilir.",
     mcpLearnMore: "Daha fazla bilgi",
   },
   backendErrors: {
